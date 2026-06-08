@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Detail Laporan #0148</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
+        <div>
+            <div class="p-5 flex items-center gap-3 border-b border-slate-800">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden')">
+                <div id="fallback-logo" class="bg-blue-600 p-2 rounded-lg text-white hidden">
+                    <i class="fa-solid fa-bullhorn text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Aduan Publik</span>
+                </div>
+            </div>
+            
+            <nav class="p-4 space-y-1">
+                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+                </a>
+                <a href="Laporan.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
+                    <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
+                </a>
+                <a href="peta.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="#" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-users w-5"></i> Manajemen User
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">ADM</div>
+            <div>
+                <p class="text-sm font-medium leading-none">Admin Utama</p>
+                <span class="text-xs text-slate-400">Pemerintah Daerah</span>
+            </div>
+            <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-4">
+                <a href="Laporan.html" class="text-gray-500 hover:text-gray-800 transition px-2 py-1 bg-gray-100 rounded-lg text-sm flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </a>
+                <h2 class="text-xl font-bold text-gray-800">Detail Validasi Aduan</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="status-badge" class="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1 rounded-full text-xs font-bold border border-red-200">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> BARU MASUK
+                </span>
+            </div>
+        </header>
+
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-2 space-y-6">
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
+                    <div class="flex justify-between items-start border-b border-gray-100 pb-4">
+                        <div>
+                            <span class="text-xs font-mono font-bold text-gray-400">TID-0148</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-0.5">Jalan Berlubang Parah di Tengah Lajur Utama</h3>
+                            <p class="text-xs text-gray-500 mt-1 flex items-center gap-2">
+                                <span><i class="fa-solid fa-user text-gray-400"></i> Budi Santoso</span>
+                                <span>•</span>
+                                <span><i class="fa-solid fa-calendar text-gray-400"></i> Hari ini, 10:15 WIB</span>
+                            </p>
+                        </div>
+                        <span class="bg-red-100 text-red-700 text-xs px-3 py-1 rounded-md font-semibold">Urgensi Tinggi</span>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Deskripsi Kerusakan</h4>
+                        <p class="text-gray-700 text-sm leading-relaxed bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            Ada lubang dengan diameter sekitar 1 meter dan kedalaman mencapai 15 cm di tengah jalan utama. Kondisi ini sangat membahayakan bagi pengendara sepeda motor, terutama saat malam hari karena minimnya penerangan di sekitar area tersebut. Tadi pagi hampir terjadi kecelakaan beruntun karena rem mendadak.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Foto Bukti Lapangan</h4>
+                        <div class="relative max-w-lg bg-gray-900 rounded-xl overflow-hidden border border-gray-200 group shadow-inner">
+                            <img src="jalanrusak.jpg" alt="Foto Jalan Berlubang" class="w-full h-64 object-cover hover:scale-105 transition duration-500 cursor-pointer">
+                            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                                <p class="text-xs"><i class="fa-solid fa-camera mr-1"></i> Kamera Smartphone Android • Metadata GPS Aktif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-800 text-base mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-user-gear text-blue-600"></i> Form Pembaruan Status & Validasi
+                    </h3>
+                    <form id="actionForm" class="space-y-4" onsubmit="updateStatusAduan(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-1">Ubah Status Laporan</label>
+                                <select id="inputStatus" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 font-medium">
+                                    <option value="baru" selected>Tetap Sebagai: Baru Masuk</option>
+                                    <option value="proses">Validasikan & Proses Perbaikan</option>
+                                    <option value="selesai">Tandai Selesai Diperbaiki</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-1">Disposisi Instansi (Opsional)</label>
+                                <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                                    <option value="">Pilih Dinas Terkait</option>
+                                    <option value="pupr">Dinas PUPR (Pekerjaan Umum)</option>
+                                    <option value="dishub">Dinas Perhubungan</option>
+                                    <option value="dlh">Dinas Lingkungan Hidup</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan Intervensi / Tindakan Teknis</label>
+                            <textarea rows="3" placeholder="Masukkan instruksi penanganan atau kendala lapangan di sini (akan tersimpan di log sistem)..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900" required></textarea>
+                        </div>
+
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg text-sm transition shadow-sm flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan & Perbarui Pelapor
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="space-y-6">
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-base">Lokasi Koordinat GPS</h3>
+                        <p class="text-xs text-gray-500">Titik lokasi akurat yang ditandai oleh sistem penanda berbasis lokasi di aplikasi seluler.</p>
+                    </div>
+
+                    <div id="mapDetail" class="w-full h-60 rounded-xl border border-gray-200 overflow-hidden z-0"></div>
+
+                    <div class="text-xs space-y-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <div class="flex justify-between"><span class="text-gray-400 font-medium">Jalan:</span> <span class="text-gray-800 font-semibold text-right">Jl. Merdeka No. 42</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400 font-medium">Kecamatan:</span> <span class="text-gray-800 font-semibold text-right">Klojen</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400 font-medium">Kota:</span> <span class="text-gray-800 font-semibold text-right">Kota Malang</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400 font-medium">Akurasi GPS:</span> <span class="text-green-600 font-bold text-right"><i class="fa-solid fa-circle-check"></i> Tinggi (~4 meter)</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-800 text-base mb-3">Log Alur Riwayat</h3>
+                    <div class="relative border-l-2 border-gray-200 pl-4 ml-2 space-y-4 text-xs">
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-0 bg-blue-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
+                            <p class="font-bold text-gray-800">Validasi Masuk Sistem</p>
+                            <p class="text-gray-500">Hari ini, 10:16 WIB • Oleh Sistem Otomatis</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-0 bg-gray-300 text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
+                            <p class="font-bold text-gray-700">Aduan Dikirim</p>
+                            <p class="text-gray-500">Hari ini, 10:15 WIB • Oleh Budi Santoso (Mobile App)</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function updateStatusAduan(event) {
+            event.preventDefault();
+            const statusSelect = document.getElementById('inputStatus').value;
+            const badge = document.getElementById('status-badge');
+            
+            if(statusSelect === "proses") {
+                badge.className = "inline-flex items-center gap-1.5 bg-amber-50 text-amber-600 px-3 py-1 rounded-full text-xs font-bold border border-amber-200";
+                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-500 animate-spin"></span> SEDANG DIPROSES';
+                alert('Sukses! Status aduan berhasil diperbarui ke "Sedang Diproses". Notifikasi pembaruan status real-time telah dikirimkan ke aplikasi mobile milik Budi Santoso.');
+            } else if(statusSelect === "selesai") {
+                badge.className = "inline-flex items-center gap-1.5 bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-200";
+                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-green-500"></span> SELESAI DIPERBAIKI';
+                alert('Sukses! Status laporan ditutup dengan hasil "Selesai Diperbaiki". Dokumen laporan diarsipkan.');
+            } else {
+                alert('Status aduan tetap berada dalam antrean baru.');
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        // 1. Inisialisasi Peta pada koordinat lokasi aduan (contoh: Jl. Merdeka)
+        // Set view: [Latitude, Longitude], Zoom level (16 agar cukup dekat/detail)
+        var mapDetail = L.map('mapDetail').setView([-7.96662, 112.63263], 16);
+
+        // 2. Tambahkan Layer Peta dari OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(mapDetail);
+
+        // 3. Buat Custom Icon Pin berwarna merah
+        var redIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: `<div style="background-color: #ef4444; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10] // Menempatkan pin tepat di tengah
+        });
+
+        // 4. Tambahkan Marker di peta beserta pop-up infonya
+        var marker = L.marker([-7.96662, 112.63263], {icon: redIcon}).addTo(mapDetail);
+        
+        marker.bindPopup(`
+            <div class="text-center">
+                <p class="font-bold text-gray-800 text-sm">Lokasi Laporan #0148</p>
+                <p class="text-xs text-gray-600">Jl. Merdeka No. 42</p>
+            </div>
+        `).openPopup();
+    </script>
+    </main> <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

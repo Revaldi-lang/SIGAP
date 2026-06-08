@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Dashboard Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
+        <div>
+            <div class="p-5 flex items-center gap-3 border-b border-slate-800">
+              <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain">
+    
+                <div>
+                        <h1 class="font-bold text-lg leading-none text-white">SIGAP</h1>
+                        <span class="text-xs text-slate-400">Aduan Publik</span>
+                    </div>
+                </div>
+            
+            <nav class="p-4 space-y-1">
+                <a href="SIGAP.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+                </a>
+                <a href="Laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
+                    <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
+                </a>
+                <a href="peta.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="#" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-users w-5"></i> Manajemen User
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">
+                ADM
+            </div>
+            <div>
+                <p class="text-sm font-medium leading-none">Admin Utama</p>
+                <span class="text-xs text-slate-400">Pemerintah Daerah</span>
+            </div>
+            <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
+    <i class="fa-solid fa-right-from-bracket"></i>
+</a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="text-gray-600 md:hidden block">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-xl font-bold text-gray-800">Ringkasan Sistem</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-sm text-right hidden sm:block">
+                    <p class="font-medium text-gray-700" id="current-date">Senin, 8 Juni 2026</p>
+                    <p class="text-xs text-gray-500">Status Server: <span class="text-green-500 font-semibold">Normal</span></p>
+                </div>
+                <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full">
+                    <i class="fa-solid fa-bell text-lg"></i>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-sm text-gray-500 font-medium">Total Aduan</span>
+                        <h3 class="text-2xl font-bold mt-1 text-gray-900">1,248</h3>
+                    </div>
+                    <div class="bg-blue-50 text-blue-600 p-3 rounded-xl">
+                        <i class="fa-solid fa-folder-open text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-sm text-gray-500 font-medium">Laporan Baru</span>
+                        <h3 class="text-2xl font-bold mt-1 text-red-600">5</h3>
+                    </div>
+                    <div class="bg-red-50 text-red-600 p-3 rounded-xl">
+                        <i class="fa-solid fa-circle-exclamation text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-sm text-gray-500 font-medium">Sedang Diproses</span>
+                        <h3 class="text-2xl font-bold mt-1 text-amber-500">12</h3>
+                    </div>
+                    <div class="bg-amber-50 text-amber-500 p-3 rounded-xl">
+                        <i class="fa-solid fa-spinner text-xl animate-spin"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-sm text-gray-500 font-medium">Selesai Diperbaiki</span>
+                        <h3 class="text-2xl font-bold mt-1 text-green-600">1,231</h3>
+                    </div>
+                    <div class="bg-green-50 text-green-600 p-3 rounded-xl">
+                        <i class="fa-solid fa-circle-check text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-lg">Aduan Infrastruktur Terbaru</h3>
+                        <p class="text-xs text-gray-500">Daftar laporan masuk dari aplikasi mobile yang memerlukan tindakan.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="text" placeholder="Cari lokasi atau kategori..." class="px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
+                        <button class="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-200 transition">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-xs font-semibold uppercase text-gray-500 border-b border-gray-200">
+                                <th class="px-6 py-3">Pelapor / Tanggal</th>
+                                <th class="px-6 py-3">Kategori Kerusakan</th>
+                                <th class="px-6 py-3">Lokasi (Koordinat)</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 text-sm">
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <p class="font-medium text-gray-800">Budi Santoso</p>
+                                    <span class="text-xs text-gray-400">Hari ini, 10:15 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-red-100 text-red-700 text-xs px-2.5 py-1 rounded-full font-medium">Jalan Berlubang Parah</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-gray-700 max-w-xs truncate">Jl. Merdeka No. 42, Kec. Klojen</p>
+                                    <a href="#" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
+                                        <i class="fa-solid fa-location-dot"></i> Lihat di Peta
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Baru
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button onclick="prosesLaporan(1)" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>
+                                    <button class="bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition">Detail</button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <p class="font-medium text-gray-800">Siti Rahma</p>
+                                    <span class="text-xs text-gray-400">Kemarin, 16:40 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-medium">Lampu Jalan Mati</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-gray-700 max-w-xs truncate">Pojok Alun-Alun Utara</p>
+                                    <a href="#" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
+                                        <i class="fa-solid fa-location-dot"></i> Lihat di Peta
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Diproses
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button class="bg-green-50 text-green-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-green-600 hover:text-white transition">Selesaikan</button>
+                                    <button class="bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition">Detail</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Fungsi simulasi memproses laporan aduan
+        function prosesLaporan(id) {
+            alert("Laporan ID #" + id + " berhasil diubah statusnya menjadi 'Diproses'. Notifikasi otomatis dikirim ke aplikasi mobile pelapor.");
+        }
+    </script>
+    </main> <script src="assets/js/script.js"></script>
+</body>
+</html>

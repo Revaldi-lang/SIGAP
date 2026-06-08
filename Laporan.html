@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Semua Laporan Masuk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
+        <div>
+            <div class="p-5 flex items-center gap-3 border-b border-slate-800">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden')">
+                <div id="fallback-logo" class="bg-blue-600 p-2 rounded-lg text-white hidden">
+                    <i class="fa-solid fa-bullhorn text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Aduan Publik</span>
+                </div>
+            </div>
+            
+            <nav class="p-4 space-y-1">
+                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+                </a>
+                <a href="Laporan.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
+                    <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
+                </a>
+                <a href="peta.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="#" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-users w-5"></i> Manajemen User
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">ADM</div>
+            <div>
+                <p class="text-sm font-medium leading-none">Admin Utama</p>
+                <span class="text-xs text-slate-400">Pemerintah Daerah</span>
+            </div>
+            <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
+    <i class="fa-solid fa-right-from-bracket"></i>
+</a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="text-gray-600 md:hidden block">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Manajemen Laporan</h2>
+                    <p class="text-xs text-gray-500 hidden sm:block">Kelola, verifikasi, dan tindak lanjuti aduan infrastruktur dari masyarakat.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full">
+                    <i class="fa-solid fa-bell text-lg"></i>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="relative">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Cari Aduan</label>
+                        <div class="relative">
+                            <input type="text" id="searchAduan" placeholder="Cari pelapor, lokasi..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Kategori Kerusakan</label>
+                        <select id="filterKategori" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                            <option value="semua">Semua Kategori</option>
+                            <option value="jalan">Jalan Berlubang / Rusak</option>
+                            <option value="fasilitas">Fasilitas Sosial / Taman</option>
+                            <option value="penerangan">Penerangan Jalan</option>
+                            <option value="drainase">Saluran Air / Drainase rusak</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Status Tindakan</label>
+                        <select id="filterStatus" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                            <option value="semua">Semua Status</option>
+                            <option value="baru">Baru Masuk</option>
+                            <option value="proses">Sedang Diproses</option>
+                            <option value="selesai">Selesai Diperbaiki</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-end">
+                        <button onclick="resetFilters()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg text-sm transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-xs font-semibold uppercase text-gray-500 border-b border-gray-200">
+                                <th class="px-6 py-3.5 w-20">ID</th>
+                                <th class="px-6 py-3.5">Pelapor & Waktu</th>
+                                <th class="px-6 py-3.5">Detail Kerusakan</th>
+                                <th class="px-6 py-3.5">Lokasi Wilayah</th>
+                                <th class="px-6 py-3.5">Status</th>
+                                <th class="px-6 py-3.5 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 text-sm">
+                            
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#0148</td>
+                                <td class="px-6 py-4">
+                                    <p class="font-semibold text-gray-900">Budi Santoso</p>
+                                    <span class="text-xs text-gray-400">Hari ini, 10:15 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-red-100 text-red-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">Jalan Berlubang</span>
+                                    <p class="text-gray-600 text-xs max-w-xs truncate">Lubang diameter 1 meter di tengah jalan utama membahayakan motor.</p>
+                                </td>
+                                <td class="px-6 py-4 text-gray-600">
+                                    <p class="font-medium">Jl. Merdeka No. 42</p>
+                                    <span class="text-xs text-gray-400">Kec. Klojen, Kota Malang</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1 bg-red-50 text-red-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Baru
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <a href="DetailLaporan.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition text-center">Tinjau</a>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#0147</td>
+                                <td class="px-6 py-4">
+                                    <p class="font-semibold text-gray-900">Siti Rahma</p>
+                                    <span class="text-xs text-gray-400">Kemarin, 16:40 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">Penerangan Jalan</span>
+                                    <p class="text-gray-600 text-xs max-w-xs truncate">3 Lampu merkuri padam total membuat jalanan gelap gulita saat malam.</p>
+                                </td>
+                                <td class="px-6 py-4 text-gray-600">
+                                    <p class="font-medium">Pojok Alun-Alun Utara</p>
+                                    <span class="text-xs text-gray-400">Kec. Lowokwaru</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Diproses
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition">Tinjau</button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#0146</td>
+                                <td class="px-6 py-4">
+                                    <p class="font-semibold text-gray-900">Ahmad Dhani</p>
+                                    <span class="text-xs text-gray-400">04 Juni 2026, 09:10 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">Drainase rusak</span>
+                                    <p class="text-gray-600 text-xs max-w-xs truncate">Selokan tersumbat sampah beton sisa proyek, air meluap ke aspal.</p>
+                                </td>
+                                <td class="px-6 py-4 text-gray-600">
+                                    <p class="font-medium">Jl. Borobudur Gang 4</p>
+                                    <span class="text-xs text-gray-400">Kec. Blimbing</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1 bg-green-50 text-green-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Selesai
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">Detail</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between flex-col sm:flex-row gap-4">
+                    <span class="text-xs text-gray-500 font-medium">
+                        Menampilkan <span class="text-gray-800 font-semibold">1-3</span> dari <span class="text-gray-800 font-semibold">148</span> Total Laporan Aduan
+                    </span>
+                    <div class="flex items-center gap-1">
+                        <button class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-400 cursor-not-allowed bg-gray-50" disabled>
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                        <button class="px-3 py-1.5 bg-blue-600 border border-blue-600 text-white rounded-lg text-xs font-semibold">1</button>
+                        <button class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50">2</button>
+                        <button class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50">3</button>
+                        <span class="text-gray-400 px-1 text-xs">...</span>
+                        <button class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50">15</button>
+                        <button class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Fungsi simulasi mereset filter pilihan ke default
+        function resetFilters() {
+            document.getElementById('searchAduan').value = '';
+            document.getElementById('filterKategori').value = 'semua';
+            document.getElementById('filterStatus').value = 'semua';
+            alert('Semua filter pencarian dibersihkan.');
+        }
+    </script>
+    </main> <script src="assets/js/script.js"></script>
+</body>
+</html>
