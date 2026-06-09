@@ -13,13 +13,12 @@
     <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
         <div>
             <div class="p-5 flex items-center gap-3 border-b border-slate-800">
-              <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain">
-    
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain">
                 <div>
-                        <h1 class="font-bold text-lg leading-none text-white">SIGAP</h1>
-                        <span class="text-xs text-slate-400">Aduan Publik</span>
-                    </div>
+                    <h1 class="font-bold text-lg leading-none text-white">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Aduan Publik</span>
                 </div>
+            </div>
             
             <nav class="p-4 space-y-1">
                 <a href="SIGAP.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
@@ -47,8 +46,8 @@
                 <span class="text-xs text-slate-400">Pemerintah Daerah</span>
             </div>
             <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
-    <i class="fa-solid fa-right-from-bracket"></i>
-</a>
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
         </div>
     </aside>
 
@@ -63,7 +62,7 @@
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-sm text-right hidden sm:block">
-                    <p class="font-medium text-gray-700" id="current-date">Senin, 8 Juni 2026</p>
+                    <p class="font-medium text-gray-700" id="current-date">Memuat tanggal...</p>
                     <p class="text-xs text-gray-500">Status Server: <span class="text-green-500 font-semibold">Normal</span></p>
                 </div>
                 <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full">
@@ -124,7 +123,7 @@
                         <p class="text-xs text-gray-500">Daftar laporan masuk dari aplikasi mobile yang memerlukan tindakan.</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <input type="text" placeholder="Cari lokasi atau kategori..." class="px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
+                        <input type="text" id="searchDashboard" placeholder="Cari lokasi atau kategori..." class="px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
                         <button class="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-200 transition">
                             <i class="fa-solid fa-filter"></i>
                         </button>
@@ -143,56 +142,56 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 text-sm">
-    <tr class="hover:bg-gray-50 transition">
-        <td class="px-6 py-4">
-            <p class="font-medium text-gray-800">Budi Santoso</p>
-            <span class="text-xs text-gray-400">Hari ini, 10:15 WIB</span>
-        </td>
-        <td class="px-6 py-4">
-            <span class="bg-red-100 text-red-700 text-xs px-2.5 py-1 rounded-full font-medium">Jalan Berlubang Parah</span>
-        </td>
-        <td class="px-6 py-4">
-            <p class="text-gray-700 max-w-xs truncate">Jl. Merdeka No. 42, Kec. Klojen</p>
-            <a href="peta.html" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
-                <i class="fa-solid fa-location-dot"></i> Lihat di Peta
-            </a>
-        </td>
-        <td class="px-6 py-4">
-            <span class="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-2 py-1 rounded-md text-xs font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Baru
-            </span>
-        </td>
-        <td class="px-6 py-4 text-right space-x-2">
-            <button onclick="prosesLaporan(1)" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>
-            <a href="DetailLaporan.html" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
-        </td>
-    </tr>
+                            <tr class="aduan-row hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <p class="font-medium text-gray-800">Budi Santoso</p>
+                                    <span class="text-xs text-gray-400">Hari ini, 10:15 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-red-100 text-red-700 text-xs px-2.5 py-1 rounded-full font-medium">Jalan Berlubang Parah</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-gray-700 max-w-xs truncate">Jl. Merdeka No. 42, Kec. Klojen</p>
+                                    <a href="peta.html" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
+                                        <i class="fa-solid fa-location-dot"></i> Lihat di Peta
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Baru
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button onclick="prosesLaporan(1)" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>
+                                    <a href="detail-laporan.html?id=0148" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
+                                </td>
+                            </tr>
 
-    <tr class="hover:bg-gray-50 transition">
-        <td class="px-6 py-4">
-            <p class="font-medium text-gray-800">Siti Rahma</p>
-            <span class="text-xs text-gray-400">Kemarin, 16:40 WIB</span>
-        </td>
-        <td class="px-6 py-4">
-            <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-medium">Lampu Jalan Mati</span>
-        </td>
-        <td class="px-6 py-4">
-            <p class="text-gray-700 max-w-xs truncate">Pojok Alun-Alun Utara</p>
-            <a href="peta.html" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
-                <i class="fa-solid fa-location-dot"></i> Lihat di Peta
-            </a>
-        </td>
-        <td class="px-6 py-4">
-            <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-600 px-2 py-1 rounded-md text-xs font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Diproses
-            </span>
-        </td>
-        <td class="px-6 py-4 text-right space-x-2">
-            <button class="bg-green-50 text-green-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-green-600 hover:text-white transition">Selesaikan</button>
-            <a href="DetailLaporan.html" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
-        </td>
-    </tr>
-</tbody>
+                            <tr class="aduan-row hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <p class="font-medium text-gray-800">Siti Rahma</p>
+                                    <span class="text-xs text-gray-400">Kemarin, 16:40 WIB</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-medium">Lampu Jalan Mati</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-gray-700 max-w-xs truncate">Pojok Alun-Alun Utara</p>
+                                    <a href="peta.html" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
+                                        <i class="fa-solid fa-location-dot"></i> Lihat di Peta
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-600 px-2 py-1 rounded-md text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Diproses
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button class="bg-green-50 text-green-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-green-600 hover:text-white transition">Selesaikan</button>
+                                    <a href="detail-laporan.html?id=0147" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -201,11 +200,54 @@
     </main>
 
     <script>
-        // Fungsi simulasi memproses laporan aduan
         function prosesLaporan(id) {
             alert("Laporan ID #" + id + " berhasil diubah statusnya menjadi 'Diproses'. Notifikasi otomatis dikirim ke aplikasi mobile pelapor.");
         }
+
+        function updateWaktuDanTanggal() {
+            const sekarang = new Date();
+            
+            // Mengambil potongan tanggal (Senin, 8 Juni 2026)
+            const tanggalTerformat = sekarang.toLocaleDateString('id-ID', {
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            });
+
+            // Mengambil potongan jam manual (hh:mm:ss) untuk menghindari kata "pukul"
+            const jam = String(sekarang.getHours()).padStart(2, '0');
+            const menit = String(sekarang.getMinutes()).padStart(2, '0');
+            const detik = String(sekarang.getSeconds()).padStart(2, '0');
+            
+            // Menggabungkannya menjadi format kustom bersih
+            document.getElementById('current-date').innerText = `${tanggalTerformat} - ${jam}:${menit}:${detik} WIB`;
+        }
+
+        updateWaktuDanTanggal();
+        setInterval(updateWaktuDanTanggal, 1000);
+
+        // ==================== FITUR BARU: LOGIKA PENCARIAN DASHBOARD ====================
+        document.getElementById('searchDashboard').addEventListener('input', function(event) {
+            const kataKunci = event.target.value.toLowerCase();
+            const semuaBaris = document.querySelectorAll('.aduan-row');
+
+            semuaBaris.forEach(row => {
+                // Ambil teks dari kolom kategori kerusakan dan lokasi wilayah
+                const kategori = row.cells[1].innerText.toLowerCase();
+                const lokasi = row.cells[2].innerText.toLowerCase();
+                const pelapor = row.cells[0].innerText.toLowerCase();
+
+                // Periksa apakah kata kunci cocok dengan kategori, lokasi, atau pelapor
+                if (kategori.includes(kataKunci) || lokasi.includes(kataKunci) || pelapor.includes(kataKunci)) {
+                    row.style.display = ""; // Tampilkan baris
+                } else {
+                    row.style.display = "none"; // Sembunyikan baris
+                }
+            });
+        });
     </script>
-    </main> <script src="assets/js/script.js"></script>
+    
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
