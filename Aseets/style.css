@@ -1,0 +1,84 @@
+/* 1. CUSTOM SCROLLBAR MODERN (Khusus Webkit Browser seperti Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9; /* slate-100 */
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* slate-300 */
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* slate-400 */
+}
+
+/* 2. CUSTOM SELECTION (Warna teks saat di-blok/highlight) */
+::selection {
+    background-color: #2563eb; /* blue-600 */
+    color: #ffffff;
+}
+
+/* 3. EFEK GLASSMORPHISM UTILITY */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 4. PENYESUAIAN PETA LEAFLET */
+.leaflet-container {
+    z-index: 10;
+    font-family: inherit;
+}
+/* Menghilangkan outline biru bawaan leaflet saat peta diklik */
+.leaflet-container:focus {
+    outline: none; 
+}
+/* Membuat popup leaflet terlihat lebih membulat dan modern */
+.leaflet-popup-content-wrapper {
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 5. ANIMASI PIN PETA (GLOWING / RADAR EFFECT) */
+.custom-div-icon div {
+    position: relative;
+    transition: all 0.3s ease;
+}
+/* Efek membesar saat di-hover */
+.custom-div-icon div:hover {
+    transform: scale(1.2);
+}
+/* Menambahkan animasi gelombang di belakang pin merah (Urgensi Tinggi) */
+.custom-div-icon.urgent-pin::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: rgba(239, 68, 68, 0.4);
+    border-radius: 50%;
+    z-index: -1;
+    animation: radarGlow 2s infinite ease-in-out;
+}
+
+/* 6. ANIMASI KEYFRAMES CUSTOM */
+@keyframes radarGlow {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes fadeInSmooth {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Class pembantu untuk mengaktifkan animasi fade in */
+.animate-fade-in {
+    animation: fadeInSmooth 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
