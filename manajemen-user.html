@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm flex items-center gap-2">
+                <button onclick="bukaModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm flex items-center gap-2">
                     <i class="fa-solid fa-user-plus"></i> Tambah Pengguna
                 </button>
             </div>
@@ -97,13 +97,13 @@
                         <thead>
                             <tr class="bg-gray-50 text-xs font-semibold uppercase text-gray-500 border-b border-gray-200">
                                 <th class="px-6 py-4">Profil Pengguna</th>
-                                <th class="px-6 py-4">Kontak & NIK</th>
+                                <th class="px-6 py-4">Kontak & NIK / NIP</th>
                                 <th class="px-6 py-4">Peran (Role)</th>
                                 <th class="px-6 py-4">Status Akun</th>
                                 <th class="px-6 py-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100 text-sm">
+                        <tbody id="daftar-user" class="divide-y divide-gray-100 text-sm">
                             
                             <tr id="user-admin" class="hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
@@ -203,12 +203,140 @@
         </div>
     </main>
 
+    <div id="modal-tambah-user" class="fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-user-plus text-blue-400"></i> Tambah Pengguna Baru</h3>
+                <button onclick="tutupModal()" class="text-slate-400 hover:text-white transition text-xl">&times;</button>
+            </div>
+            <form id="form-tambah-user" onsubmit="simpanUserBaru(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap</label>
+                    <input type="text" id="input-nama" required placeholder="Masukkan nama lengkap..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email</label>
+                    <input type="email" id="input-email" required placeholder="contoh@sigap.go.id" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">NIK / NIP</label>
+                    <input type="text" id="input-identitas" required placeholder="Masukkan NIK atau NIP..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Peran (Role)</label>
+                    <select id="input-role" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                        <option value="Administrator">Administrator</option>
+                        <option value="Petugas Lapangan">Petugas Lapangan</option>
+                        <option value="Masyarakat">Masyarakat</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-3 pt-2 border-t border-gray-100">
+                    <button type="button" onclick="tutupModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition">Batal</button>
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Pengguna
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="assets/js/script.js"></script>
 
     <script>
-        // 1. Fungsi Edit Pengguna secara Interaktif
+        // ==================== 1. KONTROL MODAL POP-UP ====================
+        function bukaModal() {
+            const modal = document.getElementById('modal-tambah-user');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.transform').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function tutupModal() {
+            const modal = document.getElementById('modal-tambah-user');
+            modal.classList.add('opacity-0');
+            modal.querySelector('.transform').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('form-tambah-user').reset(); // Reset form input
+            }, 300);
+        }
+
+        // ==================== 2. FUNGSI SIMPAN USER BARU (DOM APPEND) ====================
+        function simpanUserBaru(event) {
+            event.preventDefault(); // Mencegah reload halaman secara default
+
+            // Ambil data nilai input form
+            const nama = document.getElementById('input-nama').value.trim();
+            const email = document.getElementById('input-email').value.trim();
+            const identitas = document.getElementById('input-identitas').value.trim();
+            const role = document.getElementById('input-role').value;
+
+            // Buat ID unik acak berdasarkan timestamp agar tidak tabrakan dengan ID baris lain
+            const uniqueId = 'user-' + Date.now();
+
+            // Atur badge warna role Tailwind CSS secara dinamis
+            let roleBadge = '';
+            if (role === 'Administrator') {
+                roleBadge = `<span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-purple-200">Administrator</span>`;
+            } else if (role === 'Petugas Lapangan') {
+                roleBadge = `<span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-amber-200">Petugas Lapangan</span>`;
+            } else {
+                roleBadge = `<span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-gray-200">Masyarakat</span>`;
+            }
+
+            // Atur inisial huruf profil (diambil dari huruf pertama kata pertama & kedua)
+            const kataNama = nama.split(' ');
+            const inisial = (kataNama[0] ? kataNama[0][0] : 'U') + (kataNama[1] ? kataNama[1][0] : '');
+
+            // Buat template elemen string HTML <tr> baru
+            const barisBaruHTML = `
+                <tr id="${uniqueId}" class="hover:bg-gray-50 transition opacity-0" style="transition: all 0.5s ease;">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold uppercase">${inisial}</div>
+                            <div>
+                                <p id="name-${uniqueId}" class="font-bold text-gray-900">${nama}</p>
+                                <span class="text-xs text-gray-500">Terdaftar: Baru saja</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p id="email-${uniqueId}" class="text-gray-800 font-medium text-sm">${email}</p>
+                        <span class="text-xs text-gray-400 font-mono">${identitas}</span>
+                    </td>
+                    <td class="px-6 py-4">${roleBadge}</td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center gap-1.5 text-green-600 text-xs font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span> Aktif
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="editPengguna('${uniqueId}')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="hapusPengguna('${uniqueId}')" class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            // Append/Tambahkan baris baru ke dalam tbody
+            const tbody = document.getElementById('daftar-user');
+            tbody.insertAdjacentHTML('beforeend', barisBaruHTML);
+
+            // Trigger animasi fade-in lembut untuk baris baru
+            setTimeout(() => {
+                document.getElementById(uniqueId).classList.remove('opacity-0');
+            }, 50);
+
+            // Tutup modal dan tampilkan pemberitahuan sukses
+            tutupModal();
+            alert(`Sukses! Akun untuk "${nama}" berhasil ditambahkan.`);
+        }
+
+        // ==================== 3. FUNGSI EDIT PENGGUNA ====================
         function editPengguna(rowId) {
-            // Ambil elemen teks nama & email berdasarkan ID unik baris tabel
             const nameElement = document.getElementById('name-' + rowId);
             const emailElement = document.getElementById('email-' + rowId);
 
@@ -217,14 +345,12 @@
             const currentName = nameElement.innerText;
             const currentEmail = emailElement.innerText;
 
-            // Membuka Dialog Prompt Browser untuk Modifikasi Data
             const newName = prompt("Ubah Nama Pengguna:", currentName);
-            if (newName === null) return; // Jika klik batal (cancel)
+            if (newName === null) return; 
 
             const newEmail = prompt("Ubah Email Pengguna:", currentEmail);
-            if (newEmail === null) return; // Jika klik batal (cancel)
+            if (newEmail === null) return; 
 
-            // Validasi Input agar tidak kosong
             if (newName.trim() !== "" && newEmail.trim() !== "") {
                 nameElement.innerText = newName.trim();
                 emailElement.innerText = newEmail.trim();
@@ -234,21 +360,19 @@
             }
         }
 
-        // 2. Fungsi Hapus Baris Pengguna dari Tabel
+        // ==================== 4. FUNGSI HAPUS PENGGUNA ====================
         function hapusPengguna(rowId) {
             const nameElement = document.getElementById('name-' + rowId);
             const nama = nameElement ? nameElement.innerText : "Pengguna";
 
-            // Konfirmasi keamanan sebelum menghapus
             const konfirmasi = confirm(`Apakah Anda yakin ingin menghapus akun milik "${nama}"?`);
             
             if (konfirmasi) {
                 const rowElement = document.getElementById(rowId);
                 if (rowElement) {
-                    // Animasi memudar lembut sebelum elemen dihapus total dari DOM
                     rowElement.style.transition = "all 0.4s ease";
                     rowElement.style.opacity = "0";
-                    rowElement.style.backgroundColor = "#fee2e2"; // Efek kilasan warna merah tipis
+                    rowElement.style.backgroundColor = "#fee2e2"; 
                     
                     setTimeout(() => {
                         rowElement.remove();
