@@ -105,18 +105,18 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100 text-sm">
                             
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr id="user-admin" class="hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">AD</div>
                                         <div>
-                                            <p class="font-bold text-gray-900">Admin Utama</p>
+                                            <p id="name-user-admin" class="font-bold text-gray-900">Admin Utama</p>
                                             <span class="text-xs text-gray-500">Terdaftar: 01 Jan 2026</span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <p class="text-gray-800 font-medium text-sm">admin@sigap.go.id</p>
+                                    <p id="email-user-admin" class="text-gray-800 font-medium text-sm">admin@sigap.go.id</p>
                                     <span class="text-xs text-gray-400 font-mono">-</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -129,24 +129,24 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <button class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="editPengguna('user-admin')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
                                         <button class="text-gray-400 cursor-not-allowed" title="Admin Utama Tidak Bisa Dihapus" disabled><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr id="user-hw" class="hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold">HW</div>
                                         <div>
-                                            <p class="font-bold text-gray-900">Hendra Wijaya</p>
+                                            <p id="name-user-hw" class="font-bold text-gray-900">Hendra Wijaya</p>
                                             <span class="text-xs text-gray-500">Terdaftar: 15 Feb 2026</span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <p class="text-gray-800 font-medium text-sm">hendra.pupr@sigap.go.id</p>
+                                    <p id="email-user-hw" class="text-gray-800 font-medium text-sm">hendra.pupr@sigap.go.id</p>
                                     <span class="text-xs text-gray-400 font-mono">NIP: 198504232010121005</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -159,24 +159,24 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <button class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
+                                        <button onclick="editPengguna('user-hw')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="hapusPengguna('user-hw')" class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr id="user-bs" class="hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">BS</div>
                                         <div>
-                                            <p class="font-bold text-gray-900">Budi Santoso</p>
+                                            <p id="name-user-bs" class="font-bold text-gray-900">Budi Santoso</p>
                                             <span class="text-xs text-gray-500">Terdaftar: Hari ini</span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <p class="text-gray-800 font-medium text-sm">budi.santoso99@gmail.com</p>
+                                    <p id="email-user-bs" class="text-gray-800 font-medium text-sm">budi.santoso99@gmail.com</p>
                                     <span class="text-xs text-gray-400 font-mono">NIK: 3573012345670001</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -189,8 +189,8 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <button class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
+                                        <button onclick="editPengguna('user-bs')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="hapusPengguna('user-bs')" class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -204,5 +204,58 @@
     </main>
 
     <script src="assets/js/script.js"></script>
+
+    <script>
+        // 1. Fungsi Edit Pengguna secara Interaktif
+        function editPengguna(rowId) {
+            // Ambil elemen teks nama & email berdasarkan ID unik baris tabel
+            const nameElement = document.getElementById('name-' + rowId);
+            const emailElement = document.getElementById('email-' + rowId);
+
+            if (!nameElement || !emailElement) return;
+
+            const currentName = nameElement.innerText;
+            const currentEmail = emailElement.innerText;
+
+            // Membuka Dialog Prompt Browser untuk Modifikasi Data
+            const newName = prompt("Ubah Nama Pengguna:", currentName);
+            if (newName === null) return; // Jika klik batal (cancel)
+
+            const newEmail = prompt("Ubah Email Pengguna:", currentEmail);
+            if (newEmail === null) return; // Jika klik batal (cancel)
+
+            // Validasi Input agar tidak kosong
+            if (newName.trim() !== "" && newEmail.trim() !== "") {
+                nameElement.innerText = newName.trim();
+                emailElement.innerText = newEmail.trim();
+                alert("Sukses! Data pengguna berhasil diperbarui.");
+            } else {
+                alert("Gagal! Nama dan Email tidak boleh kosong.");
+            }
+        }
+
+        // 2. Fungsi Hapus Baris Pengguna dari Tabel
+        function hapusPengguna(rowId) {
+            const nameElement = document.getElementById('name-' + rowId);
+            const nama = nameElement ? nameElement.innerText : "Pengguna";
+
+            // Konfirmasi keamanan sebelum menghapus
+            const konfirmasi = confirm(`Apakah Anda yakin ingin menghapus akun milik "${nama}"?`);
+            
+            if (konfirmasi) {
+                const rowElement = document.getElementById(rowId);
+                if (rowElement) {
+                    // Animasi memudar lembut sebelum elemen dihapus total dari DOM
+                    rowElement.style.transition = "all 0.4s ease";
+                    rowElement.style.opacity = "0";
+                    rowElement.style.backgroundColor = "#fee2e2"; // Efek kilasan warna merah tipis
+                    
+                    setTimeout(() => {
+                        rowElement.remove();
+                    }, 400);
+                }
+            }
+        }
+    </script>
 </body>
 </html>
