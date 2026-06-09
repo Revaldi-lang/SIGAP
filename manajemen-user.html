@@ -75,18 +75,18 @@
             
             <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col sm:flex-row justify-between gap-4 items-center">
                 <div class="relative w-full sm:w-96">
-                    <input type="text" placeholder="Cari nama, email, atau NIK..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                    <input type="text" id="cari-input" placeholder="Cari nama, email, atau NIK..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
                 </div>
                 <div class="flex gap-2 w-full sm:w-auto">
-                    <select class="w-full sm:w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                    <select id="filter-role-select" class="w-full sm:w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
                         <option value="semua">Semua Role</option>
-                        <option value="admin">Administrator</option>
-                        <option value="petugas">Petugas Lapangan</option>
-                        <option value="masyarakat">Masyarakat</option>
+                        <option value="Administrator">Administrator</option>
+                        <option value="Petugas PUPR">Petugas Lapangan</option>
+                        <option value="Masyarakat">Masyarakat</option>
                     </select>
-                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm transition">
-                        <i class="fa-solid fa-filter"></i>
+                    <button onclick="resetFilterUser()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm transition" title="Reset Filter">
+                        <i class="fa-solid fa-filter-circle-xmark"></i>
                     </button>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                         </thead>
                         <tbody id="daftar-user" class="divide-y divide-gray-100 text-sm">
                             
-                            <tr id="user-admin" class="hover:bg-gray-50 transition">
+                            <tr id="user-admin" data-role="Administrator" class="user-row hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">AD</div>
@@ -135,7 +135,7 @@
                                 </td>
                             </tr>
 
-                            <tr id="user-hw" class="hover:bg-gray-50 transition">
+                            <tr id="user-hw" data-role="Petugas PUPR" class="user-row hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold">HW</div>
@@ -165,7 +165,7 @@
                                 </td>
                             </tr>
 
-                            <tr id="user-bs" class="hover:bg-gray-50 transition">
+                            <tr id="user-bs" data-role="Masyarakat" class="user-row hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">BS</div>
@@ -226,7 +226,7 @@
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Peran (Role)</label>
                     <select id="input-role" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
                         <option value="Administrator">Administrator</option>
-                        <option value="Petugas Lapangan">Petugas Lapangan</option>
+                        <option value="Petugas PUPR">Petugas Lapangan</option>
                         <option value="Masyarakat">Masyarakat</option>
                     </select>
                 </div>
@@ -243,6 +243,45 @@
     <script src="assets/js/script.js"></script>
 
     <script>
+        // ==================== FITUR BARU: LOGIKA FILTER MULTI-KRITERIA ====================
+        function jalankanFilterUser() {
+            const kataKunci = document.getElementById('cari-input').value.toLowerCase();
+            const roleDipilih = document.getElementById('filter-role-select').value;
+            
+            // Ambil semua baris data di dalam tabel (kita beri class selector tambahan agar aman)
+            const semuaBaris = document.querySelectorAll('#daftar-user tr');
+
+            semuaBaris.forEach(row => {
+                // Ambil data teks nama, email, dan data-role dari baris terkait
+                const nama = row.querySelector('[id^="name-"]').innerText.toLowerCase();
+                const email = row.querySelector('[id^="email-"]').innerText.toLowerCase();
+                const roleBaris = row.getAttribute('data-role');
+
+                // Cocokkan kriteria pencarian teks & filter dropdown role
+                const cocokKataKunci = nama.includes(kataKunci) || email.includes(kataKunci);
+                const cocokRole = (roleDipilih === 'semua') || (roleBaris === roleDipilih);
+
+                // Tampilkan jika kedua kriteria cocok, sembunyikan jika salah satu tidak cocok
+                if (cocokKataKunci && cocokRole) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        // Jalankan filter otomatis saat pengguna mengetik teks atau mengubah pilihan dropdown
+        document.getElementById('cari-input').addEventListener('input', jalankanFilterUser);
+        document.getElementById('filter-role-select').addEventListener('change', jalankanFilterUser);
+
+        // Fungsi Tombol Reset Filter
+        function resetFilterUser() {
+            document.getElementById('cari-input').value = "";
+            document.getElementById('filter-role-select').value = "semua";
+            jalankanFilterUser();
+        }
+
+
         // ==================== 1. KONTROL MODAL POP-UP ====================
         function bukaModal() {
             const modal = document.getElementById('modal-tambah-user');
@@ -259,40 +298,38 @@
             modal.querySelector('.transform').classList.add('scale-95');
             setTimeout(() => {
                 modal.classList.add('hidden');
-                document.getElementById('form-tambah-user').reset(); // Reset form input
+                document.getElementById('form-tambah-user').reset();
             }, 300);
         }
 
-        // ==================== 2. FUNGSI SIMPAN USER BARU (DOM APPEND) ====================
+        // ==================== 2. FUNGSI SIMPAN USER BARU ====================
         function simpanUserBaru(event) {
-            event.preventDefault(); // Mencegah reload halaman secara default
+            event.preventDefault();
 
-            // Ambil data nilai input form
             const nama = document.getElementById('input-nama').value.trim();
             const email = document.getElementById('input-email').value.trim();
             const identitas = document.getElementById('input-identitas').value.trim();
             const role = document.getElementById('input-role').value;
-
-            // Buat ID unik acak berdasarkan timestamp agar tidak tabrakan dengan ID baris lain
             const uniqueId = 'user-' + Date.now();
 
-            // Atur badge warna role Tailwind CSS secara dinamis
             let roleBadge = '';
+            let labelTextRole = role; 
+            
             if (role === 'Administrator') {
                 roleBadge = `<span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-purple-200">Administrator</span>`;
-            } else if (role === 'Petugas Lapangan') {
-                roleBadge = `<span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-amber-200">Petugas Lapangan</span>`;
+            } else if (role === 'Petugas PUPR') {
+                roleBadge = `<span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-amber-200">Petugas PUPR</span>`;
             } else {
                 roleBadge = `<span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-gray-200">Masyarakat</span>`;
+                labelTextRole = 'Masyarakat'; 
             }
 
-            // Atur inisial huruf profil (diambil dari huruf pertama kata pertama & kedua)
             const kataNama = nama.split(' ');
             const inisial = (kataNama[0] ? kataNama[0][0] : 'U') + (kataNama[1] ? kataNama[1][0] : '');
 
-            // Buat template elemen string HTML <tr> baru
+            // FITUR: Ditambahkan atribut data-role="${labelTextRole}" agar user baru otomatis bisa ikut difilter
             const barisBaruHTML = `
-                <tr id="${uniqueId}" class="hover:bg-gray-50 transition opacity-0" style="transition: all 0.5s ease;">
+                <tr id="${uniqueId}" data-role="${labelTextRole}" class="hover:bg-gray-50 transition opacity-0" style="transition: all 0.5s ease;">
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold uppercase">${inisial}</div>
@@ -321,16 +358,14 @@
                 </tr>
             `;
 
-            // Append/Tambahkan baris baru ke dalam tbody
             const tbody = document.getElementById('daftar-user');
             tbody.insertAdjacentHTML('beforeend', barisBaruHTML);
 
-            // Trigger animasi fade-in lembut untuk baris baru
             setTimeout(() => {
                 document.getElementById(uniqueId).classList.remove('opacity-0');
+                jalankanFilterUser(); // Jalankan ulang filter agar posisi tampilan tetap sinkron
             }, 50);
 
-            // Tutup modal dan tampilkan pemberitahuan sukses
             tutupModal();
             alert(`Sukses! Akun untuk "${nama}" berhasil ditambahkan.`);
         }
@@ -355,6 +390,7 @@
                 nameElement.innerText = newName.trim();
                 emailElement.innerText = newEmail.trim();
                 alert("Sukses! Data pengguna berhasil diperbarui.");
+                jalankanFilterUser(); // Perbarui filter seandainya teks nama/email berubah
             } else {
                 alert("Gagal! Nama dan Email tidak boleh kosong.");
             }

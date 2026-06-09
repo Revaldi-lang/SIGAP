@@ -47,8 +47,8 @@
                 <span class="text-xs text-slate-400">Pemerintah Daerah</span>
             </div>
             <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
-    <i class="fa-solid fa-right-from-bracket"></i>
-</a>
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
         </div>
     </aside>
 
@@ -126,12 +126,12 @@
                                 <th class="px-6 py-3.5 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100 text-sm">
+                        <tbody id="tbody-laporan" class="divide-y divide-gray-100 text-sm">
                             
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr data-kategori="jalan" data-status="baru" class="laporan-row hover:bg-gray-50 transition">
                                 <td class="px-6 py-4 font-mono font-bold text-gray-400">#0148</td>
                                 <td class="px-6 py-4">
-                                    <p class="font-semibold text-gray-900">Budi Santoso</p>
+                                    <p class="font-semibold text-gray-900 target-pencarian">Budi Santoso</p>
                                     <span class="text-xs text-gray-400">Hari ini, 10:15 WIB</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -139,7 +139,7 @@
                                     <p class="text-gray-600 text-xs max-w-xs truncate">Lubang diameter 1 meter di tengah jalan utama membahayakan motor.</p>
                                 </td>
                                 <td class="px-6 py-4 text-gray-600">
-                                    <p class="font-medium">Jl. Merdeka No. 42</p>
+                                    <p class="font-medium target-pencarian">Jl. Merdeka No. 42</p>
                                     <span class="text-xs text-gray-400">Kec. Klojen, Kota Malang</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -152,10 +152,10 @@
                                 </td>
                             </tr>
 
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr data-kategori="penerangan" data-status="proses" class="laporan-row hover:bg-gray-50 transition">
                                 <td class="px-6 py-4 font-mono font-bold text-gray-400">#0147</td>
                                 <td class="px-6 py-4">
-                                    <p class="font-semibold text-gray-900">Siti Rahma</p>
+                                    <p class="font-semibold text-gray-900 target-pencarian">Siti Rahma</p>
                                     <span class="text-xs text-gray-400">Kemarin, 16:40 WIB</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -163,7 +163,7 @@
                                     <p class="text-gray-600 text-xs max-w-xs truncate">3 Lampu merkuri padam total membuat jalanan gelap gulita saat malam.</p>
                                 </td>
                                 <td class="px-6 py-4 text-gray-600">
-                                    <p class="font-medium">Pojok Alun-Alun Utara</p>
+                                    <p class="font-medium target-pencarian">Pojok Alun-Alun Utara</p>
                                     <span class="text-xs text-gray-400">Kec. Lowokwaru</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -176,10 +176,10 @@
                                 </td>
                             </tr>
 
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr data-kategori="drainase" data-status="selesai" class="laporan-row hover:bg-gray-50 transition">
                                 <td class="px-6 py-4 font-mono font-bold text-gray-400">#0146</td>
                                 <td class="px-6 py-4">
-                                    <p class="font-semibold text-gray-900">Ahmad Dhani</p>
+                                    <p class="font-semibold text-gray-900 target-pencarian">Ahmad Dhani</p>
                                     <span class="text-xs text-gray-400">04 Juni 2026, 09:10 WIB</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -187,7 +187,7 @@
                                     <p class="text-gray-600 text-xs max-w-xs truncate">Selokan tersumbat sampah beton sisa proyek, air meluap ke aspal.</p>
                                 </td>
                                 <td class="px-6 py-4 text-gray-600">
-                                    <p class="font-medium">Jl. Borobudur Gang 4</p>
+                                    <p class="font-medium target-pencarian">Jl. Borobudur Gang 4</p>
                                     <span class="text-xs text-gray-400">Kec. Blimbing</span>
                                 </td>
                                 <td class="px-6 py-4">
@@ -206,7 +206,7 @@
 
                 <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between flex-col sm:flex-row gap-4">
                     <span class="text-xs text-gray-500 font-medium">
-                        Menampilkan <span class="text-gray-800 font-semibold">1-3</span> dari <span class="text-gray-800 font-semibold">148</span> Total Laporan Aduan
+                        Menampilkan <span id="count-visible" class="text-gray-800 font-semibold">3</span> dari <span class="text-gray-800 font-semibold">3</span> Total Laporan Aduan
                     </span>
                     <div class="flex items-center gap-1">
                         <button class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-400 cursor-not-allowed bg-gray-50" disabled>
@@ -228,14 +228,60 @@
     </main>
 
     <script>
-        // Fungsi simulasi mereset filter pilihan ke default
+        function jalankanFilterLaporan() {
+            const kataKunci = document.getElementById('searchAduan').value.toLowerCase();
+            const kategoriTerpilih = document.getElementById('filterKategori').value;
+            const statusTerpilih = document.getElementById('filterStatus').value;
+            
+            // Mengambil semua baris data laporan di dalam tabel
+            const semuaBaris = document.querySelectorAll('#tbody-laporan .laporan-row');
+            let jumlahDataTampil = 0;
+
+            semuaBaris.forEach(row => {
+                const kategoriBaris = row.getAttribute('data-kategori');
+                const statusBaris = row.getAttribute('data-status');
+                
+                // Menggabungkan teks nama pelapor dan lokasi wilayah untuk dicocokkan
+                const targetTeks = Array.from(row.querySelectorAll('.target-pencarian'))
+                                        .map(el => el.innerText.toLowerCase())
+                                        .join(' ');
+
+                const cocokKataKunci = targetTeks.includes(kataKunci);
+                const cocokKategori = (kategoriTerpilih === 'semua') || (kategoriBaris === kategoriTerpilih);
+                const cocokStatus = (statusTerpilih === 'semua') || (statusBaris === statusTerpilih);
+
+                // Baris akan tampil hanya jika lolos ketiga filter di atas
+                if (cocokKataKunci && cocokKategori && cocokStatus) {
+                    row.style.display = "";
+                    jumlahDataTampil++;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Mengubah teks info angka penampilan data di bawah tabel secara dinamis
+            const counterElement = document.getElementById('count-visible');
+            if (counterElement) {
+                counterElement.innerText = jumlahDataTampil;
+            }
+        }
+
+        // Memasang trigger event agar filter berjalan otomatis saat diinput/diubah
+        document.getElementById('searchAduan').addEventListener('input', jalankanFilterLaporan);
+        document.getElementById('filterKategori').addEventListener('change', jalankanFilterLaporan);
+        document.getElementById('filterStatus').addEventListener('change', jalankanFilterLaporan);
+
+        // Fungsi Tombol Reset Filter
         function resetFilters() {
             document.getElementById('searchAduan').value = '';
             document.getElementById('filterKategori').value = 'semua';
             document.getElementById('filterStatus').value = 'semua';
+            
+            jalankanFilterLaporan(); 
             alert('Semua filter pencarian dibersihkan.');
         }
     </script>
-    </main> <script src="assets/js/script.js"></script>
+    
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
