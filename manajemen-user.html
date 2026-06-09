@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -418,4 +419,426 @@
         }
     </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Manajemen Pengguna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex z-50">
+        <div>
+            <div class="p-5 flex items-center gap-3 border-b border-slate-800">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden')">
+                <div id="fallback-logo" class="bg-blue-600 p-2 rounded-lg text-white hidden">
+                    <i class="fa-solid fa-bullhorn text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Aduan Publik</span>
+                </div>
+            </div>
+            
+            <nav class="p-4 space-y-1">
+                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+                </a>
+                <a href="Laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
+                    <span class="ml-auto bg-red-700 text-xs px-2 py-0.5 rounded-full text-white">5</span>
+                </a>
+                <a href="peta.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="manajemen-user.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-users w-5"></i> Manajemen User
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">ADM</div>
+            <div>
+                <p class="text-sm font-medium leading-none">Admin Utama</p>
+                <span class="text-xs text-slate-400">Pemerintah Daerah</span>
+            </div>
+            <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto animate-fade-in">
+        
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="text-gray-600 md:hidden block">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Manajemen Pengguna</h2>
+                    <p class="text-xs text-gray-500 hidden sm:block">Kelola hak akses admin, petugas instansi, dan akun masyarakat.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="bukaModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i> Tambah Pengguna
+                </button>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col sm:flex-row justify-between gap-4 items-center">
+                <div class="relative w-full sm:w-96">
+                    <input type="text" id="cari-input" placeholder="Cari nama, email, atau NIK..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <select id="filter-role-select" class="w-full sm:w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                        <option value="semua">Semua Role</option>
+                        <option value="Administrator">Administrator</option>
+                        <option value="Petugas PUPR">Petugas Lapangan</option>
+                        <option value="Masyarakat">Masyarakat</option>
+                    </select>
+                    <button onclick="resetFilterUser()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm transition" title="Reset Filter">
+                        <i class="fa-solid fa-filter-circle-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-xs font-semibold uppercase text-gray-500 border-b border-gray-200">
+                                <th class="px-6 py-4">Profil Pengguna</th>
+                                <th class="px-6 py-4">Kontak & NIK / NIP</th>
+                                <th class="px-6 py-4">Peran (Role)</th>
+                                <th class="px-6 py-4">Status Akun</th>
+                                <th class="px-6 py-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="daftar-user" class="divide-y divide-gray-100 text-sm">
+                            
+                            <tr id="user-admin" data-role="Administrator" class="user-row hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">AD</div>
+                                        <div>
+                                            <p id="name-user-admin" class="font-bold text-gray-900">Admin Utama</p>
+                                            <span class="text-xs text-gray-500">Terdaftar: 01 Jan 2026</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p id="email-user-admin" class="text-gray-800 font-medium text-sm">admin@sigap.go.id</p>
+                                    <span class="text-xs text-gray-400 font-mono">-</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-purple-200">Administrator</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 text-green-600 text-xs font-semibold">
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span> Aktif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button onclick="editPengguna('user-admin')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="text-gray-400 cursor-not-allowed" title="Admin Utama Tidak Bisa Dihapus" disabled><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr id="user-hw" data-role="Petugas PUPR" class="user-row hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold">HW</div>
+                                        <div>
+                                            <p id="name-user-hw" class="font-bold text-gray-900">Hendra Wijaya</p>
+                                            <span class="text-xs text-gray-500">Terdaftar: 15 Feb 2026</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p id="email-user-hw" class="text-gray-800 font-medium text-sm">hendra.pupr@sigap.go.id</p>
+                                    <span class="text-xs text-gray-400 font-mono">NIP: 198504232010121005</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-amber-200">Petugas PUPR</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 text-green-600 text-xs font-semibold">
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span> Aktif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button onclick="editPengguna('user-hw')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="hapusPengguna('user-hw')" class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr id="user-bs" data-role="Masyarakat" class="user-row hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">BS</div>
+                                        <div>
+                                            <p id="name-user-bs" class="font-bold text-gray-900">Budi Santoso</p>
+                                            <span class="text-xs text-gray-500">Terdaftar: Hari ini</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p id="email-user-bs" class="text-gray-800 font-medium text-sm">budi.santoso99@gmail.com</p>
+                                    <span class="text-xs text-gray-400 font-mono">NIK: 3573012345670001</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-gray-200">Masyarakat</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 text-gray-500 text-xs font-semibold">
+                                        <span class="w-2 h-2 rounded-full bg-gray-400"></span> Menunggu Verifikasi
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button onclick="editPengguna('user-bs')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="hapusPengguna('user-bs')" class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="modal-tambah-user" class="fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-user-plus text-blue-400"></i> Tambah Pengguna Baru</h3>
+                <button onclick="tutupModal()" class="text-slate-400 hover:text-white transition text-xl">&times;</button>
+            </div>
+            <form id="form-tambah-user" onsubmit="simpanUserBaru(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap</label>
+                    <input type="text" id="input-nama" required placeholder="Masukkan nama lengkap..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email</label>
+                    <input type="email" id="input-email" required placeholder="contoh@sigap.go.id" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">NIK / NIP</label>
+                    <input type="text" id="input-identitas" required placeholder="Masukkan NIK atau NIP..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Peran (Role)</label>
+                    <select id="input-role" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900">
+                        <option value="Administrator">Administrator</option>
+                        <option value="Petugas PUPR">Petugas Lapangan</option>
+                        <option value="Masyarakat">Masyarakat</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-3 pt-2 border-t border-gray-100">
+                    <button type="button" onclick="tutupModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition">Batal</button>
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Pengguna
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+
+    <script>
+        // ==================== FITUR BARU: LOGIKA FILTER MULTI-KRITERIA ====================
+        function jalankanFilterUser() {
+            const kataKunci = document.getElementById('cari-input').value.toLowerCase();
+            const roleDipilih = document.getElementById('filter-role-select').value;
+            
+            // Ambil semua baris data di dalam tabel (kita beri class selector tambahan agar aman)
+            const semuaBaris = document.querySelectorAll('#daftar-user tr');
+
+            semuaBaris.forEach(row => {
+                // Ambil data teks nama, email, dan data-role dari baris terkait
+                const nama = row.querySelector('[id^="name-"]').innerText.toLowerCase();
+                const email = row.querySelector('[id^="email-"]').innerText.toLowerCase();
+                const roleBaris = row.getAttribute('data-role');
+
+                // Cocokkan kriteria pencarian teks & filter dropdown role
+                const cocokKataKunci = nama.includes(kataKunci) || email.includes(kataKunci);
+                const cocokRole = (roleDipilih === 'semua') || (roleBaris === roleDipilih);
+
+                // Tampilkan jika kedua kriteria cocok, sembunyikan jika salah satu tidak cocok
+                if (cocokKataKunci && cocokRole) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        // Jalankan filter otomatis saat pengguna mengetik teks atau mengubah pilihan dropdown
+        document.getElementById('cari-input').addEventListener('input', jalankanFilterUser);
+        document.getElementById('filter-role-select').addEventListener('change', jalankanFilterUser);
+
+        // Fungsi Tombol Reset Filter
+        function resetFilterUser() {
+            document.getElementById('cari-input').value = "";
+            document.getElementById('filter-role-select').value = "semua";
+            jalankanFilterUser();
+        }
+
+
+        // ==================== 1. KONTROL MODAL POP-UP ====================
+        function bukaModal() {
+            const modal = document.getElementById('modal-tambah-user');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.transform').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function tutupModal() {
+            const modal = document.getElementById('modal-tambah-user');
+            modal.classList.add('opacity-0');
+            modal.querySelector('.transform').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('form-tambah-user').reset();
+            }, 300);
+        }
+
+        // ==================== 2. FUNGSI SIMPAN USER BARU ====================
+        function simpanUserBaru(event) {
+            event.preventDefault();
+
+            const nama = document.getElementById('input-nama').value.trim();
+            const email = document.getElementById('input-email').value.trim();
+            const identitas = document.getElementById('input-identitas').value.trim();
+            const role = document.getElementById('input-role').value;
+            const uniqueId = 'user-' + Date.now();
+
+            let roleBadge = '';
+            let labelTextRole = role; 
+            
+            if (role === 'Administrator') {
+                roleBadge = `<span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-purple-200">Administrator</span>`;
+            } else if (role === 'Petugas PUPR') {
+                roleBadge = `<span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-amber-200">Petugas PUPR</span>`;
+            } else {
+                roleBadge = `<span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-gray-200">Masyarakat</span>`;
+                labelTextRole = 'Masyarakat'; 
+            }
+
+            const kataNama = nama.split(' ');
+            const inisial = (kataNama[0] ? kataNama[0][0] : 'U') + (kataNama[1] ? kataNama[1][0] : '');
+
+            // FITUR: Ditambahkan atribut data-role="${labelTextRole}" agar user baru otomatis bisa ikut difilter
+            const barisBaruHTML = `
+                <tr id="${uniqueId}" data-role="${labelTextRole}" class="hover:bg-gray-50 transition opacity-0" style="transition: all 0.5s ease;">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold uppercase">${inisial}</div>
+                            <div>
+                                <p id="name-${uniqueId}" class="font-bold text-gray-900">${nama}</p>
+                                <span class="text-xs text-gray-500">Terdaftar: Baru saja</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p id="email-${uniqueId}" class="text-gray-800 font-medium text-sm">${email}</p>
+                        <span class="text-xs text-gray-400 font-mono">${identitas}</span>
+                    </td>
+                    <td class="px-6 py-4">${roleBadge}</td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center gap-1.5 text-green-600 text-xs font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span> Aktif
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="editPengguna('${uniqueId}')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="hapusPengguna('${uniqueId}')" class="text-red-500 hover:text-red-700 transition" title="Hapus Pengguna"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            const tbody = document.getElementById('daftar-user');
+            tbody.insertAdjacentHTML('beforeend', barisBaruHTML);
+
+            setTimeout(() => {
+                document.getElementById(uniqueId).classList.remove('opacity-0');
+                jalankanFilterUser(); // Jalankan ulang filter agar posisi tampilan tetap sinkron
+            }, 50);
+
+            tutupModal();
+            alert(`Sukses! Akun untuk "${nama}" berhasil ditambahkan.`);
+        }
+
+        // ==================== 3. FUNGSI EDIT PENGGUNA ====================
+        function editPengguna(rowId) {
+            const nameElement = document.getElementById('name-' + rowId);
+            const emailElement = document.getElementById('email-' + rowId);
+
+            if (!nameElement || !emailElement) return;
+
+            const currentName = nameElement.innerText;
+            const currentEmail = emailElement.innerText;
+
+            const newName = prompt("Ubah Nama Pengguna:", currentName);
+            if (newName === null) return; 
+
+            const newEmail = prompt("Ubah Email Pengguna:", currentEmail);
+            if (newEmail === null) return; 
+
+            if (newName.trim() !== "" && newEmail.trim() !== "") {
+                nameElement.innerText = newName.trim();
+                emailElement.innerText = newEmail.trim();
+                alert("Sukses! Data pengguna berhasil diperbarui.");
+                jalankanFilterUser(); // Perbarui filter seandainya teks nama/email berubah
+            } else {
+                alert("Gagal! Nama dan Email tidak boleh kosong.");
+            }
+        }
+
+        // ==================== 4. FUNGSI HAPUS PENGGUNA ====================
+        function hapusPengguna(rowId) {
+            const nameElement = document.getElementById('name-' + rowId);
+            const nama = nameElement ? nameElement.innerText : "Pengguna";
+
+            const konfirmasi = confirm(`Apakah Anda yakin ingin menghapus akun milik "${nama}"?`);
+            
+            if (konfirmasi) {
+                const rowElement = document.getElementById(rowId);
+                if (rowElement) {
+                    rowElement.style.transition = "all 0.4s ease";
+                    rowElement.style.opacity = "0";
+                    rowElement.style.backgroundColor = "#fee2e2"; 
+                    
+                    setTimeout(() => {
+                        rowElement.remove();
+                    }, 400);
+                }
+            }
+        }
+    </script>
+</body>
+>>>>>>> f9860afcc43a777cb41066b0523c8525c275fbe8
 </html>
