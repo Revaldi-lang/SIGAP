@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Pengaturan Profil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex z-50 shadow-xl relative">
+        <div>
+            <div class="p-5 flex items-center gap-3 border-b border-slate-800">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden')">
+                <div id="fallback-logo" class="bg-blue-600 p-2 rounded-lg text-white hidden">
+                    <i class="fa-solid fa-bullhorn text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Aduan Publik</span>
+                </div>
+            </div>
+            
+            <nav class="p-4 space-y-1">
+                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+                </a>
+                <a href="Laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
+                    <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
+                </a>
+                <a href="peta.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="manajemen-user.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-users w-5"></i> Manajemen User
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 flex items-center gap-3 bg-slate-950/40">
+            <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Avatar" class="w-10 h-10 rounded-full object-cover border border-slate-700">
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium leading-none truncate text-white">Admin Utama</p>
+                <span class="text-[11px] text-slate-400 truncate block mt-1">Pemerintah Daerah</span>
+            </div>
+            <a href="login.html" class="text-slate-400 hover:text-red-400 transition">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm sticky top-0 z-40">
+            <div class="flex items-center gap-4">
+                <button class="text-gray-600 md:hidden block">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Pengaturan Profil</h2>
+                    <p class="text-xs text-gray-500 hidden sm:block">Kelola informasi data diri, foto profil, dan keamanan kredensial akun Anda.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 max-w-4xl w-full mx-auto space-y-6">
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col sm:flex-row items-center gap-6">
+                <div class="relative group">
+                    <img id="profile-preview" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover border-4 border-gray-100 shadow-sm">
+                    <label for="upload-avatar" class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white text-xs opacity-0 group-hover:opacity-100 transition cursor-pointer font-medium">
+                        <i class="fa-solid fa-camera text-base mb-1 block text-center"></i>
+                    </label>
+                    <input type="file" id="upload-avatar" accept="image/*" class="hidden" onchange="previewImage(event)">
+                </div>
+                <div class="text-center sm:text-left flex-1">
+                    <h3 class="text-lg font-bold text-gray-900">Foto Profil Anda</h3>
+                    <p class="text-xs text-gray-400 mt-1 max-w-sm">Disarankan menggunakan gambar persegi berformat PNG, JPG atau JPEG maksimal ukuran 2MB.</p>
+                    <div class="mt-3 flex flex-wrap justify-center sm:justify-start gap-2">
+                        <button onclick="document.getElementById('upload-avatar').click()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-4 rounded-lg transition shadow-sm">Ganti Foto</button>
+                        <button onclick="hapusFoto()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-semibold py-2 px-4 rounded-lg transition">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-b border-gray-200 flex gap-4">
+                <button id="tab-umum" onclick="gantiTab('umum')" class="border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none">
+                    <i class="fa-solid fa-id-card-clip mr-1.5"></i>Informasi Umum
+                </button>
+                <button id="tab-keamanan" onclick="gantiTab('keamanan')" class="border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none">
+                    <i class="fa-solid fa-shield-halved mr-1.5"></i>Keamanan & Sandi
+                </button>
+            </div>
+
+            <div id="panel-umum" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300">
+                <form onsubmit="simpanProfilUmum(event)" class="p-6 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Nama Lengkap</label>
+                            <input type="text" id="profile-name" required value="Admin Utama" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">NIP / NIK</label>
+                            <input type="text" value="199408122020121002" disabled class="w-full px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-400 font-mono cursor-not-allowed" title="Identitas resmi tidak dapat diubah secara mandiri">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Alamat Email</label>
+                            <input type="email" id="profile-email" required value="admin@sigap.go.id" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Nomor Telepon / WA</label>
+                            <input type="text" required value="081234567890" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Instansi Satuan Kerja</label>
+                        <input type="text" value="Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)" disabled class="w-full px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed">
+                    </div>
+                    <div class="flex justify-end pt-2 border-t border-gray-100">
+                        <button type="submit" id="btn-simpan-umum" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-lg transition shadow-sm flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="panel-keamanan" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hidden transition-all duration-300">
+                <form onsubmit="simpanProfilSandi(event)" class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Kata Sandi Sekarang</label>
+                        <input type="password" required placeholder="Masukkan kata sandi saat ini..." class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Kata Sandi Baru</label>
+                            <input type="password" id="new-password" required placeholder="Minimal 8 karakter..." class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Konfirmasi Kata Sandi Baru</label>
+                            <input type="password" id="confirm-new-password" required placeholder="Ulangi kata sandi baru..." class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                        </div>
+                    </div>
+                    <div class="flex justify-end pt-2 border-t border-gray-100">
+                        <button type="submit" id="btn-simpan-sandi" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-lg transition shadow-sm flex items-center gap-2">
+                            <i class="fa-solid fa-key"></i> Perbarui Kata Sandi
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+
+    <script>
+        // 1. Logika Pengalihan Menu Tab Konten
+        function gantiTab(kategori) {
+            const tabUmum = document.getElementById('tab-umum');
+            const tabKeamanan = document.getElementById('tab-keamanan');
+            const panelUmum = document.getElementById('panel-umum');
+            const panelKeamanan = document.getElementById('panel-keamanan');
+
+            if (kategori === 'umum') {
+                // Atur style tombol tab aktif
+                tabUmum.className = "border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none";
+                tabKeamanan.className = "border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none";
+                // Atur visibilitas panel konten
+                panelUmum.classList.remove('hidden');
+                panelKeamanan.classList.add('hidden');
+            } else {
+                tabUmum.className = "border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none";
+                tabKeamanan.className = "border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none";
+                panelUmum.classList.add('hidden');
+                panelKeamanan.classList.remove('hidden');
+            }
+        }
+
+        // 2. Fitur Preview Foto saat Diunggah
+        function previewImage(event) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Update gambar utama dan avatar sidebar sekalian agar sinkron
+                    document.getElementById('profile-preview').src = e.target.result;
+                    const sidebarAvatar = document.getElementById('sidebar-avatar');
+                    if (sidebarAvatar) sidebarAvatar.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 3. Fungsi Reset/Hapus Foto Profil ke Default
+        function hapusFoto() {
+            const defaultAvatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
+            document.getElementById('profile-preview').src = defaultAvatar;
+            const sidebarAvatar = document.getElementById('sidebar-avatar');
+            if (sidebarAvatar) sidebarAvatar.src = defaultAvatar;
+            document.getElementById('upload-avatar').value = ""; // Bersihkan nilai file input
+        }
+
+        // 4. Simulasi Submit Informasi Umum
+        function simpanProfilUmum(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-simpan-umum');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                alert("Sukses! Informasi profil umum Anda berhasil diperbarui.");
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
+                btn.disabled = false;
+            }, 1200);
+        }
+
+        // 5. Simulasi Perubahan Kata Sandi
+        function simpanProfilSandi(event) {
+            event.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+            if (newPassword !== confirmNewPassword) {
+                alert("Gagal! Konfirmasi kata sandi baru tidak cocok.");
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                alert("Gagal! Kata sandi baru minimal harus berjumlah 8 karakter.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-simpan-sandi');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memperbarui...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                alert("Sukses! Keamanan akun diperbarui. Silakan gunakan kata sandi baru pada sesi masuk berikutnya.");
+                event.target.reset(); // Kosongkan seluruh input field form sandi
+                btn.innerHTML = '<i class="fa-solid fa-key"></i> Perbarui Kata Sandi';
+                btn.disabled = false;
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
