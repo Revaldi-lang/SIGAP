@@ -37,19 +37,19 @@
                 <a href="manajemen-user.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-users w-5"></i> Manajemen User
                 </a>
-                <a href="pengaturan-profil.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                  <i class="fa-solid fa-user-gear w-5"></i> Pengaturan Profil
-              </a>
+                <a href="pengaturan-profil.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-user-gear w-5"></i> Pengaturan Profil
+                </a>
             </nav>
         </div>
 
-        <div class="p-4 border-t border-slate-800 flex items-center gap-3 bg-slate-950/40">
-            <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Avatar" class="w-10 h-10 rounded-full object-cover border border-slate-700">
-            <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium leading-none truncate text-white">Admin Utama</p>
-                <span class="text-[11px] text-slate-400 truncate block mt-1">Pemerintah Daerah</span>
+        <div class="p-4 border-t border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">ADM</div>
+            <div>
+                <p class="text-sm font-medium leading-none">Admin Utama</p>
+                <span class="text-xs text-slate-400">Pemerintah Daerah</span>
             </div>
-            <a href="login.html" class="text-slate-400 hover:text-red-400 transition">
+            <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
                 <i class="fa-solid fa-right-from-bracket"></i>
             </a>
         </div>
@@ -162,7 +162,6 @@
     <script src="assets/js/script.js"></script>
 
     <script>
-        // 1. Logika Pengalihan Menu Tab Konten
         function gantiTab(kategori) {
             const tabUmum = document.getElementById('tab-umum');
             const tabKeamanan = document.getElementById('tab-keamanan');
@@ -170,10 +169,8 @@
             const panelKeamanan = document.getElementById('panel-keamanan');
 
             if (kategori === 'umum') {
-                // Atur style tombol tab aktif
                 tabUmum.className = "border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none";
                 tabKeamanan.className = "border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none";
-                // Atur visibilitas panel konten
                 panelUmum.classList.remove('hidden');
                 panelKeamanan.classList.add('hidden');
             } else {
@@ -184,31 +181,23 @@
             }
         }
 
-        // 2. Fitur Preview Foto saat Diunggah
         function previewImage(event) {
             const input = event.target;
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Update gambar utama dan avatar sidebar sekalian agar sinkron
                     document.getElementById('profile-preview').src = e.target.result;
-                    const sidebarAvatar = document.getElementById('sidebar-avatar');
-                    if (sidebarAvatar) sidebarAvatar.src = e.target.result;
                 }
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // 3. Fungsi Reset/Hapus Foto Profil ke Default
         function hapusFoto() {
             const defaultAvatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
             document.getElementById('profile-preview').src = defaultAvatar;
-            const sidebarAvatar = document.getElementById('sidebar-avatar');
-            if (sidebarAvatar) sidebarAvatar.src = defaultAvatar;
-            document.getElementById('upload-avatar').value = ""; // Bersihkan nilai file input
+            document.getElementById('upload-avatar').value = ""; 
         }
 
-        // 4. Simulasi Submit Informasi Umum
         function simpanProfilUmum(event) {
             event.preventDefault();
             const btn = document.getElementById('btn-simpan-umum');
@@ -222,7 +211,6 @@
             }, 1200);
         }
 
-        // 5. Simulasi Perubahan Kata Sandi
         function simpanProfilSandi(event) {
             event.preventDefault();
             const newPassword = document.getElementById('new-password').value;
@@ -243,8 +231,8 @@
             btn.disabled = true;
 
             setTimeout(() => {
-                alert("Sukses! Keamanan akun diperbarui. Silakan gunakan kata sandi baru pada sesi masuk berikutnya.");
-                event.target.reset(); // Kosongkan seluruh input field form sandi
+                alert("Sukses! Keamanan akun diperbarui.");
+                event.target.reset(); 
                 btn.innerHTML = '<i class="fa-solid fa-key"></i> Perbarui Kata Sandi';
                 btn.disabled = false;
             }, 1200);
