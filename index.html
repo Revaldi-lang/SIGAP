@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Layanan Aduan Infrastruktur Publik</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk Icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Efek khusus untuk kecocokan gaya dengan gambar referensi */
+        .bg-landing {
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=85');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 font-sans text-white h-screen flex overflow-hidden bg-landing relative">
+
+    <!-- TOP COOKIES/ALERT BAR (Sama seperti bagian atas gambar referensi Anda) -->
+    <div id="top-alert" class="absolute top-0 left-0 right-0 bg-slate-900/90 border-b border-slate-800 backdrop-blur-sm px-6 py-2.5 flex items-center justify-between z-50 text-xs text-slate-300 md:pr-40">
+        <p class="mx-auto text-center">Dengan mengakses situs SIGAP, Anda mendukung transparansi pembangunan dan perbaikan infrastruktur daerah. <a href="#" class="text-blue-400 hover:underline ml-1 font-medium">Pelajari Selengkapnya</a></p>
+        <button onclick="document.getElementById('top-alert').remove()" class="text-slate-500 hover:text-white transition text-sm">&times;</button>
+    </div>
+
+    <!-- AREA KONTEN UTAMA (SISI KIRI & TENGAH) -->
+    <div class="flex-1 flex flex-col justify-between p-6 md:p-12 pt-16 md:pt-20 h-full relative z-10">
+        
+        <!-- HEADER: Logo & Navigasi Horisontal -->
+        <header class="flex items-center justify-between w-full">
+            <!-- Logo SIGAP -->
+            <div class="flex items-center gap-3">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-12 w-auto object-contain drop-shadow-lg" onerror="this.src='sigap.jpg'">
+                <div>
+                    <h1 class="font-bold text-xl leading-none tracking-wider text-white">SIGAP</h1>
+                    <span class="text-[10px] text-blue-400 font-semibold tracking-widest uppercase">Aduan Publik</span>
+                </div>
+            </div>
+            <!-- Navigasi Horisontal Meniru Gaya Gambar Referensi -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-200">
+                <a href="#" class="hover:text-blue-400 border-b-2 border-transparent hover:border-blue-500 pb-1 transition">Masyarakat</a>
+                <a href="#" class="hover:text-blue-400 border-b-2 border-transparent hover:border-blue-500 pb-1 transition">Alur Pengaduan</a>
+                <a href="#" class="hover:text-blue-400 border-b-2 border-transparent hover:border-blue-500 pb-1 transition">Statistik Wilayah</a>
+                <a href="#" class="hover:text-blue-400 border-b-2 border-transparent hover:border-blue-500 pb-1 transition">Tentang Kami</a>
+            </nav>
+            <!-- Search & Language Mini Trigger -->
+            <div class="hidden sm:flex items-center gap-4 text-sm">
+                <button class="text-slate-300 hover:text-white transition"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <div class="flex items-center bg-slate-900/60 rounded-full p-1 border border-slate-800 text-[11px] font-bold">
+                    <span class="bg-blue-600 px-2 py-0.5 rounded-full text-white">ID</span>
+                    <span class="px-2 py-0.5 text-slate-400">EN</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- TENGAH: Judul Hero & Search Bar Besar -->
+        <div class="max-w-3xl w-full my-auto space-y-6">
+            <div class="space-y-2">
+                <span class="text-xs font-bold text-blue-400 tracking-widest uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20 inline-block">Layanan Aspirasi Pemerintah Daerah</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-md">Lapor Aduan</h2>
+            </div>
+            
+            <!-- Search Bar Utama (Persis seperti input pencarian di tengah contoh gambar) -->
+            <div class="relative max-w-xl group">
+                <input type="text" placeholder="Cari status penanganan laporan aduan Anda..." class="w-full bg-slate-900/50 backdrop-blur-md border border-slate-700/60 rounded-xl pl-5 pr-14 py-4 text-base text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition shadow-2xl">
+                <button class="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-lg flex items-center justify-center transition shadow-md shadow-blue-500/20">
+                    <i class="fa-solid fa-magnifying-glass text-base"></i>
+                </button>
+            </div>
+
+            <!-- DUA KARTU INFORMASI (Gaya Meniru Komponen Tengah Gambar Referensi) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl pt-4">
+                <!-- Kartu Kiri: Berita/Banner Interaktif -->
+                <div class="bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-slate-800 p-5 rounded-xl backdrop-blur-sm relative overflow-hidden group hover:border-slate-700 transition flex flex-col justify-between min-h-[140px]">
+                    <div class="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 rounded-full bg-blue-500/10 blur-xl"></div>
+                    <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">#InfoSIGAP</span>
+                    <h4 class="font-bold text-sm text-slate-100 leading-snug mt-2">Perbaikan Jalan Tol Merdeka Rampung 100% Lebih Cepat</h4>
+                    <div class="flex justify-between items-center mt-4 pt-2 border-t border-slate-800/60">
+                        <span class="text-[11px] text-slate-400">Dinas PUPR</span>
+                        <i class="fa-solid fa-arrow-right text-xs text-blue-400 group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Kartu Kanan: Ringkasan Data Real-time (Model seperti Kurs eRate BCA Anda) -->
+                <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-xl backdrop-blur-sm hover:border-slate-700 transition flex flex-col justify-between min-h-[140px]">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Statistik Hari Ini
+                        </span>
+                        <i class="fa-solid fa-chart-simple text-slate-600 text-xs"></i>
+                    </div>
+                    <div class="space-y-1.5 my-2">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span>Aduan Masuk Baru:</span>
+                            <span class="font-bold text-slate-200">5 Kasus</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span>Sedang Diperbaiki:</span>
+                            <span class="font-bold text-amber-400">12 Lokasi</span>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 italic">Data diperbarui otomatis dari server pusat daerah</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER: Info Scroll Bawah -->
+        <footer class="flex items-center gap-2 text-xs text-slate-400/80 cursor-pointer hover:text-white transition w-max">
+            <i class="fa-solid fa-chevron-down text-[10px] animate-bounce"></i>
+            <span>Scroll kebawah untuk melihat informasi publik lainnya</span>
+        </footer>
+    </div>
+
+    <!-- ==================== SISI KANAN: MENU SIDEBAR IKONIK ==================== -->
+    <!-- (Ini adalah implementasi dari menu sidebar biru vertikal yang ada di sisi kanan gambar Anda) -->
+    <aside class="w-24 md:w-28 bg-blue-600 border-l border-blue-500 h-full flex flex-col justify-between py-8 z-20 shadow-2xl relative">
+        <!-- Dekorasi Gradasi Halus agar Mirip dengan Nuansa Biru Eksklusif di Gambar -->
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-500/20 via-transparent to-blue-700/30 pointer-events-none"></div>
+        
+        <!-- Grup Menu Atas -->
+        <div class="flex flex-col items-center w-full space-y-1 relative z-10">
+            <!-- Ikon Login (Akses Utama) -->
+            <a href="login.html" class="w-full flex flex-col items-center justify-center text-center py-5 text-white hover:bg-blue-700 transition group border-b border-blue-500/30">
+                <i class="fa-solid fa-right-to-bracket text-xl mb-2 group-hover:scale-110 transition"></i>
+                <span class="text-[11px] font-bold tracking-wider">Login</span>
+            </a>
+            <!-- Ikon Registrasi -->
+            <a href="register.html" class="w-full flex flex-col items-center justify-center text-center py-5 text-blue-100 hover:bg-blue-700 hover:text-white transition group border-b border-blue-500/30">
+                <i class="fa-solid fa-user-plus text-lg mb-2 group-hover:scale-110 transition"></i>
+                <span class="text-[11px] font-semibold tracking-wider">Daftar</span>
+            </a>
+            <!-- Ikon Peta Dampak Publik -->
+            <a href="peta.html" class="w-full flex flex-col items-center justify-center text-center py-5 text-blue-100 hover:bg-blue-700 hover:text-white transition group border-b border-blue-500/30">
+                <i class="fa-solid fa-map-location-dot text-lg mb-2 group-hover:scale-110 transition"></i>
+                <span class="text-[11px] font-semibold tracking-wider">Peta</span>
+            </a>
+            <!-- Ikon Lacak Berkas -->
+            <a href="#" class="w-full flex flex-col items-center justify-center text-center py-5 text-blue-100 hover:bg-blue-700 hover:text-white transition group border-b border-blue-500/30">
+                <i class="fa-solid fa-magnifying-glass-location text-lg mb-2 group-hover:scale-110 transition"></i>
+                <span class="text-[11px] font-semibold tracking-wider">Lacak</span>
+            </a>
+        </div>
+
+        <!-- Grup Menu Bawah (Kontak / Bantuan) -->
+        <div class="flex flex-col items-center w-full relative z-10">
+            <a href="#" class="w-full flex flex-col items-center justify-center text-center py-4 text-blue-100 hover:bg-blue-700 hover:text-white transition group">
+                <i class="fa-solid fa-headset text-lg mb-1.5 group-hover:rotate-12 transition"></i>
+                <span class="text-[10px] font-medium tracking-wide">Call Center</span>
+            </a>
+        </div>
+    </aside>
+
+</body>
+</html>
