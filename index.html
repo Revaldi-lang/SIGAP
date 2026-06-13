@@ -258,36 +258,88 @@
                 <p class="text-xs text-slate-400 max-w-xl">Ikuti panduan ringkas di bawah ini untuk mengirimkan laporan infrastruktur ke pusat data SIGAP.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 relative">
-                <!-- Stepper Connector Line -->
-                <div class="absolute left-16 right-16 top-0.5 h-px border-t border-dashed border-slate-800 hidden sm:block z-0"></div>
+            <!-- 4-Column Adjacent Grid (Zero Gap Layout) -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-0 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+                <!-- Column 1: Dark Slate Box (Step 01) -->
+                <div class="bg-slate-950 p-6 flex flex-col justify-between h-[300px] md:h-[360px] text-left">
+                    <div class="space-y-3">
+                        <span class="text-[9px] font-extrabold text-blue-400 tracking-widest bg-blue-500/10 px-2.5 py-1 rounded border border-blue-500/15 uppercase inline-block">Step 01</span>
+                        <h4 class="text-base font-extrabold text-white">Daftar / Masuk</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            Akses gerbang login masyarakat menggunakan akun terdaftar Anda. Jika belum terdaftar, buat akun baru menggunakan nomor NIK KTP yang valid.
+                        </p>
+                    </div>
+                    <button onclick="bukaModalAkses()" class="w-max border border-white/20 hover:border-white text-white text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                        Buka Portal
+                    </button>
+                </div>
 
-                <!-- Step 1 -->
-                <div class="bg-slate-900/40 p-5 rounded-2xl border border-slate-800/80 relative group hover:border-blue-600/40 transition z-10">
-                    <div class="absolute -top-4 left-6 w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform duration-300">01</div>
-                    <h6 class="font-bold text-xs text-slate-100 mt-2 mb-1.5">Daftar / Masuk</h6>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Akses gerbang login masyarakat menggunakan NIK KTP valid sebagai bukti otentikasi pelapor.</p>
+                <!-- Column 2: Photo with Overlaid Text & Logo (Step 02) -->
+                <div class="relative h-[300px] md:h-[360px] overflow-hidden flex flex-col justify-between p-6 text-left group">
+                    <!-- Background Image -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80')"></div>
+                    <!-- Gradient Dark Overlay to ensure text readability -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-slate-950/40"></div>
+                    
+                    <!-- Content (Relative Z-Index) -->
+                    <div class="relative z-10 space-y-3">
+                        <span class="text-[9px] font-extrabold text-blue-400 tracking-widest bg-blue-500/10 px-2.5 py-1 rounded border border-blue-500/15 uppercase inline-block">Step 02</span>
+                        <h4 class="text-base font-extrabold text-white">Isi Uraian Laporan</h4>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            Pilih kategori kerusakan (jalan, lampu, drainase), lampirkan bukti foto riil, dan jelaskan uraian masalah secara mendetail.
+                        </p>
+                    </div>
+                    
+                    <!-- Bottom-Left Glass Overlay Icon & Button -->
+                    <div class="relative z-10 flex items-center justify-between w-full mt-4">
+                        <div class="w-8 h-8 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 flex items-center justify-center shadow-lg shrink-0">
+                            <img src="sigap.png" alt="SIGAP Logo" class="h-4 w-auto object-contain" onerror="this.src='sigap.jpg'">
+                        </div>
+                        <button onclick="bukaModalAkses()" class="w-max border border-white/20 hover:border-white text-white text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                            Tulis Laporan
+                        </button>
+                    </div>
                 </div>
-                
-                <!-- Step 2 -->
-                <div class="bg-slate-900/40 p-5 rounded-2xl border border-slate-800/80 relative group hover:border-blue-600/40 transition z-10">
-                    <div class="absolute -top-4 left-6 w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center font-bold text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:scale-105 transition-all duration-300">02</div>
-                    <h6 class="font-bold text-xs text-slate-100 mt-2 mb-1.5">Isi Formulir</h6>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Pilih kategori fasilitas publik, lampirkan bukti foto material riil, dan jelaskan kronologi singkat.</p>
+
+                <!-- Column 3: Photo with Overlaid Text & Logo (Step 03) -->
+                <div class="relative h-[300px] md:h-[360px] overflow-hidden flex flex-col justify-between p-6 text-left group">
+                    <!-- Background Image -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80')"></div>
+                    <!-- Gradient Dark Overlay to ensure text readability -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-slate-950/40"></div>
+                    
+                    <!-- Content (Relative Z-Index) -->
+                    <div class="relative z-10 space-y-3">
+                        <span class="text-[9px] font-extrabold text-blue-400 tracking-widest bg-blue-500/10 px-2.5 py-1 rounded border border-blue-500/15 uppercase inline-block">Step 03</span>
+                        <h4 class="text-base font-extrabold text-white">Tandai Titik Lokasi</h4>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            Sematkan titik lokasi presisi dari infrastruktur rusak di peta digital agar memudahkan petugas dinas teknis melacak titik koordinat.
+                        </p>
+                    </div>
+                    
+                    <!-- Bottom-Left Glass Overlay Icon & Button -->
+                    <div class="relative z-10 flex items-center justify-between w-full mt-4">
+                        <div class="w-8 h-8 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 flex items-center justify-center shadow-lg shrink-0">
+                            <img src="sigap.png" alt="SIGAP Logo" class="h-4 w-auto object-contain" onerror="this.src='sigap.jpg'">
+                        </div>
+                        <button onclick="aksesProteksiPeta(event)" class="w-max border border-white/20 hover:border-white text-white text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                            Peta Lokasi
+                        </button>
+                    </div>
                 </div>
-                
-                <!-- Step 3 -->
-                <div class="bg-slate-900/40 p-5 rounded-2xl border border-slate-800/80 relative group hover:border-blue-600/40 transition z-10">
-                    <div class="absolute -top-4 left-6 w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center font-bold text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:scale-105 transition-all duration-300">03</div>
-                    <h6 class="font-bold text-xs text-slate-100 mt-2 mb-1.5">Tandai Lokasi</h6>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Sematkan titik koordinat lokasi kerusakan secara presisi menggunakan peta digital bawaan.</p>
-                </div>
-                
-                <!-- Step 4 -->
-                <div class="bg-slate-900/40 p-5 rounded-2xl border border-slate-800/80 relative group hover:border-blue-600/40 transition z-10">
-                    <div class="absolute -top-4 left-6 w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center font-bold text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:scale-105 transition-all duration-300">04</div>
-                    <h6 class="font-bold text-xs text-slate-100 mt-2 mb-1.5">Kirim & Pantau</h6>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Kirim berkas. Anda otomatis mendapatkan kode tiket unik (ID aduan) untuk melacak progress berkas.</p>
+
+                <!-- Column 4: Sky Blue Box (Step 04) -->
+                <div class="bg-[#78b3e3] p-6 flex flex-col justify-between h-[300px] md:h-[360px] text-left">
+                    <div class="space-y-3">
+                        <span class="text-[9px] font-extrabold text-slate-950 tracking-widest bg-white/30 px-2.5 py-1 rounded border border-white/10 uppercase inline-block">Step 04</span>
+                        <h4 class="text-base font-extrabold text-slate-950">Kirim & Pantau Progres</h4>
+                        <p class="text-[11px] text-slate-900 leading-relaxed font-semibold">
+                            Kirimkan data berkas aduan, kemudian pantau secara berkala linimasa perkembangan tindak lanjut yang dikerjakan oleh aparatur pemda.
+                        </p>
+                    </div>
+                    <button onclick="aksesProteksiLacak(event)" class="w-max border border-slate-950/30 hover:border-slate-950 text-slate-950 text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                        Lacak Tiket
+                    </button>
                 </div>
             </div>
         </div>
