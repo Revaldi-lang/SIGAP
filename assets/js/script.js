@@ -188,8 +188,8 @@ function handleLoginMasyarakat(event) {
     btn.disabled = true;
 
     setTimeout(() => {
-        alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses peta dampak.");
-        window.location.href = 'peta.html';
+        alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses Dasbor Warga.");
+        window.location.href = 'dashboard-pelapor.html';
     }, 1200);
 }
 
@@ -329,7 +329,7 @@ function selesaikanLaporanDasbor(id) {
 }
 
 // Inisialisasi dasbor jika berada di halaman dasbor
-if (document.getElementById('current-date') && window.location.pathname.includes('sigap.html')) {
+if (document.getElementById('current-date')) {
     renderDashboard();
 }
 
@@ -419,7 +419,7 @@ function jalankanFilterLaporan() {
     if (countVisible) countVisible.innerText = count;
 }
 
-if (document.getElementById('tbody-laporan') && window.location.pathname.includes('laporan.html')) {
+if (document.getElementById('tbody-laporan')) {
     renderLaporanTable();
     document.getElementById('searchAduan').addEventListener('input', jalankanFilterLaporan);
     document.getElementById('filterKategori').addEventListener('change', jalankanFilterLaporan);
@@ -598,9 +598,16 @@ function updateStatusAduan(event) {
     }
 }
 
-if (document.getElementById('mapDetail') && window.location.pathname.includes('detail-laporan.html')) {
-    window.addEventListener('DOMContentLoaded', initDetailPage);
-    document.getElementById('actionForm').addEventListener('submit', updateStatusAduan);
+if (document.getElementById('mapDetail')) {
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initDetailPage);
+    } else {
+        initDetailPage();
+    }
+    const actForm = document.getElementById('actionForm');
+    if (actForm) {
+        actForm.addEventListener('submit', updateStatusAduan);
+    }
 }
 
 // =========================================
@@ -758,7 +765,7 @@ function hapusPengguna(rowId) {
     }
 }
 
-if (document.getElementById('daftar-user') && window.location.pathname.includes('manajemen-user.html')) {
+if (document.getElementById('daftar-user')) {
     renderUsersTable();
     document.getElementById('cari-input').addEventListener('input', jalankanFilterUser);
     document.getElementById('filter-role-select').addEventListener('change', jalankanFilterUser);
@@ -864,8 +871,12 @@ function initPetaDampak() {
 }
 
 // Inisialisasi peta dampak jika di halaman peta
-if (document.getElementById('map') && window.location.pathname.includes('peta.html')) {
-    window.addEventListener('DOMContentLoaded', initPetaDampak);
+if (document.getElementById('map')) {
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initPetaDampak);
+    } else {
+        initPetaDampak();
+    }
 }
 
 // =========================================
@@ -908,4 +919,168 @@ function handleResetSandi(event) {
         btn.classList.remove('opacity-80', 'cursor-not-allowed');
         btn.disabled = false;
     }, 1200);
+}
+
+// =========================================
+// 10. LOGIKA DASBOR PELAPOR (dashboard-pelapor.html)
+// =========================================
+function renderDasborPelapor() {
+    const listAduan = getLaporan();
+    const pelaporAktif = "Budi Santoso";
+    const aduanSaya = listAduan.filter(x => x.pelapor === pelaporAktif);
+
+    const total = aduanSaya.length;
+    const baru = aduanSaya.filter(x => x.status === 'baru').length;
+    const proses = aduanSaya.filter(x => x.status === 'proses').length;
+    const selesai = aduanSaya.filter(x => x.status === 'selesai').length;
+
+    const elTotal = document.getElementById('stat-total');
+    const elBaru = document.getElementById('stat-baru');
+    const elProses = document.getElementById('stat-proses');
+    const elSelesai = document.getElementById('stat-selesai');
+
+    if (elTotal) elTotal.innerText = total;
+    if (elBaru) elBaru.innerText = baru;
+    if (elProses) elProses.innerText = proses;
+    if (elSelesai) elSelesai.innerText = selesai;
+
+    const tbody = document.getElementById('tbody-aduan-saya');
+    if (tbody) {
+        tbody.innerHTML = '';
+        if (aduanSaya.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500 italic">Anda belum pernah mengirimkan laporan aduan.</td></tr>`;
+            return;
+        }
+
+        aduanSaya.forEach(aduan => {
+            let badgeClass = 'bg-red-500/10 text-red-400 border-red-500/20';
+            let dotClass = 'bg-red-500';
+            let labelStatus = 'Baru Masuk';
+
+            if (aduan.status === 'proses') {
+                badgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                dotClass = 'bg-amber-500 animate-pulse';
+                labelStatus = 'Sedang Diproses';
+            } else if (aduan.status === 'selesai') {
+                badgeClass = 'bg-green-500/10 text-green-400 border-green-500/20';
+                dotClass = 'bg-green-500';
+                labelStatus = 'Selesai Diperbaiki';
+            }
+
+            const row = `
+                <tr class="hover:bg-slate-900/30 transition border-b border-slate-800/40">
+                    <td class="px-6 py-4 font-mono font-bold text-slate-400">#${aduan.id}</td>
+                    <td class="px-6 py-4 text-slate-300">${aduan.waktu}</td>
+                    <td class="px-6 py-4">
+                        <span class="bg-blue-500/10 text-blue-400 text-xs px-2.5 py-1 rounded-full font-semibold border border-blue-500/10 inline-block mb-1">${aduan.kategoriLabel}</span>
+                        <p class="text-slate-400 text-xs max-w-xs truncate">${aduan.deskripsi}</p>
+                    </td>
+                    <td class="px-6 py-4 text-slate-300">
+                        <p class="font-medium">${aduan.lokasi}</p>
+                        <span class="text-xs text-slate-500">${aduan.wilayah}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center gap-1.5 ${badgeClass} px-3 py-1 rounded-full text-xs font-bold border">
+                            <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span> ${labelStatus}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <a href="detail-laporan.html?id=${aduan.id}" class="inline-block bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-slate-700 text-center">Tinjau Log</a>
+                    </td>
+                </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+}
+
+// =========================================
+// 11. LOGIKA FORM ADUAN BARU (buat-laporan.html)
+// =========================================
+let selectorMapMarker = null;
+
+function initMapSelector() {
+    const mapSelectorDiv = document.getElementById('mapSelector');
+    if (!mapSelectorDiv || typeof L === 'undefined') return;
+
+    var mapSelector = L.map('mapSelector', { zoomControl: false }).setView([-7.983908, 112.621391], 13);
+    L.control.zoom({ position: 'bottomright' }).addTo(mapSelector);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(mapSelector);
+
+    var pinColor = '#ef4444';
+    var selectorIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color: ${pinColor}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+    });
+
+    mapSelector.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lng = e.latlng.lng.toFixed(6);
+
+        document.getElementById('input-lat').value = lat;
+        document.getElementById('input-lng').value = lng;
+
+        if (selectorMapMarker) {
+            selectorMapMarker.setLatLng(e.latlng);
+        } else {
+            selectorMapMarker = L.marker(e.latlng, {icon: selectorIcon}).addTo(mapSelector)
+                                .bindPopup(`<div class="text-center text-xs font-bold text-gray-800"><p>Titik Kerusakan Terpilih</p></div>`).openPopup();
+        }
+    });
+}
+
+function kirimAduanBaru(event) {
+    event.preventDefault();
+    const kategori = document.getElementById('input-kategori').value;
+    const urgensi = document.getElementById('input-urgensi').value;
+    const lokasi = document.getElementById('input-lokasi').value.trim();
+    const deskripsi = document.getElementById('input-deskripsi').value.trim();
+    const lat = document.getElementById('input-lat').value;
+    const lng = document.getElementById('input-lng').value;
+
+    if (!lat || !lng) {
+        alert("Gagal mengirim! Anda wajib memilih titik lokasi kerusakan terlebih dahulu dengan mengklik peta di sisi kanan.");
+        return;
+    }
+
+    let kategoriLabel = "Jalan Berlubang";
+    if (kategori === "penerangan") kategoriLabel = "Penerangan Jalan";
+    else if (kategori === "drainase") kategoriLabel = "Drainase rusak";
+    else if (kategori === "fasilitas") kategoriLabel = "Fasilitas Sosial / Taman";
+
+    const listAduan = getLaporan();
+    const nextIdNum = Math.max(...listAduan.map(x => parseInt(x.id))) + 1;
+    const nextId = "0" + nextIdNum;
+
+    const newAduan = {
+        id: nextId,
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+        kategori: kategori,
+        kategoriLabel: kategoriLabel,
+        deskripsi: deskripsi,
+        status: "baru",
+        pelapor: "Budi Santoso",
+        waktu: "Hari ini, " + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) + " WIB",
+        lokasi: lokasi,
+        wilayah: "Kota Malang",
+        urgensi: urgensi,
+        dinas: "Dinas Terkait (Menunggu Verifikasi)",
+        foto: "assets/images/jalanrusak.jpg",
+        logs: [
+            { judul: "Laporan Terkirim & Menunggu Verifikasi", waktu: "Baru Saja", aktor: "Budi Santoso" }
+        ]
+    };
+
+    listAduan.unshift(newAduan);
+    saveLaporan(listAduan);
+
+    alert(`Sukses! Aduan Anda dengan ID #${nextId} berhasil dikirimkan ke pusat data SIGAP.`);
+    window.location.href = 'dashboard-pelapor.html';
 }
