@@ -867,3 +867,45 @@ function initPetaDampak() {
 if (document.getElementById('map') && window.location.pathname.includes('peta.html')) {
     window.addEventListener('DOMContentLoaded', initPetaDampak);
 }
+
+// =========================================
+// 9. LOGIKA KONTROL MODAL LUPA SANDI (login.html)
+// =========================================
+function bukaModalLupaSandi() {
+    const modal = document.getElementById('modal-lupa-sandi');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modal.querySelector('.transform').classList.remove('scale-95');
+    }, 10);
+}
+
+function tutupModalLupaSandi() {
+    const modal = document.getElementById('modal-lupa-sandi');
+    if (!modal) return;
+    modal.classList.add('opacity-0');
+    modal.querySelector('.transform').classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('form-lupa-sandi').reset();
+    }, 300);
+}
+
+function handleResetSandi(event) {
+    event.preventDefault();
+    const emailTarget = document.getElementById('email-reset').value;
+    const btn = document.getElementById('btnResetSandi');
+
+    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mengirim...';
+    btn.classList.add('opacity-80', 'cursor-not-allowed');
+    btn.disabled = true;
+
+    setTimeout(() => {
+        alert(`Sukses! Tautan pengaturan ulang kata sandi berhasil dikirim ke email: ${emailTarget}.\nSilakan periksa kotak masuk atau folder spam email Anda.`);
+        tutupModalLupaSandi();
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Link';
+        btn.classList.remove('opacity-80', 'cursor-not-allowed');
+        btn.disabled = false;
+    }, 1200);
+}
