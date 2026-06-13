@@ -165,7 +165,8 @@ const defaultUsers = [
         identitas: "-",
         role: "Administrator",
         status: "Aktif",
-        registered: "01 Jan 2026"
+        registered: "01 Jan 2026",
+        password: "admin123"
     },
     {
         id: "user-hw",
@@ -174,7 +175,8 @@ const defaultUsers = [
         identitas: "NIP: 198504232010121005",
         role: "Petugas PUPR",
         status: "Aktif",
-        registered: "15 Feb 2026"
+        registered: "15 Feb 2026",
+        password: "petugas123"
     },
     {
         id: "user-bs",
@@ -183,7 +185,8 @@ const defaultUsers = [
         identitas: "NIK: 3573012345670001",
         role: "Masyarakat",
         status: "Menunggu Verifikasi",
-        registered: "Hari ini"
+        registered: "Hari ini",
+        password: "warga123"
     }
 ];
 
@@ -203,7 +206,27 @@ function getUsers() {
     if (!localStorage.getItem('sigap_users')) {
         localStorage.setItem('sigap_users', JSON.stringify(defaultUsers));
     }
-    return JSON.parse(localStorage.getItem('sigap_users'));
+    const users = JSON.parse(localStorage.getItem('sigap_users'));
+    
+    // Migrasi: Pastikan semua pengguna default/lama di localStorage memiliki sandi
+    let updated = false;
+    users.forEach(user => {
+        if (!user.password) {
+            const matchedDefault = defaultUsers.find(d => d.email === user.email);
+            if (matchedDefault) {
+                user.password = matchedDefault.password;
+                updated = true;
+            } else {
+                user.password = "warga123"; // Sandi cadangan default
+                updated = true;
+            }
+        }
+    });
+    
+    if (updated) {
+        localStorage.setItem('sigap_users', JSON.stringify(users));
+    }
+    return users;
 }
 
 function saveUsers(data) {
@@ -239,7 +262,24 @@ if (togglePassword && passwordInput) {
 function handleLogin(event) {
     event.preventDefault();
     const emailInput = document.getElementById('email').value.trim();
+    const passwordInput = document.getElementById('password').value;
     const btn = event.target.querySelector('button[type="submit"]');
+
+    // Cari user di database lokal
+    const users = getUsers();
+    const matchedUser = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() && u.password === passwordInput);
+
+    if (!matchedUser) {
+        alert("Gagal Masuk! Alamat email atau kata sandi yang Anda masukkan salah.");
+        return;
+    }
+
+    // Role guard: hanya Administrator dan Petugas PUPR yang boleh masuk lewat portal admin
+    if (matchedUser.role !== 'Administrator' && matchedUser.role !== 'Petugas PUPR') {
+        alert("Akses Ditolak! Akun Anda terdaftar sebagai " + matchedUser.role + ". Silakan masuk melalui Portal Masyarakat.");
+        return;
+    }
+
     btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memverifikasi...';
     btn.classList.add('opacity-80', 'cursor-not-allowed');
     btn.disabled = true;
@@ -247,8 +287,9 @@ function handleLogin(event) {
     setTimeout(() => {
         const sessionData = {
             role: 'admin',
-            email: emailInput || 'admin@sigap.go.id',
-            username: 'Admin Utama'
+            email: matchedUser.email,
+            username: matchedUser.username,
+            id: matchedUser.id
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         window.location.href = 'sigap.html';
@@ -258,7 +299,24 @@ function handleLogin(event) {
 function handleLoginMasyarakat(event) {
     event.preventDefault();
     const emailInput = event.target.querySelector('input[type="email"]').value.trim();
+    const passwordInput = document.getElementById('password').value;
     const btn = document.getElementById('btnLogin');
+
+    // Cari user di database lokal
+    const users = getUsers();
+    const matchedUser = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() && u.password === passwordInput);
+
+    if (!matchedUser) {
+        alert("Gagal Masuk! Alamat email atau kata sandi yang Anda masukkan salah.");
+        return;
+    }
+
+    // Role guard: hanya Masyarakat yang boleh masuk lewat portal pelapor
+    if (matchedUser.role !== 'Masyarakat') {
+        alert("Akses Ditolak! Akun Anda terdaftar sebagai " + matchedUser.role + ". Silakan masuk melalui Portal Admin.");
+        return;
+    }
+
     btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mengautentikasi...';
     btn.classList.add('opacity-80', 'cursor-not-allowed');
     btn.disabled = true;
@@ -266,9 +324,9 @@ function handleLoginMasyarakat(event) {
     setTimeout(() => {
         const sessionData = {
             role: 'pelapor',
-            email: emailInput || 'budi.santoso99@gmail.com',
-            username: 'Budi Santoso',
-            id: 'user-bs'
+            email: matchedUser.email,
+            username: matchedUser.username,
+            id: matchedUser.id
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses Dasbor Warga.");
@@ -290,12 +348,20 @@ function handleRegister(event) {
     }
 
     const btn = document.getElementById('btnRegister');
+
+    // Tambahkan pengguna baru ke database lokal
+    const dbUsers = getUsers();
+
+    // Validasi duplikasi email
+    if (dbUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        alert("Gagal! Alamat email ini sudah terdaftar.");
+        return;
+    }
+
     btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mendaftarkan...';
     btn.classList.add('opacity-80', 'cursor-not-allowed');
     btn.disabled = true;
 
-    // Tambahkan pengguna baru ke database lokal
-    const dbUsers = getUsers();
     const newUser = {
         id: 'user-' + Date.now(),
         username: nama,
@@ -303,14 +369,15 @@ function handleRegister(event) {
         identitas: 'NIK: ' + nik,
         role: "Masyarakat",
         status: "Menunggu Verifikasi",
-        registered: "Baru Saja"
+        registered: "Baru Saja",
+        password: password
     };
     dbUsers.push(newUser);
     saveUsers(dbUsers);
 
     setTimeout(() => {
-        alert("Pendaftaran Berhasil!\nAkun Anda telah terdaftar dan menunggu verifikasi admin. Anda diarahkan ke gerbang masuk.");
-        window.location.href = 'login.html';
+        alert("Pendaftaran Berhasil!\nAkun Anda telah terdaftar dan menunggu verifikasi admin. Silakan masuk.");
+        window.location.href = 'login-masyarakat.html';
     }, 1500);
 }
 
@@ -787,6 +854,21 @@ function simpanUserBaru(event) {
     const role = document.getElementById('input-role').value;
 
     const dbUsers = getUsers();
+
+    // Validasi duplikasi email
+    if (dbUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        alert("Gagal! Alamat email ini sudah terdaftar.");
+        return;
+    }
+
+    // Tentukan sandi default berdasarkan peran
+    let defaultPass = "warga123";
+    if (role === 'Administrator') {
+        defaultPass = "admin123";
+    } else if (role === 'Petugas PUPR') {
+        defaultPass = "petugas123";
+    }
+
     const newUser = {
         id: 'user-' + Date.now(),
         username: name,
@@ -794,14 +876,15 @@ function simpanUserBaru(event) {
         identitas: identitas,
         role: role,
         status: "Aktif",
-        registered: "Baru Saja"
+        registered: "Baru Saja",
+        password: defaultPass
     };
 
     dbUsers.push(newUser);
     saveUsers(dbUsers);
     renderUsersTable();
     tutupModal();
-    alert(`Sukses! Akun untuk "${name}" berhasil ditambahkan secara permanen.`);
+    alert(`Sukses! Akun untuk "${name}" berhasil ditambahkan secara permanen dengan sandi default "${defaultPass}".`);
 }
 
 function editPengguna(rowId) {
@@ -1493,6 +1576,24 @@ function simpanProfilSandiPelapor(event) {
 
     if (newPassword.length < 8) {
         alert("Gagal! Kata sandi baru minimal harus berjumlah 8 karakter.");
+        return;
+    }
+
+    const sessionStr = localStorage.getItem('sigap_session');
+    if (!sessionStr) {
+        alert("Gagal! Sesi aktif tidak ditemukan.");
+        return;
+    }
+    const session = JSON.parse(sessionStr);
+
+    const users = getUsers();
+    const userIndex = users.findIndex(x => x.email.toLowerCase() === session.email.toLowerCase());
+
+    if (userIndex !== -1) {
+        users[userIndex].password = newPassword;
+        saveUsers(users);
+    } else {
+        alert("Gagal! Akun Anda tidak ditemukan di database lokal.");
         return;
     }
 
