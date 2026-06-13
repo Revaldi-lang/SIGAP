@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
 
-    <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
+    <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col justify-between fixed inset-y-0 left-0 z-[1050] transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out">
         <div>
             <a href="index.html" class="p-5 flex items-center gap-3 border-b border-slate-800 hover:bg-slate-800/50 transition block text-white">
                 <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden')">
@@ -59,7 +59,7 @@
         
         <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
             <div class="flex items-center gap-4">
-                <button class="text-gray-600 md:hidden block">
+                <button id="mobile-menu-btn" class="text-gray-600 md:hidden block focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
                 <div>
@@ -121,84 +121,84 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-gray-50 text-xs font-semibold uppercase text-gray-500 border-b border-gray-200">
-                                <th class="px-6 py-3.5 w-20">ID</th>
-                                <th class="px-6 py-3.5">Pelapor & Waktu</th>
-                                <th class="px-6 py-3.5">Detail Kerusakan</th>
-                                <th class="px-6 py-3.5">Lokasi Wilayah</th>
-                                <th class="px-6 py-3.5">Status</th>
-                                <th class="px-6 py-3.5 text-center">Aksi</th>
+                                <th class="px-4 sm:px-6 py-3.5 w-20">ID</th>
+                                <th class="px-4 sm:px-6 py-3.5">Pelapor & Waktu</th>
+                                <th class="px-4 sm:px-6 py-3.5">Detail Kerusakan</th>
+                                <th class="px-4 sm:px-6 py-3.5">Lokasi Wilayah</th>
+                                <th class="px-4 sm:px-6 py-3.5">Status</th>
+                                <th class="px-4 sm:px-6 py-3.5 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-laporan" class="divide-y divide-gray-100 text-sm">
                             
                             <tr data-kategori="jalan" data-status="baru" class="laporan-row hover:bg-gray-50 transition">
-                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#0148</td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#0148</td>
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <p class="font-semibold text-gray-900 target-pencarian">Budi Santoso</p>
                                     <span class="text-xs text-gray-400">Hari ini, 10:15 WIB</span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <span class="bg-red-100 text-red-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">Jalan Berlubang</span>
                                     <p class="text-gray-600 text-xs max-w-xs truncate">Lubang diameter 1 meter di tengah jalan utama membahayakan motor.</p>
                                 </td>
-                                <td class="px-6 py-4 text-gray-600">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                                     <p class="font-medium target-pencarian">Jl. Merdeka No. 42</p>
                                     <span class="text-xs text-gray-400">Kec. Klojen, Kota Malang</span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <span class="inline-flex items-center gap-1 bg-red-50 text-red-600 px-2 py-1 rounded-md text-xs font-semibold">
                                         <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Baru
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 text-center">
                                     <a href="detail-laporan.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition text-center">Tinjau</a>
                                 </td>
                             </tr>
 
                             <tr data-kategori="penerangan" data-status="proses" class="laporan-row hover:bg-gray-50 transition">
-                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#0147</td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#0147</td>
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <p class="font-semibold text-gray-900 target-pencarian">Siti Rahma</p>
                                     <span class="text-xs text-gray-400">Kemarin, 16:40 WIB</span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">Penerangan Jalan</span>
                                     <p class="text-gray-600 text-xs max-w-xs truncate">3 Lampu merkuri padam total membuat jalanan gelap gulita saat malam.</p>
                                 </td>
-                                <td class="px-6 py-4 text-gray-600">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                                     <p class="font-medium target-pencarian">Pojok Alun-Alun Utara</p>
                                     <span class="text-xs text-gray-400">Kec. Lowokwaru</span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-600 px-2 py-1 rounded-md text-xs font-semibold">
                                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Diproses
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 text-center">
                                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition">Tinjau</button>
                                 </td>
                             </tr>
 
                             <tr data-kategori="drainase" data-status="selesai" class="laporan-row hover:bg-gray-50 transition">
-                                <td class="px-6 py-4 font-mono font-bold text-gray-400">#0146</td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#0146</td>
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <p class="font-semibold text-gray-900 target-pencarian">Ahmad Dhani</p>
                                     <span class="text-xs text-gray-400">04 Juni 2026, 09:10 WIB</span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">Drainase rusak</span>
                                     <p class="text-gray-600 text-xs max-w-xs truncate">Selokan tersumbat sampah beton sisa proyek, air meluap ke aspal.</p>
                                 </td>
-                                <td class="px-6 py-4 text-gray-600">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                                     <p class="font-medium target-pencarian">Jl. Borobudur Gang 4</p>
                                     <span class="text-xs text-gray-400">Kec. Blimbing</span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4">
                                     <span class="inline-flex items-center gap-1 bg-green-50 text-green-600 px-2 py-1 rounded-md text-xs font-semibold">
                                         <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Selesai
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-4 sm:px-6 py-3 sm:py-4 text-center">
                                     <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">Detail</button>
                                 </td>
                             </tr>

@@ -1,18 +1,17 @@
 /* 1. CUSTOM SCROLLBAR MODERN (Khusus Webkit Browser seperti Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #f1f5f9; /* slate-100 */
-    border-radius: 10px;
+    background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1; /* slate-300 */
+    background: rgba(148, 163, 184, 0.3); /* slate-400 dengan opacity */
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8; /* slate-400 */
+    background: rgba(148, 163, 184, 0.6); /* lebih gelap saat hover */
 }
 
 /* 2. CUSTOM SELECTION (Warna teks saat di-blok/highlight) */
