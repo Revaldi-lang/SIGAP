@@ -3,6 +3,65 @@
    Core JavaScript Engine (localStorage Database & Dynamic Page Sync)
    ========================================================================= */
 
+// =========================================
+// 0. AUTHENTICATION & ROLE GUARD ENGINE
+// =========================================
+(function checkSessionGuard() {
+    const path = window.location.pathname;
+    const page = path.substring(path.lastIndexOf('/') + 1).toLowerCase();
+    
+    // Daftar Halaman Admin
+    const adminPages = ['sigap.html', 'laporan.html', 'manajemen-user.html', 'peta.html', 'pengaturan-profil.html', 'detail-laporan.html'];
+    // Daftar Halaman Pelapor
+    const pelaporPages = ['dashboard-pelapor.html', 'buat-laporan.html', 'peta-pelapor.html', 'pengaturan-profil-pelapor.html', 'detail-laporan-pelapor.html'];
+    
+    const sessionStr = localStorage.getItem('sigap_session');
+    const session = sessionStr ? JSON.parse(sessionStr) : null;
+    
+    const isAdminPage = adminPages.some(p => page.includes(p));
+    const isPelaporPage = pelaporPages.some(p => page.includes(p));
+    
+    if (isAdminPage) {
+        if (!session) {
+            alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Admin.");
+            window.location.href = 'login.html';
+        } else if (session.role !== 'admin') {
+            alert("Akses Ditolak! Halaman ini khusus untuk Administrator.");
+            window.location.href = 'dashboard-pelapor.html';
+        }
+    } else if (isPelaporPage) {
+        if (!session) {
+            alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Pelapor.");
+            window.location.href = 'login-masyarakat.html';
+        } else if (session.role !== 'pelapor') {
+            alert("Akses Ditolak! Halaman ini khusus untuk Pelapor.");
+            window.location.href = 'sigap.html';
+        }
+    }
+})();
+
+function handleLogout(event) {
+    if (event) event.preventDefault();
+    localStorage.removeItem('sigap_session');
+    alert("Anda telah berhasil keluar dari sistem SIGAP.");
+    window.location.href = 'index.html';
+}
+
+// Auto-bind logout buttons on DOM load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindLogoutTriggers);
+} else {
+    bindLogoutTriggers();
+}
+
+function bindLogoutTriggers() {
+    document.querySelectorAll('a[href="login.html"], a[href="login-masyarakat.html"]').forEach(btn => {
+        if (btn.querySelector('.fa-right-from-bracket') || btn.title === 'Keluar' || btn.classList.contains('text-red-400') || btn.parentElement.classList.contains('border-t') || btn.innerHTML.includes('Keluar')) {
+            btn.addEventListener('click', handleLogout);
+        }
+    });
+}
+
 // 1. DATA DEFAULT (MOCK DATABASE)
 const defaultLaporan = [
     {
@@ -170,24 +229,39 @@ if (togglePassword && passwordInput) {
 
 function handleLogin(event) {
     event.preventDefault();
+    const emailInput = document.getElementById('email').value.trim();
     const btn = event.target.querySelector('button[type="submit"]');
     btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memverifikasi...';
     btn.classList.add('opacity-80', 'cursor-not-allowed');
     btn.disabled = true;
 
     setTimeout(() => {
+        const sessionData = {
+            role: 'admin',
+            email: emailInput || 'admin@sigap.go.id',
+            username: 'Admin Utama'
+        };
+        localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         window.location.href = 'sigap.html';
     }, 1200);
 }
 
 function handleLoginMasyarakat(event) {
     event.preventDefault();
+    const emailInput = event.target.querySelector('input[type="email"]').value.trim();
     const btn = document.getElementById('btnLogin');
     btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mengautentikasi...';
     btn.classList.add('opacity-80', 'cursor-not-allowed');
     btn.disabled = true;
 
     setTimeout(() => {
+        const sessionData = {
+            role: 'pelapor',
+            email: emailInput || 'budi.santoso99@gmail.com',
+            username: 'Budi Santoso',
+            id: 'user-bs'
+        };
+        localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses Dasbor Warga.");
         window.location.href = 'dashboard-pelapor.html';
     }, 1200);
@@ -985,7 +1059,7 @@ function renderDasborPelapor() {
                         </span>
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <a href="detail-laporan.html?id=${aduan.id}" class="inline-block bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-slate-700 text-center">Tinjau Log</a>
+                        <a href="detail-laporan-pelapor.html?id=${aduan.id}" class="inline-block bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-slate-700 text-center">Tinjau Log</a>
                     </td>
                 </tr>
             `;
@@ -1083,4 +1157,309 @@ function kirimAduanBaru(event) {
 
     alert(`Sukses! Aduan Anda dengan ID #${nextId} berhasil dikirimkan ke pusat data SIGAP.`);
     window.location.href = 'dashboard-pelapor.html';
+}
+
+// =========================================
+// 12. LOGIKA PETA DAMPAK WARGA (peta-pelapor.html)
+// =========================================
+function initPetaDampakPelapor() {
+    const mapContainer = document.getElementById('mapPelapor');
+    if (!mapContainer || typeof L === 'undefined') return;
+
+    var map = L.map('mapPelapor', { zoomControl: false }).setView([-7.983908, 112.621391], 13);
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors - Proyek SIGAP'
+    }).addTo(map);
+
+    function createIcon(color) {
+        return L.divIcon({
+            className: 'custom-div-icon',
+            html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+    }
+
+    var iconMerah = createIcon('#ef4444');
+    var iconKuning = createIcon('#f59e0b');
+    var iconHijau = createIcon('#22c55e');
+
+    var markerLayer = L.layerGroup().addTo(map);
+
+    function renderPeta() {
+        markerLayer.clearLayers();
+        const listLaporan = getLaporan();
+
+        var cbBaru = document.getElementById('filter-baru');
+        var cbProses = document.getElementById('filter-proses');
+        var cbSelesai = document.getElementById('filter-selesai');
+
+        var showBaru = cbBaru ? cbBaru.checked : true;
+        var showProses = cbProses ? cbProses.checked : true;
+        var showSelesai = cbSelesai ? cbSelesai.checked : true;
+
+        listLaporan.forEach(function(laporan) {
+            var isVisible = 
+                (laporan.status === 'baru' && showBaru) ||
+                (laporan.status === 'proses' && showProses) ||
+                (laporan.status === 'selesai' && showSelesai);
+
+            if (isVisible) {
+                var pinIcon = laporan.status === 'baru' ? iconMerah : 
+                              laporan.status === 'proses' ? iconKuning : iconHijau;
+                var marker = L.marker([laporan.lat, laporan.lng], {icon: pinIcon});
+                var statusText = laporan.status === 'baru' ? '<span class="text-red-400 font-bold">Baru Masuk</span>' : 
+                                 laporan.status === 'proses' ? '<span class="text-amber-400 font-bold">Sedang Diproses</span>' : 
+                                 '<span class="text-green-400 font-bold">Selesai</span>';
+
+                var popupContent = `
+                    <div class="font-sans text-sm p-1 text-slate-200">
+                        <p class="font-mono text-xs text-slate-500 font-bold">#${laporan.id}</p>
+                        <h4 class="font-bold text-white text-base mb-1">${laporan.kategoriLabel}</h4>
+                        <p class="text-slate-400 text-xs mb-1">Status: ${statusText}</p>
+                        <a href="detail-laporan-pelapor.html?id=${laporan.id}" class="block w-full text-center bg-blue-600 text-white py-1.5 rounded-md text-xs font-semibold hover:bg-blue-700 mt-2">Lihat Detail</a>
+                    </div>
+                `;
+                marker.bindPopup(popupContent);
+                markerLayer.addLayer(marker);
+            }
+        });
+    }
+
+    renderPeta();
+
+    var filterBaru = document.getElementById('filter-baru');
+    var filterProses = document.getElementById('filter-proses');
+    var filterSelesai = document.getElementById('filter-selesai');
+
+    if (filterBaru) filterBaru.addEventListener('change', renderPeta);
+    if (filterProses) filterProses.addEventListener('change', renderPeta);
+    if (filterSelesai) filterSelesai.addEventListener('change', renderPeta);
+}
+
+if (document.getElementById('mapPelapor')) {
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initPetaDampakPelapor);
+    } else {
+        initPetaDampakPelapor();
+    }
+}
+
+// =========================================
+// 13. LOGIKA DETAIL LAPORAN WARGA (detail-laporan-pelapor.html)
+// =========================================
+function initDetailPagePelapor() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const aduanId = urlParams.get('id');
+    if (!aduanId) {
+        alert("Parameter ID aduan tidak valid.");
+        window.location.href = 'dashboard-pelapor.html';
+        return;
+    }
+
+    const listAduan = getLaporan();
+    const aduan = listAduan.find(x => x.id === aduanId);
+    if (!aduan) {
+        alert("Laporan aduan tidak ditemukan di database lokal.");
+        window.location.href = 'dashboard-pelapor.html';
+        return;
+    }
+
+    const elId = document.getElementById('aduan-id');
+    const elKategori = document.getElementById('aduan-kategori');
+    const elPelapor = document.getElementById('aduan-pelapor');
+    const elWaktu = document.getElementById('aduan-waktu');
+    const elUrgensi = document.getElementById('aduan-urgensi');
+    const elDeskripsi = document.getElementById('aduan-deskripsi');
+    const elFoto = document.getElementById('aduan-foto');
+    const elLokasi = document.getElementById('aduan-lokasi');
+    const elWilayah = document.getElementById('aduan-wilayah');
+    const elStatusBadge = document.getElementById('status-badge');
+
+    if (elId) elId.innerText = "#" + aduan.id;
+    if (elKategori) elKategori.innerText = aduan.kategoriLabel;
+    if (elPelapor) elPelapor.innerText = aduan.pelapor;
+    if (elWaktu) elWaktu.innerText = aduan.waktu;
+    if (elDeskripsi) elDeskripsi.innerText = aduan.deskripsi;
+    if (elLokasi) elLokasi.innerText = aduan.lokasi;
+    if (elWilayah) elWilayah.innerText = aduan.wilayah;
+
+    if (elUrgensi) {
+        elUrgensi.innerText = "Urgensi " + aduan.urgensi;
+        if (aduan.urgensi === 'Tinggi') {
+            elUrgensi.className = "bg-red-500/10 text-red-400 text-xs px-3 py-1 rounded-md font-semibold border border-red-500/10";
+        } else if (aduan.urgensi === 'Sedang') {
+            elUrgensi.className = "bg-amber-500/10 text-amber-400 text-xs px-3 py-1 rounded-md font-semibold border border-amber-500/10";
+        } else {
+            elUrgensi.className = "bg-green-500/10 text-green-400 text-xs px-3 py-1 rounded-md font-semibold border border-green-500/10";
+        }
+    }
+
+    if (elFoto) {
+        elFoto.src = aduan.foto || 'jalanrusak.jpg';
+        elFoto.onerror = function() {
+            this.src = 'jalanrusak.jpg';
+        };
+    }
+
+    if (elStatusBadge) {
+        let badgeClass = 'bg-red-500/10 text-red-400 border-red-500/20';
+        let dotClass = 'bg-red-500';
+        let labelStatus = 'BARU MASUK';
+
+        if (aduan.status === 'proses') {
+            badgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+            dotClass = 'bg-amber-500 animate-pulse';
+            labelStatus = 'SEDANG DIPROSES';
+        } else if (aduan.status === 'selesai') {
+            badgeClass = 'bg-green-500/10 text-green-400 border-green-500/20';
+            dotClass = 'bg-green-500';
+            labelStatus = 'SELESAI DIPERBAIKI';
+        }
+
+        elStatusBadge.className = `inline-flex items-center gap-1.5 ${badgeClass} px-3 py-1 rounded-full text-xs font-bold border`;
+        elStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span> ${labelStatus}`;
+    }
+
+    if (document.getElementById('mapDetailPelapor') && typeof L !== 'undefined') {
+        var mapDetail = L.map('mapDetailPelapor', { zoomControl: false, attributionControl: false }).setView([aduan.lat, aduan.lng], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(mapDetail);
+
+        var markerColor = aduan.status === 'baru' ? '#ef4444' : aduan.status === 'proses' ? '#f59e0b' : '#22c55e';
+        var markerIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: `<div style="background-color: ${markerColor}; width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+        });
+
+        L.marker([aduan.lat, aduan.lng], { icon: markerIcon }).addTo(mapDetail);
+    }
+
+    const timeline = document.getElementById('timeline-pelapor');
+    if (timeline) {
+        timeline.innerHTML = '';
+        if (aduan.logs && aduan.logs.length > 0) {
+            aduan.logs.forEach((log, index) => {
+                const dotBg = index === 0 ? 'bg-blue-500' : 'bg-slate-700';
+                const logHtml = `
+                    <div class="relative">
+                        <span class="absolute -left-[21px] top-0 ${dotBg} text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
+                        <p class="font-bold text-slate-200">${log.judul}</p>
+                        <p class="text-slate-500">${log.waktu} • Oleh ${log.aktor}</p>
+                    </div>
+                `;
+                timeline.insertAdjacentHTML('beforeend', logHtml);
+            });
+        }
+    }
+}
+
+if (document.getElementById('mapDetailPelapor')) {
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initDetailPagePelapor);
+    } else {
+        initDetailPagePelapor();
+    }
+}
+
+// =========================================
+// 14. LOGIKA PENGATURAN PROFIL WARGA (pengaturan-profil-pelapor.html)
+// =========================================
+function initProfilePelapor() {
+    const sessionStr = localStorage.getItem('sigap_session');
+    if (!sessionStr) return;
+    const session = JSON.parse(sessionStr);
+
+    const users = getUsers();
+    const user = users.find(x => x.email === session.email || x.id === 'user-bs') || {
+        username: session.username,
+        email: session.email,
+        identitas: "NIK: 3573012345670001",
+        telepon: "081234567890",
+        alamat: "Jl. Ijen No. 12, Klojen, Kota Malang"
+    };
+
+    const elName = document.getElementById('profile-name');
+    const elEmail = document.getElementById('profile-email');
+    const elPhone = document.getElementById('profile-phone');
+    const elAddress = document.getElementById('profile-address');
+
+    if (elName) elName.value = user.username;
+    if (elEmail) elEmail.value = user.email;
+    if (elPhone) elPhone.value = user.telepon || '081234567890';
+    if (elAddress) elAddress.value = user.alamat || 'Jl. Ijen No. 12, Klojen, Kota Malang';
+}
+
+function simpanProfilUmumPelapor(event) {
+    event.preventDefault();
+    const name = document.getElementById('profile-name').value.trim();
+    const email = document.getElementById('profile-email').value.trim();
+    const phone = document.getElementById('profile-phone').value.trim();
+    const address = document.getElementById('profile-address').value.trim();
+
+    const sessionStr = localStorage.getItem('sigap_session');
+    if (!sessionStr) return;
+    const session = JSON.parse(sessionStr);
+
+    const users = getUsers();
+    const userIndex = users.findIndex(x => x.email === session.email || x.id === 'user-bs');
+    
+    if (userIndex !== -1) {
+        users[userIndex].username = name;
+        users[userIndex].email = email;
+        users[userIndex].telepon = phone;
+        users[userIndex].alamat = address;
+        saveUsers(users);
+    }
+
+    session.username = name;
+    session.email = email;
+    localStorage.setItem('sigap_session', JSON.stringify(session));
+
+    const btn = document.getElementById('btn-simpan-umum');
+    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+        alert("Sukses! Informasi profil umum Anda berhasil diperbarui.");
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
+        btn.disabled = false;
+        
+        const avatarInitials = document.getElementById('avatar-initials');
+        if (avatarInitials) {
+            const initials = name.split(' ').map(x => x[0]).join('').substring(0, 2).toUpperCase();
+            avatarInitials.innerText = initials;
+        }
+    }, 1200);
+}
+
+function simpanProfilSandiPelapor(event) {
+    event.preventDefault();
+    const newPassword = document.getElementById('new-password').value;
+    const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+    if (newPassword !== confirmNewPassword) {
+        alert("Gagal! Konfirmasi kata sandi baru tidak cocok.");
+        return;
+    }
+
+    if (newPassword.length < 8) {
+        alert("Gagal! Kata sandi baru minimal harus berjumlah 8 karakter.");
+        return;
+    }
+
+    const btn = document.getElementById('btn-simpan-sandi');
+    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memperbarui...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+        alert("Sukses! Keamanan akun diperbarui secara aman.");
+        event.target.reset(); 
+        btn.innerHTML = '<i class="fa-solid fa-key"></i> Perbarui Kata Sandi';
+        btn.disabled = false;
+    }, 1200);
 }

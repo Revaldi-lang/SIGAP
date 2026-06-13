@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Pengaturan Profil Warga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-950 font-sans text-white flex h-screen overflow-hidden relative">
+
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-emerald-900/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Sidebar Warga -->
+    <aside class="w-64 bg-slate-900/90 border-r border-slate-800/60 text-white flex flex-col justify-between hidden md:flex z-50 relative">
+        <div>
+            <a href="index.html" class="p-5 flex items-center gap-3 border-b border-slate-800/80 hover:bg-slate-800/30 transition block">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.src='sigap.jpg'">
+                <div>
+                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Portal Warga</span>
+                </div>
+            </a>
+            
+            <nav class="p-4 space-y-1">
+                <a href="dashboard-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dasbor Saya
+                </a>
+                <a href="buat-laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-file-signature w-5"></i> Buat Laporan Baru
+                </a>
+                <a href="peta-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="pengaturan-profil-pelapor.html" class="flex items-center gap-3 bg-blue-600/90 text-white px-4 py-3 rounded-lg font-medium transition shadow-md shadow-blue-500/10">
+                    <i class="fa-solid fa-user-gear w-5"></i> Pengaturan Profil
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800/80 flex items-center gap-3 bg-slate-950/20">
+            <div class="w-10 h-10 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-bold border border-blue-500/20">
+                BS
+            </div>
+            <div>
+                <p class="text-sm font-medium leading-none">Budi Santoso</p>
+                <span class="text-xs text-slate-500 font-mono">NIK: 357301234...</span>
+            </div>
+            <a href="login-masyarakat.html" class="ml-auto text-slate-500 hover:text-red-400" title="Keluar">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto relative z-10">
+        
+        <!-- Header -->
+        <header class="bg-slate-900/60 border-b border-slate-800/60 px-6 py-4 flex items-center justify-between shadow-sm backdrop-blur-md sticky top-0 z-40">
+            <div class="flex items-center gap-4">
+                <button class="text-slate-400 md:hidden block hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-white">Pengaturan Profil Saya</h2>
+                    <p class="text-xs text-slate-400 hidden sm:block">Perbarui biodata profil warga Anda dan kata sandi keamanan.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 max-w-4xl w-full mx-auto space-y-6">
+            
+            <!-- Avatar Banner Card -->
+            <div class="bg-slate-900/40 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md flex flex-col sm:flex-row items-center gap-6 shadow-lg">
+                <div class="relative group">
+                    <div id="avatar-initials" class="w-24 h-24 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-3xl font-bold border border-blue-500/30 shadow-md">
+                        BS
+                    </div>
+                </div>
+                <div class="text-center sm:text-left flex-1">
+                    <h3 class="text-lg font-bold text-white">Budi Santoso</h3>
+                    <p class="text-xs text-slate-400 mt-1 max-w-sm">Status Akun: <span class="text-emerald-400 font-semibold">Aktif (Terverifikasi NIK)</span></p>
+                    <p class="text-[10px] text-slate-500 mt-1 font-mono">Tedaftar sejak: 13 Juni 2026</p>
+                </div>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="border-b border-slate-800/60 flex gap-4">
+                <button id="tab-umum" onclick="gantiTab('umum')" class="border-b-2 border-blue-500 text-blue-400 pb-3 font-semibold text-sm transition focus:outline-none">
+                    <i class="fa-solid fa-id-card-clip mr-1.5"></i>Informasi Umum
+                </button>
+                <button id="tab-keamanan" onclick="gantiTab('keamanan')" class="border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-medium text-sm transition focus:outline-none">
+                    <i class="fa-solid fa-shield-halved mr-1.5"></i>Keamanan & Sandi
+                </button>
+            </div>
+
+            <!-- Panel Umum -->
+            <div id="panel-umum" class="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg backdrop-blur-md">
+                <form id="form-profil-pelapor" onsubmit="simpanProfilUmumPelapor(event)" class="p-6 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Lengkap</label>
+                            <input type="text" id="profile-name" required value="Budi Santoso" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">NIK (KTP)</label>
+                            <input type="text" value="3573012345670001" disabled class="w-full bg-slate-950/20 border border-slate-900 rounded-xl px-4 py-2.5 text-sm text-slate-500 font-mono cursor-not-allowed" title="NIK resmi tidak dapat diubah secara mandiri">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Alamat Email</label>
+                            <input type="email" id="profile-email" required value="budi.santoso99@gmail.com" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nomor Telepon / WhatsApp</label>
+                            <input type="text" id="profile-phone" required value="081234567890" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 font-mono">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Alamat Domisili Warga</label>
+                        <input type="text" id="profile-address" value="Jl. Ijen No. 12, Klojen, Kota Malang" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="flex justify-end pt-2 border-t border-slate-800">
+                        <button type="submit" id="btn-simpan-umum" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-xl transition shadow-md shadow-blue-500/20 flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Panel Keamanan -->
+            <div id="panel-keamanan" class="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden hidden shadow-lg backdrop-blur-md">
+                <form id="form-sandi-pelapor" onsubmit="simpanProfilSandiPelapor(event)" class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Kata Sandi Sekarang</label>
+                        <input type="password" id="old-password" required placeholder="Masukkan kata sandi saat ini..." class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Kata Sandi Baru</label>
+                            <input type="password" id="new-password" required placeholder="Minimal 8 karakter..." class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Konfirmasi Kata Sandi Baru</label>
+                            <input type="password" id="confirm-new-password" required placeholder="Ulangi kata sandi baru..." class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div class="flex justify-end pt-2 border-t border-slate-800">
+                        <button type="submit" id="btn-simpan-sandi" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-xl transition shadow-md shadow-blue-500/20 flex items-center gap-2">
+                            <i class="fa-solid fa-key"></i> Perbarui Kata Sandi
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        function gantiTab(kategori) {
+            const tabUmum = document.getElementById('tab-umum');
+            const tabKeamanan = document.getElementById('tab-keamanan');
+            const panelUmum = document.getElementById('panel-umum');
+            const panelKeamanan = document.getElementById('panel-keamanan');
+
+            if (kategori === 'umum') {
+                tabUmum.className = "border-b-2 border-blue-500 text-blue-400 pb-3 font-semibold text-sm transition focus:outline-none";
+                tabKeamanan.className = "border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-medium text-sm transition focus:outline-none";
+                panelUmum.classList.remove('hidden');
+                panelKeamanan.classList.add('hidden');
+            } else {
+                tabUmum.className = "border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-medium text-sm transition focus:outline-none";
+                tabKeamanan.className = "border-b-2 border-blue-500 text-blue-400 pb-3 font-semibold text-sm transition focus:outline-none";
+                panelUmum.classList.add('hidden');
+                panelKeamanan.classList.remove('hidden');
+            }
+        }
+        
+        // Trigger pre-load profile warga dari localStorage jika script.js terpasang
+        if (typeof initProfilePelapor === 'function') {
+            initProfilePelapor();
+        }
+    </script>
+</body>
+</html>

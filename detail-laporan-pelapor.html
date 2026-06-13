@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP - Detail Aduan Warga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .leaflet-container {
+            z-index: 1;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 font-sans text-white flex h-screen overflow-hidden relative">
+
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-emerald-900/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Sidebar Warga -->
+    <aside class="w-64 bg-slate-900/90 border-r border-slate-800/60 text-white flex flex-col justify-between hidden md:flex z-50 relative">
+        <div>
+            <a href="index.html" class="p-5 flex items-center gap-3 border-b border-slate-800/80 hover:bg-slate-800/30 transition block">
+                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.src='sigap.jpg'">
+                <div>
+                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
+                    <span class="text-xs text-slate-400">Portal Warga</span>
+                </div>
+            </a>
+            
+            <nav class="p-4 space-y-1">
+                <a href="dashboard-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-chart-pie w-5"></i> Dasbor Saya
+                </a>
+                <a href="buat-laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-file-signature w-5"></i> Buat Laporan Baru
+                </a>
+                <a href="peta-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
+                </a>
+                <a href="pengaturan-profil-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                    <i class="fa-solid fa-user-gear w-5"></i> Pengaturan Profil
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800/80 flex items-center gap-3 bg-slate-950/20">
+            <div class="w-10 h-10 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-bold border border-blue-500/20">
+                BS
+            </div>
+            <div>
+                <p class="text-sm font-medium leading-none">Budi Santoso</p>
+                <span class="text-xs text-slate-500 font-mono">NIK: 357301234...</span>
+            </div>
+            <a href="login-masyarakat.html" class="ml-auto text-slate-500 hover:text-red-400" title="Keluar">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto relative z-10">
+        
+        <!-- Header -->
+        <header class="bg-slate-900/60 border-b border-slate-800/60 px-6 py-4 flex items-center justify-between shadow-sm backdrop-blur-md sticky top-0 z-40">
+            <div class="flex items-center gap-4">
+                <a href="dashboard-pelapor.html" class="text-slate-400 hover:text-white px-2 py-1 bg-slate-850 border border-slate-800 rounded-lg text-sm flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </a>
+                <h2 class="text-xl font-bold text-white">Lacak Progres Laporan</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="status-badge" class="inline-flex items-center gap-1.5 bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-xs font-bold border border-red-500/20">
+                    <span class="w-2 h-2 rounded-full bg-red-500"></span> MEMUAT...
+                </span>
+            </div>
+        </header>
+
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Deskripsi & Foto Kiri -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <div class="bg-slate-900/40 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md space-y-4 shadow-lg">
+                    <div class="flex justify-between items-start border-b border-slate-800 pb-4">
+                        <div>
+                            <span id="aduan-id" class="text-xs font-mono font-bold text-slate-500">#0000</span>
+                            <h3 id="aduan-kategori" class="text-lg font-bold text-white mt-0.5">Memuat Laporan...</h3>
+                            <p class="text-xs text-slate-400 mt-1 flex items-center gap-2">
+                                <span><i class="fa-solid fa-user text-slate-500"></i> <span id="aduan-pelapor">Budi Santoso</span></span>
+                                <span>•</span>
+                                <span><i class="fa-solid fa-calendar text-slate-500"></i> <span id="aduan-waktu">Hari ini</span></span>
+                            </p>
+                        </div>
+                        <span id="aduan-urgensi" class="bg-blue-500/10 text-blue-400 text-xs px-3 py-1 rounded-md font-semibold border border-blue-500/10">Tingkat Urgensi</span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Deskripsi Kerusakan Warga</h4>
+                        <p id="aduan-deskripsi" class="text-slate-300 text-sm leading-relaxed bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
+                            Mengunduh deskripsi aduan dari database...
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Foto Bukti Lapangan</h4>
+                        <div class="relative max-w-lg bg-slate-950 rounded-xl overflow-hidden border border-slate-800 group shadow-inner">
+                            <img id="aduan-foto" src="jalanrusak.jpg" alt="Foto Jalan Berlubang" class="w-full h-64 object-cover hover:scale-105 transition duration-500 cursor-pointer">
+                            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4 text-white">
+                                <p class="text-[10px] text-slate-400"><i class="fa-solid fa-camera mr-1"></i> Bukti Laporan Fisik Warga</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Peta & Log Kanan -->
+            <div class="space-y-6">
+                
+                <div class="bg-slate-900/40 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md space-y-4 shadow-lg">
+                    <div>
+                        <h3 class="font-bold text-white text-base">Lokasi Titik Aduan</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Lokasi tepat dari infrastruktur jalan/fasilitas rusak yang Anda pin di peta.</p>
+                    </div>
+
+                    <div id="mapDetailPelapor" class="w-full h-60 rounded-xl border border-slate-800 overflow-hidden z-0"></div>
+
+                    <div class="text-xs space-y-2 bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                        <div class="flex justify-between"><span class="text-slate-500 font-medium">Jalan:</span> <span id="aduan-lokasi" class="text-slate-300 font-semibold text-right">Memuat...</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500 font-medium">Wilayah:</span> <span id="aduan-wilayah" class="text-slate-300 font-semibold text-right">Memuat...</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500 font-medium">GPS Akurasi:</span> <span class="text-emerald-400 font-bold text-right"><i class="fa-solid fa-circle-check text-xs"></i> Akurat (~4 meter)</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/40 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md shadow-lg">
+                    <h3 class="font-bold text-white text-base mb-3">Linimasa Progres Penanganan</h3>
+                    <div id="timeline-pelapor" class="relative border-l-2 border-slate-800 pl-4 ml-2 space-y-4 text-xs">
+                        <!-- Riwayat log akan dimasukkan via JavaScript -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        if (typeof initDetailPagePelapor === 'function') {
+            initDetailPagePelapor();
+        }
+    </script>
+</body>
+</html>
