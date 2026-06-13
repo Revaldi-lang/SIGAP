@@ -8,18 +8,27 @@
 // =========================================
 (function checkSessionGuard() {
     const path = window.location.pathname;
-    const page = path.substring(path.lastIndexOf('/') + 1).toLowerCase();
     
     // Daftar Halaman Admin
     const adminPages = ['sigap.html', 'laporan.html', 'manajemen-user.html', 'peta.html', 'pengaturan-profil.html', 'detail-laporan.html'];
     // Daftar Halaman Pelapor
     const pelaporPages = ['dashboard-pelapor.html', 'buat-laporan.html', 'peta-pelapor.html', 'pengaturan-profil-pelapor.html', 'detail-laporan-pelapor.html'];
     
+    // Ambil nama file secara presisi (bersihkan query string dan hash, default ke index.html)
+    let pageName = path.substring(path.lastIndexOf('/') + 1).split('?')[0].split('#')[0].toLowerCase();
+    if (!pageName) {
+        pageName = 'index.html';
+    }
+    // Jika Vercel cleanUrls memotong ekstensi .html, tambahkan kembali untuk validasi
+    if (!pageName.includes('.')) {
+        pageName += '.html';
+    }
+    
     const sessionStr = localStorage.getItem('sigap_session');
     const session = sessionStr ? JSON.parse(sessionStr) : null;
     
-    const isAdminPage = adminPages.some(p => page.includes(p));
-    const isPelaporPage = pelaporPages.some(p => page.includes(p));
+    const isAdminPage = adminPages.includes(pageName);
+    const isPelaporPage = pelaporPages.includes(pageName);
     
     if (isAdminPage) {
         if (!session) {
@@ -1018,11 +1027,22 @@ function renderDasborPelapor() {
     if (elProses) elProses.innerText = proses;
     if (elSelesai) elSelesai.innerText = selesai;
 
-    const tbody = document.getElementById('tbody-aduan-saya');
-    if (tbody) {
-        tbody.innerHTML = '';
+    const countBadge = document.getElementById('aduan-saya-count');
+    if (countBadge) {
+        countBadge.innerText = `${total} ADUAN AKTIF`;
+    }
+
+    const container = document.getElementById('list-aduan-saya');
+    if (container) {
+        container.innerHTML = '';
         if (aduanSaya.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500 italic">Anda belum pernah mengirimkan laporan aduan.</td></tr>`;
+            container.innerHTML = `
+                <div class="text-center py-16 border border-dashed border-slate-800 rounded-2xl bg-slate-950/20">
+                    <i class="fa-solid fa-folder-open text-slate-700 text-4xl mb-3 block animate-bounce"></i>
+                    <p class="text-slate-400 text-sm font-semibold">Belum Ada Laporan</p>
+                    <p class="text-xs text-slate-500 mt-1">Anda belum pernah mengirimkan laporan aduan infrastruktur.</p>
+                </div>
+            `;
             return;
         }
 
@@ -1041,29 +1061,53 @@ function renderDasborPelapor() {
                 labelStatus = 'Selesai Diperbaiki';
             }
 
-            const row = `
-                <tr class="hover:bg-slate-900/30 transition border-b border-slate-800/40">
-                    <td class="px-6 py-4 font-mono font-bold text-slate-400">#${aduan.id}</td>
-                    <td class="px-6 py-4 text-slate-300">${aduan.waktu}</td>
-                    <td class="px-6 py-4">
-                        <span class="bg-blue-500/10 text-blue-400 text-xs px-2.5 py-1 rounded-full font-semibold border border-blue-500/10 inline-block mb-1">${aduan.kategoriLabel}</span>
-                        <p class="text-slate-400 text-xs max-w-xs truncate">${aduan.deskripsi}</p>
-                    </td>
-                    <td class="px-6 py-4 text-slate-300">
-                        <p class="font-medium">${aduan.lokasi}</p>
-                        <span class="text-xs text-slate-500">${aduan.wilayah}</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center gap-1.5 ${badgeClass} px-3 py-1 rounded-full text-xs font-bold border">
+            // Atur icon kategori kerusakan secara spesifik & estetik
+            let iconClass = 'fa-solid fa-road text-blue-400';
+            let iconBg = 'bg-blue-500/10';
+            let iconBorder = 'border-blue-500/30';
+
+            if (aduan.kategori === 'penerangan') {
+                iconClass = 'fa-solid fa-lightbulb text-amber-400';
+                iconBg = 'bg-amber-500/10';
+                iconBorder = 'border-amber-500/30';
+            } else if (aduan.kategori === 'drainase') {
+                iconClass = 'fa-solid fa-droplet text-cyan-400';
+                iconBg = 'bg-cyan-500/10';
+                iconBorder = 'border-cyan-500/30';
+            } else if (aduan.kategori === 'fasilitas') {
+                iconClass = 'fa-solid fa-tree text-emerald-400';
+                iconBg = 'bg-emerald-500/10';
+                iconBorder = 'border-emerald-500/30';
+            }
+
+            const card = `
+                <div class="group bg-slate-900/20 hover:bg-slate-900/50 border-2 border-slate-700 hover:border-blue-500/50 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300 shadow-sm backdrop-blur-md">
+                    <div class="flex items-start gap-4">
+                        <div class="p-3.5 rounded-xl ${iconBg} border-2 ${iconBorder} text-base flex items-center justify-center shrink-0">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-[10px] font-mono font-bold text-slate-500">#${aduan.id}</span>
+                                <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded-full font-bold border-2 border-blue-500/20 uppercase tracking-wider">${aduan.kategoriLabel}</span>
+                                <span class="text-slate-600 text-xs font-mono">• ${aduan.waktu}</span>
+                            </div>
+                            <h4 class="font-bold text-white text-base mt-1.5 leading-snug">${aduan.lokasi}</h4>
+                            <p class="text-slate-400 text-xs mt-1 max-w-xl leading-relaxed">${aduan.deskripsi}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 border-t-2 sm:border-t-0 border-slate-900/50 pt-3 sm:pt-0 shrink-0">
+                        <span class="inline-flex items-center gap-1.5 ${badgeClass} px-3 py-1 rounded-full text-[10px] font-bold border-2 uppercase tracking-wider">
                             <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span> ${labelStatus}
                         </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <a href="detail-laporan-pelapor.html?id=${aduan.id}" class="inline-block bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-slate-700 text-center">Tinjau Log</a>
-                    </td>
-                </tr>
+                        <a href="detail-laporan-pelapor.html?id=${aduan.id}" class="bg-slate-950/60 hover:bg-blue-600 text-slate-300 hover:text-white border-2 border-slate-700 hover:border-blue-500 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 shadow-sm">
+                            Tinjau Log <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
             `;
-            tbody.insertAdjacentHTML('beforeend', row);
+            container.insertAdjacentHTML('beforeend', card);
         });
     }
 }

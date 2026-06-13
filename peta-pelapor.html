@@ -7,18 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
         .leaflet-container {
             z-index: 10;
-            font-family: inherit;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
     </style>
 </head>
-<body class="bg-slate-950 font-sans text-white flex h-screen overflow-hidden relative">
-
-    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-emerald-900/5 rounded-full blur-3xl pointer-events-none"></div>
+<body class="bg-slate-900 text-white flex h-screen overflow-hidden relative">
 
     <!-- Sidebar Warga -->
     <aside class="w-64 bg-slate-900/90 border-r border-slate-800/60 text-white flex flex-col justify-between hidden md:flex z-50 relative">
