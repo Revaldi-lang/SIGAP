@@ -30,6 +30,16 @@
     const isAdminPage = adminPages.includes(pageName);
     const isPelaporPage = pelaporPages.includes(pageName);
     
+    // Auto-redirect jika sudah login dan mengunjungi halaman login
+    if (pageName === 'login.html' && session && session.role === 'admin') {
+        window.location.href = 'sigap.html';
+        return;
+    }
+    if (pageName === 'login-masyarakat.html' && session && session.role === 'pelapor') {
+        window.location.href = 'dashboard-pelapor.html';
+        return;
+    }
+    
     if (isAdminPage) {
         if (!session) {
             alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Admin.");
@@ -65,7 +75,12 @@ if (document.readyState === 'loading') {
 
 function bindLogoutTriggers() {
     document.querySelectorAll('a[href="login.html"], a[href="login-masyarakat.html"]').forEach(btn => {
-        if (btn.querySelector('.fa-right-from-bracket') || btn.title === 'Keluar' || btn.classList.contains('text-red-400') || btn.parentElement.classList.contains('border-t') || btn.innerHTML.includes('Keluar')) {
+        const hasLogoutIcon = btn.querySelector('.fa-right-from-bracket') || btn.querySelector('.fa-right-to-bracket');
+        const hasLogoutTitle = btn.title === 'Keluar' || btn.title === 'Logout';
+        const hasLogoutText = btn.innerHTML.includes('Keluar') || btn.innerHTML.includes('Logout');
+        
+        // Hanya bind jika benar-benar merupakan tombol keluar
+        if (hasLogoutIcon || hasLogoutTitle || hasLogoutText) {
             btn.addEventListener('click', handleLogout);
         }
     });
