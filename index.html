@@ -189,144 +189,61 @@
                 <p class="text-xs text-slate-400 leading-relaxed">SIGAP mengintegrasikan aduan masyarakat dengan ekosistem penanganan dinas secara responsif, cerdas, dan transparan.</p>
             </div>
 
-            <!-- HIGH FIDELITY DEVICE MOCKUPS (NO AI WIREFRAMES) -->
-            <div class="relative w-full max-w-3xl mx-auto flex items-center justify-center h-[260px] md:h-[350px] my-2">
-                
-                <!-- Browser Mockup (Center) -->
-                <div class="absolute w-[72%] md:w-[65%] aspect-video bg-slate-950 rounded-2xl border-[3px] border-slate-800 shadow-2xl z-10 flex flex-col overflow-hidden">
-                    <div class="bg-slate-900 px-3 py-2 flex items-center gap-1.5 border-b border-slate-800/80 shrink-0">
-                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
-                        <div class="bg-slate-950 text-[8px] text-slate-500 px-4 py-0.5 rounded ml-2 flex-1 max-w-[160px] truncate border border-slate-800">sigap.pemda.go.id/dashboard</div>
+            <!-- 3-Column Adjacent Grid (Zero Gap Layout) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+                <!-- Column 1: Dark Slate Box (Fitur 01) -->
+                <div class="bg-slate-950 p-8 flex flex-col justify-between h-[300px] md:h-[360px] text-left">
+                    <div class="space-y-3">
+                        <span class="text-[9px] font-extrabold text-blue-400 tracking-widest bg-blue-500/10 px-2.5 py-1 rounded border border-blue-500/15 uppercase inline-block">Fitur 01</span>
+                        <h4 class="text-base font-extrabold text-white">Pelaporan Instan 2 Menit</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Laporkan kerusakan jalan, penerangan padam, atau saluran air tersumbat langsung dari HP Anda di lokasi kejadian dalam hitungan menit secara instan.
+                        </p>
                     </div>
-                    <div class="p-2.5 bg-slate-950 flex-1 grid grid-cols-12 gap-2 overflow-hidden">
-                        <!-- Mockup Admin Sidebar -->
-                        <div class="col-span-3 bg-slate-900 rounded-lg p-2 space-y-1.5 border border-slate-800 flex flex-col text-[6px] font-bold text-slate-500">
-                            <div class="flex items-center gap-1.5 text-blue-500 bg-blue-500/5 px-1 py-0.5 rounded border border-blue-500/10"><i class="fa-solid fa-chart-line text-[7px]"></i> Dasbor</div>
-                            <div class="flex items-center gap-1.5 px-1 py-0.5"><i class="fa-solid fa-file-invoice text-[7px]"></i> Laporan</div>
-                            <div class="flex items-center gap-1.5 px-1 py-0.5"><i class="fa-solid fa-map-location-dot text-[7px]"></i> Peta Dampak</div>
-                            <div class="flex items-center gap-1.5 px-1 py-0.5"><i class="fa-solid fa-users text-[7px]"></i> Manajemen</div>
-                        </div>
-                        <!-- Mockup Admin Workspace -->
-                        <div class="col-span-9 bg-slate-900 rounded-lg p-2 border border-slate-800 flex flex-col justify-between text-[6px] relative overflow-hidden">
-                            <div class="flex justify-between items-center border-b border-slate-800 pb-1 mb-1 font-bold text-slate-300">
-                                <span>Disposisi Aduan</span>
-                                <span class="text-blue-500 font-bold">17 Aktif</span>
-                            </div>
-                            <!-- Small Stats Row -->
-                            <div class="grid grid-cols-3 gap-1 mb-1.5">
-                                <div class="bg-slate-950 p-1 rounded border border-slate-800 flex justify-between items-center">
-                                    <span class="text-slate-400">Jalan</span>
-                                    <span class="font-extrabold text-blue-500">8</span>
-                                </div>
-                                <div class="bg-slate-950 p-1 rounded border border-slate-800 flex justify-between items-center">
-                                    <span class="text-slate-400">PJU</span>
-                                    <span class="font-extrabold text-amber-500">6</span>
-                                </div>
-                                <div class="bg-slate-950 p-1 rounded border border-slate-800 flex justify-between items-center">
-                                    <span class="text-slate-400">Air</span>
-                                    <span class="font-extrabold text-red-500">3</span>
-                                </div>
-                            </div>
-                            <!-- Mini Card stream -->
-                            <div class="space-y-1 flex-1 flex flex-col justify-end">
-                                <div class="flex items-center justify-between bg-slate-950/60 p-1 rounded border border-slate-800">
-                                    <span class="text-slate-300">#0142 - Jalan Veteran Ambles</span>
-                                    <span class="text-amber-500 bg-amber-500/10 px-1 py-0.2 rounded border border-amber-500/15 uppercase font-bold text-[5px]">Diproses</span>
-                                </div>
-                                <div class="flex items-center justify-between bg-slate-950/60 p-1 rounded border border-slate-800">
-                                    <span class="text-slate-300">#0141 - Tiang PJU Robooh</span>
-                                    <span class="text-emerald-500 bg-emerald-500/10 px-1 py-0.2 rounded border border-emerald-500/15 uppercase font-bold text-[5px]">Selesai</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button onclick="bukaModalAkses()" class="w-max border border-white/20 hover:border-white text-white text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                        Mulai Lapor
+                    </button>
                 </div>
 
-                <!-- Smartphone Mockup (Left - Citizen Form) -->
-                <div class="absolute left-2 md:left-8 bottom-2 w-[22%] sm:w-[18%] aspect-[9/19] bg-slate-950 rounded-2xl border-[3px] border-slate-800 shadow-2xl z-20 overflow-hidden flex flex-col">
-                    <div class="w-12 h-2.5 bg-slate-800 mx-auto mt-1 rounded-full shrink-0 flex items-center justify-center"><span class="w-1 h-1 bg-slate-950 rounded-full"></span></div>
-                    <div class="p-2.5 space-y-1.5 flex-1 flex flex-col justify-between text-[7px] bg-slate-900 mt-1 font-semibold">
-                        <div class="space-y-1 text-slate-400">
-                            <span class="text-[5px] text-slate-500 uppercase font-bold">Kategori Aduan</span>
-                            <div class="bg-slate-950 p-1 rounded text-slate-300 border border-slate-800 flex justify-between items-center text-[5px]">
-                                <span>Jalan & Jembatan</span>
-                                <i class="fa-solid fa-chevron-down text-slate-600"></i>
-                            </div>
-                            <span class="text-[5px] text-slate-500 uppercase font-bold block mt-1">Uraian Masalah</span>
-                            <div class="bg-slate-950 p-1 rounded border border-slate-800 h-8 leading-normal text-[5px]">
-                                Lubang aspal jalan...
-                            </div>
-                            <span class="text-[5px] text-slate-500 uppercase font-bold block mt-1">Foto Kerusakan</span>
-                            <div class="bg-slate-950 p-1 rounded border border-slate-800 flex items-center justify-center gap-1 text-slate-600 h-5">
-                                <i class="fa-solid fa-image"></i> <span>jalan.jpg</span>
-                            </div>
+                <!-- Column 2: Photo with Overlaid Text & Logo (Fitur 02) -->
+                <div class="relative h-[300px] md:h-[360px] overflow-hidden flex flex-col justify-between p-8 text-left group">
+                    <!-- Background Image -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80')"></div>
+                    <!-- Gradient Dark Overlay to ensure text readability -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-slate-950/40"></div>
+                    
+                    <!-- Content (Relative Z-Index) -->
+                    <div class="relative z-10 space-y-3">
+                        <span class="text-[9px] font-extrabold text-blue-400 tracking-widest bg-blue-500/10 px-2.5 py-1 rounded border border-blue-500/15 uppercase inline-block">Fitur 02</span>
+                        <h4 class="text-base font-extrabold text-white">Transparansi Lacak Real-Time</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Pantau kemajuan laporan Anda secara terbuka dari tahap verifikasi administratif, disposisi ke dinas sektoral, hingga pengerjaan operasional di lapangan.
+                        </p>
+                    </div>
+                    
+                    <!-- Bottom-Left Glass Overlay Icon & Button -->
+                    <div class="relative z-10 flex items-center justify-between w-full mt-4">
+                        <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 flex items-center justify-center shadow-lg shrink-0">
+                            <img src="sigap.png" alt="SIGAP Logo" class="h-5 w-auto object-contain" onerror="this.src='sigap.jpg'">
                         </div>
-                        <button class="w-full bg-blue-600 text-white rounded py-1 text-[5px] flex items-center justify-center gap-1 font-bold">
-                            KIRIM LAPORAN <i class="fa-solid fa-paper-plane text-[4px]"></i>
+                        <button onclick="aksesProteksiLacak(event)" class="w-max border border-white/20 hover:border-white text-white text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                            Lacak Berkas
                         </button>
                     </div>
                 </div>
 
-                <!-- Smartphone Mockup (Right - GPS Location) -->
-                <div class="absolute right-2 md:right-8 bottom-6 w-[22%] sm:w-[18%] aspect-[9/19] bg-slate-950 rounded-2xl border-[3px] border-slate-800 shadow-2xl z-20 overflow-hidden flex flex-col">
-                    <div class="w-12 h-2.5 bg-slate-800 mx-auto mt-1 rounded-full shrink-0 flex items-center justify-center"><span class="w-1 h-1 bg-slate-950 rounded-full"></span></div>
-                    <div class="flex-1 bg-slate-900 relative mt-1 overflow-hidden p-1 flex flex-col justify-between">
-                        <!-- Styled road grids -->
-                        <div class="absolute inset-0 opacity-20 pointer-events-none">
-                            <div class="absolute inset-y-0 left-1/3 w-[1.5px] bg-slate-700"></div>
-                            <div class="absolute inset-y-0 right-1/4 w-[1.5px] bg-slate-700"></div>
-                            <div class="absolute inset-x-0 top-1/2 h-[1.5px] bg-slate-700"></div>
-                        </div>
-                        
-                        <!-- Radar Pin -->
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                            <div class="relative w-3.5 h-3.5 flex items-center justify-center">
-                                <span class="absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-60 animate-ping"></span>
-                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-rose-600"></span>
-                            </div>
-                            <span class="bg-slate-950 text-[3.5px] text-white px-0.8 py-0.2 rounded border border-slate-800 mt-0.5 uppercase tracking-wide">Jalan Ambles</span>
-                        </div>
-                        
-                        <!-- Top status overlay -->
-                        <div class="relative z-10 flex justify-between items-center bg-slate-950/80 p-0.8 rounded text-[4.5px] text-slate-400 border border-slate-800">
-                            <span>Sistem Peta Warga</span>
-                            <i class="fa-solid fa-location-crosshairs text-blue-500"></i>
-                        </div>
-                        
-                        <!-- Bottom status overlay -->
-                        <div class="relative z-10 bg-slate-950/90 p-0.8 rounded border border-slate-800 text-[4px] text-slate-500">
-                            <span>GPS Koordinat Terkunci</span>
-                        </div>
+                <!-- Column 3: Sky Blue Box (Fitur 03) -->
+                <div class="bg-[#78b3e3] p-8 flex flex-col justify-between h-[300px] md:h-[360px] text-left">
+                    <div class="space-y-3">
+                        <span class="text-[9px] font-extrabold text-slate-950 tracking-widest bg-white/30 px-2.5 py-1 rounded border border-white/10 uppercase inline-block">Fitur 03</span>
+                        <h4 class="text-base font-extrabold text-slate-950">Peta Spasial & Dampak</h4>
+                        <p class="text-xs text-slate-900 leading-relaxed font-semibold">
+                            Sistem pemetaan digital berbasis Leaflet mempermudah pemerintah daerah memetakan sebaran kerusakan guna merumuskan skala prioritas kerja yang akurat.
+                        </p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Bento grid statistics counters below -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
-                <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800/80 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition duration-300 group">
-                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-base mb-3 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-bolt-lightning"></i>
-                    </div>
-                    <h5 class="font-bold text-xs text-slate-100 mb-1.5">Pelaporan Instan</h5>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Laporkan kerusakan infrastruktur daerah seperti jalan berlubang atau jembatan rusak kurang dari 2 menit lewat HP.</p>
-                </div>
-                
-                <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800/80 hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5 transition duration-300 group">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-base mb-3 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
-                    <h5 class="font-bold text-xs text-slate-100 mb-1.5">Transparansi Penuh</h5>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Pantau perkembangan status berkas laporan Anda secara real-time dari verifikasi awal hingga eksekusi lapangan.</p>
-                </div>
-                
-                <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800/80 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/5 transition duration-300 group">
-                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base mb-3 group-hover:bg-purple-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                    </div>
-                    <h5 class="font-bold text-xs text-slate-100 mb-1.5">Pemetaan Akurat</h5>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">Geolokasi presisi mempermudah regu dinas memetakan titik kerusakan utama secara efisien untuk perbaikan daerah.</p>
+                    <button onclick="aksesProteksiPeta(event)" class="w-max border border-slate-950/30 hover:border-slate-950 text-slate-950 text-[9px] font-bold py-2 px-4 rounded transition uppercase tracking-wider focus:outline-none">
+                        Lihat Peta Dampak
+                    </button>
                 </div>
             </div>
         </div>
