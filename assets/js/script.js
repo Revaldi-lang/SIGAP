@@ -206,10 +206,29 @@ function getUsers() {
     if (!localStorage.getItem('sigap_users')) {
         localStorage.setItem('sigap_users', JSON.stringify(defaultUsers));
     }
-    const users = JSON.parse(localStorage.getItem('sigap_users'));
+    let users = JSON.parse(localStorage.getItem('sigap_users'));
+    
+    // Pastikan semua defaultUsers tersinkronisasi dan aktif di local storage
+    let updated = false;
+    defaultUsers.forEach(defUser => {
+        const index = users.findIndex(u => u.email.toLowerCase() === defUser.email.toLowerCase());
+        if (index === -1) {
+            users.push(defUser);
+            updated = true;
+        } else {
+            // Jika user default ada tapi password, role, atau statusnya tidak sinkron, perbarui
+            if (users[index].password !== defUser.password || 
+                users[index].role !== defUser.role || 
+                users[index].status !== defUser.status) {
+                users[index].password = defUser.password;
+                users[index].role = defUser.role;
+                users[index].status = defUser.status;
+                updated = true;
+            }
+        }
+    });
     
     // Migrasi: Pastikan semua pengguna default/lama di localStorage memiliki sandi
-    let updated = false;
     users.forEach(user => {
         if (!user.password) {
             const matchedDefault = defaultUsers.find(d => d.email === user.email);
@@ -280,9 +299,11 @@ function handleLogin(event) {
         return;
     }
 
-    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memverifikasi...';
-    btn.classList.add('opacity-80', 'cursor-not-allowed');
-    btn.disabled = true;
+    if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memverifikasi...';
+        btn.classList.add('opacity-80', 'cursor-not-allowed');
+        btn.disabled = true;
+    }
 
     setTimeout(() => {
         const sessionData = {
@@ -317,9 +338,11 @@ function handleLoginMasyarakat(event) {
         return;
     }
 
-    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mengautentikasi...';
-    btn.classList.add('opacity-80', 'cursor-not-allowed');
-    btn.disabled = true;
+    if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Mengautentikasi...';
+        btn.classList.add('opacity-80', 'cursor-not-allowed');
+        btn.disabled = true;
+    }
 
     setTimeout(() => {
         const sessionData = {
