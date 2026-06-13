@@ -462,25 +462,25 @@ function renderDashboard() {
 
             const row = `
                 <tr class="aduan-row hover:bg-gray-50 transition">
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4">
                         <p class="font-medium text-gray-800">${aduan.pelapor}</p>
                         <span class="text-xs text-gray-400">${aduan.waktu}</span>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4">
                         <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-medium">${aduan.kategoriLabel}</span>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4">
                         <p class="text-gray-700 max-w-xs truncate">${aduan.lokasi}</p>
                         <a href="peta.html" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
                             <i class="fa-solid fa-location-dot"></i> Lihat di Peta
                         </a>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4">
                         <span class="inline-flex items-center gap-1.5 ${badgeClass} px-2 py-1 rounded-md text-xs font-semibold">
                             <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span> ${labelStatus}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-right space-x-2">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-right space-x-2">
                         ${aduan.status === 'baru' ? `<button onclick="prosesLaporanDasbor('${aduan.id}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>` : ''}
                         ${aduan.status === 'proses' ? `<button onclick="selesaikanLaporanDasbor('${aduan.id}')" class="bg-green-50 text-green-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-green-600 hover:text-white transition">Selesaikan</button>` : ''}
                         <a href="detail-laporan.html?id=${aduan.id}" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
@@ -547,25 +547,25 @@ function renderLaporanTable() {
 
         const row = `
             <tr data-kategori="${aduan.kategori}" data-status="${aduan.status}" class="laporan-row hover:bg-gray-50 transition">
-                <td class="px-6 py-4 font-mono font-bold text-gray-400">#${aduan.id}</td>
-                <td class="px-6 py-4">
+                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#${aduan.id}</td>
+                <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <p class="font-semibold text-gray-900 target-pencarian">${aduan.pelapor}</p>
                     <span class="text-xs text-gray-400">${aduan.waktu}</span>
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">${aduan.kategoriLabel}</span>
                     <p class="text-gray-600 text-xs max-w-xs truncate">${aduan.deskripsi}</p>
                 </td>
-                <td class="px-6 py-4 text-gray-600">
+                <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                     <p class="font-medium target-pencarian">${aduan.lokasi}</p>
                     <span class="text-xs text-gray-400">${aduan.wilayah}</span>
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <span class="inline-flex items-center gap-1 ${badgeClass} px-2 py-1 rounded-md text-xs font-semibold">
                         <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span> ${labelStatus}
                     </span>
                 </td>
-                <td class="px-6 py-4 text-center">
+                <td class="px-4 sm:px-6 py-3 sm:py-4 text-center">
                     <a href="detail-laporan.html?id=${aduan.id}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition text-center">Tinjau</a>
                 </td>
             </tr>
@@ -1790,7 +1790,74 @@ window.addEventListener('click', function(event) {
 
 // Auto-run updateNavbarSession on DOM load
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', updateNavbarSession);
+    document.addEventListener('DOMContentLoaded', () => {
+        updateNavbarSession();
+        initMobileSidebar();
+    });
 } else {
     updateNavbarSession();
+    initMobileSidebar();
+}
+
+// =========================================
+// 16. MOBILE SIDEBAR NAVIGATION
+// =========================================
+function initMobileSidebar() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    
+    if (!btn || !sidebar) return;
+    
+    // Create overlay dynamically if it doesn't exist
+    let overlay = document.getElementById('sidebar-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'sidebar-overlay';
+        overlay.className = 'fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden transition-opacity duration-300 opacity-0';
+        document.body.appendChild(overlay);
+    }
+    
+    function toggleSidebar() {
+        const isOpen = sidebar.classList.contains('translate-x-0');
+        const icon = btn.querySelector('i');
+        
+        if (isOpen) {
+            // Close
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('-translate-x-full');
+            
+            // Hide Overlay
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+            
+            // Toggle Icon
+            if (icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        } else {
+            // Open
+            sidebar.classList.remove('-translate-x-full');
+            sidebar.classList.add('translate-x-0');
+            
+            // Show Overlay
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                overlay.classList.add('opacity-100');
+            }, 10);
+            
+            // Toggle Icon
+            if (icon) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        }
+    }
+    
+    btn.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
 }

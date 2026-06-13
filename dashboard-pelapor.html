@@ -22,7 +22,7 @@
 <body class="bg-slate-900 text-white flex h-screen overflow-hidden relative">
 
     <!-- Sidebar Warga -->
-    <aside class="w-64 bg-slate-950/60 border-r border-slate-900/60 text-white flex flex-col justify-between hidden md:flex z-10 backdrop-blur-md">
+    <aside id="sidebar" class="w-64 bg-slate-950/60 border-r border-slate-900/60 text-white flex flex-col justify-between fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out backdrop-blur-md">
         <div>
             <a href="index.html" class="p-5 flex items-center gap-3 border-b border-slate-900/60 hover:bg-slate-900/30 transition block">
                 <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.src='sigap.jpg'">
@@ -68,7 +68,7 @@
         <!-- Header -->
         <header class="bg-[#090d16]/30 border-b border-slate-900/60 px-6 py-4 flex items-center justify-between backdrop-blur-md sticky top-0 z-40">
             <div class="flex items-center gap-4">
-                <button class="text-slate-400 md:hidden block hover:text-white">
+                <button id="mobile-menu-btn" class="text-slate-400 md:hidden block hover:text-white focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
                 <h2 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
@@ -145,10 +145,10 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 <!-- Stat Card 1 -->
-                <div class="bg-slate-900/35 p-5 rounded-2xl border-2 border-slate-700 hover:border-blue-500/50 glow-card transition duration-300 flex items-center justify-between">
+                <div class="bg-slate-900/35 p-4 sm:p-5 rounded-2xl border-2 border-slate-700 hover:border-blue-500/50 glow-card transition duration-300 flex items-center justify-between">
                     <div>
                         <span class="text-[10px] text-slate-500 font-bold tracking-wider uppercase font-mono">Aduan Saya</span>
-                        <h3 id="stat-total" class="text-3xl font-extrabold mt-1 text-white tracking-tight">0</h3>
+                        <h3 id="stat-total" class="text-2xl sm:text-3xl font-extrabold mt-1 text-white tracking-tight">0</h3>
                     </div>
                     <div class="bg-blue-500/5 text-blue-400 p-3 rounded-xl border-2 border-blue-500/20">
                         <i class="fa-solid fa-folder-open text-lg"></i>
@@ -156,10 +156,10 @@
                 </div>
 
                 <!-- Stat Card 2 -->
-                <div class="bg-slate-900/35 p-5 rounded-2xl border-2 border-slate-700 hover:border-red-500/50 glow-card transition duration-300 flex items-center justify-between">
+                <div class="bg-slate-900/35 p-4 sm:p-5 rounded-2xl border-2 border-slate-700 hover:border-red-500/50 glow-card transition duration-300 flex items-center justify-between">
                     <div>
                         <span class="text-[10px] text-slate-500 font-bold tracking-wider uppercase font-mono">Baru Dikirim</span>
-                        <h3 id="stat-baru" class="text-3xl font-extrabold mt-1 text-red-400 tracking-tight">0</h3>
+                        <h3 id="stat-baru" class="text-2xl sm:text-3xl font-extrabold mt-1 text-red-400 tracking-tight">0</h3>
                     </div>
                     <div class="bg-red-500/5 text-red-400 p-3 rounded-xl border-2 border-red-500/20">
                         <i class="fa-solid fa-circle-exclamation text-lg"></i>
@@ -167,10 +167,10 @@
                 </div>
 
                 <!-- Stat Card 3 -->
-                <div class="bg-slate-900/35 p-5 rounded-2xl border-2 border-slate-700 hover:border-amber-500/50 glow-card transition duration-300 flex items-center justify-between">
+                <div class="bg-slate-900/35 p-4 sm:p-5 rounded-2xl border-2 border-slate-700 hover:border-amber-500/50 glow-card transition duration-300 flex items-center justify-between">
                     <div>
                         <span class="text-[10px] text-slate-500 font-bold tracking-wider uppercase font-mono">Diproses</span>
-                        <h3 id="stat-proses" class="text-3xl font-extrabold mt-1 text-amber-400 tracking-tight">0</h3>
+                        <h3 id="stat-proses" class="text-2xl sm:text-3xl font-extrabold mt-1 text-amber-400 tracking-tight">0</h3>
                     </div>
                     <div class="bg-amber-500/5 text-amber-400 p-3 rounded-xl border-2 border-amber-500/20">
                         <i class="fa-solid fa-spinner text-lg animate-spin"></i>
@@ -178,10 +178,10 @@
                 </div>
 
                 <!-- Stat Card 4 -->
-                <div class="bg-slate-900/35 p-5 rounded-2xl border-2 border-slate-700 hover:border-green-500/50 glow-card transition duration-300 flex items-center justify-between">
+                <div class="bg-slate-900/35 p-4 sm:p-5 rounded-2xl border-2 border-slate-700 hover:border-green-500/50 glow-card transition duration-300 flex items-center justify-between">
                     <div>
                         <span class="text-[10px] text-slate-500 font-bold tracking-wider uppercase font-mono">Selesai</span>
-                        <h3 id="stat-selesai" class="text-3xl font-extrabold mt-1 text-green-400 tracking-tight">0</h3>
+                        <h3 id="stat-selesai" class="text-2xl sm:text-3xl font-extrabold mt-1 text-green-400 tracking-tight">0</h3>
                     </div>
                     <div class="bg-green-500/5 text-green-400 p-3 rounded-xl border-2 border-green-500/20">
                         <i class="fa-solid fa-circle-check text-lg"></i>
