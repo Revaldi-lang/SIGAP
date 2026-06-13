@@ -1646,3 +1646,151 @@ function simpanProfilSandiPelapor(event) {
         btn.disabled = false;
     }, 1200);
 }
+
+// =========================================
+// 15. DYNAMIC NAVBAR USER PROFILE (index.html)
+// =========================================
+function updateNavbarSession() {
+    const desktopContainer = document.getElementById('nav-portal-container-desktop');
+    const mobileContainer = document.getElementById('nav-portal-container-mobile');
+    
+    // Only proceed if at least one container is found
+    if (!desktopContainer && !mobileContainer) return;
+    
+    const sessionStr = localStorage.getItem('sigap_session');
+    if (!sessionStr) return; // Keep default "Masuk Portal" button
+    
+    try {
+        const session = JSON.parse(sessionStr);
+        if (!session || !session.username || !session.role) return;
+        
+        // Calculate initials
+        const nameParts = session.username.trim().split(/\s+/);
+        const initials = nameParts.map(x => x[0]).join('').substring(0, 2).toUpperCase();
+        
+        // Setup URLs and labels based on role
+        let dashboardUrl = 'dashboard-pelapor.html';
+        let profileUrl = 'pengaturan-profil-pelapor.html';
+        let roleLabel = 'Masyarakat / Pelapor';
+        
+        if (session.role === 'admin') {
+            dashboardUrl = 'sigap.html';
+            profileUrl = 'pengaturan-profil.html';
+            roleLabel = 'Administrator';
+        }
+        
+        // Render desktop profile dropdown
+        if (desktopContainer) {
+            desktopContainer.innerHTML = `
+                <div class="relative inline-block text-left" id="user-profile-menu">
+                    <button type="button" onclick="toggleProfileDropdown(event)" class="flex items-center gap-3 bg-white hover:bg-slate-50 border border-[#E6DFD5] rounded-xl px-3 py-1.5 transition duration-200 focus:outline-none">
+                        <div class="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-inner tracking-wider">
+                            ${initials}
+                        </div>
+                        <div class="text-left hidden lg:block">
+                            <p class="text-[11px] font-bold text-[#1E1B18] leading-tight max-w-[120px] truncate">${session.username}</p>
+                            <p class="text-[9px] text-[#6B645C] font-semibold leading-tight">${roleLabel}</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-[#6B645C] ml-1"></i>
+                    </button>
+                    
+                    <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 origin-top-right divide-y divide-[#E6DFD5] rounded-2xl bg-white border border-[#E6DFD5] shadow-lg ring-1 ring-black/5 focus:outline-none z-50 transform scale-95 opacity-0 transition-all duration-200">
+                        <div class="px-4 py-3">
+                            <p class="text-[10px] text-[#6B645C] font-semibold">Masuk sebagai</p>
+                            <p class="text-xs font-bold text-[#1E1B18] truncate mt-0.5">${session.username}</p>
+                            <span class="inline-flex items-center rounded-md bg-blue-50 px-1.5 py-0.5 text-[9px] font-bold text-blue-700 ring-1 ring-inset ring-blue-700/10 mt-1.5">${roleLabel}</span>
+                        </div>
+                        <div class="py-1">
+                            <a href="${dashboardUrl}" class="group flex items-center px-4 py-2 text-xs text-[#1E1B18] hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                                <i class="fa-solid fa-gauge text-slate-400 group-hover:text-blue-600 mr-2.5 text-xs w-4"></i>
+                                Dasbor Anda
+                            </a>
+                            <a href="${profileUrl}" class="group flex items-center px-4 py-2 text-xs text-[#1E1B18] hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                                <i class="fa-solid fa-user-gear text-slate-400 group-hover:text-blue-600 mr-2.5 text-xs w-4"></i>
+                                Pengaturan Profil
+                            </a>
+                        </div>
+                        <div class="py-1">
+                            <a href="#" onclick="handleLogout(event)" class="group flex items-center px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">
+                                <i class="fa-solid fa-right-from-bracket text-red-400 group-hover:text-red-600 mr-2.5 text-xs w-4"></i>
+                                Keluar Sesi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Render mobile profile options
+        if (mobileContainer) {
+            mobileContainer.innerHTML = `
+                <div class="pt-3 border-t border-[#E6DFD5] mt-3 space-y-2">
+                    <div class="flex items-center gap-3 px-1 py-2">
+                        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center shadow-inner tracking-wider">
+                            ${initials}
+                        </div>
+                        <div class="text-left">
+                            <p class="text-xs font-bold text-[#1E1B18]">${session.username}</p>
+                            <p class="text-[10px] text-[#6B645C] font-semibold">${roleLabel}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        <a href="${dashboardUrl}" onclick="toggleMobileMenu()" class="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-[#E6DFD5] text-xs font-bold text-[#1E1B18] py-2.5 rounded-xl transition text-center">
+                            <i class="fa-solid fa-gauge text-blue-600"></i> Dasbor
+                        </a>
+                        <a href="${profileUrl}" onclick="toggleMobileMenu()" class="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-[#E6DFD5] text-xs font-bold text-[#1E1B18] py-2.5 rounded-xl transition text-center">
+                            <i class="fa-solid fa-user-gear text-blue-600"></i> Profil
+                        </a>
+                    </div>
+                    <button onclick="handleLogout(event)" class="w-full flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold py-2.5 rounded-xl transition text-center border border-red-200">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar Sesi
+                    </button>
+                </div>
+            `;
+        }
+    } catch (e) {
+        console.error("Error parsing user session in navbar:", e);
+    }
+}
+
+function toggleProfileDropdown(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('profile-dropdown-menu');
+    if (!dropdown) return;
+    
+    const isHidden = dropdown.classList.contains('hidden');
+    if (isHidden) {
+        dropdown.classList.remove('hidden');
+        // Let it render first before applying transition classes
+        setTimeout(() => {
+            dropdown.classList.remove('scale-95', 'opacity-0');
+            dropdown.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    } else {
+        dropdown.classList.remove('scale-100', 'opacity-100');
+        dropdown.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            dropdown.classList.add('hidden');
+        }, 200);
+    }
+}
+
+// Close dropdown if clicked outside
+window.addEventListener('click', function(event) {
+    const menu = document.getElementById('user-profile-menu');
+    const dropdown = document.getElementById('profile-dropdown-menu');
+    if (menu && dropdown && !menu.contains(event.target)) {
+        dropdown.classList.remove('scale-100', 'opacity-100');
+        dropdown.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            dropdown.classList.add('hidden');
+        }, 200);
+    }
+});
+
+// Auto-run updateNavbarSession on DOM load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateNavbarSession);
+} else {
+    updateNavbarSession();
+}

@@ -59,9 +59,11 @@
             
             <!-- Right Actions -->
             <div class="flex items-center gap-4">
-                <button onclick="bukaModalAkses()" class="hidden sm:inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-blue-600/10 uppercase tracking-wider">
-                    Masuk Portal
-                </button>
+                <div id="nav-portal-container-desktop" class="hidden sm:inline-block">
+                    <button onclick="bukaModalAkses()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-blue-600/10 uppercase tracking-wider">
+                        Masuk Portal
+                    </button>
+                </div>
                 
                 <!-- Burger Button -->
                 <button onclick="toggleMobileMenu()" class="md:hidden flex items-center justify-center p-2 text-[#1E1B18] hover:bg-blue-600/5 rounded-lg transition focus:outline-none">
@@ -76,7 +78,7 @@
             <a href="#alur-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">Cara Melapor</a>
             <a href="#proses-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">SOP Kerja</a>
             <a href="#suara-warga-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">Suara Warga</a>
-            <div class="pt-2">
+            <div id="nav-portal-container-mobile" class="pt-2">
                 <button onclick="bukaModalAkses(); toggleMobileMenu();" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl transition text-center uppercase tracking-wider">
                     Masuk Portal
                 </button>
@@ -561,6 +563,7 @@
     </div>
 
     <!-- 10. SCRIPTS -->
+    <script src="assets/js/script.js"></script>
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
