@@ -329,7 +329,7 @@ function handleLogin(event) {
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         window.location.href = 'sigap.html';
-    }, 1200);
+    }, 200);
 }
 
 function handleLoginMasyarakat(event) {
@@ -369,7 +369,7 @@ function handleLoginMasyarakat(event) {
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses Dasbor Warga.");
         window.location.href = 'dashboard-pelapor.html';
-    }, 1200);
+    }, 200);
 }
 
 function handleRegister(event) {
@@ -416,7 +416,7 @@ function handleRegister(event) {
     setTimeout(() => {
         alert("Pendaftaran Berhasil!\nAkun Anda telah terdaftar dan menunggu verifikasi admin. Silakan masuk.");
         window.location.href = 'login-masyarakat.html';
-    }, 1500);
+    }, 300);
 }
 
 // =========================================
@@ -1122,7 +1122,7 @@ function handleResetSandi(event) {
         btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Link';
         btn.classList.remove('opacity-80', 'cursor-not-allowed');
         btn.disabled = false;
-    }, 1200);
+    }, 200);
 }
 
 // =========================================
@@ -1599,7 +1599,7 @@ function simpanProfilUmumPelapor(event) {
             const initials = name.split(' ').map(x => x[0]).join('').substring(0, 2).toUpperCase();
             avatarInitials.innerText = initials;
         }
-    }, 1200);
+    }, 200);
 }
 
 function simpanProfilSandiPelapor(event) {
@@ -1644,7 +1644,7 @@ function simpanProfilSandiPelapor(event) {
         event.target.reset(); 
         btn.innerHTML = '<i class="fa-solid fa-key"></i> Perbarui Kata Sandi';
         btn.disabled = false;
-    }, 1200);
+    }, 200);
 }
 
 // =========================================
