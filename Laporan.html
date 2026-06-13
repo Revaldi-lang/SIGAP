@@ -24,10 +24,10 @@
             </div>
             
             <nav class="p-4 space-y-1">
-                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="sigap.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
                 </a>
-                <a href="Laporan.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="laporan.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
                     <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
                 </a>
@@ -151,7 +151,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <a href="DetailLaporan.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition text-center">Tinjau</a>
+                                    <a href="detail-laporan.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition text-center">Tinjau</a>
                                 </td>
                             </tr>
 
@@ -230,60 +230,7 @@
         </div>
     </main>
 
-    <script>
-        function jalankanFilterLaporan() {
-            const kataKunci = document.getElementById('searchAduan').value.toLowerCase();
-            const kategoriTerpilih = document.getElementById('filterKategori').value;
-            const statusTerpilih = document.getElementById('filterStatus').value;
-            
-            // Mengambil semua baris data laporan di dalam tabel
-            const semuaBaris = document.querySelectorAll('#tbody-laporan .laporan-row');
-            let jumlahDataTampil = 0;
 
-            semuaBaris.forEach(row => {
-                const kategoriBaris = row.getAttribute('data-kategori');
-                const statusBaris = row.getAttribute('data-status');
-                
-                // Menggabungkan teks nama pelapor dan lokasi wilayah untuk dicocokkan
-                const targetTeks = Array.from(row.querySelectorAll('.target-pencarian'))
-                                        .map(el => el.innerText.toLowerCase())
-                                        .join(' ');
-
-                const cocokKataKunci = targetTeks.includes(kataKunci);
-                const cocokKategori = (kategoriTerpilih === 'semua') || (kategoriBaris === kategoriTerpilih);
-                const cocokStatus = (statusTerpilih === 'semua') || (statusBaris === statusTerpilih);
-
-                // Baris akan tampil hanya jika lolos ketiga filter di atas
-                if (cocokKataKunci && cocokKategori && cocokStatus) {
-                    row.style.display = "";
-                    jumlahDataTampil++;
-                } else {
-                    row.style.display = "none";
-                }
-            });
-
-            // Mengubah teks info angka penampilan data di bawah tabel secara dinamis
-            const counterElement = document.getElementById('count-visible');
-            if (counterElement) {
-                counterElement.innerText = jumlahDataTampil;
-            }
-        }
-
-        // Memasang trigger event agar filter berjalan otomatis saat diinput/diubah
-        document.getElementById('searchAduan').addEventListener('input', jalankanFilterLaporan);
-        document.getElementById('filterKategori').addEventListener('change', jalankanFilterLaporan);
-        document.getElementById('filterStatus').addEventListener('change', jalankanFilterLaporan);
-
-        // Fungsi Tombol Reset Filter
-        function resetFilters() {
-            document.getElementById('searchAduan').value = '';
-            document.getElementById('filterKategori').value = 'semua';
-            document.getElementById('filterStatus').value = 'semua';
-            
-            jalankanFilterLaporan(); 
-            alert('Semua filter pencarian dibersihkan.');
-        }
-    </script>
     
     <script src="assets/js/script.js"></script>
 </body>

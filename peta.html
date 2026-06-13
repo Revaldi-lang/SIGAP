@@ -32,7 +32,7 @@
             </div>
             
             <nav class="p-4 space-y-1">
-                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="sigap.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
                 </a>
                 <a href="laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
@@ -131,94 +131,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="assets/js/script.js"></script>
     
-    <script>
-        // 1. Inisialisasi Peta
-        var map = L.map('map', {
-            zoomControl: false 
-        }).setView([-7.983908, 112.621391], 13);
 
-        L.control.zoom({
-            position: 'bottomright'
-        }).addTo(map);
-
-        // 2. Tambahkan Layer Peta
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors - Proyek SIGAP'
-        }).addTo(map);
-
-        // 3. Konfigurasi Warna Pin Marker
-        function createIcon(color) {
-            return L.divIcon({
-                className: 'custom-div-icon',
-                html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
-            });
-        }
-
-        var iconMerah = createIcon('#ef4444'); 
-        var iconKuning = createIcon('#f59e0b'); 
-        var iconHijau = createIcon('#22c55e'); 
-
-        // 4. Data Aduan Masuk
-        var laporanMasuk = [
-            { id: "#0148", lat: -7.97662, lng: 112.63263, kategori: "Jalan Berlubang", status: "baru", pelapor: "Budi Santoso", warna: iconMerah },
-            { id: "#0147", lat: -7.96210, lng: 112.62510, kategori: "Penerangan Jalan", status: "proses", pelapor: "Siti Rahma", warna: iconKuning },
-            { id: "#0146", lat: -7.99320, lng: 112.61890, kategori: "Drainase Rusak", status: "selesai", pelapor: "Ahmad Dhani", warna: iconHijau },
-            { id: "#0149", lat: -7.98100, lng: 112.63500, kategori: "Fasilitas Publik", status: "baru", pelapor: "Diana Putri", warna: iconMerah }
-        ];
-
-        // 5. Buat Wadah (Layer Group) Khusus untuk Pin
-        var markerLayer = L.layerGroup().addTo(map);
-
-        // 6. Fungsi Utama Filter & Render Pin
-        function renderPeta() {
-            markerLayer.clearLayers(); // Bersihkan peta sebelum pasang pin baru
-
-            var showBaru = document.getElementById('filter-baru').checked;
-            var showProses = document.getElementById('filter-proses').checked;
-            var showSelesai = document.getElementById('filter-selesai').checked;
-
-            laporanMasuk.forEach(function(laporan) {
-                var isVisible = 
-                    (laporan.status === 'baru' && showBaru) ||
-                    (laporan.status === 'proses' && showProses) ||
-                    (laporan.status === 'selesai' && showSelesai);
-
-                if (isVisible) {
-                    var marker = L.marker([laporan.lat, laporan.lng], {icon: laporan.warna});
-                    
-                    var statusText = laporan.status === 'baru' ? '<span class="text-red-600 font-bold">Baru Masuk</span>' : 
-                                     laporan.status === 'proses' ? '<span class="text-amber-500 font-bold">Sedang Diproses</span>' : 
-                                     '<span class="text-green-600 font-bold">Selesai</span>';
-
-                    // Menghapus tanda # agar URL Parameter rapi (?id=0148)
-                    var idUrl = laporan.id.replace('#', '');
-
-                    var popupContent = `
-                        <div class="font-sans text-sm">
-                            <p class="font-mono text-xs text-gray-400 font-bold">${laporan.id}</p>
-                            <h4 class="font-bold text-gray-800 text-base mb-1">${laporan.kategori}</h4>
-                            <p class="text-gray-600 text-xs mb-2">Dilaporkan oleh: ${laporan.pelapor}</p>
-                            <p class="text-xs mb-2">Status: ${statusText}</p>
-                            <a href="detail-laporan.html?id=${idUrl}" class="block w-full text-center bg-blue-600 text-white py-1.5 rounded-md text-xs font-semibold hover:bg-blue-700 mt-2">Lihat Detail</a>
-                        </div>
-                    `;
-                    
-                    marker.bindPopup(popupContent);
-                    markerLayer.addLayer(marker); 
-                }
-            });
-        }
-
-        // 7. Jalankan pertama kali saat halaman dibuka
-        renderPeta();
-
-        // 8. Pasang event listener pada checkbox
-        document.getElementById('filter-baru').addEventListener('change', renderPeta);
-        document.getElementById('filter-proses').addEventListener('change', renderPeta);
-        document.getElementById('filter-selesai').addEventListener('change', renderPeta);
-    </script>
 </body>
 </html>

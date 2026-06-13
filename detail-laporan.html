@@ -26,10 +26,10 @@
             </div>
             
             <nav class="p-4 space-y-1">
-                <a href="SIGAP.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="sigap.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
                 </a>
-                <a href="Laporan.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="laporan.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
                     <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
                 </a>
@@ -61,7 +61,7 @@
         
         <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
             <div class="flex items-center gap-4">
-                <a href="Laporan.html" class="text-gray-500 hover:text-gray-800 transition px-2 py-1 bg-gray-100 rounded-lg text-sm flex items-center gap-1">
+                <a href="laporan.html" class="text-gray-500 hover:text-gray-800 transition px-2 py-1 bg-gray-100 rounded-lg text-sm flex items-center gap-1">
                     <i class="fa-solid fa-arrow-left"></i> Kembali
                 </a>
                 <h2 class="text-xl font-bold text-gray-800">Detail Validasi Aduan</h2>
@@ -188,57 +188,8 @@
         </div>
     </main>
 
-    <script>
-        function updateStatusAduan(event) {
-            event.preventDefault();
-            const statusSelect = document.getElementById('inputStatus').value;
-            const badge = document.getElementById('status-badge');
-            
-            if(statusSelect === "proses") {
-                badge.className = "inline-flex items-center gap-1.5 bg-amber-50 text-amber-600 px-3 py-1 rounded-full text-xs font-bold border border-amber-200";
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-500 animate-spin"></span> SEDANG DIPROSES';
-                alert('Sukses! Status aduan berhasil diperbarui ke "Sedang Diproses". Notifikasi pembaruan status real-time telah dikirimkan ke aplikasi mobile milik Budi Santoso.');
-            } else if(statusSelect === "selesai") {
-                badge.className = "inline-flex items-center gap-1.5 bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-200";
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-green-500"></span> SELESAI DIPERBAIKI';
-                alert('Sukses! Status laporan ditutup dengan hasil "Selesai Diperbaiki". Dokumen laporan diarsipkan.');
-            } else {
-                alert('Status aduan tetap berada dalam antrean baru.');
-            }
-        }
-    </script>
+    </main>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
-    <script>
-        // 1. Inisialisasi Peta pada koordinat lokasi aduan (contoh: Jl. Merdeka)
-        // Set view: [Latitude, Longitude], Zoom level (16 agar cukup dekat/detail)
-        var mapDetail = L.map('mapDetail').setView([-7.96662, 112.63263], 16);
-
-        // 2. Tambahkan Layer Peta dari OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(mapDetail);
-
-        // 3. Buat Custom Icon Pin berwarna merah
-        var redIcon = L.divIcon({
-            className: 'custom-div-icon',
-            html: `<div style="background-color: #ef4444; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
-            iconSize: [20, 20],
-            iconAnchor: [10, 10] // Menempatkan pin tepat di tengah
-        });
-
-        // 4. Tambahkan Marker di peta beserta pop-up infonya
-        var marker = L.marker([-7.96662, 112.63263], {icon: redIcon}).addTo(mapDetail);
-        
-        marker.bindPopup(`
-            <div class="text-center">
-                <p class="font-bold text-gray-800 text-sm">Lokasi Laporan #0148</p>
-                <p class="text-xs text-gray-600">Jl. Merdeka No. 42</p>
-            </div>
-        `).openPopup();
-    </script>
-    </main> <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <script src="assets/js/script.js"></script>
 </body>

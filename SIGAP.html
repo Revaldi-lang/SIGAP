@@ -21,10 +21,10 @@
             </div>
             
             <nav class="p-4 space-y-1">
-                <a href="SIGAP.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="sigap.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
                 </a>
-                <a href="Laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
+                <a href="laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
                     <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
                     <span class="ml-auto bg-red-500 text-xs px-2 py-0.5 rounded-full text-white">5</span>
                 </a>
@@ -166,7 +166,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-2">
                                     <button onclick="prosesLaporan(1)" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>
-                                    <a href="DetailLaporan.html" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
+                                    <a href="detail-laporan.html" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
                                 </td>
                             </tr>
 
@@ -203,10 +203,6 @@
     </main>
 
     <script>
-        function prosesLaporan(id) {
-            alert("Laporan ID #" + id + " berhasil diubah statusnya menjadi 'Diproses'. Notifikasi otomatis dikirim ke aplikasi mobile pelapor.");
-        }
-
         function updateWaktuDanTanggal() {
             const sekarang = new Date();
             
