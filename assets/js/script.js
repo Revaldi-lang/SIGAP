@@ -3,6 +3,74 @@
    Core JavaScript Engine (localStorage Database & Dynamic Page Sync)
    ========================================================================= */
 
+// Setup Tailwind Config for Dark Mode support
+window.tailwind = window.tailwind || {};
+window.tailwind.config = window.tailwind.config || {};
+window.tailwind.config.darkMode = 'class';
+
+// Early theme check to prevent flash of light theme
+(function initTheme() {
+    const savedTheme = localStorage.getItem('sigap_theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const activeTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    if (activeTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body && document.body.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        document.body && document.body.classList.remove('dark');
+    }
+})();
+
+// Function to apply theme changes dynamically
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body && document.body.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        document.body && document.body.classList.remove('dark');
+    }
+}
+
+// Function to inject theme toggle button dynamically
+function injectThemeToggle() {
+    if (document.getElementById('theme-toggle-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'theme-toggle-btn';
+    btn.className = 'fixed bottom-6 right-6 z-[9999] bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 w-12 h-12 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500';
+    btn.setAttribute('aria-label', 'Ubah Tema');
+
+    btn.innerHTML = `
+        <i class="fa-solid fa-moon text-lg dark:hidden block"></i>
+        <i class="fa-solid fa-sun text-lg hidden dark:block text-amber-400"></i>
+    `;
+
+    document.body.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        const nextTheme = isDark ? 'light' : 'dark';
+        localStorage.setItem('sigap_theme', nextTheme);
+        applyTheme(nextTheme);
+    });
+}
+
+// Bind injectThemeToggle to DOM load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        // Run applyTheme again now that document.body is available
+        const savedTheme = localStorage.getItem('sigap_theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+        injectThemeToggle();
+    });
+} else {
+    injectThemeToggle();
+}
+
+
 // =========================================
 // 0. AUTHENTICATION & ROLE GUARD ENGINE
 // =========================================
