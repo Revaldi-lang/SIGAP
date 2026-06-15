@@ -33,6 +33,43 @@ function applyTheme(theme) {
     }
 }
 
+// Helper to append current theme to any internal URL redirect
+function getRedirectUrl(url) {
+    try {
+        const isDark = document.documentElement.classList.contains('dark');
+        const theme = isDark ? 'dark' : 'light';
+        const parts = url.split('?');
+        const basePath = parts[0];
+        const searchParams = new URLSearchParams(parts[1] || '');
+        searchParams.set('theme', theme);
+        return basePath + '?' + searchParams.toString();
+    } catch(e) {
+        return url;
+    }
+}
+
+// Dynamic Link Theme Propagation (Crucial for file:// protocol local support)
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+    
+    const href = link.getAttribute('href');
+    if (!href) return;
+    
+    // Ignore external links, mailto, phone, and anchor links on the same page
+    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#') || href.startsWith('javascript:')) {
+        return;
+    }
+    
+    // Process internal links to add/propagate theme
+    try {
+        link.setAttribute('href', getRedirectUrl(href));
+    } catch(err) {
+        console.error('Error propagating theme on link click:', err);
+    }
+});
+
+
 // Function to inject theme toggle button dynamically
 function injectThemeToggle() {
     if (document.getElementById('theme-toggle-btn')) return;
@@ -100,29 +137,29 @@ if (document.readyState === 'loading') {
     
     // Auto-redirect jika sudah login dan mengunjungi halaman login
     if (pageName === 'login.html' && session && session.role === 'admin') {
-        window.location.href = 'sigap.html';
+        window.location.href = getRedirectUrl('sigap.html');
         return;
     }
     if (pageName === 'login-masyarakat.html' && session && session.role === 'pelapor') {
-        window.location.href = 'dashboard-pelapor.html';
+        window.location.href = getRedirectUrl('dashboard-pelapor.html');
         return;
     }
     
     if (isAdminPage) {
         if (!session) {
             alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Admin.");
-            window.location.href = 'login.html';
+            window.location.href = getRedirectUrl('login.html');
         } else if (session.role !== 'admin') {
             alert("Akses Ditolak! Halaman ini khusus untuk Administrator.");
-            window.location.href = 'dashboard-pelapor.html';
+            window.location.href = getRedirectUrl('dashboard-pelapor.html');
         }
     } else if (isPelaporPage) {
         if (!session) {
             alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Pelapor.");
-            window.location.href = 'login-masyarakat.html';
+            window.location.href = getRedirectUrl('login-masyarakat.html');
         } else if (session.role !== 'pelapor') {
             alert("Akses Ditolak! Halaman ini khusus untuk Pelapor.");
-            window.location.href = 'sigap.html';
+            window.location.href = getRedirectUrl('sigap.html');
         }
     }
 })();
@@ -131,7 +168,7 @@ function handleLogout(event) {
     if (event) event.preventDefault();
     localStorage.removeItem('sigap_session');
     alert("Anda telah berhasil keluar dari sistem SIGAP.");
-    window.location.href = 'index.html';
+    window.location.href = getRedirectUrl('index.html');
 }
 
 // Auto-bind logout buttons on DOM load
@@ -396,7 +433,7 @@ function handleLogin(event) {
             id: matchedUser.id
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
-        window.location.href = 'sigap.html';
+        window.location.href = getRedirectUrl('sigap.html');
     }, 200);
 }
 
@@ -436,7 +473,7 @@ function handleLoginMasyarakat(event) {
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses Dasbor Warga.");
-        window.location.href = 'dashboard-pelapor.html';
+        window.location.href = getRedirectUrl('dashboard-pelapor.html');
     }, 200);
 }
 
@@ -483,7 +520,7 @@ function handleRegister(event) {
 
     setTimeout(() => {
         alert("Pendaftaran Berhasil!\nAkun Anda telah terdaftar dan menunggu verifikasi admin. Silakan masuk.");
-        window.location.href = 'login-masyarakat.html';
+        window.location.href = getRedirectUrl('login-masyarakat.html');
     }, 300);
 }
 

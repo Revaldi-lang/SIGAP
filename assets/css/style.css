@@ -86,6 +86,24 @@
    DARK MODE OVERRIDES & PALETTE (Sleek dark theme system)
    ========================================================================= */
 
+/* Smooth Transitions for Theme Switching */
+body, header, aside, main, section, 
+div.bg-white, div.bg-gray-100, div.bg-[#FAF6F0], div.bg-slate-900,
+span, h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, table, tr, th, td {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease !important;
+}
+
+/* Prevent transitions on animations, icons, and leaflet map elements */
+.animate-spin, 
+.fa-spin, 
+.leaflet-tile, 
+.leaflet-zoom-animated, 
+.custom-div-icon,
+.custom-div-icon div,
+.custom-div-icon.urgent-pin::after {
+    transition: none !important;
+}
+
 /* Global Dark Mode Overrides */
 html.dark body,
 html.dark {
@@ -246,4 +264,13 @@ html.dark .leaflet-popup-content-wrapper,
 html.dark .leaflet-popup-tip {
     background-color: #1e293b !important;
     color: #f8fafc !important;
-}
+}
+
+/* Theme Toggle Button Micro-animations */
+#theme-toggle-btn i {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+#theme-toggle-btn:hover i {
+    transform: rotate(30deg) scale(1.1) !important;
+}
+
