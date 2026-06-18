@@ -88,7 +88,7 @@
 
 /* Smooth Transitions for Theme Switching */
 body, header, aside, main, section, 
-div.bg-white, div.bg-gray-100, div.bg-[#FAF6F0], div.bg-slate-900,
+div.bg-white, div.bg-gray-100, div.bg-\[\#FAF6F0\], div.bg-slate-900,
 span, h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, table, tr, th, td {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease !important;
 }
