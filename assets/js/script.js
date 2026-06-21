@@ -149,18 +149,168 @@ if (document.readyState === 'loading') {
         if (!session) {
             alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Admin.");
             window.location.href = getRedirectUrl('login.html');
+            return;
         } else if (session.role !== 'admin') {
             alert("Akses Ditolak! Halaman ini khusus untuk Administrator.");
             window.location.href = getRedirectUrl('dashboard-pelapor.html');
+            return;
         }
     } else if (isPelaporPage) {
         if (!session) {
             alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Pelapor.");
             window.location.href = getRedirectUrl('login-masyarakat.html');
+            return;
         } else if (session.role !== 'pelapor') {
             alert("Akses Ditolak! Halaman ini khusus untuk Pelapor.");
             window.location.href = getRedirectUrl('sigap.html');
+            return;
         }
+    }
+
+    // Logika Manajemen Sesi 1 Menit (Inactivity Timeout)
+    if (session && (isAdminPage || isPelaporPage)) {
+        const SESSION_TIMEOUT_MS = 60 * 1000; // 1 menit
+        const WARNING_THRESHOLD_MS = 15 * 1000; // 15 detik terakhir untuk peringatan
+        
+        // Cek apakah sesi sudah kedaluwarsa sejak load awal
+        const lastActivityStr = localStorage.getItem('sigap_session_last_activity');
+        let lastActivity = lastActivityStr ? parseInt(lastActivityStr) : Date.now();
+        
+        // Inisialisasi jika belum ada timestamp aktivitas
+        if (!lastActivityStr) {
+            localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+            lastActivity = Date.now();
+        }
+        
+        const now = Date.now();
+        if (now - lastActivity >= SESSION_TIMEOUT_MS) {
+            // Sesi sudah mati sebelum halaman dimuat / saat tidak fokus
+            localStorage.removeItem('sigap_session');
+            localStorage.removeItem('sigap_session_last_activity');
+            alert("Sesi Anda telah berakhir karena tidak ada aktivitas selama 1 menit.");
+            const redirectTarget = session.role === 'admin' ? 'login.html' : 'login-masyarakat.html';
+            window.location.href = getRedirectUrl(redirectTarget);
+            return;
+        }
+        
+        // Logika monitoring aktivitas pengguna
+        let lastLoggedActivity = Date.now();
+        function updateActivity() {
+            const currentTime = Date.now();
+            // Throttle penulisan ke localStorage maksimal 1 detik sekali untuk optimasi
+            if (currentTime - lastLoggedActivity > 1000) {
+                localStorage.setItem('sigap_session_last_activity', currentTime.toString());
+                lastLoggedActivity = currentTime;
+            }
+        }
+        
+        // Dengarkan berbagai event interaksi user
+        const activityEvents = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+        activityEvents.forEach(evt => {
+            document.addEventListener(evt, updateActivity, { passive: true });
+        });
+        
+        // Setup Modal Peringatan Sesi
+        let warningModal = null;
+        
+        function showWarningModal() {
+            if (document.getElementById('session-warning-modal')) return;
+            
+            warningModal = document.createElement('div');
+            warningModal.id = 'session-warning-modal';
+            warningModal.className = 'fixed inset-0 z-[99999] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 opacity-0 scale-95';
+            
+            warningModal.innerHTML = `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 dark:border-slate-700 transform transition-all duration-300 p-6 flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 text-2xl animate-pulse">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 text-center">Sesi Anda Hampir Berakhir</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm mb-6 text-center leading-relaxed">
+                        Anda tidak melakukan aktivitas selama beberapa saat. Sesi akan otomatis ditutup dalam 
+                        <span id="session-countdown-timer" class="font-extrabold text-amber-600 dark:text-amber-400 text-lg px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 inline-block animate-bounce">15</span> detik.
+                    </p>
+                    <div class="flex gap-3 w-full">
+                        <button id="session-logout-now-btn" class="flex-1 py-2.5 px-4 rounded-xl text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 font-semibold transition-all active:scale-95 text-center text-sm">
+                            Keluar Sekarang
+                        </button>
+                        <button id="session-continue-btn" class="flex-1 py-2.5 px-4 rounded-xl text-white bg-blue-600 hover:bg-blue-700 font-semibold transition-all shadow-lg shadow-blue-500/20 active:scale-95 text-center text-sm">
+                            Lanjutkan Sesi
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(warningModal);
+            
+            // Trigger animation fade-in
+            setTimeout(() => {
+                warningModal.classList.remove('opacity-0', 'scale-95');
+                warningModal.classList.add('opacity-100', 'scale-100');
+            }, 10);
+            
+            // Pasang event listener tombol
+            document.getElementById('session-continue-btn').addEventListener('click', () => {
+                localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+                lastLoggedActivity = Date.now();
+                removeWarningModal();
+            });
+            
+            document.getElementById('session-logout-now-btn').addEventListener('click', () => {
+                autoLogout();
+            });
+        }
+        
+        function removeWarningModal() {
+            const modal = document.getElementById('session-warning-modal');
+            if (modal) {
+                modal.classList.remove('opacity-100', 'scale-100');
+                modal.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        modal.parentNode.removeChild(modal);
+                    }
+                }, 300);
+            }
+        }
+        
+        function autoLogout() {
+            // Bersihkan interval & event listener
+            clearInterval(checkInterval);
+            activityEvents.forEach(evt => {
+                document.removeEventListener(evt, updateActivity);
+            });
+            removeWarningModal();
+            
+            localStorage.removeItem('sigap_session');
+            localStorage.removeItem('sigap_session_last_activity');
+            
+            alert("Sesi Anda telah berakhir karena tidak ada aktivitas selama 1 menit.");
+            const redirectTarget = session.role === 'admin' ? 'login.html' : 'login-masyarakat.html';
+            window.location.href = getRedirectUrl(redirectTarget);
+        }
+        
+        // Loop pengecekan sesi berkala
+        const checkInterval = setInterval(() => {
+            const currentActivity = parseInt(localStorage.getItem('sigap_session_last_activity') || '0');
+            const timeElapsed = Date.now() - currentActivity;
+            
+            if (timeElapsed >= SESSION_TIMEOUT_MS) {
+                autoLogout();
+            } else if (timeElapsed >= SESSION_TIMEOUT_MS - WARNING_THRESHOLD_MS) {
+                // Tampilkan modal jika belum ada
+                showWarningModal();
+                // Hitung mundur sisa detik
+                const secondsLeft = Math.ceil((SESSION_TIMEOUT_MS - timeElapsed) / 1000);
+                const timerEl = document.getElementById('session-countdown-timer');
+                if (timerEl) {
+                    timerEl.innerText = secondsLeft;
+                }
+            } else {
+                // Jika user aktif di tab lain, sembunyikan modal jika sedang tampil
+                removeWarningModal();
+            }
+        }, 1000);
     }
 })();
 
@@ -433,6 +583,7 @@ function handleLogin(event) {
             id: matchedUser.id
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+        localStorage.setItem('sigap_session_last_activity', Date.now().toString());
         window.location.href = getRedirectUrl('sigap.html');
     }, 200);
 }
@@ -472,6 +623,7 @@ function handleLoginMasyarakat(event) {
             id: matchedUser.id
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+        localStorage.setItem('sigap_session_last_activity', Date.now().toString());
         alert("Login Sukses!\nSelamat datang di platform SIGAP. Anda sekarang dapat mengakses Dasbor Warga.");
         window.location.href = getRedirectUrl('dashboard-pelapor.html');
     }, 200);
