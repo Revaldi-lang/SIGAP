@@ -3,6 +3,24 @@
    Core JavaScript Engine (localStorage Database & Dynamic Page Sync)
    ========================================================================= */
 
+// =========================================
+// SECURITY UTILITIES (XSS Mitigation & Input Sanitization)
+// =========================================
+function sanitizeInput(str) {
+    if (!str) return '';
+    return str.replace(/<[^>]*>/g, '').trim();
+}
+
+function escapeHTML(str) {
+    if (!str) return '';
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Setup Tailwind Config for Dark Mode support
 window.tailwind = window.tailwind || {};
 window.tailwind.config = window.tailwind.config || {};
@@ -130,7 +148,23 @@ if (document.readyState === 'loading') {
     }
     
     const sessionStr = localStorage.getItem('sigap_session');
-    const session = sessionStr ? JSON.parse(sessionStr) : null;
+    let session = null;
+    if (sessionStr) {
+        try {
+            const parsedSession = JSON.parse(sessionStr);
+            const usersStr = localStorage.getItem('sigap_users');
+            const users = usersStr ? JSON.parse(usersStr) : [];
+            const matchedUser = users.find(u => u.email.toLowerCase() === parsedSession.email.toLowerCase() && u.id === parsedSession.id);
+            if (matchedUser && matchedUser.status === 'Aktif') {
+                const expectedRole = (matchedUser.role === 'Administrator' || matchedUser.role === 'Petugas PUPR') ? 'admin' : 'pelapor';
+                if (parsedSession.role === expectedRole) {
+                    session = parsedSession;
+                }
+            }
+        } catch (e) {
+            session = null;
+        }
+    }
     
     const isAdminPage = adminPages.includes(pageName);
     const isPelaporPage = pelaporPages.includes(pageName);
@@ -147,7 +181,7 @@ if (document.readyState === 'loading') {
     
     if (isAdminPage) {
         if (!session) {
-            alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Admin.");
+            alert("Akses ditolak! Sesi tidak ditemukan atau akun dinonaktifkan. Silakan masuk sebagai Admin.");
             window.location.href = getRedirectUrl('login.html');
             return;
         } else if (session.role !== 'admin') {
@@ -157,7 +191,7 @@ if (document.readyState === 'loading') {
         }
     } else if (isPelaporPage) {
         if (!session) {
-            alert("Akses ditolak! Sesi tidak ditemukan. Silakan masuk sebagai Pelapor.");
+            alert("Akses ditolak! Sesi tidak ditemukan atau akun belum terverifikasi. Silakan masuk sebagai Pelapor.");
             window.location.href = getRedirectUrl('login-masyarakat.html');
             return;
         } else if (session.role !== 'pelapor') {
@@ -454,7 +488,7 @@ const defaultUsers = [
         email: "budi.santoso99@gmail.com",
         identitas: "NIK: 3573012345670001",
         role: "Masyarakat",
-        status: "Menunggu Verifikasi",
+        status: "Aktif",
         registered: "Hari ini",
         password: "warga123"
     }
@@ -550,8 +584,8 @@ if (togglePassword && passwordInput) {
 
 function handleLogin(event) {
     event.preventDefault();
-    const emailInput = document.getElementById('email').value.trim();
-    const passwordInput = document.getElementById('password').value;
+    const emailInput = sanitizeInput(document.getElementById('email').value.trim());
+    const passwordInput = sanitizeInput(document.getElementById('password').value);
     const btn = event.target.querySelector('button[type="submit"]');
 
     // Cari user di database lokal
@@ -560,6 +594,11 @@ function handleLogin(event) {
 
     if (!matchedUser) {
         alert("Gagal Masuk! Alamat email atau kata sandi yang Anda masukkan salah.");
+        return;
+    }
+
+    if (matchedUser.status !== 'Aktif') {
+        alert("Akses Ditolak! Akun Anda sedang menunggu verifikasi oleh Administrator. Silakan tunggu beberapa saat atau hubungi dukungan teknis.");
         return;
     }
 
@@ -590,8 +629,8 @@ function handleLogin(event) {
 
 function handleLoginMasyarakat(event) {
     event.preventDefault();
-    const emailInput = event.target.querySelector('input[type="email"]').value.trim();
-    const passwordInput = document.getElementById('password').value;
+    const emailInput = sanitizeInput(event.target.querySelector('input[type="email"]').value.trim());
+    const passwordInput = sanitizeInput(document.getElementById('password').value);
     const btn = document.getElementById('btnLogin');
 
     // Cari user di database lokal
@@ -600,6 +639,11 @@ function handleLoginMasyarakat(event) {
 
     if (!matchedUser) {
         alert("Gagal Masuk! Alamat email atau kata sandi yang Anda masukkan salah.");
+        return;
+    }
+
+    if (matchedUser.status !== 'Aktif') {
+        alert("Akses Ditolak! Akun Anda belum diaktifkan atau sedang menunggu verifikasi oleh Administrator.");
         return;
     }
 
@@ -631,11 +675,37 @@ function handleLoginMasyarakat(event) {
 
 function handleRegister(event) {
     event.preventDefault();
-    const nama = event.target.querySelectorAll('input')[0].value;
-    const nik = event.target.querySelectorAll('input')[1].value;
-    const email = event.target.querySelectorAll('input')[2].value;
-    const password = document.getElementById('password').value;
+    const rawNama = event.target.querySelectorAll('input')[0].value;
+    const rawNik = event.target.querySelectorAll('input')[1].value;
+    const rawEmail = event.target.querySelectorAll('input')[2].value;
+    const rawPassword = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
+
+    const nama = sanitizeInput(rawNama);
+    const nik = sanitizeInput(rawNik);
+    const email = sanitizeInput(rawEmail);
+    const password = sanitizeInput(rawPassword);
+
+    if (nama.length < 3) {
+        alert("Gagal Mendaftar! Nama Lengkap minimal harus terdiri dari 3 karakter.");
+        return;
+    }
+
+    if (!/^\d{16}$/.test(nik)) {
+        alert("Gagal Mendaftar! NIK harus berupa angka sepanjang 16 digit.");
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Gagal Mendaftar! Format alamat email tidak valid.");
+        return;
+    }
+
+    if (password.length < 8) {
+        alert("Gagal Mendaftar! Kata sandi minimal harus terdiri dari 8 karakter.");
+        return;
+    }
 
     if (password !== confirmPassword) {
         alert("Gagal! Konfirmasi kata sandi tidak cocok.");
@@ -650,6 +720,12 @@ function handleRegister(event) {
     // Validasi duplikasi email
     if (dbUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
         alert("Gagal! Alamat email ini sudah terdaftar.");
+        return;
+    }
+
+    // Validasi duplikasi NIK
+    if (dbUsers.some(u => u.identitas === 'NIK: ' + nik)) {
+        alert("Gagal! NIK ini sudah terdaftar.");
         return;
     }
 
@@ -720,14 +796,14 @@ function renderDashboard() {
             const row = `
                 <tr class="aduan-row hover:bg-gray-50 transition">
                     <td class="px-4 sm:px-6 py-3 sm:py-4">
-                        <p class="font-medium text-gray-800">${aduan.pelapor}</p>
-                        <span class="text-xs text-gray-400">${aduan.waktu}</span>
+                        <p class="font-medium text-gray-800">${escapeHTML(aduan.pelapor)}</p>
+                        <span class="text-xs text-gray-400">${escapeHTML(aduan.waktu)}</span>
                     </td>
                     <td class="px-4 sm:px-6 py-3 sm:py-4">
-                        <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-medium">${aduan.kategoriLabel}</span>
+                        <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-medium">${escapeHTML(aduan.kategoriLabel)}</span>
                     </td>
                     <td class="px-4 sm:px-6 py-3 sm:py-4">
-                        <p class="text-gray-700 max-w-xs truncate">${aduan.lokasi}</p>
+                        <p class="text-gray-700 max-w-xs truncate">${escapeHTML(aduan.lokasi)}</p>
                         <a href="peta.html" class="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-0.5">
                             <i class="fa-solid fa-location-dot"></i> Lihat di Peta
                         </a>
@@ -803,19 +879,19 @@ function renderLaporanTable() {
         }
 
         const row = `
-            <tr data-kategori="${aduan.kategori}" data-status="${aduan.status}" class="laporan-row hover:bg-gray-50 transition">
-                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#${aduan.id}</td>
+            <tr data-kategori="${escapeHTML(aduan.kategori)}" data-status="${escapeHTML(aduan.status)}" class="laporan-row hover:bg-gray-50 transition">
+                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#${escapeHTML(aduan.id)}</td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4">
-                    <p class="font-semibold text-gray-900 target-pencarian">${aduan.pelapor}</p>
-                    <span class="text-xs text-gray-400">${aduan.waktu}</span>
+                    <p class="font-semibold text-gray-900 target-pencarian">${escapeHTML(aduan.pelapor)}</p>
+                    <span class="text-xs text-gray-400">${escapeHTML(aduan.waktu)}</span>
                 </td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4">
-                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">${aduan.kategoriLabel}</span>
-                    <p class="text-gray-600 text-xs max-w-xs truncate">${aduan.deskripsi}</p>
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">${escapeHTML(aduan.kategoriLabel)}</span>
+                    <p class="text-gray-600 text-xs max-w-xs truncate">${escapeHTML(aduan.deskripsi)}</p>
                 </td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
-                    <p class="font-medium target-pencarian">${aduan.lokasi}</p>
-                    <span class="text-xs text-gray-400">${aduan.wilayah}</span>
+                    <p class="font-medium target-pencarian">${escapeHTML(aduan.lokasi)}</p>
+                    <span class="text-xs text-gray-400">${escapeHTML(aduan.wilayah)}</span>
                 </td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <span class="inline-flex items-center gap-1 ${badgeClass} px-2 py-1 rounded-md text-xs font-semibold">
@@ -920,9 +996,9 @@ function initDetailPage() {
     const reporterMeta = document.querySelector('.text-xs.text-gray-500.mt-1');
     if (reporterMeta) {
         reporterMeta.innerHTML = `
-            <span><i class="fa-solid fa-user text-gray-400"></i> ${aduan.pelapor}</span>
+            <span><i class="fa-solid fa-user text-gray-400"></i> ${escapeHTML(aduan.pelapor)}</span>
             <span>•</span>
-            <span><i class="fa-solid fa-calendar text-gray-400"></i> ${aduan.waktu}</span>
+            <span><i class="fa-solid fa-calendar text-gray-400"></i> ${escapeHTML(aduan.waktu)}</span>
         `;
     }
 
@@ -955,8 +1031,8 @@ function initDetailPage() {
     const lokasiDetailText = document.querySelector('.text-xs.space-y-2');
     if (lokasiDetailText) {
         lokasiDetailText.innerHTML = `
-            <div class="flex justify-between"><span class="text-gray-400 font-medium">Jalan:</span> <span class="text-gray-800 font-semibold text-right">${aduan.lokasi}</span></div>
-            <div class="flex justify-between"><span class="text-gray-400 font-medium">Wilayah:</span> <span class="text-gray-800 font-semibold text-right">${aduan.wilayah}</span></div>
+            <div class="flex justify-between"><span class="text-gray-400 font-medium">Jalan:</span> <span class="text-gray-800 font-semibold text-right">${escapeHTML(aduan.lokasi)}</span></div>
+            <div class="flex justify-between"><span class="text-gray-400 font-medium">Wilayah:</span> <span class="text-gray-800 font-semibold text-right">${escapeHTML(aduan.wilayah)}</span></div>
             <div class="flex justify-between"><span class="text-gray-400 font-medium">Akurasi GPS:</span> <span class="text-green-600 font-bold text-right"><i class="fa-solid fa-circle-check"></i> Tinggi (~4 meter)</span></div>
         `;
     }
@@ -969,8 +1045,8 @@ function initDetailPage() {
             const logItem = `
                 <div class="relative mb-4">
                     <span class="absolute -left-[21px] top-0 bg-blue-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
-                    <p class="font-bold text-gray-800">${log.judul}</p>
-                    <p class="text-gray-500">${log.waktu} • Oleh ${log.aktor}</p>
+                    <p class="font-bold text-gray-800">${escapeHTML(log.judul)}</p>
+                    <p class="text-gray-500">${escapeHTML(log.waktu)} • Oleh ${escapeHTML(log.aktor)}</p>
                 </div>
             `;
             timelineContainer.insertAdjacentHTML('beforeend', logItem);
@@ -1081,25 +1157,31 @@ function renderUsersTable() {
         const words = user.username.split(' ');
         const initials = (words[0] ? words[0][0] : 'U') + (words[1] ? words[1][0] : '');
 
+        let verifyBtn = '';
+        if (user.status === 'Menunggu Verifikasi') {
+            verifyBtn = `<button onclick="verifikasiPengguna('${user.id}')" class="text-emerald-500 hover:text-emerald-700 transition" title="Verifikasi Akun"><i class="fa-solid fa-circle-check"></i></button>`;
+        }
+
         const row = `
-            <tr id="${user.id}" data-role="${user.role}" class="user-row hover:bg-gray-50 transition">
+            <tr id="${user.id}" data-role="${escapeHTML(user.role)}" class="user-row hover:bg-gray-50 transition">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold uppercase">${initials}</div>
                         <div>
-                            <p id="name-${user.id}" class="font-bold text-gray-900">${user.username}</p>
-                            <span class="text-xs text-gray-500">Terdaftar: ${user.registered}</span>
+                            <p id="name-${user.id}" class="font-bold text-gray-900">${escapeHTML(user.username)}</p>
+                            <span class="text-xs text-gray-500">Terdaftar: ${escapeHTML(user.registered)}</span>
                         </div>
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <p id="email-${user.id}" class="text-gray-800 font-medium text-sm">${user.email}</p>
-                    <span class="text-xs text-gray-400 font-mono">${user.identitas}</span>
+                    <p id="email-${user.id}" class="text-gray-800 font-medium text-sm">${escapeHTML(user.email)}</p>
+                    <span class="text-xs text-gray-400 font-mono">${escapeHTML(user.identitas)}</span>
                 </td>
                 <td class="px-6 py-4">${roleBadge}</td>
                 <td class="px-6 py-4">${statusBadge}</td>
                 <td class="px-6 py-4 text-center">
                     <div class="flex items-center justify-center gap-2">
+                        ${verifyBtn}
                         <button onclick="editPengguna('${user.id}')" class="text-blue-500 hover:text-blue-700 transition" title="Edit Pengguna"><i class="fa-solid fa-pen-to-square"></i></button>
                         ${user.id === 'user-admin' ? 
                             `<button class="text-gray-400 cursor-not-allowed" title="Admin Utama Tidak Bisa Dihapus" disabled><i class="fa-solid fa-trash"></i></button>` :
@@ -1143,10 +1225,25 @@ function resetFilterUser() {
 
 function simpanUserBaru(event) {
     event.preventDefault();
-    const name = document.getElementById('input-nama').value.trim();
-    const email = document.getElementById('input-email').value.trim();
-    const identitas = document.getElementById('input-identitas').value.trim();
+    const rawName = document.getElementById('input-nama').value.trim();
+    const rawEmail = document.getElementById('input-email').value.trim();
+    const rawIdentitas = document.getElementById('input-identitas').value.trim();
     const role = document.getElementById('input-role').value;
+
+    const name = sanitizeInput(rawName);
+    const email = sanitizeInput(rawEmail);
+    const identitas = sanitizeInput(rawIdentitas);
+
+    if (name.length < 3) {
+        alert("Gagal Menyimpan! Nama Lengkap minimal harus terdiri dari 3 karakter.");
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Gagal Menyimpan! Format alamat email tidak valid.");
+        return;
+    }
 
     const dbUsers = getUsers();
 
@@ -1193,14 +1290,31 @@ function editPengguna(rowId) {
     const newEmail = prompt("Ubah Email Pengguna:", target.email);
     if (newEmail === null) return;
 
-    if (newName.trim() !== "" && newEmail.trim() !== "") {
-        target.username = newName.trim();
-        target.email = newEmail.trim();
+    const sanitizedName = sanitizeInput(newName);
+    const sanitizedEmail = sanitizeInput(newEmail);
+
+    if (sanitizedName !== "" && sanitizedEmail !== "") {
+        target.username = sanitizedName;
+        target.email = sanitizedEmail;
         saveUsers(dbUsers);
         renderUsersTable();
         alert("Sukses! Data pengguna berhasil diperbarui di database lokal.");
     } else {
         alert("Gagal! Nama dan Email tidak boleh kosong.");
+    }
+}
+
+function verifikasiPengguna(rowId) {
+    const dbUsers = getUsers();
+    const target = dbUsers.find(x => x.id === rowId);
+    if (!target) return;
+
+    const konfirmasi = confirm(`Apakah Anda yakin ingin memverifikasi dan mengaktifkan akun milik "${target.username}"?`);
+    if (konfirmasi) {
+        target.status = 'Aktif';
+        saveUsers(dbUsers);
+        renderUsersTable();
+        alert(`Sukses! Akun "${target.username}" telah aktif dan kini dapat digunakan untuk masuk ke portal.`);
     }
 }
 
@@ -1387,7 +1501,9 @@ function handleResetSandi(event) {
 // =========================================
 function renderDasborPelapor() {
     const listAduan = getLaporan();
-    const pelaporAktif = "Budi Santoso";
+    const sessionStr = localStorage.getItem('sigap_session');
+    const session = sessionStr ? JSON.parse(sessionStr) : null;
+    const pelaporAktif = session ? session.username : "Budi Santoso";
     const aduanSaya = listAduan.filter(x => x.pelapor === pelaporAktif);
 
     const total = aduanSaya.length;
@@ -1466,12 +1582,12 @@ function renderDasborPelapor() {
                         </div>
                         <div>
                             <div class="flex flex-wrap items-center gap-2">
-                                <span class="text-[10px] font-mono font-bold text-slate-500">#${aduan.id}</span>
-                                <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded-full font-bold border-2 border-blue-500/20 uppercase tracking-wider">${aduan.kategoriLabel}</span>
-                                <span class="text-slate-600 text-xs font-mono">• ${aduan.waktu}</span>
+                                <span class="text-[10px] font-mono font-bold text-slate-500">#${escapeHTML(aduan.id)}</span>
+                                <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded-full font-bold border-2 border-blue-500/20 uppercase tracking-wider">${escapeHTML(aduan.kategoriLabel)}</span>
+                                <span class="text-slate-600 text-xs font-mono">• ${escapeHTML(aduan.waktu)}</span>
                             </div>
-                            <h4 class="font-bold text-white text-base mt-1.5 leading-snug">${aduan.lokasi}</h4>
-                            <p class="text-slate-400 text-xs mt-1 max-w-xl leading-relaxed">${aduan.deskripsi}</p>
+                            <h4 class="font-bold text-white text-base mt-1.5 leading-snug">${escapeHTML(aduan.lokasi)}</h4>
+                            <p class="text-slate-400 text-xs mt-1 max-w-xl leading-relaxed">${escapeHTML(aduan.deskripsi)}</p>
                         </div>
                     </div>
                     
@@ -1770,8 +1886,8 @@ function initDetailPagePelapor() {
                 const logHtml = `
                     <div class="relative">
                         <span class="absolute -left-[21px] top-0 ${dotBg} text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
-                        <p class="font-bold text-slate-200">${log.judul}</p>
-                        <p class="text-slate-500">${log.waktu} • Oleh ${log.aktor}</p>
+                        <p class="font-bold text-slate-200">${escapeHTML(log.judul)}</p>
+                        <p class="text-slate-500">${escapeHTML(log.waktu)} • Oleh ${escapeHTML(log.aktor)}</p>
                     </div>
                 `;
                 timeline.insertAdjacentHTML('beforeend', logHtml);
@@ -1945,7 +2061,7 @@ function updateNavbarSession() {
                             ${initials}
                         </div>
                         <div class="text-left hidden lg:block">
-                            <p class="text-[11px] font-bold text-[#1E1B18] leading-tight max-w-[120px] truncate">${session.username}</p>
+                            <p class="text-[11px] font-bold text-[#1E1B18] leading-tight max-w-[120px] truncate">${escapeHTML(session.username)}</p>
                             <p class="text-[9px] text-[#6B645C] font-semibold leading-tight">${roleLabel}</p>
                         </div>
                         <i class="fa-solid fa-chevron-down text-[10px] text-[#6B645C] ml-1"></i>
@@ -1954,7 +2070,7 @@ function updateNavbarSession() {
                     <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 origin-top-right divide-y divide-[#E6DFD5] rounded-2xl bg-white border border-[#E6DFD5] shadow-lg ring-1 ring-black/5 focus:outline-none z-50 transform scale-95 opacity-0 transition-all duration-200">
                         <div class="px-4 py-3">
                             <p class="text-[10px] text-[#6B645C] font-semibold">Masuk sebagai</p>
-                            <p class="text-xs font-bold text-[#1E1B18] truncate mt-0.5">${session.username}</p>
+                            <p class="text-xs font-bold text-[#1E1B18] truncate mt-0.5">${escapeHTML(session.username)}</p>
                             <span class="inline-flex items-center rounded-md bg-blue-50 px-1.5 py-0.5 text-[9px] font-bold text-blue-700 ring-1 ring-inset ring-blue-700/10 mt-1.5">${roleLabel}</span>
                         </div>
                         <div class="py-1">
@@ -1987,7 +2103,7 @@ function updateNavbarSession() {
                             ${initials}
                         </div>
                         <div class="text-left">
-                            <p class="text-xs font-bold text-[#1E1B18]">${session.username}</p>
+                            <p class="text-xs font-bold text-[#1E1B18]">${escapeHTML(session.username)}</p>
                             <p class="text-[10px] text-[#6B645C] font-semibold">${roleLabel}</p>
                         </div>
                     </div>

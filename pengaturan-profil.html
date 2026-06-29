@@ -123,7 +123,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">NIP / NIK</label>
-                            <input type="text" value="199408122020121002" disabled class="w-full px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-400 font-mono cursor-not-allowed" title="Identitas resmi tidak dapat diubah secara mandiri">
+                            <input type="text" id="profile-identitas" value="199408122020121002" disabled class="w-full px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-400 font-mono cursor-not-allowed" title="Identitas resmi tidak dapat diubah secara mandiri">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -133,7 +133,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Nomor Telepon / WA</label>
-                            <input type="text" required value="081234567890" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">
+                            <input type="text" id="profile-phone" required value="081234567890" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">
                         </div>
                     </div>
                     <div>
@@ -216,6 +216,43 @@
 
         function simpanProfilUmum(event) {
             event.preventDefault();
+            const rawName = document.getElementById('profile-name').value.trim();
+            const rawEmail = document.getElementById('profile-email').value.trim();
+            const rawPhone = document.getElementById('profile-phone').value.trim();
+
+            const name = sanitizeInput(rawName);
+            const email = sanitizeInput(rawEmail);
+            const phone = sanitizeInput(rawPhone);
+
+            if (name.length < 3) {
+                alert("Gagal Menyimpan! Nama Lengkap minimal harus terdiri dari 3 karakter.");
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Gagal Menyimpan! Format alamat email tidak valid.");
+                return;
+            }
+
+            const sessionStr = localStorage.getItem('sigap_session');
+            if (!sessionStr) return;
+            const session = JSON.parse(sessionStr);
+
+            const users = getUsers();
+            const userIndex = users.findIndex(x => x.email === session.email || x.id === session.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex].username = name;
+                users[userIndex].email = email;
+                users[userIndex].telepon = phone;
+                saveUsers(users);
+            }
+
+            session.username = name;
+            session.email = email;
+            localStorage.setItem('sigap_session', JSON.stringify(session));
+
             const btn = document.getElementById('btn-simpan-umum');
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
             btn.disabled = true;
@@ -229,8 +266,10 @@
 
         function simpanProfilSandi(event) {
             event.preventDefault();
-            const newPassword = document.getElementById('new-password').value;
+            const rawNewPassword = document.getElementById('new-password').value;
             const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+            const newPassword = sanitizeInput(rawNewPassword);
 
             if (newPassword !== confirmNewPassword) {
                 alert("Gagal! Konfirmasi kata sandi baru tidak cocok.");
@@ -239,6 +278,24 @@
 
             if (newPassword.length < 8) {
                 alert("Gagal! Kata sandi baru minimal harus berjumlah 8 karakter.");
+                return;
+            }
+
+            const sessionStr = localStorage.getItem('sigap_session');
+            if (!sessionStr) {
+                alert("Gagal! Sesi aktif tidak ditemukan.");
+                return;
+            }
+            const session = JSON.parse(sessionStr);
+
+            const users = getUsers();
+            const userIndex = users.findIndex(x => x.email.toLowerCase() === session.email.toLowerCase());
+
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                saveUsers(users);
+            } else {
+                alert("Gagal! Akun Anda tidak ditemukan di database lokal.");
                 return;
             }
 
@@ -252,6 +309,37 @@
                 btn.innerHTML = '<i class="fa-solid fa-key"></i> Perbarui Kata Sandi';
                 btn.disabled = false;
             }, 200);
+        }
+
+        function initProfileAdmin() {
+            const sessionStr = localStorage.getItem('sigap_session');
+            if (!sessionStr) return;
+            const session = JSON.parse(sessionStr);
+
+            const users = getUsers();
+            const user = users.find(x => x.email === session.email || x.id === session.id) || {
+                username: session.username,
+                email: session.email,
+                identitas: "NIP: 199408122020121002",
+                telepon: "081234567890"
+            };
+
+            const elName = document.getElementById('profile-name');
+            const elEmail = document.getElementById('profile-email');
+            const elPhone = document.getElementById('profile-phone');
+            const elIdentitas = document.getElementById('profile-identitas');
+
+            if (elName) elName.value = user.username;
+            if (elEmail) elEmail.value = user.email;
+            if (elPhone) elPhone.value = user.telepon || "081234567890";
+            if (elIdentitas) elIdentitas.value = user.identitas.replace('NIP: ', '').replace('NIK: ', '');
+        }
+
+        // Initialize admin profile on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initProfileAdmin);
+        } else {
+            initProfileAdmin();
         }
     </script>
 </body>
