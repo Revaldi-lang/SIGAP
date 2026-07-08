@@ -1,94 +1,92 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGAP - Masuk Akun Masyarakat</title>
-        <script>
-        tailwind = {
-            config: {
-                darkMode: 'class'
-            }
-        };
-        (function() {
-            const savedTheme = localStorage.getItem('sigap_theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001360",
+                        "surface": "#fcf9f8",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b",
+                        "outline-variant": "#c5c5d5",
+                        "surface-container-low": "#f6f3f2"
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fdf9f3;
         }
     </style>
 </head>
-<body class="bg-slate-900 flex items-center justify-center min-h-screen p-4 relative overflow-x-hidden">
-
-    <div class="w-full max-w-md bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-800 shadow-2xl overflow-hidden p-6 sm:p-8 z-10 my-4">
-        
+<body class="bg-background flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md bg-white border border-outline-variant rounded-2xl shadow-xl p-6 sm:p-8">
         <div class="text-center mb-6">
-            <a href="index.html" class="inline-flex bg-slate-950 p-2 rounded-xl mb-3 shadow-lg shadow-blue-500/10 w-16 h-16 items-center justify-center border border-slate-800 hover:border-slate-700 transition">
-                <img src="sigap.jpg" alt="Logo SIGAP" class="w-full h-full object-contain rounded-lg" onerror="this.src='sigap.png'">
+            <a href="index.html" class="inline-flex bg-primary/10 p-2 rounded-xl mb-3 w-16 h-16 items-center justify-center border border-primary/20 hover:bg-primary/20 transition">
+                <img src="sigap.png" alt="Logo SIGAP" class="w-full h-full object-contain" onerror="this.src='sigap.jpg'">
             </a>
-            <h2 class="text-2xl font-bold text-white tracking-tight">Portal Masyarakat</h2>
-            <p class="text-sm text-slate-400 mt-1">Silakan masuk untuk membuat aduan atau melacak berkas laporan Anda.</p>
+            <h2 class="text-2xl font-bold text-on-surface tracking-tight">Portal Masyarakat</h2>
+            <p class="text-sm text-on-surface-variant mt-1">Silakan masuk untuk membuat aduan atau melacak berkas laporan Anda.</p>
         </div>
 
         <form onsubmit="handleLoginMasyarakat(event)" class="space-y-4">
-            
             <div>
-                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Alamat Email</label>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Alamat Email</label>
                 <div class="relative">
-                    <input type="email" required placeholder="budi.santoso@gmail.com" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
-                    <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-slate-600 text-xs"></i>
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">mail</span>
+                    <input type="email" required placeholder="budi.santoso@gmail.com" class="w-full bg-white border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition">
                 </div>
             </div>
 
             <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Kata Sandi</label>
-                    <a href="#" onclick="alert('Fitur pemulihan sandi masyarakat sedang disinkronkan.')" class="text-xs text-blue-400 hover:underline">Lupa Sandi?</a>
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Kata Sandi</label>
+                    <a href="#" onclick="alert('Fitur pemulihan sandi masyarakat sedang disinkronkan.')" class="text-xs font-bold text-primary hover:underline">Lupa Sandi?</a>
                 </div>
                 <div class="relative">
-                    <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl pl-10 pr-10 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
-                    <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-600 text-xs"></i>
-                    <button type="button" id="togglePassword" class="absolute right-3 top-3 text-slate-500 hover:text-slate-300 transition">
-                        <i class="fa-solid fa-eye text-xs" id="eyeIcon"></i>
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">lock</span>
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full bg-white border border-outline-variant rounded-lg pl-10 pr-10 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition">
+                    <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition">
+                        <span class="material-symbols-outlined text-sm" id="eyeIcon">visibility</span>
                     </button>
                 </div>
             </div>
 
             <div class="flex items-center pt-1">
-                <input type="checkbox" id="remember" class="rounded bg-slate-950 border-slate-800 text-blue-600 focus:ring-blue-500 h-4 w-4 cursor-pointer">
-                <label for="remember" class="ml-2 text-xs text-slate-400 cursor-pointer select-none">
+                <input type="checkbox" id="remember" class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4 cursor-pointer">
+                <label for="remember" class="ml-2 text-xs text-on-surface-variant cursor-pointer select-none">
                     Ingat sesi masuk saya di perangkat ini
                 </label>
             </div>
 
             <div class="pt-2">
-                <button type="submit" id="btnLogin" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl text-sm transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
-                    Masuk Sekarang <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+                <button type="submit" id="btnLogin" class="w-full bg-primary text-on-primary font-bold py-3 px-4 rounded-lg text-sm transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98]">
+                    Masuk Sekarang <span class="material-symbols-outlined text-sm">login</span>
                 </button>
             </div>
         </form>
 
-        <div class="space-y-3 mt-6 pt-4 border-t border-slate-800/60 text-center text-sm">
-            <div class="text-slate-400">
-                Belum memiliki akun? <a href="register.html" class="text-blue-400 font-medium hover:underline">Daftar di sini</a>
+        <div class="space-y-3 mt-6 pt-4 border-t border-outline-variant text-center text-xs">
+            <div class="text-on-surface-variant">
+                Belum memiliki akun? <a href="register.html" class="text-primary font-bold hover:underline">Daftar di sini</a>
             </div>
             <div>
-                <a href="index.html" class="text-xs text-slate-500 hover:text-slate-300 transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Halaman Utama
+                <a href="index.html" class="text-on-surface-variant hover:text-primary transition flex items-center justify-center gap-1">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span> Kembali ke Halaman Utama
                 </a>
             </div>
         </div>

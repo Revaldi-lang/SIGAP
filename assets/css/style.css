@@ -273,4 +273,112 @@ html.dark .leaflet-popup-tip {
 #theme-toggle-btn:hover i {
     transform: rotate(30deg) scale(1.1) !important;
 }
+
+/* =========================================================================
+   DYNAMIC OVERRIDES FOR DYNAMIC JS GENERATED CONTENTS
+   ========================================================================= */
+
+/* Reporter dashboard card overrides to match minimalist light theme */
+#list-aduan-saya .group {
+    background-color: #ffffff !important;
+    border: 1px solid #E5E2E1 !important;
+    color: #1c1b1b !important;
+    border-radius: 0.75rem !important;
+}
+
+#list-aduan-saya .text-white {
+    color: #1c1b1b !important;
+}
+
+#list-aduan-saya .text-slate-400 {
+    color: #444653 !important;
+}
+
+#list-aduan-saya .text-slate-500 {
+    color: #757684 !important;
+}
+
+#list-aduan-saya .text-slate-600 {
+    color: #757684 !important;
+}
+
+#list-aduan-saya .border-slate-700 {
+    border-color: #e5e2e1 !important;
+}
+
+#list-aduan-saya .border-blue-500\/20 {
+    border-color: rgba(0, 19, 96, 0.2) !important;
+}
+
+#list-aduan-saya .bg-blue-500\/10 {
+    background-color: rgba(0, 19, 96, 0.08) !important;
+    color: #001360 !important;
+}
+
+#list-aduan-saya a.bg-slate-950\/60 {
+    background-color: #001360 !important;
+    color: #ffffff !important;
+    border: 1px solid #001360 !important;
+    border-radius: 0.5rem !important;
+}
+
+#list-aduan-saya a.bg-slate-950\/60:hover {
+    background-color: #223aa8 !important;
+    border-color: #223aa8 !important;
+}
+
+/* Timeline overrides for light theme */
+#timeline-pelapor .text-slate-200 {
+    color: #1c1b1b !important;
+}
+
+#timeline-pelapor .text-slate-500 {
+    color: #444653 !important;
+}
+
+/* Dark mode overrides for these dynamically generated elements */
+html.dark #list-aduan-saya .group {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark #list-aduan-saya .text-white {
+    color: #f1f5f9 !important;
+}
+
+html.dark #list-aduan-saya .text-slate-400 {
+    color: #94a3b8 !important;
+}
+
+html.dark #list-aduan-saya .text-slate-500 {
+    color: #64748b !important;
+}
+
+html.dark #list-aduan-saya .text-slate-600 {
+    color: #64748b !important;
+}
+
+html.dark #list-aduan-saya .border-slate-700 {
+    border-color: #334155 !important;
+}
+
+html.dark #list-aduan-saya a.bg-slate-950\/60 {
+    background-color: #0f172a !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+html.dark #list-aduan-saya a.bg-slate-950\/60:hover {
+    background-color: #1e293b !important;
+}
+
+html.dark #timeline-pelapor .text-slate-200 {
+    color: #f1f5f9 !important;
+}
+
+html.dark #timeline-pelapor .text-slate-500 {
+    color: #94a3b8 !important;
+}
+
 

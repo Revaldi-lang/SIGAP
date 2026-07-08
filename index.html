@@ -1,590 +1,511 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>SIGAP - Layanan Aspirasi & Pengaduan Infrastruktur Daerah</title>
-        <script>
-        tailwind = {
-            config: {
-                darkMode: 'class'
-            }
-        };
-        (function() {
-            const savedTheme = localStorage.getItem('sigap_theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#735c00",
+                        "on-surface": "#1c1b1b",
+                        "inverse-surface": "#313030",
+                        "on-secondary-fixed": "#1c1c18",
+                        "tertiary-fixed": "#ffe088",
+                        "on-primary-fixed": "#001159",
+                        "on-tertiary-container": "#4f3e00",
+                        "on-surface-variant": "#444653",
+                        "surface-tint": "#3e54c1",
+                        "tertiary-fixed-dim": "#e9c349",
+                        "surface": "#fcf9f8",
+                        "tertiary-container": "#cca830",
+                        "on-primary-fixed-variant": "#223aa8",
+                        "secondary-fixed-dim": "#c9c6c1",
+                        "surface-variant": "#e5e2e1",
+                        "background": "#fcf9f8",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary": "#001360",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#605e5a",
+                        "secondary-container": "#e6e2dc",
+                        "primary-fixed": "#dee1ff",
+                        "surface-container-high": "#eae7e7",
+                        "outline-variant": "#c5c5d5",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "on-secondary": "#ffffff",
+                        "outline": "#757684",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-bright": "#fcf9f8",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#484743",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "inverse-primary": "#bac3ff",
+                        "primary-fixed-dim": "#bac3ff",
+                        "on-background": "#1c1b1b",
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary-container": "#666460",
+                        "primary-container": "#002395",
+                        "surface-container": "#f0eded",
+                        "on-primary-container": "#8094ff",
+                        "on-tertiary-fixed": "#241a00",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#e6e2dc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "section-gap": "80px",
+                        "unit": "8px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "container-max": "1280px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
     <style>
         body {
+            background-color: #fdf9f3;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1c1b1b;
         }
-        .bg-landing {
-            background-image: linear-gradient(to bottom, rgba(30, 27, 24, 0.45), rgba(30, 27, 24, 0.95)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=85');
-            background-size: cover;
-            background-position: center;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
         }
-        html {
-            scroll-behavior: smooth;
+        .tonal-card {
+            background-color: #ffffff;
+            border: 1px solid #E5E1DA;
+            transition: border-color 0.3s ease;
+        }
+        .tonal-card:hover {
+            border-color: #001360;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(0, 19, 96, 0.05) 0%, transparent 70%);
         }
     </style>
 </head>
-<body class="bg-[#FAF6F0] font-sans text-[#1E1B18] scroll-smooth relative min-h-screen flex flex-col justify-between">
-
-    <!-- 1. TOP ALERT/ANNOUNCEMENT BANNER -->
-    <div id="top-alert" class="bg-blue-600 text-white px-6 py-2.5 flex items-center justify-between text-xs relative z-50 transition-all duration-300">
+<body class="overflow-x-hidden">
+    <!-- Top Alert Announcements -->
+    <div id="top-alert" class="bg-primary text-on-primary px-6 py-2.5 flex items-center justify-between text-xs relative z-50 transition-all duration-300">
         <p class="mx-auto text-center flex items-center flex-wrap justify-center gap-2">
             <span class="bg-white/20 text-white border border-white/20 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Info Terbaru</span>
-            Situs SIGAP terintegrasi dengan Dinas PUPR & Dishub untuk jaminan respon perbaikan kurang dari 48 jam.
+            Situs SIGAP terintegrasi dengan Dinas PUPR &amp; Dishub untuk jaminan respon perbaikan kurang dari 48 jam.
             <a href="#info-section" class="text-white hover:underline ml-1 font-semibold">Pelajari Selengkapnya</a>
         </p>
         <button onclick="document.getElementById('top-alert').remove()" class="text-white/80 hover:text-white transition text-lg leading-none focus:outline-none absolute right-4">&times;</button>
     </div>
 
-    <!-- 2. STICKY TOP NAVBAR -->
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-[#FAF6F0]/85 border-b border-[#E6DFD5] transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 hover:opacity-90 transition">
-                <div class="bg-blue-600/10 p-2 rounded-xl border border-blue-600/20 flex items-center justify-center">
-                    <img src="sigap.png" alt="Logo SIGAP" class="h-8 w-auto object-contain drop-shadow" onerror="this.src='sigap.jpg'">
+    <!-- TopNavBar -->
+    <nav class="bg-surface border-b border-outline-variant fixed top-10 left-0 w-full z-50 transition-all duration-200 ease-in-out h-20" style="top: inherit;">
+        <div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-full">
+            <div class="flex items-center gap-stack-md">
+                <div class="bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center justify-center">
+                    <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
                 </div>
-                <div>
-                    <h1 class="font-extrabold text-lg leading-none tracking-wider text-[#1E1B18]">SIGAP</h1>
-                    <span class="text-[9px] text-blue-600 font-extrabold tracking-widest uppercase block mt-0.5">Aduan Publik</span>
-                </div>
-            </a>
-            
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-8 text-xs font-bold tracking-wider uppercase text-[#6B645C]">
-                <a href="#info-section" class="hover:text-blue-600 transition-colors">Kegunaan</a>
-                <a href="#alur-section" class="hover:text-blue-600 transition-colors">Cara Melapor</a>
-                <a href="#proses-section" class="hover:text-blue-600 transition-colors">SOP Kerja</a>
-                <a href="#suara-warga-section" class="hover:text-blue-600 transition-colors">Suara Warga</a>
-            </nav>
-            
-            <!-- Right Actions -->
+                <span class="font-headline-md text-headline-md font-bold text-primary">SIGAP</span>
+            </div>
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#info-section">Kegunaan</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#alur-section">Cara Melapor</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#proses-section">SOP Kerja</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#suara-warga-section">Suara Warga</a>
+            </div>
             <div class="flex items-center gap-4">
-                <div id="nav-portal-container-desktop" class="hidden sm:inline-block">
-                    <button onclick="bukaModalAkses()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md shadow-blue-600/10 uppercase tracking-wider">
+                <div id="nav-portal-container-desktop">
+                    <button onclick="bukaModalAkses()" class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md transition-all active:scale-95">
                         Masuk Portal
                     </button>
                 </div>
-                
-                <!-- Burger Button -->
-                <button onclick="toggleMobileMenu()" class="md:hidden flex items-center justify-center p-2 text-[#1E1B18] hover:bg-blue-600/5 rounded-lg transition focus:outline-none">
-                    <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-primary">
+                    <span class="material-symbols-outlined">menu</span>
                 </button>
             </div>
         </div>
         
         <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-[#E6DFD5] bg-[#FAF6F0] px-6 py-4 space-y-3 transition-all duration-300">
-            <a href="#info-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">Kegunaan</a>
-            <a href="#alur-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">Cara Melapor</a>
-            <a href="#proses-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">SOP Kerja</a>
-            <a href="#suara-warga-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-[#6B645C] hover:text-blue-600 py-1 transition-colors">Suara Warga</a>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-outline-variant bg-surface px-6 py-4 space-y-3 transition-all duration-300">
+            <a href="#info-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">Kegunaan</a>
+            <a href="#alur-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">Cara Melapor</a>
+            <a href="#proses-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">SOP Kerja</a>
+            <a href="#suara-warga-section" onclick="toggleMobileMenu()" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">Suara Warga</a>
             <div id="nav-portal-container-mobile" class="pt-2">
-                <button onclick="bukaModalAkses(); toggleMobileMenu();" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl transition text-center uppercase tracking-wider">
+                <button onclick="bukaModalAkses(); toggleMobileMenu();" class="w-full bg-primary text-on-primary font-bold text-xs py-3 rounded-lg transition text-center uppercase tracking-wider">
                     Masuk Portal
                 </button>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- 3. HERO SECTION -->
-    <section id="hero-section" class="w-full min-h-[85vh] flex flex-col justify-center py-20 px-6 md:px-12 relative overflow-hidden bg-landing">
-        <!-- Overlay filter gelap hangat agar teks sangat terbaca -->
-        <div class="absolute inset-0 bg-gradient-to-b from-[#1e1b18]/50 via-[#1e1b18]/70 to-[#1e1b18]/90 z-0"></div>
-        
-        <div class="max-w-6xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <!-- Left Info -->
-            <div class="lg:col-span-7 space-y-6 text-left">
-                <span class="text-[10px] font-extrabold text-[#FAF6F0] tracking-widest uppercase bg-blue-600/20 text-blue-300 px-3 py-1.5 rounded border border-blue-500/30 inline-block">
-                    Layanan Aspirasi Pemerintah Daerah
-                </span>
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
-                    Pengaduan Infrastruktur <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">Online & Terpadu</span>
-                </h2>
-                <p class="text-sm md:text-base text-[#E6DFD5] max-w-2xl leading-relaxed">
-                    Sampaikan aduan mengenai kerusakan jalan, lampu penerangan padam, atau saluran air tersumbat di berbagai wilayah kota/kabupaten di Indonesia secara cepat untuk penanganan langsung.
-                </p>
-                
-                <!-- ID Tracker Form -->
-                <div class="relative max-w-xl shadow-2xl rounded-2xl border border-white/10 bg-white/10 backdrop-blur-md p-1.5 focus-within:border-blue-500 transition duration-300">
-                    <form onsubmit="aksesProteksiLacak(event)" class="flex">
-                        <input type="text" placeholder="Masukkan ID laporan Anda untuk melacak status..." class="w-full bg-transparent pl-4 pr-3 py-3 text-sm text-white placeholder-slate-300 focus:outline-none">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-3 rounded-xl transition flex items-center gap-1.5 shrink-0 shadow-md">
-                            <i class="fa-solid fa-magnifying-glass"></i> Lacak
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="hero-gradient relative overflow-hidden py-24 md:py-32 px-margin-mobile md:px-margin-desktop">
+            <div class="max-w-container-max mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-stack-lg">
+                    <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase bg-primary-fixed px-3 py-1 rounded">Portal Resmi Pelayanan</span>
+                    <h1 class="font-display-lg text-display-lg text-primary max-w-xl">
+                        Efisiensi Publik Dalam Satu Genggaman.
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">
+                        SIGAP menghadirkan transparansi dan kemudahan akses bagi setiap warga negara. Lapor, pantau, dan selesaikan urusan administratif Anda dengan standar keamanan kelas dunia.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="bukaModalAkses()" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-md flex items-center gap-2 hover:bg-primary-container transition-all">
+                            Buat Laporan Sekarang
+                            <span class="material-symbols-outlined">arrow_forward</span>
                         </button>
-                    </form>
+                        <a href="#info-section" class="border border-primary text-primary px-8 py-4 rounded-lg font-label-md hover:bg-primary-fixed transition-all inline-block text-center">
+                            Pelajari Selengkapnya
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-video md:aspect-square bg-surface-container-high rounded-xl overflow-hidden border border-outline-variant" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    </div>
+                    <!-- Tactile Overlay Element -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg border border-outline-variant hidden md:block max-w-[240px] shadow-lg">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="material-symbols-outlined text-tertiary">verified_user</span>
+                            <span class="font-label-sm text-label-sm text-on-surface">Data Terenkripsi</span>
+                        </div>
+                        <p class="text-[12px] text-on-surface-variant">Setiap laporan diproses dengan protokol keamanan AES-256 untuk menjamin kerahasiaan identitas Anda.</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Right Info (Stats & News) -->
-            <div class="lg:col-span-5 space-y-6">
-                <!-- Info Card -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-xl transition flex flex-col justify-between min-h-[150px]">
-                    <div class="flex items-center justify-between border-b border-[#E6DFD5]/60 pb-3">
-                        <span class="text-[10px] font-extrabold text-blue-600 uppercase tracking-widest bg-blue-50 px-2.5 py-1 rounded border border-blue-150">
-                            #InfoSIGAP
-                        </span>
-                        <span class="text-xs text-emerald-600 font-bold flex items-center gap-1">
-                            <i class="fa-solid fa-circle-check"></i> Selesai
-                        </span>
-                    </div>
-                    <h4 class="font-bold text-sm text-[#1E1B18] leading-relaxed mt-3">
-                        Perbaikan Aspal Ambles di Jalan Veteran Rampung Lebih Cepat
-                    </h4>
-                    <div class="flex justify-between items-center mt-4 pt-2 border-t border-[#E6DFD5]/40 text-[10px] text-[#6B645C]">
-                        <span><i class="fa-solid fa-hard-hat text-blue-600 mr-1"></i> Dinas PUPR Daerah</span>
-                        <button onclick="aksesProteksiLacak(event)" class="font-semibold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer focus:outline-none">Detail <i class="fa-solid fa-arrow-right ml-0.5"></i></button>
+        <!-- Features (Kegunaan) -->
+        <section id="info-section" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+            <div class="max-w-container-max mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-16">
+                    <div class="max-w-2xl">
+                        <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Solusi Terpadu Masyarakat</h2>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Kami menyederhanakan kompleksitas birokrasi menjadi antarmuka yang intuitif dan fungsional untuk segala kebutuhan Anda.</p>
                     </div>
                 </div>
-
-                <!-- Stats Card -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-xl transition flex flex-col justify-between min-h-[150px]">
-                    <div class="flex items-center justify-between border-b border-[#E6DFD5]/60 pb-3">
-                        <span class="text-[10px] font-extrabold text-blue-600 uppercase tracking-widest flex items-center gap-1.5">
-                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Statistik Hari Ini
-                        </span>
-                        <i class="fa-solid fa-chart-simple text-[#6B645C]"></i>
-                    </div>
-                    <div class="space-y-2.5 my-3 text-xs text-[#6B645C]">
-                        <div class="flex justify-between">
-                            <span>Aduan Masuk Baru:</span>
-                            <span class="font-bold text-[#1E1B18]">5 Laporan</span>
+                <div class="grid md:grid-cols-3 gap-gutter">
+                    <!-- Feature 1 -->
+                    <div class="tonal-card p-stack-lg flex flex-col gap-4 rounded-xl">
+                        <div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span>Sedang Dikerjakan:</span>
-                            <span class="font-bold text-amber-600">12 Lokasi</span>
-                        </div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Pelaporan Cepat</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Laporkan keluhan atau insiden fasilitas publik hanya dalam hitungan detik dengan sistem otomatisasi lokasi.</p>
                     </div>
-                    <div class="text-[9px] text-[#6B645C]/80 italic">Data diperbarui otomatis oleh sistem internal dinas</div>
+                    <!-- Feature 2 -->
+                    <div class="tonal-card p-stack-lg flex flex-col gap-4 rounded-xl">
+                        <div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Arsip Digital</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Akses semua dokumen penting dan riwayat laporan Anda dalam satu repositori terpusat yang aman.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="tonal-card p-stack-lg flex flex-col gap-4 rounded-xl">
+                        <div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Pantauan Real-time</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Dapatkan notifikasi progres permohonan Anda secara instan hingga status dinyatakan selesai oleh petugas.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 4. INFO SECTION (KEGUNAAN SISTEM) -->
-    <section id="info-section" class="w-full bg-[#FAF6F0] py-24 px-6 md:px-12 border-b border-[#E6DFD5]">
-        <div class="max-w-6xl mx-auto space-y-16">
-            <div class="text-center space-y-3 max-w-2xl mx-auto">
-                <span class="text-[10px] font-bold text-blue-600 tracking-widest uppercase bg-blue-50 border border-blue-200 px-3.5 py-1.5 rounded inline-block">
-                    01 Kegunaan Sistem
-                </span>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-[#1E1B18] tracking-tight">Solusi Layanan Publik Digital</h3>
-                <p class="text-xs md:text-sm text-[#6B645C] leading-relaxed">SIGAP mengintegrasikan aduan masyarakat dengan ekosistem penanganan dinas secara responsif, cerdas, dan transparan.</p>
-            </div>
-
-            <!-- 3-Column Catalog Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Column 1: Fitur 01 -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500/30 transition duration-300 flex flex-col justify-between min-h-[460px]">
-                    <div class="space-y-4">
-                        <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Pelaporan Instan" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Fitur 01</span>
-                        <h4 class="text-lg font-bold text-[#1E1B18]">Pelaporan Instan 2 Menit</h4>
-                        <p class="text-xs text-[#6B645C] leading-relaxed">
-                            Laporkan kerusakan jalan, penerangan padam, atau saluran air tersumbat langsung dari HP Anda di lokasi kejadian dalam hitungan menit secara instan.
-                        </p>
-                    </div>
-                    <button onclick="bukaModalAkses()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3.5 px-4 rounded-xl transition uppercase tracking-wider mt-6 focus:outline-none">
-                        Mulai Lapor
-                    </button>
+        <!-- Process (Cara Melapor) -->
+        <section id="alur-section" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low">
+            <div class="max-w-container-max mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Empat Langkah Mudah</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">Dirancang untuk kecepatan dan kemudahan akses bagi seluruh lapisan masyarakat.</p>
                 </div>
-
-                <!-- Column 2: Fitur 02 -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500/30 transition duration-300 flex flex-col justify-between min-h-[460px]">
-                    <div class="space-y-4">
-                        <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Transparansi Lacak" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Fitur 02</span>
-                        <h4 class="text-lg font-bold text-[#1E1B18]">Transparansi Lacak Real-Time</h4>
-                        <p class="text-xs text-[#6B645C] leading-relaxed">
-                            Pantau kemajuan laporan Anda secara terbuka dari tahap verifikasi administratif, disposisi ke dinas sektoral, hingga pengerjaan operasional di lapangan.
-                        </p>
+                <div class="grid md:grid-cols-4 gap-gutter relative">
+                    <!-- Step 1 -->
+                    <div class="relative z-10 text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-white border border-outline-variant flex items-center justify-center mx-auto text-primary font-bold text-xl shadow-sm">1</div>
+                        <h4 class="font-label-md text-label-md uppercase tracking-wide text-on-surface">Masuk Akun</h4>
+                        <p class="text-sm text-on-surface-variant px-4">Otentikasi melalui NIK atau email untuk verifikasi keamanan data.</p>
                     </div>
-                    <button onclick="aksesProteksiLacak(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3.5 px-4 rounded-xl transition uppercase tracking-wider mt-6 focus:outline-none">
-                        Lacak Berkas
-                    </button>
-                </div>
-
-                <!-- Column 3: Fitur 03 -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500/30 transition duration-300 flex flex-col justify-between min-h-[460px]">
-                    <div class="space-y-4">
-                        <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&w=600&q=80" alt="Peta Spasial" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Fitur 03</span>
-                        <h4 class="text-lg font-bold text-[#1E1B18]">Peta Spasial & Dampak</h4>
-                        <p class="text-xs text-[#6B645C] leading-relaxed">
-                            Sistem pemetaan digital berbasis Leaflet mempermudah pemerintah daerah memetakan sebaran kerusakan guna merumuskan skala prioritas kerja yang akurat.
-                        </p>
+                    <!-- Step 2 -->
+                    <div class="relative z-10 text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-white border border-outline-variant flex items-center justify-center mx-auto text-primary font-bold text-xl shadow-sm">2</div>
+                        <h4 class="font-label-md text-label-md uppercase tracking-wide text-on-surface">Isi Formulir</h4>
+                        <p class="text-sm text-on-surface-variant px-4">Deskripsikan kebutuhan atau kendala Anda dengan lampiran bukti visual.</p>
                     </div>
-                    <button onclick="aksesProteksiPeta(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3.5 px-4 rounded-xl transition uppercase tracking-wider mt-6 focus:outline-none">
-                        Lihat Peta Dampak
-                    </button>
+                    <!-- Step 3 -->
+                    <div class="relative z-10 text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-white border border-outline-variant flex items-center justify-center mx-auto text-primary font-bold text-xl shadow-sm">3</div>
+                        <h4 class="font-label-md text-label-md uppercase tracking-wide text-on-surface">Verifikasi</h4>
+                        <p class="text-sm text-on-surface-variant px-4">Tim SIGAP melakukan validasi data dalam waktu maksimal 24 jam kerja.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="relative z-10 text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center mx-auto text-on-primary font-bold text-xl shadow-sm">4</div>
+                        <h4 class="font-label-md text-label-md uppercase tracking-wide text-on-surface">Tindak Lanjut</h4>
+                        <p class="text-sm text-on-surface-variant px-4">Laporan diteruskan ke instansi terkait untuk penyelesaian segera.</p>
+                    </div>
+                    <!-- Decorative Line -->
+                    <div class="hidden md:block absolute top-8 left-0 w-full h-[1px] bg-outline-variant -z-0"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 5. ALUR SECTION (PANDUAN PENGGUNA) -->
-    <section id="alur-section" class="w-full bg-[#FAF6F0] py-24 px-6 md:px-12 border-b border-[#E6DFD5]">
-        <div class="max-w-6xl mx-auto space-y-16">
-            <div class="text-center space-y-3 max-w-2xl mx-auto">
-                <span class="text-[10px] font-bold text-blue-600 tracking-widest uppercase bg-blue-50 border border-blue-200 px-3.5 py-1.5 rounded inline-block">
-                    02 Panduan Pengguna
-                </span>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-[#1E1B18] tracking-tight">4 Langkah Mudah Membuat Aduan</h3>
-                <p class="text-xs md:text-sm text-[#6B645C] max-w-xl mx-auto leading-relaxed">Ikuti panduan ringkas di bawah ini untuk mengirimkan laporan infrastruktur ke pusat data SIGAP.</p>
-            </div>
-
-            <!-- 4-Column Step Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- Column 1: Step 01 -->
-                <div class="bg-white border border-[#E6DFD5] p-5 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[420px]">
-                    <div class="space-y-3">
-                        <div class="w-full h-36 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=600&q=80" alt="Daftar Masuk" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Step 01</span>
-                        <h4 class="text-base font-bold text-[#1E1B18]">Daftar / Masuk</h4>
-                        <p class="text-[11px] text-[#6B645C] leading-relaxed">
-                            Akses gerbang login masyarakat menggunakan akun terdaftar Anda. Jika belum terdaftar, buat akun baru menggunakan nomor NIK KTP yang valid.
-                        </p>
-                    </div>
-                    <button onclick="bukaModalAkses()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold py-3 px-4 rounded-xl transition uppercase tracking-wider mt-4 focus:outline-none">
-                        Buka Portal
-                    </button>
+        <!-- SOP Section -->
+        <section id="proses-section" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+            <div class="max-w-container-max mx-auto">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">SOP &amp; Alur Penyelesaian Laporan</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Kami menjamin akuntabilitas setiap keluhan yang masuk dengan alur kerja profesional yang terdokumentasi rapi.</p>
                 </div>
-
-                <!-- Column 2: Step 02 -->
-                <div class="bg-white border border-[#E6DFD5] p-5 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[420px]">
-                    <div class="space-y-3">
-                        <div class="w-full h-36 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=600&q=80" alt="Isi Laporan" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">1</div>
+                            <div>
+                                <h4 class="font-label-md text-on-surface font-bold">Respon Awal PUPR</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">Estimasi verifikasi &amp; peninjauan laporan awal dalam waktu 3 jam sejak laporan dikirim warga.</p>
+                            </div>
                         </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Step 02</span>
-                        <h4 class="text-base font-bold text-[#1E1B18]">Isi Uraian Laporan</h4>
-                        <p class="text-[11px] text-[#6B645C] leading-relaxed">
-                            Pilih kategori kerusakan (jalan, lampu, drainase), lampirkan bukti foto riil, dan jelaskan uraian masalah secara mendetail.
-                        </p>
-                    </div>
-                    <button onclick="bukaModalAkses()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold py-3 px-4 rounded-xl transition uppercase tracking-wider mt-4 focus:outline-none">
-                        Tulis Laporan
-                    </button>
-                </div>
-
-                <!-- Column 3: Step 03 -->
-                <div class="bg-white border border-[#E6DFD5] p-5 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[420px]">
-                    <div class="space-y-3">
-                        <div class="w-full h-36 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&fit=crop&w=600&q=80" alt="Tandai Titik" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">2</div>
+                            <div>
+                                <h4 class="font-label-md text-on-surface font-bold">Disposisi Lapangan</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">Petugas dinas terkait langsung diterjunkan ke titik lokasi dalam waktu maksimal 12 jam.</p>
+                            </div>
                         </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Step 03</span>
-                        <h4 class="text-base font-bold text-[#1E1B18]">Tandai Titik Lokasi</h4>
-                        <p class="text-[11px] text-[#6B645C] leading-relaxed">
-                            Sematkan titik lokasi presisi dari infrastruktur rusak di peta digital agar memudahkan petugas dinas teknis melacak titik koordinat.
-                        </p>
-                    </div>
-                    <button onclick="aksesProteksiPeta(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold py-3 px-4 rounded-xl transition uppercase tracking-wider mt-4 focus:outline-none">
-                        Peta Lokasi
-                    </button>
-                </div>
-
-                <!-- Column 4: Step 04 -->
-                <div class="bg-white border border-[#E6DFD5] p-5 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[420px]">
-                    <div class="space-y-3">
-                        <div class="w-full h-36 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?auto=format&fit=crop&w=600&q=80" alt="Kirim Pantau" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">3</div>
+                            <div>
+                                <h4 class="font-label-md text-on-surface font-bold">Pekerjaan Teknis</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">Penyelesaian perbaikan jalan, penerangan jalan atau selokan selesai dalam rata-rata waktu 24 - 48 jam.</p>
+                            </div>
                         </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Step 04</span>
-                        <h4 class="text-base font-bold text-[#1E1B18]">Kirim & Pantau</h4>
-                        <p class="text-[11px] text-[#6B645C] leading-relaxed">
-                            Kirimkan data berkas aduan, kemudian pantau secara berkala linimasa perkembangan tindak lanjut yang dikerjakan oleh aparatur pemda.
-                        </p>
                     </div>
-                    <button onclick="aksesProteksiLacak(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold py-3 px-4 rounded-xl transition uppercase tracking-wider mt-4 focus:outline-none">
-                        Lacak Tiket
-                    </button>
+                    <div class="aspect-video bg-surface-container rounded-xl overflow-hidden border border-outline-variant" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 6. PROSES SECTION (SOP PENANGANAN) -->
-    <section id="proses-section" class="w-full bg-[#FAF6F0] py-24 px-6 md:px-12 border-b border-[#E6DFD5]">
-        <div class="max-w-6xl mx-auto space-y-16">
-            <div class="text-center space-y-3 max-w-2xl mx-auto">
-                <span class="text-[10px] font-bold text-blue-600 tracking-widest uppercase bg-blue-50 border border-blue-200 px-3.5 py-1.5 rounded inline-block">
-                    03 SOP Operasional Kerja
-                </span>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-[#1E1B18] tracking-tight">Siklus Penanganan Berkas</h3>
-                <p class="text-xs md:text-sm text-[#6B645C] leading-relaxed max-w-xl mx-auto">Alur kerja sistematis instansi pemda untuk memverifikasi, mendisposisi, dan merampungkan aduan publik secara akuntabel.</p>
-            </div>
-
-            <!-- 3-Column SOP Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tahap 1 -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[460px]">
-                    <div class="space-y-4">
-                        <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Verifikasi Validitas" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Tahap 1</span>
-                        <h4 class="text-lg font-bold text-[#1E1B18]">Verifikasi Validitas Berkas</h4>
-                        <p class="text-xs text-[#6B645C] leading-relaxed">
-                            Validator mengecek kesesuaian lampiran foto aduan serta keakuratan titik koordinat GPS di peta guna menyaring aduan fiktif, hoaks, atau spam secara berkala.
-                        </p>
-                    </div>
-                    <button onclick="aksesProteksiLacak(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3.5 px-4 rounded-xl transition uppercase tracking-wider mt-6 focus:outline-none">
-                        Pelajari Alur
-                    </button>
-                </div>
-
-                <!-- Tahap 2 -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[460px]">
-                    <div class="space-y-4">
-                        <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" alt="Disposisi Lapangan" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Tahap 2</span>
-                        <h4 class="text-lg font-bold text-[#1E1B18]">Disposisi & Lapangan</h4>
-                        <p class="text-xs text-[#6B645C] leading-relaxed">
-                            Berkas valid otomatis diteruskan ke Dinas Teknis (PUPR/Dishub/DLH). Kepala dinas mengonfirmasi tugas dan mengirim regu operasional beserta perlengkapan ke lokasi.
-                        </p>
-                    </div>
-                    <button onclick="aksesProteksiLacak(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3.5 px-4 rounded-xl transition uppercase tracking-wider mt-6 focus:outline-none">
-                        Pelajari Alur
-                    </button>
-                </div>
-
-                <!-- Tahap 3 -->
-                <div class="bg-white border border-[#E6DFD5] p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between min-h-[460px]">
-                    <div class="space-y-4">
-                        <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=600&q=80" alt="Eksekusi Selesai" class="w-full h-full object-cover hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-extrabold text-blue-600 tracking-widest bg-blue-50 px-2.5 py-1.5 rounded border border-blue-100 uppercase inline-block">Tahap 3</span>
-                        <h4 class="text-lg font-bold text-[#1E1B18]">Eksekusi & Notifikasi Selesai</h4>
-                        <p class="text-xs text-[#6B645C] leading-relaxed">
-                            Regu operasional merampungkan perbaikan fisik di lapangan. Petugas mengunggah dokumentasi foto hasil akhir kerja, menutup tiket aduan, dan notifikasi dikirim ke pelapor.
-                        </p>
-                    </div>
-                    <button onclick="aksesProteksiLacak(event)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3.5 px-4 rounded-xl transition uppercase tracking-wider mt-6 focus:outline-none">
-                        Lacak Progress
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. SUARA WARGA (TESTIMONIAL SECTION) -->
-    <section id="suara-warga-section" class="w-full bg-[#FAF6F0] py-24 px-6 md:px-12 border-b border-[#E6DFD5]">
-        <div class="max-w-6xl mx-auto space-y-16">
-            <div class="text-center space-y-3 max-w-2xl mx-auto">
-                <span class="text-[10px] font-bold text-blue-600 tracking-widest uppercase bg-blue-50 border border-blue-200 px-3.5 py-1.5 rounded inline-block">
-                    04 Suara Warga
-                </span>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-[#1E1B18] tracking-tight">Testimoni Pelapor</h3>
-                <p class="text-xs md:text-sm text-[#6B645C] leading-relaxed max-w-xl mx-auto">Ulasan dan kepuasan langsung dari berbagai warga kota di Indonesia terhadap pelayanan tanggap darurat infrastruktur dari tim SIGAP.</p>
-            </div>
-
-            <!-- 3-Column Testimonial Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white border border-[#E6DFD5] p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <!-- Stars -->
-                        <div class="flex items-center gap-1 text-amber-500 text-sm">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <!-- Quote -->
-                        <p class="text-xs md:text-sm italic text-[#6B645C] leading-relaxed">
-                            "Laporan saya tentang jalan berlubang besar di Bandung direspons sangat cepat. Dalam 24 jam, regu perbaikan jalan PUPR sudah datang dan merapikan jalan tersebut. Sangat apresiasi!"
-                        </p>
-                    </div>
-                    <!-- User -->
-                    <div class="flex items-center gap-4 mt-8 pt-4 border-t border-[#E6DFD5]/40">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80" alt="Budi Santoso" class="w-12 h-12 rounded-full object-cover border border-[#E6DFD5] shadow-inner">
+        <!-- Testimonials (Suara Warga) -->
+        <section id="suara-warga-section" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low">
+            <div class="max-w-container-max mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Dipercaya Oleh Ribuan Masyarakat</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">Kualitas pelayanan publik kami diukur dari kepuasan dan kemudahan yang dirasakan oleh setiap individu.</p>
+                    <div class="flex justify-center gap-12 mt-8">
                         <div>
-                            <h5 class="font-extrabold text-sm text-[#1E1B18]">Budi Santoso</h5>
-                            <span class="text-[10px] text-[#6B645C] block">Warga Kota Bandung</span>
+                            <div class="text-3xl font-bold text-primary mb-1">98%</div>
+                            <div class="font-label-sm text-label-sm text-on-surface-variant">Penyelesaian Cepat</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-primary mb-1">15k+</div>
+                            <div class="font-label-sm text-label-sm text-on-surface-variant">Laporan Selesai</div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Testimonial 2 -->
-                <div class="bg-white border border-[#E6DFD5] p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <!-- Stars -->
-                        <div class="flex items-center gap-1 text-amber-500 text-sm">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+                <div class="grid md:grid-cols-3 gap-gutter">
+                    <!-- Testimonial 1 -->
+                    <div class="tonal-card p-stack-lg rounded-xl flex flex-col justify-between bg-white">
+                        <div class="space-y-4">
+                            <div class="flex gap-1 text-tertiary mb-4">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                            </div>
+                            <p class="font-body-md text-body-md italic text-on-surface mb-6">"Laporan saya tentang jalan berlubang besar di Bandung direspons sangat cepat. Dalam 24 jam, regu perbaikan jalan PUPR sudah datang dan merapikan jalan tersebut. Sangat apresiasi!"</p>
                         </div>
-                        <!-- Quote -->
-                        <p class="text-xs md:text-sm italic text-[#6B645C] leading-relaxed">
-                            "Lampu penerangan jalan di gang rumah kami padam berbulan-bulan. Setelah saya laporkan lewat portal SIGAP dan menyematkan koordinat peta, petugas Dishub langsung memasang lampu baru besok malamnya!"
-                        </p>
-                    </div>
-                    <!-- User -->
-                    <div class="flex items-center gap-4 mt-8 pt-4 border-t border-[#E6DFD5]/40">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80" alt="Siti Aminah" class="w-12 h-12 rounded-full object-cover border border-[#E6DFD5] shadow-inner">
-                        <div>
-                            <h5 class="font-extrabold text-sm text-[#1E1B18]">Siti Aminah</h5>
-                            <span class="text-[10px] text-[#6B645C] block">Warga Kota Surabaya</span>
+                        <div class="flex items-center gap-4 pt-4 border-t border-outline-variant">
+                            <div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80'); background-size: cover;"></div>
+                            <div>
+                                <div class="font-label-md text-on-surface font-bold">Budi Santoso</div>
+                                <div class="text-[12px] text-on-surface-variant">Warga, Bandung</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="bg-white border border-[#E6DFD5] p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <!-- Stars -->
-                        <div class="flex items-center gap-1 text-amber-500 text-sm">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+                    <!-- Testimonial 2 -->
+                    <div class="tonal-card p-stack-lg rounded-xl flex flex-col justify-between bg-white">
+                        <div class="space-y-4">
+                            <div class="flex gap-1 text-tertiary mb-4">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                            </div>
+                            <p class="font-body-md text-body-md italic text-on-surface mb-6">"Lampu penerangan jalan di gang rumah kami padam berbulan-bulan. Setelah saya laporkan lewat portal SIGAP dan menyematkan koordinat peta, petugas Dishub langsung memasang lampu baru besok malamnya!"</p>
                         </div>
-                        <!-- Quote -->
-                        <p class="text-xs md:text-sm italic text-[#6B645C] leading-relaxed">
-                            "Transparansi pelacakan di web SIGAP ini luar biasa. Kita bisa tahu persis laporan kita sudah diverifikasi, sedang didisposisi ke dinas mana, dan mendapat foto bukti perbaikan setelah selesai."
-                        </p>
+                        <div class="flex items-center gap-4 pt-4 border-t border-outline-variant">
+                            <div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80'); background-size: cover;"></div>
+                            <div>
+                                <div class="font-label-md text-on-surface font-bold">Siti Aminah</div>
+                                <div class="text-[12px] text-on-surface-variant">Warga, Surabaya</div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- User -->
-                    <div class="flex items-center gap-4 mt-8 pt-4 border-t border-[#E6DFD5]/40">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80" alt="Rahmat Hidayat" class="w-12 h-12 rounded-full object-cover border border-[#E6DFD5] shadow-inner">
-                        <div>
-                            <h5 class="font-extrabold text-sm text-[#1E1B18]">Rahmat Hidayat</h5>
-                            <span class="text-[10px] text-[#6B645C] block">Warga Kota Medan</span>
+                    <!-- Testimonial 3 -->
+                    <div class="tonal-card p-stack-lg rounded-xl flex flex-col justify-between bg-white">
+                        <div class="space-y-4">
+                            <div class="flex gap-1 text-tertiary mb-4">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                            </div>
+                            <p class="font-body-md text-body-md italic text-on-surface mb-6">"Transparansi pelacakan di web SIGAP ini luar biasa. Kita bisa tahu persis laporan kita sudah diverifikasi, sedang didisposisi ke dinas mana, dan mendapat foto bukti perbaikan setelah selesai."</p>
+                        </div>
+                        <div class="flex items-center gap-4 pt-4 border-t border-outline-variant">
+                            <div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80'); background-size: cover;"></div>
+                            <div>
+                                <div class="font-label-md text-on-surface font-bold">Rahmat Hidayat</div>
+                                <div class="text-[12px] text-on-surface-variant">Warga, Medan</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 8. FOOTER SECTION -->
+        <!-- CTA Section -->
+        <section class="px-margin-mobile md:px-margin-desktop py-20 bg-surface">
+            <div class="max-w-container-max mx-auto bg-primary rounded-2xl p-12 md:p-20 text-center text-on-primary relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px); background-size: 24px 24px;"></div>
+                <h2 class="font-display-lg text-display-lg mb-6 relative z-10 text-white">Siap Untuk Pelayanan Yang Lebih Baik?</h2>
+                <p class="font-body-lg text-body-lg mb-10 max-w-2xl mx-auto opacity-90 relative z-10">Bergabunglah dengan ribuan masyarakat yang telah merasakan kemudahan birokrasi digital bersama SIGAP.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-4 relative z-10">
+                    <button onclick="bukaModalAkses()" class="bg-white text-primary px-10 py-4 rounded-lg font-bold hover:bg-surface-variant transition-all">Daftar Akun Sekarang</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
     <footer class="bg-[#1E1B18] text-[#E6DFD5] pt-16 pb-8 px-6 md:px-12 w-full mt-auto">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
-            <!-- Col 1: About -->
+        <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
             <div class="md:col-span-6 space-y-4">
-                <a href="index.html" class="flex items-center gap-3 w-max">
+                <div class="flex items-center gap-stack-md">
                     <div class="bg-white/10 p-2 rounded-xl border border-white/10 flex items-center justify-center">
-                        <img src="sigap.png" alt="Logo SIGAP" class="h-8 w-auto object-contain drop-shadow" onerror="this.src='sigap.jpg'">
+                        <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
                     </div>
-                    <div>
-                        <h1 class="font-extrabold text-lg leading-none tracking-wider text-white">SIGAP</h1>
-                        <span class="text-[9px] text-blue-400 font-extrabold tracking-widest uppercase block mt-0.5">Aduan Publik</span>
-                    </div>
-                </a>
+                    <span class="font-headline-sm text-headline-sm font-bold text-white">SIGAP</span>
+                </div>
                 <p class="text-xs text-[#E6DFD5]/85 leading-relaxed max-w-md">
-                    SIGAP adalah platform Layanan Aspirasi & Pengaduan Infrastruktur Daerah Nasional yang terintegrasi langsung dengan instansi teknis pemerintah daerah di seluruh Indonesia untuk pelayanan publik transparan.
+                    SIGAP adalah platform Layanan Aspirasi &amp; Pengaduan Infrastruktur Daerah Nasional yang terintegrasi langsung dengan instansi teknis pemerintah daerah di seluruh Indonesia untuk pelayanan publik transparan.
                 </p>
-
             </div>
-
-            <!-- Col 2: Navigation Links -->
             <div class="md:col-span-3 space-y-4">
-                <h5 class="text-sm font-bold uppercase tracking-wider text-white">Tautan Halaman</h5>
-                <ul class="space-y-2.5 text-xs">
-                    <li><a href="#info-section" class="hover:text-blue-400 transition-colors">Kegunaan Sistem</a></li>
-                    <li><a href="#alur-section" class="hover:text-blue-400 transition-colors">Cara Melapor</a></li>
-                    <li><a href="#proses-section" class="hover:text-blue-400 transition-colors">SOP Penanganan</a></li>
-                    <li><a href="#suara-warga-section" class="hover:text-blue-400 transition-colors">Suara Warga</a></li>
+                <h5 class="text-sm font-bold uppercase tracking-wider text-white">Navigasi</h5>
+                <ul class="space-y-2.5 text-xs text-[#E6DFD5]/80">
+                    <li><a class="hover:text-blue-400 transition-colors" href="#info-section">Kegunaan</a></li>
+                    <li><a class="hover:text-blue-400 transition-colors" href="#alur-section">Cara Melapor</a></li>
+                    <li><a class="hover:text-blue-400 transition-colors" href="#proses-section">SOP Kerja</a></li>
+                    <li><a class="hover:text-blue-400 transition-colors" href="#suara-warga-section">Suara Warga</a></li>
                 </ul>
             </div>
-
-            <!-- Col 3: Contact & Support -->
             <div class="md:col-span-3 space-y-4">
                 <h5 class="text-sm font-bold uppercase tracking-wider text-white">Hubungi Bantuan</h5>
                 <ul class="space-y-2.5 text-xs text-[#E6DFD5]/80">
                     <li class="flex items-start gap-2">
-                        <i class="fa-solid fa-location-dot mt-0.5 text-blue-400"></i>
+                        <span class="material-symbols-outlined text-sm mt-0.5 text-blue-400">location_on</span>
                         <span>Pusat Layanan SIGAP Nasional, DKI Jakarta, Indonesia</span>
                     </li>
                     <li class="flex items-center gap-2">
-                        <i class="fa-solid fa-phone text-blue-400"></i>
+                        <span class="material-symbols-outlined text-sm text-blue-400">phone</span>
                         <span>Hotline 112 (Bebas Pulsa)</span>
                     </li>
                     <li class="flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-blue-400"></i>
+                        <span class="material-symbols-outlined text-sm text-blue-400">mail</span>
                         <span>support@sigap.go.id</span>
                     </li>
                 </ul>
             </div>
         </div>
-        
-        <!-- Bottom Copyright -->
-        <div class="max-w-6xl mx-auto pt-8 text-center text-xs text-[#E6DFD5]/60">
+        <div class="max-w-container-max mx-auto pt-8 text-center text-xs text-[#E6DFD5]/60">
             <p>Copyright &copy; 2026 SIGAP Indonesia. Seluruh hak cipta dilindungi.</p>
         </div>
     </footer>
 
-    <!-- 9. ACCESS MODAL SELECTOR -->
+    <!-- ACCESS MODAL SELECTOR -->
     <div id="modal-role-selector" class="fixed inset-0 bg-[#1E1B18]/75 backdrop-blur-sm z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white border border-[#E6DFD5] rounded-3xl shadow-2xl w-full max-w-lg p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative text-center">
-            <button onclick="tutupModalAkses()" class="absolute top-4 right-4 text-[#6B645C] hover:text-[#1E1B18] transition text-2xl focus:outline-none">&times;</button>
+        <div class="bg-white border border-outline-variant rounded-2xl shadow-2xl w-full max-w-lg p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative text-center">
+            <button onclick="tutupModalAkses()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition text-2xl focus:outline-none">&times;</button>
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-[#1E1B18] tracking-tight">Pilih Akses Masuk Portal</h3>
-                <p class="text-xs text-[#6B645C] mt-1">Silakan pilih peran akun Anda untuk disesuaikan menuju gerbang login.</p>
+                <h3 class="text-xl font-bold text-on-surface tracking-tight">Pilih Akses Masuk Portal</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Silakan pilih peran akun Anda untuk disesuaikan menuju gerbang login.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a href="login-masyarakat.html" class="flex flex-col items-center justify-center p-6 bg-[#FAF6F0] hover:bg-white border border-[#E6DFD5] hover:border-blue-500 rounded-2xl transition group text-center shadow-sm">
-                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-3.5 group-hover:bg-blue-600 group-hover:text-white transition shadow-sm">
-                        <i class="fa-solid fa-users"></i>
+                <a href="login-masyarakat.html" class="flex flex-col items-center justify-center p-6 bg-surface-container-low hover:bg-white border border-outline-variant hover:border-primary rounded-xl transition group text-center shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-3.5 group-hover:bg-primary group-hover:text-white transition shadow-sm">
+                        <span class="material-symbols-outlined">group</span>
                     </div>
-                    <h4 class="font-bold text-sm text-[#1E1B18]">Masyarakat / Pelapor</h4>
-                    <p class="text-[10px] text-[#6B645C] mt-1.5 leading-relaxed">Masuk untuk membuat laporan aduan baru atau melacak berkas aduan.</p>
+                    <h4 class="font-bold text-sm text-on-surface">Masyarakat / Pelapor</h4>
+                    <p class="text-[10px] text-on-surface-variant mt-1.5 leading-relaxed">Masuk untuk membuat laporan aduan baru atau melacak berkas aduan.</p>
                 </a>
-                <a href="login.html" class="flex flex-col items-center justify-center p-6 bg-[#FAF6F0] hover:bg-white border border-[#E6DFD5] hover:border-purple-500 rounded-2xl transition group text-center shadow-sm">
-                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl mb-3.5 group-hover:bg-purple-600 group-hover:text-white transition shadow-sm">
-                        <i class="fa-solid fa-user-shield"></i>
+                <a href="login.html" class="flex flex-col items-center justify-center p-6 bg-surface-container-low hover:bg-white border border-outline-variant hover:border-primary rounded-xl transition group text-center shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-3.5 group-hover:bg-primary group-hover:text-white transition shadow-sm">
+                        <span class="material-symbols-outlined">admin_panel_settings</span>
                     </div>
-                    <h4 class="font-bold text-sm text-[#1E1B18]">Admin / Petugas</h4>
-                    <p class="text-[10px] text-[#6B645C] mt-1.5 leading-relaxed">Portal khusus aparatur pemda untuk meninjau dan merespons aduan.</p>
+                    <h4 class="font-bold text-sm text-on-surface">Admin / Petugas</h4>
+                    <p class="text-[10px] text-on-surface-variant mt-1.5 leading-relaxed">Portal khusus aparatur pemda untuk meninjau dan merespons aduan.</p>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- 10. SCRIPTS -->
+    <!-- SCRIPTS -->
     <script src="assets/js/script.js"></script>
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-menu-icon');
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
-                icon.className = "fa-solid fa-xmark text-xl";
             } else {
                 menu.classList.add('hidden');
-                icon.className = "fa-solid fa-bars text-xl";
             }
         }
 
@@ -606,17 +527,15 @@
             }, 300);
         }
 
-        function aksesProteksiPeta(event) {
-            event.preventDefault();
-            alert("Akses Terbatas!\nUntuk melihat Peta Dampak Laporan secara real-time, Anda diwajibkan untuk masuk (login) ke dalam sistem SIGAP terlebih dahulu.");
-            bukaModalAkses();
-        }
-
-        function aksesProteksiLacak(event) {
-            event.preventDefault();
-            alert("Akses Dilindungi!\nUntuk melacak rincian perkembangan berkas aduan, Anda harus masuk (login) terlebih dahulu demi menjaga kerahasiaan data NIK dan privasi pelapor.");
-            bukaModalAkses();
-        }
+        // Simple scroll interaction for navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm', 'bg-white/90', 'backdrop-blur-md');
+            } else {
+                nav.classList.remove('shadow-sm', 'bg-white/90', 'backdrop-blur-md');
+            }
+        });
     </script>
 </body>
 </html>

@@ -1,182 +1,260 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGAP - Pengaturan Profil Warga</title>
-        <script>
-        tailwind = {
-            config: {
-                darkMode: 'class'
-            }
-        };
-        (function() {
-            const savedTheme = localStorage.getItem('sigap_theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#735c00",
+                      "on-surface": "#1c1b1b",
+                      "inverse-surface": "#313030",
+                      "on-secondary-fixed": "#1c1c18",
+                      "tertiary-fixed": "#ffe088",
+                      "on-primary-fixed": "#001159",
+                      "on-tertiary-container": "#4f3e00",
+                      "on-surface-variant": "#444653",
+                      "surface-tint": "#3e54c1",
+                      "tertiary-fixed-dim": "#e9c349",
+                      "surface": "#fcf9f8",
+                      "tertiary-container": "#cca830",
+                      "on-primary-fixed-variant": "#223aa8",
+                      "secondary-fixed-dim": "#c9c6c1",
+                      "surface-variant": "#e5e2e1",
+                      "background": "#fcf9f8",
+                      "on-tertiary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "primary": "#001360",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#605e5a",
+                      "secondary-container": "#e6e2dc",
+                      "primary-fixed": "#dee1ff",
+                      "surface-container-high": "#eae7e7",
+                      "outline-variant": "#c5c5d5",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "on-secondary": "#ffffff",
+                      "outline": "#757684",
+                      "inverse-on-surface": "#f3f0ef",
+                      "surface-container-highest": "#e5e2e1",
+                      "surface-bright": "#fcf9f8",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#484743",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "inverse-primary": "#bac3ff",
+                      "primary-fixed-dim": "#bac3ff",
+                      "on-background": "#1c1b1b",
+                      "surface-dim": "#dcd9d9",
+                      "on-secondary-container": "#666460",
+                      "primary-container": "#002395",
+                      "surface-container": "#f0eded",
+                      "on-primary-container": "#8094ff",
+                      "on-tertiary-fixed": "#241a00",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#e6e2dc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "section-gap": "80px",
+                      "unit": "8px",
+                      "stack-lg": "32px",
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "container-max": "1280px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
     <style>
         body {
+            background-color: #fcf9f8;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
         }
     </style>
 </head>
-<body class="bg-slate-900 text-white flex h-screen overflow-hidden relative">
-
+<body class="text-on-surface">
     <!-- Sidebar Warga -->
-    <aside id="sidebar" class="w-64 bg-slate-900/90 border-r border-slate-800/60 text-white flex flex-col justify-between fixed inset-y-0 left-0 z-[1050] transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out">
-        <div>
-            <a href="index.html" class="p-5 flex items-center gap-3 border-b border-slate-800/80 hover:bg-slate-800/30 transition block">
-                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.src='sigap.jpg'">
-                <div>
-                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
-                    <span class="text-xs text-slate-400">Portal Warga</span>
-                </div>
-            </a>
-            
-            <nav class="p-4 space-y-1">
-                <a href="dashboard-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-chart-pie w-5"></i> Dasbor Saya
-                </a>
-                <a href="buat-laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-file-signature w-5"></i> Buat Laporan Baru
-                </a>
-                <a href="peta-pelapor.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800/60 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
-                </a>
-                <a href="pengaturan-profil-pelapor.html" class="flex items-center gap-3 bg-blue-600/90 text-white px-4 py-3 rounded-lg font-medium transition shadow-md shadow-blue-500/10">
-                    <i class="fa-solid fa-user-gear w-5"></i> Pengaturan Profil
-                </a>
-            </nav>
+    <aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-stack-md z-50">
+        <div class="flex items-center gap-3 px-4 py-6 mb-8">
+            <div class="bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center justify-center">
+                <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
+            </div>
+            <span class="font-headline-sm text-headline-md font-bold text-primary">SIGAP</span>
         </div>
-
-        <div class="p-4 border-t border-slate-800/80 flex items-center gap-3 bg-slate-950/20">
-            <div class="w-10 h-10 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-bold border border-blue-500/20">
-                BS
+        <!-- User Profile Anchor -->
+        <div class="px-4 mb-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+                    <span class="material-symbols-outlined">person</span>
+                </div>
+                <div>
+                    <h3 class="font-label-md text-label-md font-bold text-on-surface text-sm">Budi Santoso</h3>
+                    <p class="text-[10px] text-on-surface-variant tracking-wider uppercase font-semibold">Masyarakat</p>
+                </div>
             </div>
-            <div>
-                <p class="text-sm font-medium leading-none">Budi Santoso</p>
-                <span class="text-xs text-slate-500 font-mono">NIK: 357301234...</span>
-            </div>
-            <a href="login-masyarakat.html" class="ml-auto text-slate-500 hover:text-red-400" title="Keluar">
-                <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+        <!-- Main Navigation -->
+        <nav class="flex-grow space-y-1">
+            <a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-lg transition-colors" href="dashboard-pelapor.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-stack-md text-on-surface-variant hover:bg-surface-variant px-4 py-3 rounded-lg transition-colors" href="buat-laporan.html">
+                <span class="material-symbols-outlined">description</span>
+                <span class="font-label-md text-label-md">Buat Laporan</span>
+            </a>
+            <a class="flex items-center gap-stack-md text-on-surface-variant hover:bg-surface-variant px-4 py-3 rounded-lg transition-colors" href="peta-pelapor.html">
+                <span class="material-symbols-outlined">map</span>
+                <span class="font-label-md text-label-md">Peta Dampak</span>
+            </a>
+            <a class="flex items-center gap-stack-md bg-primary-container text-on-primary-container rounded-lg px-4 py-3 transition-colors" href="pengaturan-profil-pelapor.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                <span class="font-label-md text-label-md">Pengaturan</span>
+            </a>
+        </nav>
+        <!-- Footer Nav -->
+        <div class="border-t border-outline-variant pt-4 space-y-1">
+            <a class="flex items-center gap-stack-md text-error hover:bg-error-container/20 px-4 py-3 rounded-lg transition-colors" href="login-masyarakat.html">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Keluar</span>
             </a>
         </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col h-full overflow-y-auto relative z-10">
-        
+    <!-- Main Content Canvas -->
+    <main class="ml-64 min-h-screen p-margin-desktop max-w-[1024px]">
         <!-- Header -->
-        <header class="bg-slate-900/60 border-b border-slate-800/60 px-6 py-4 flex items-center justify-between shadow-sm backdrop-blur-md sticky top-0 z-40">
-            <div class="flex items-center gap-4">
-                <button id="mobile-menu-btn" class="text-slate-400 md:hidden block hover:text-white focus:outline-none">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-                <div>
-                    <h2 class="text-xl font-bold text-white">Pengaturan Profil Saya</h2>
-                    <p class="text-xs text-slate-400 hidden sm:block">Perbarui biodata profil warga Anda dan kata sandi keamanan.</p>
-                </div>
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <h1 class="font-display-lg text-display-lg text-primary mb-1">Pengaturan Profil Saya</h1>
+                <p class="font-body-md text-on-surface-variant">Perbarui biodata profil warga Anda dan kata sandi keamanan.</p>
             </div>
         </header>
 
-        <div class="p-6 max-w-4xl w-full mx-auto space-y-6">
-            
-            <!-- Avatar Banner Card -->
-            <div class="bg-slate-900/40 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md flex flex-col sm:flex-row items-center gap-6 shadow-lg">
-                <div class="relative group">
-                    <div id="avatar-initials" class="w-24 h-24 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-3xl font-bold border border-blue-500/30 shadow-md">
-                        BS
-                    </div>
-                </div>
-                <div class="text-center sm:text-left flex-1">
-                    <h3 class="text-lg font-bold text-white">Budi Santoso</h3>
-                    <p class="text-xs text-slate-400 mt-1 max-w-sm">Status Akun: <span class="text-emerald-400 font-semibold">Aktif (Terverifikasi NIK)</span></p>
-                    <p class="text-[10px] text-slate-500 mt-1 font-mono">Tedaftar sejak: 13 Juni 2026</p>
+        <!-- Avatar Banner Card -->
+        <div class="bg-surface-container-lowest p-6 border border-outline-variant rounded-xl flex flex-col sm:flex-row items-center gap-6 mb-8">
+            <div class="relative group">
+                <div id="avatar-initials" class="w-24 h-24 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-3xl font-bold border border-primary/20 shadow-md">
+                    BS
                 </div>
             </div>
-
-            <!-- Tab Buttons -->
-            <div class="border-b border-slate-800/60 flex gap-4">
-                <button id="tab-umum" onclick="gantiTab('umum')" class="border-b-2 border-blue-500 text-blue-400 pb-3 font-semibold text-sm transition focus:outline-none">
-                    <i class="fa-solid fa-id-card-clip mr-1.5"></i>Informasi Umum
-                </button>
-                <button id="tab-keamanan" onclick="gantiTab('keamanan')" class="border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-medium text-sm transition focus:outline-none">
-                    <i class="fa-solid fa-shield-halved mr-1.5"></i>Keamanan & Sandi
-                </button>
+            <div class="text-center sm:text-left flex-grow">
+                <h3 class="text-lg font-bold text-on-surface">Budi Santoso</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Status Akun: <span class="text-green-600 font-bold">Aktif (Terverifikasi NIK)</span></p>
+                <p class="text-[10px] text-on-surface-variant mt-1 font-mono">Terdaftar sejak: 13 Juni 2026</p>
             </div>
+        </div>
 
-            <!-- Panel Umum -->
-            <div id="panel-umum" class="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg backdrop-blur-md">
-                <form id="form-profil-pelapor" onsubmit="simpanProfilUmumPelapor(event)" class="p-6 space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nama Lengkap</label>
-                            <input type="text" id="profile-name" required value="Budi Santoso" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">NIK (KTP)</label>
-                            <input type="text" value="3573012345670001" disabled class="w-full bg-slate-950/20 border border-slate-900 rounded-xl px-4 py-2.5 text-sm text-slate-500 font-mono cursor-not-allowed" title="NIK resmi tidak dapat diubah secara mandiri">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Alamat Email</label>
-                            <input type="email" id="profile-email" required value="budi.santoso99@gmail.com" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nomor Telepon / WhatsApp</label>
-                            <input type="text" id="profile-phone" required value="081234567890" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 font-mono">
-                        </div>
+        <!-- Tab Selector Header -->
+        <div class="border-b border-outline-variant flex gap-4 mb-6">
+            <button id="tab-umum" onclick="gantiTab('umum')" class="border-b-2 border-primary text-primary pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5">
+                <span class="material-symbols-outlined">badge</span> Informasi Umum
+            </button>
+            <button id="tab-keamanan" onclick="gantiTab('keamanan')" class="border-b-2 border-transparent text-on-surface-variant hover:text-on-surface pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5">
+                <span class="material-symbols-outlined">security</span> Keamanan &amp; Sandi
+            </button>
+        </div>
+
+        <!-- Panel Informasi Umum -->
+        <div id="panel-umum" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-300">
+            <form id="form-profil-pelapor" onsubmit="simpanProfilUmumPelapor(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Nama Lengkap</label>
+                        <input type="text" id="profile-name" required value="Budi Santoso" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Alamat Domisili Warga</label>
-                        <input type="text" id="profile-address" value="Jl. Ijen No. 12, Klojen, Kota Malang" class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">NIK (KTP)</label>
+                        <input type="text" value="3573012345670001" disabled class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-on-surface-variant font-mono cursor-not-allowed" title="NIK resmi tidak dapat diubah secara mandiri">
                     </div>
-                    <div class="flex justify-end pt-2 border-t border-slate-800">
-                        <button type="submit" id="btn-simpan-umum" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-xl transition shadow-md shadow-blue-500/20 flex items-center gap-2">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Panel Keamanan -->
-            <div id="panel-keamanan" class="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden hidden shadow-lg backdrop-blur-md">
-                <form id="form-sandi-pelapor" onsubmit="simpanProfilSandiPelapor(event)" class="p-6 space-y-4">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Kata Sandi Sekarang</label>
-                        <input type="password" id="old-password" required placeholder="Masukkan kata sandi saat ini..." class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Alamat Email</label>
+                        <input type="email" id="profile-email" required value="budi.santoso99@gmail.com" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Kata Sandi Baru</label>
-                            <input type="password" id="new-password" required placeholder="Minimal 8 karakter..." class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Konfirmasi Kata Sandi Baru</label>
-                            <input type="password" id="confirm-new-password" required placeholder="Ulangi kata sandi baru..." class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                        </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Nomor Telepon / WhatsApp</label>
+                        <input type="text" id="profile-phone" required value="081234567890" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface font-mono">
                     </div>
-                    <div class="flex justify-end pt-2 border-t border-slate-800">
-                        <button type="submit" id="btn-simpan-sandi" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-xl transition shadow-md shadow-blue-500/20 flex items-center gap-2">
-                            <i class="fa-solid fa-key"></i> Perbarui Kata Sandi
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Alamat Domisili Warga</label>
+                    <input type="text" id="profile-address" value="Jl. Ijen No. 12, Klojen, Kota Malang" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                </div>
+                <div class="flex justify-end pt-4 border-t border-outline-variant">
+                    <button type="submit" id="btn-simpan-umum" class="bg-primary text-on-primary font-bold py-2.5 px-6 rounded-lg text-sm transition-all hover:opacity-90 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm font-bold">save</span> Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
 
+        <!-- Panel Keamanan -->
+        <div id="panel-keamanan" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 hidden transition-all duration-300">
+            <form id="form-sandi-pelapor" onsubmit="simpanProfilSandiPelapor(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Kata Sandi Sekarang</label>
+                    <input type="password" id="old-password" required placeholder="Masukkan kata sandi saat ini..." class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Kata Sandi Baru</label>
+                        <input type="password" id="new-password" required placeholder="Minimal 8 karakter..." class="w-full bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Konfirmasi Kata Sandi Baru</label>
+                        <input type="password" id="confirm-new-password" required placeholder="Ulangi kata sandi baru..." class="w-full bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4 border-t border-outline-variant">
+                    <button type="submit" id="btn-simpan-sandi" class="bg-primary text-on-primary font-bold py-2.5 px-6 rounded-lg text-sm transition-all hover:opacity-90 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm font-bold">key</span> Perbarui Kata Sandi
+                    </button>
+                </div>
+            </form>
         </div>
     </main>
 
@@ -189,18 +267,18 @@
             const panelKeamanan = document.getElementById('panel-keamanan');
 
             if (kategori === 'umum') {
-                tabUmum.className = "border-b-2 border-blue-500 text-blue-400 pb-3 font-semibold text-sm transition focus:outline-none";
-                tabKeamanan.className = "border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-medium text-sm transition focus:outline-none";
+                tabUmum.className = "border-b-2 border-primary text-primary pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
+                tabKeamanan.className = "border-b-2 border-transparent text-on-surface-variant hover:text-on-surface pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
                 panelUmum.classList.remove('hidden');
                 panelKeamanan.classList.add('hidden');
             } else {
-                tabUmum.className = "border-b-2 border-transparent text-slate-400 hover:text-white pb-3 font-medium text-sm transition focus:outline-none";
-                tabKeamanan.className = "border-b-2 border-blue-500 text-blue-400 pb-3 font-semibold text-sm transition focus:outline-none";
+                tabUmum.className = "border-b-2 border-transparent text-on-surface-variant hover:text-on-surface pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
+                tabKeamanan.className = "border-b-2 border-primary text-primary pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
                 panelUmum.classList.add('hidden');
                 panelKeamanan.classList.remove('hidden');
             }
         }
-        
+
         // Trigger pre-load profile warga dari localStorage jika script.js terpasang
         if (typeof initProfilePelapor === 'function') {
             initProfilePelapor();

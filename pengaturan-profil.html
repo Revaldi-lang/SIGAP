@@ -1,182 +1,276 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGAP - Pengaturan Profil</title>
-        <script>
-        tailwind = {
-            config: {
-                darkMode: 'class'
-            }
-        };
-        (function() {
-            const savedTheme = localStorage.getItem('sigap_theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#735c00",
+                      "on-surface": "#1c1b1b",
+                      "inverse-surface": "#313030",
+                      "on-secondary-fixed": "#1c1c18",
+                      "tertiary-fixed": "#ffe088",
+                      "on-primary-fixed": "#001159",
+                      "on-tertiary-container": "#4f3e00",
+                      "on-surface-variant": "#444653",
+                      "surface-tint": "#3e54c1",
+                      "tertiary-fixed-dim": "#e9c349",
+                      "surface": "#fcf9f8",
+                      "tertiary-container": "#cca830",
+                      "on-primary-fixed-variant": "#223aa8",
+                      "secondary-fixed-dim": "#c9c6c1",
+                      "surface-variant": "#e5e2e1",
+                      "background": "#fcf9f8",
+                      "on-tertiary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "primary": "#001360",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#605e5a",
+                      "secondary-container": "#e6e2dc",
+                      "primary-fixed": "#dee1ff",
+                      "surface-container-high": "#eae7e7",
+                      "outline-variant": "#c5c5d5",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "on-secondary": "#ffffff",
+                      "outline": "#757684",
+                      "inverse-on-surface": "#f3f0ef",
+                      "surface-container-highest": "#e5e2e1",
+                      "surface-bright": "#fcf9f8",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#484743",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "inverse-primary": "#bac3ff",
+                      "primary-fixed-dim": "#bac3ff",
+                      "on-background": "#1c1b1b",
+                      "surface-dim": "#dcd9d9",
+                      "on-secondary-container": "#666460",
+                      "primary-container": "#002395",
+                      "surface-container": "#f0eded",
+                      "on-primary-container": "#8094ff",
+                      "on-tertiary-fixed": "#241a00",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#e6e2dc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "section-gap": "80px",
+                      "unit": "8px",
+                      "stack-lg": "32px",
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "container-max": "1280px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fcf9f8;
+            color: #1c1b1b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
-
-    <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col justify-between fixed inset-y-0 left-0 z-[1050] transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out">
-        <div>
-            <a href="index.html" class="p-5 flex items-center gap-3 border-b border-slate-800 hover:bg-slate-800/50 transition block text-white">
-                <img src="sigap.png" alt="Logo SIGAP" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden')">
-                <div id="fallback-logo" class="bg-blue-600 p-2 rounded-lg text-white hidden">
-                    <i class="fa-solid fa-bullhorn text-xl"></i>
+<body class="bg-surface">
+    <!-- SideNavBar -->
+    <aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-stack-md z-50">
+        <div class="flex items-center gap-3 px-4 py-6 mb-stack-lg">
+            <div class="bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center justify-center">
+                <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
+            </div>
+            <span class="font-headline-sm text-headline-md font-bold text-primary">SIGAP</span>
+        </div>
+        
+        <!-- User Profile Info -->
+        <div class="px-4 mb-stack-lg">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+                    <span class="material-symbols-outlined">person</span>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-none">SIGAP</h1>
-                    <span class="text-xs text-slate-400">Aduan Publik</span>
+                    <h4 class="font-label-md text-on-surface font-bold text-sm">Admin Utama</h4>
+                    <p class="text-[10px] text-on-surface-variant tracking-wider uppercase font-semibold">Pemerintah Daerah</p>
                 </div>
-            </a>
-            
-            <nav class="p-4 space-y-1">
-                <a href="sigap.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
-                </a>
-                <a href="laporan.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-list-check w-5"></i> Laporan Masuk
-                    <span class="ml-auto bg-red-700 text-xs px-2 py-0.5 rounded-full text-white">5</span>
-                </a>
-                <a href="peta.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-map-location-dot w-5"></i> Peta Dampak
-                </a>
-                <a href="manajemen-user.html" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 hover:text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-users w-5"></i> Manajemen User
-                </a>
-                <a href="pengaturan-profil.html" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-user-gear w-5"></i> Pengaturan Profil
-                </a>
-            </nav>
+            </div>
         </div>
 
-        <div class="p-4 border-t border-slate-800 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">ADM</div>
-            <div>
-                <p class="text-sm font-medium leading-none">Admin Utama</p>
-                <span class="text-xs text-slate-400">Pemerintah Daerah</span>
-            </div>
-            <a href="login.html" class="ml-auto text-slate-400 hover:text-red-400">
-                <i class="fa-solid fa-right-from-bracket"></i>
+        <!-- Navigation Links -->
+        <nav class="flex-1 space-y-1">
+            <a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-lg transition-colors" href="sigap.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-lg transition-colors" href="laporan.html">
+                <span class="material-symbols-outlined">description</span>
+                <span class="font-label-md text-label-md">Laporan Masuk</span>
+            </a>
+            <a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-lg transition-colors" href="peta.html">
+                <span class="material-symbols-outlined">map</span>
+                <span class="font-label-md text-label-md">Peta Dampak</span>
+            </a>
+            <a class="flex items-center gap-stack-md text-on-surface-variant px-4 py-3 hover:bg-surface-variant rounded-lg transition-colors" href="manajemen-user.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Manajemen User</span>
+            </a>
+            <a class="flex items-center gap-stack-md bg-primary-container text-on-primary-container rounded-lg px-4 py-3 transition-colors" href="pengaturan-profil.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Pengaturan Profil</span>
+            </a>
+        </nav>
+
+        <!-- Footer Navigation -->
+        <div class="mt-auto border-t border-outline-variant pt-stack-md">
+            <a class="flex items-center gap-stack-md text-error px-4 py-3 hover:bg-error-container rounded-lg transition-colors" href="login.html">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Keluar</span>
             </a>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-full overflow-y-auto">
-        
-        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm sticky top-0 z-40">
-            <div class="flex items-center gap-4">
-                <button id="mobile-menu-btn" class="text-gray-600 md:hidden block focus:outline-none">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-                <div>
-                    <h2 class="text-xl font-bold text-gray-800">Pengaturan Profil</h2>
-                    <p class="text-xs text-gray-500 hidden sm:block">Kelola informasi data diri, foto profil, dan keamanan kredensial akun Anda.</p>
-                </div>
+    <!-- Main Content Area -->
+    <main class="ml-64 min-h-screen px-margin-desktop py-stack-lg max-w-[1024px]">
+        <!-- Top Bar / Header -->
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <h1 class="font-display-lg text-display-lg text-primary mb-1">Pengaturan Profil</h1>
+                <p class="font-body-md text-on-surface-variant">Kelola data diri, foto profil, dan keamanan sandi login Anda.</p>
             </div>
         </header>
 
-        <div class="p-6 max-w-4xl w-full mx-auto space-y-6">
-            
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col sm:flex-row items-center gap-6">
-                <div class="relative group">
-                    <img id="profile-preview" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover border-4 border-gray-100 shadow-sm">
-                    <label for="upload-avatar" class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white text-xs opacity-0 group-hover:opacity-100 transition cursor-pointer font-medium">
-                        <i class="fa-solid fa-camera text-base mb-1 block text-center"></i>
-                    </label>
-                    <input type="file" id="upload-avatar" accept="image/*" class="hidden" onchange="previewImage(event)">
-                </div>
-                <div class="text-center sm:text-left flex-1">
-                    <h3 class="text-lg font-bold text-gray-900">Foto Profil Anda</h3>
-                    <p class="text-xs text-gray-400 mt-1 max-w-sm">Disarankan menggunakan gambar persegi berformat PNG, JPG atau JPEG maksimal ukuran 2MB.</p>
-                    <div class="mt-3 flex flex-wrap justify-center sm:justify-start gap-2">
-                        <button onclick="document.getElementById('upload-avatar').click()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-4 rounded-lg transition shadow-sm">Ganti Foto</button>
-                        <button onclick="hapusFoto()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-semibold py-2 px-4 rounded-lg transition">Hapus</button>
-                    </div>
+        <!-- Avatar Banner Card -->
+        <div class="bg-surface-container-lowest p-6 border border-outline-variant rounded-xl flex flex-col sm:flex-row items-center gap-6 mb-8">
+            <div class="relative group">
+                <img id="profile-preview" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover border-4 border-surface shadow-sm">
+                <label for="upload-avatar" class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white text-xs opacity-0 group-hover:opacity-100 transition cursor-pointer font-medium">
+                    <span class="material-symbols-outlined">photo_camera</span>
+                </label>
+                <input type="file" id="upload-avatar" accept="image/*" class="hidden" onchange="previewImage(event)">
+            </div>
+            <div class="text-center sm:text-left flex-grow">
+                <h3 class="text-lg font-bold text-on-surface">Foto Profil Anda</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Disarankan format PNG atau JPG dengan rasio 1:1 maksimal ukuran 2MB.</p>
+                <div class="mt-3 flex flex-wrap justify-center sm:justify-start gap-2">
+                    <button onclick="document.getElementById('upload-avatar').click()" class="bg-primary text-on-primary text-xs font-bold py-2 px-4 rounded-lg transition shadow-sm hover:opacity-90">Ganti Foto</button>
+                    <button onclick="hapusFoto()" class="bg-surface-container-low border border-outline-variant hover:bg-surface-variant text-on-surface text-xs font-bold py-2 px-4 rounded-lg transition">Hapus</button>
                 </div>
             </div>
+        </div>
 
-            <div class="border-b border-gray-200 flex gap-4">
-                <button id="tab-umum" onclick="gantiTab('umum')" class="border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none">
-                    <i class="fa-solid fa-id-card-clip mr-1.5"></i>Informasi Umum
-                </button>
-                <button id="tab-keamanan" onclick="gantiTab('keamanan')" class="border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none">
-                    <i class="fa-solid fa-shield-halved mr-1.5"></i>Keamanan & Sandi
-                </button>
-            </div>
+        <!-- Tab Selector Header -->
+        <div class="border-b border-outline-variant flex gap-4 mb-6">
+            <button id="tab-umum" onclick="gantiTab('umum')" class="border-b-2 border-primary text-primary pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5">
+                <span class="material-symbols-outlined">badge</span> Informasi Umum
+            </button>
+            <button id="tab-keamanan" onclick="gantiTab('keamanan')" class="border-b-2 border-transparent text-on-surface-variant hover:text-on-surface pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5">
+                <span class="material-symbols-outlined">security</span> Keamanan &amp; Sandi
+            </button>
+        </div>
 
-            <div id="panel-umum" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300">
-                <form onsubmit="simpanProfilUmum(event)" class="p-6 space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Nama Lengkap</label>
-                            <input type="text" id="profile-name" required value="Admin Utama" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">NIP / NIK</label>
-                            <input type="text" id="profile-identitas" value="199408122020121002" disabled class="w-full px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-400 font-mono cursor-not-allowed" title="Identitas resmi tidak dapat diubah secara mandiri">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Alamat Email</label>
-                            <input type="email" id="profile-email" required value="admin@sigap.go.id" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Nomor Telepon / WA</label>
-                            <input type="text" id="profile-phone" required value="081234567890" class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 font-mono">
-                        </div>
+        <!-- Panel Informasi Umum -->
+        <div id="panel-umum" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-300">
+            <form onsubmit="simpanProfilUmum(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Nama Lengkap</label>
+                        <input type="text" id="profile-name" required value="Admin Utama" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Instansi Satuan Kerja</label>
-                        <input type="text" value="Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)" disabled class="w-full px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed">
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">NIP / NIK</label>
+                        <input type="text" id="profile-identitas" value="199408122020121002" disabled class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-on-surface-variant font-mono cursor-not-allowed" title="Identitas resmi tidak dapat diubah secara mandiri">
                     </div>
-                    <div class="flex justify-end pt-2 border-t border-gray-100">
-                        <button type="submit" id="btn-simpan-umum" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-lg transition shadow-sm flex items-center gap-2">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div id="panel-keamanan" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hidden transition-all duration-300">
-                <form onsubmit="simpanProfilSandi(event)" class="p-6 space-y-4">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Kata Sandi Sekarang</label>
-                        <input type="password" required placeholder="Masukkan kata sandi saat ini..." class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Alamat Email</label>
+                        <input type="email" id="profile-email" required value="admin@sigap.go.id" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Kata Sandi Baru</label>
-                            <input type="password" id="new-password" required placeholder="Minimal 8 karakter..." class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5">Konfirmasi Kata Sandi Baru</label>
-                            <input type="password" id="confirm-new-password" required placeholder="Ulangi kata sandi baru..." class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900">
-                        </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Nomor Telepon / WA</label>
+                        <input type="text" id="profile-phone" required value="081234567890" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface font-mono">
                     </div>
-                    <div class="flex justify-end pt-2 border-t border-gray-100">
-                        <button type="submit" id="btn-simpan-sandi" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-5 rounded-lg transition shadow-sm flex items-center gap-2">
-                            <i class="fa-solid fa-key"></i> Perbarui Kata Sandi
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Instansi Satuan Kerja</label>
+                    <input type="text" value="Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)" disabled class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-on-surface-variant cursor-not-allowed">
+                </div>
+                <div class="flex justify-end pt-4 border-t border-outline-variant">
+                    <button type="submit" id="btn-simpan-umum" class="bg-primary text-on-primary font-bold py-2.5 px-6 rounded-lg text-sm transition-all hover:opacity-90 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm font-bold">save</span> Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
 
+        <!-- Panel Keamanan -->
+        <div id="panel-keamanan" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 hidden transition-all duration-300">
+            <form onsubmit="simpanProfilSandi(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Kata Sandi Sekarang</label>
+                    <input type="password" required placeholder="Masukkan kata sandi saat ini..." class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Kata Sandi Baru</label>
+                        <input type="password" id="new-password" required placeholder="Minimal 8 karakter..." class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-2">Konfirmasi Kata Sandi Baru</label>
+                        <input type="password" id="confirm-new-password" required placeholder="Ulangi kata sandi baru..." class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-on-surface">
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4 border-t border-outline-variant">
+                    <button type="submit" id="btn-simpan-sandi" class="bg-primary text-on-primary font-bold py-2.5 px-6 rounded-lg text-sm transition-all hover:opacity-90 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm font-bold">key</span> Perbarui Kata Sandi
+                    </button>
+                </div>
+            </form>
         </div>
     </main>
 
     <script src="assets/js/script.js"></script>
-
     <script>
         function gantiTab(kategori) {
             const tabUmum = document.getElementById('tab-umum');
@@ -185,13 +279,13 @@
             const panelKeamanan = document.getElementById('panel-keamanan');
 
             if (kategori === 'umum') {
-                tabUmum.className = "border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none";
-                tabKeamanan.className = "border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none";
+                tabUmum.className = "border-b-2 border-primary text-primary pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
+                tabKeamanan.className = "border-b-2 border-transparent text-on-surface-variant hover:text-on-surface pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
                 panelUmum.classList.remove('hidden');
                 panelKeamanan.classList.add('hidden');
             } else {
-                tabUmum.className = "border-b-2 border-transparent text-gray-500 hover:text-gray-800 pb-3 font-medium text-sm transition focus:outline-none";
-                tabKeamanan.className = "border-b-2 border-blue-600 text-blue-600 pb-3 font-semibold text-sm transition focus:outline-none";
+                tabUmum.className = "border-b-2 border-transparent text-on-surface-variant hover:text-on-surface pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
+                tabKeamanan.className = "border-b-2 border-primary text-primary pb-3 font-bold text-sm transition focus:outline-none flex items-center gap-1.5";
                 panelUmum.classList.add('hidden');
                 panelKeamanan.classList.remove('hidden');
             }
@@ -212,134 +306,6 @@
             const defaultAvatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
             document.getElementById('profile-preview').src = defaultAvatar;
             document.getElementById('upload-avatar').value = ""; 
-        }
-
-        function simpanProfilUmum(event) {
-            event.preventDefault();
-            const rawName = document.getElementById('profile-name').value.trim();
-            const rawEmail = document.getElementById('profile-email').value.trim();
-            const rawPhone = document.getElementById('profile-phone').value.trim();
-
-            const name = sanitizeInput(rawName);
-            const email = sanitizeInput(rawEmail);
-            const phone = sanitizeInput(rawPhone);
-
-            if (name.length < 3) {
-                alert("Gagal Menyimpan! Nama Lengkap minimal harus terdiri dari 3 karakter.");
-                return;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Gagal Menyimpan! Format alamat email tidak valid.");
-                return;
-            }
-
-            const sessionStr = localStorage.getItem('sigap_session');
-            if (!sessionStr) return;
-            const session = JSON.parse(sessionStr);
-
-            const users = getUsers();
-            const userIndex = users.findIndex(x => x.email === session.email || x.id === session.id);
-            
-            if (userIndex !== -1) {
-                users[userIndex].username = name;
-                users[userIndex].email = email;
-                users[userIndex].telepon = phone;
-                saveUsers(users);
-            }
-
-            session.username = name;
-            session.email = email;
-            localStorage.setItem('sigap_session', JSON.stringify(session));
-
-            const btn = document.getElementById('btn-simpan-umum');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                alert("Sukses! Informasi profil umum Anda berhasil diperbarui.");
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
-                btn.disabled = false;
-            }, 200);
-        }
-
-        function simpanProfilSandi(event) {
-            event.preventDefault();
-            const rawNewPassword = document.getElementById('new-password').value;
-            const confirmNewPassword = document.getElementById('confirm-new-password').value;
-
-            const newPassword = sanitizeInput(rawNewPassword);
-
-            if (newPassword !== confirmNewPassword) {
-                alert("Gagal! Konfirmasi kata sandi baru tidak cocok.");
-                return;
-            }
-
-            if (newPassword.length < 8) {
-                alert("Gagal! Kata sandi baru minimal harus berjumlah 8 karakter.");
-                return;
-            }
-
-            const sessionStr = localStorage.getItem('sigap_session');
-            if (!sessionStr) {
-                alert("Gagal! Sesi aktif tidak ditemukan.");
-                return;
-            }
-            const session = JSON.parse(sessionStr);
-
-            const users = getUsers();
-            const userIndex = users.findIndex(x => x.email.toLowerCase() === session.email.toLowerCase());
-
-            if (userIndex !== -1) {
-                users[userIndex].password = newPassword;
-                saveUsers(users);
-            } else {
-                alert("Gagal! Akun Anda tidak ditemukan di database lokal.");
-                return;
-            }
-
-            const btn = document.getElementById('btn-simpan-sandi');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memperbarui...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                alert("Sukses! Keamanan akun diperbarui.");
-                event.target.reset(); 
-                btn.innerHTML = '<i class="fa-solid fa-key"></i> Perbarui Kata Sandi';
-                btn.disabled = false;
-            }, 200);
-        }
-
-        function initProfileAdmin() {
-            const sessionStr = localStorage.getItem('sigap_session');
-            if (!sessionStr) return;
-            const session = JSON.parse(sessionStr);
-
-            const users = getUsers();
-            const user = users.find(x => x.email === session.email || x.id === session.id) || {
-                username: session.username,
-                email: session.email,
-                identitas: "NIP: 199408122020121002",
-                telepon: "081234567890"
-            };
-
-            const elName = document.getElementById('profile-name');
-            const elEmail = document.getElementById('profile-email');
-            const elPhone = document.getElementById('profile-phone');
-            const elIdentitas = document.getElementById('profile-identitas');
-
-            if (elName) elName.value = user.username;
-            if (elEmail) elEmail.value = user.email;
-            if (elPhone) elPhone.value = user.telepon || "081234567890";
-            if (elIdentitas) elIdentitas.value = user.identitas.replace('NIP: ', '').replace('NIK: ', '');
-        }
-
-        // Initialize admin profile on load
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initProfileAdmin);
-        } else {
-            initProfileAdmin();
         }
     </script>
 </body>
