@@ -30,6 +30,34 @@ function getRedirectUrl(url) {
     return url;
 }
 
+// Global SIGAP Logo Click Handler — navigates to index.html from any page
+document.addEventListener('DOMContentLoaded', function() {
+    const logoImgs = document.querySelectorAll('img[src="sigap.png"], img[src="sigap.jpg"]');
+    logoImgs.forEach(function(img) {
+        // Jika logo sudah dibungkus <a href="index.html">, skip (sudah benar)
+        const parent = img.closest('a');
+        if (parent && (parent.getAttribute('href') === 'index.html' || parent.getAttribute('href') === './index.html')) {
+            return;
+        }
+        // Tambahkan gaya klik dan navigasi
+        img.style.cursor = 'pointer';
+        img.title = 'Kembali ke Halaman Utama';
+        img.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.replace('index.html');
+        });
+        // Jika logo dibungkus <a> ke halaman lain, override juga parentnya
+        if (parent) {
+            parent.style.cursor = 'pointer';
+            parent.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.replace('index.html');
+            });
+        }
+    });
+});
+
 
 // =========================================
 // 0. AUTHENTICATION & ROLE GUARD ENGINE
