@@ -76,28 +76,28 @@ function getRedirectUrl(url) {
     
     // Auto-redirect jika sudah login dan mengunjungi halaman login
     if (pageName === 'login.html' && session && session.role === 'admin') {
-        window.location.href = getRedirectUrl('sigap.html');
+        window.location.replace('sigap.html');
         return;
     }
     if (pageName === 'login-masyarakat.html' && session && session.role === 'pelapor') {
-        window.location.href = getRedirectUrl('dashboard-pelapor.html');
+        window.location.replace('dashboard-pelapor.html');
         return;
     }
     
     if (isAdminPage) {
         if (!session) {
-            window.location.href = 'login.html';
+            window.location.replace('login.html');
             return;
         } else if (session.role !== 'admin') {
-            window.location.href = 'dashboard-pelapor.html';
+            window.location.replace('dashboard-pelapor.html');
             return;
         }
     } else if (isPelaporPage) {
         if (!session) {
-            window.location.href = 'login-masyarakat.html';
+            window.location.replace('login-masyarakat.html');
             return;
         } else if (session.role !== 'pelapor') {
-            window.location.href = 'sigap.html';
+            window.location.replace('sigap.html');
             return;
         }
     }
@@ -123,7 +123,7 @@ function getRedirectUrl(url) {
             localStorage.removeItem('sigap_session');
             localStorage.removeItem('sigap_session_last_activity');
             const redirectTarget = session.role === 'admin' ? 'login.html' : 'login-masyarakat.html';
-            window.location.href = redirectTarget;
+            window.location.replace(redirectTarget);
             return;
         }
         
@@ -217,7 +217,7 @@ function getRedirectUrl(url) {
             localStorage.removeItem('sigap_session');
             localStorage.removeItem('sigap_session_last_activity');
             const redirectTarget = session.role === 'admin' ? 'login.html' : 'login-masyarakat.html';
-            window.location.href = redirectTarget;
+            window.location.replace(redirectTarget);
         }
         
         // Loop pengecekan sesi berkala
@@ -248,7 +248,7 @@ function handleLogout(event) {
     if (event) event.preventDefault();
     localStorage.removeItem('sigap_session');
     localStorage.removeItem('sigap_session_last_activity');
-    window.location.href = 'index.html';
+    window.location.replace('index.html');
 }
 
 // Auto-bind logout buttons on DOM load
@@ -519,7 +519,7 @@ function handleLogin(event) {
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-        window.location.href = 'sigap.html';
+        window.location.replace('sigap.html');
     }, 150);
 }
 
@@ -564,7 +564,7 @@ function handleLoginMasyarakat(event) {
         };
         localStorage.setItem('sigap_session', JSON.stringify(sessionData));
         localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-        window.location.href = 'dashboard-pelapor.html';
+        window.location.replace('dashboard-pelapor.html');
     }, 150);
 }
 
@@ -643,7 +643,7 @@ function handleRegister(event) {
 
     setTimeout(() => {
         alert("Pendaftaran Berhasil!\nAkun Anda telah terdaftar dan menunggu verifikasi admin. Silakan masuk.");
-        window.location.href = getRedirectUrl('login-masyarakat.html');
+        window.location.replace('login-masyarakat.html');
     }, 300);
 }
 
@@ -892,7 +892,7 @@ function initDetailPage() {
     if (reporterMeta) {
         reporterMeta.innerHTML = `
             <span><i class="fa-solid fa-user text-gray-400"></i> ${escapeHTML(aduan.pelapor)}</span>
-            <span>•</span>
+            <span>â€¢</span>
             <span><i class="fa-solid fa-calendar text-gray-400"></i> ${escapeHTML(aduan.waktu)}</span>
         `;
     }
@@ -941,7 +941,7 @@ function initDetailPage() {
                 <div class="relative mb-4">
                     <span class="absolute -left-[21px] top-0 bg-blue-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
                     <p class="font-bold text-gray-800">${escapeHTML(log.judul)}</p>
-                    <p class="text-gray-500">${escapeHTML(log.waktu)} • Oleh ${escapeHTML(log.aktor)}</p>
+                    <p class="text-gray-500">${escapeHTML(log.waktu)} â€¢ Oleh ${escapeHTML(log.aktor)}</p>
                 </div>
             `;
             timelineContainer.insertAdjacentHTML('beforeend', logItem);
@@ -959,7 +959,7 @@ function initDetailPage() {
             var mapDetail = L.map('mapDetail').setView([aduan.lat, aduan.lng], 16);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
-                attribution: '© OpenStreetMap'
+                attribution: 'Â© OpenStreetMap'
             }).addTo(mapDetail);
 
             var pinColor = aduan.status === 'baru' ? '#ef4444' : aduan.status === 'proses' ? '#f59e0b' : '#22c55e';
@@ -1260,7 +1260,7 @@ function initPetaDampak() {
     // Tambahkan Layer Peta
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '© OpenStreetMap contributors - Proyek SIGAP'
+        attribution: 'Â© OpenStreetMap contributors - Proyek SIGAP'
     }).addTo(map);
 
     // Konfigurasi Warna Pin Marker
@@ -1479,7 +1479,7 @@ function renderDasborPelapor() {
                             <div class="flex flex-wrap items-center gap-2">
                                 <span class="text-[10px] font-mono font-bold text-slate-500">#${escapeHTML(aduan.id)}</span>
                                 <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded-full font-bold border-2 border-blue-500/20 uppercase tracking-wider">${escapeHTML(aduan.kategoriLabel)}</span>
-                                <span class="text-slate-600 text-xs font-mono">• ${escapeHTML(aduan.waktu)}</span>
+                                <span class="text-slate-600 text-xs font-mono">â€¢ ${escapeHTML(aduan.waktu)}</span>
                             </div>
                             <h4 class="font-bold text-white text-base mt-1.5 leading-snug">${escapeHTML(aduan.lokasi)}</h4>
                             <p class="text-slate-400 text-xs mt-1 max-w-xl leading-relaxed">${escapeHTML(aduan.deskripsi)}</p>
@@ -1515,7 +1515,7 @@ function initMapSelector() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
+        attribution: 'Â© OpenStreetMap contributors'
     }).addTo(mapSelector);
 
     var pinColor = '#ef4444';
@@ -1589,7 +1589,7 @@ function kirimAduanBaru(event) {
     saveLaporan(listAduan);
 
     alert(`Sukses! Aduan Anda dengan ID #${nextId} berhasil dikirimkan ke pusat data SIGAP.`);
-    window.location.href = 'dashboard-pelapor.html';
+    window.location.replace('dashboard-pelapor.html');
 }
 
 // =========================================
@@ -1604,7 +1604,7 @@ function initPetaDampakPelapor() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '© OpenStreetMap contributors - Proyek SIGAP'
+        attribution: 'Â© OpenStreetMap contributors - Proyek SIGAP'
     }).addTo(map);
 
     function createIcon(color) {
@@ -1689,7 +1689,7 @@ function initDetailPagePelapor() {
     const aduanId = urlParams.get('id');
     if (!aduanId) {
         alert("Parameter ID aduan tidak valid.");
-        window.location.href = 'dashboard-pelapor.html';
+        window.location.replace('dashboard-pelapor.html');
         return;
     }
 
@@ -1697,7 +1697,7 @@ function initDetailPagePelapor() {
     const aduan = listAduan.find(x => x.id === aduanId);
     if (!aduan) {
         alert("Laporan aduan tidak ditemukan di database lokal.");
-        window.location.href = 'dashboard-pelapor.html';
+        window.location.replace('dashboard-pelapor.html');
         return;
     }
 
@@ -1782,7 +1782,7 @@ function initDetailPagePelapor() {
                     <div class="relative">
                         <span class="absolute -left-[21px] top-0 ${dotBg} text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
                         <p class="font-bold text-slate-200">${escapeHTML(log.judul)}</p>
-                        <p class="text-slate-500">${escapeHTML(log.waktu)} • Oleh ${escapeHTML(log.aktor)}</p>
+                        <p class="text-slate-500">${escapeHTML(log.waktu)} â€¢ Oleh ${escapeHTML(log.aktor)}</p>
                     </div>
                 `;
                 timeline.insertAdjacentHTML('beforeend', logHtml);
