@@ -2545,6 +2545,48 @@ if (document.readyState === 'loading') {
     initMobileSidebar();
 }
 
+// Listen for session changes from other tabs/windows and update UI
+window.addEventListener('storage', function(e) {
+    if (!e) return;
+    if (e.key === 'sigap_session' || e.key === 'sigap_logged_out') {
+        try {
+            if (typeof updateNavbarSession === 'function') updateNavbarSession();
+            if (typeof reRenderActivePage === 'function') reRenderActivePage();
+            if (typeof bindLogoutTriggers === 'function') bindLogoutTriggers();
+            if (typeof initMobileSidebar === 'function') initMobileSidebar();
+        } catch (err) {
+            console.warn('Error handling storage event for session sync:', err && err.message);
+        }
+    }
+});
+
+// Poll localStorage briefly on page load to handle redirect callback races
+(function pollSessionOnLoad() {
+    let handled = false;
+    let attempts = 0;
+    const maxAttempts = 20; // ~6 seconds
+    const t = setInterval(() => {
+        attempts++;
+        const s = localStorage.getItem('sigap_session');
+        if (s && !handled) {
+            handled = true;
+            try {
+                if (typeof updateNavbarSession === 'function') updateNavbarSession();
+                if (typeof reRenderActivePage === 'function') reRenderActivePage();
+                if (typeof bindLogoutTriggers === 'function') bindLogoutTriggers();
+                if (typeof initMobileSidebar === 'function') initMobileSidebar();
+            } catch (err) {
+                console.warn('Error during pollSessionOnLoad UI update:', err && err.message);
+            }
+            clearInterval(t);
+            return;
+        }
+        if (attempts >= maxAttempts) {
+            clearInterval(t);
+        }
+    }, 300);
+})();
+
 // =========================================
 // 16. MOBILE SIDEBAR NAVIGATION
 // =========================================
