@@ -147,6 +147,8 @@
 /* =========================================================================
    MOBILE / RESPONSIVE ADJUSTMENTS
    ========================================================================= */
+/* Smooth scrolling for anchor navigation */
+html { scroll-behavior: smooth; }
 @media (max-width: 768px) {
     /* Make navbar less tall and not overlap content */
     nav {
