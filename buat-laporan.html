@@ -121,7 +121,7 @@
 <body class="font-body-md text-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
     <!-- Top Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-outline-variant h-20 flex items-center">
-        <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
+        <div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-20">
             <div class="flex items-center gap-4">
                 <div class="bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center justify-center">
                     <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
@@ -134,26 +134,13 @@
                 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="peta-pelapor.html">Peta Dampak</a>
                 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="pengaturan-profil-pelapor.html">Pengaturan Profil</a>
             </nav>
-            <div class="flex items-center gap-4">
-                <a href="login-masyarakat.html" class="hidden sm:inline-block px-6 py-2 border border-outline-variant text-on-surface hover:text-primary font-label-md rounded-lg hover:bg-primary/5 transition-all">
+            <div class="flex items-center gap-stack-md">
+                <a href="login-masyarakat.html" class="px-6 py-2 border border-outline-variant text-on-surface hover:text-primary font-label-md rounded-lg hover:bg-primary/5 transition-all">
                     Keluar
                 </a>
-                <button id="mobile-menu-toggle" onclick="toggleMobileMenu()" class="md:hidden text-primary" aria-expanded="false">
-                    <span id="mobile-menu-icon" class="material-symbols-outlined">menu</span>
-                </button>
             </div>
         </div>
     </header>
-
-    <!-- Mobile Dropdown Menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-outline-variant bg-surface px-6 py-4 space-y-3 transition-all duration-300">
-        <a href="dashboard-pelapor.html" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">Dashboard Saya</a>
-        <a href="peta-pelapor.html" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">Peta Dampak</a>
-        <a href="pengaturan-profil-pelapor.html" class="block text-sm font-bold text-on-surface-variant hover:text-primary py-1 transition-colors">Pengaturan Profil</a>
-        <a href="login-masyarakat.html" class="block text-sm font-bold text-error py-1 transition-colors">Keluar</a>
-    </div>
-
-    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/40 hidden z-[99997]" onclick="closeMobileMenu()"></div>
 
     <main class="pt-32 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <div class="max-w-6xl mx-auto">
@@ -315,13 +302,6 @@
         if (typeof initMapSelector === 'function') {
             initMapSelector();
         }
-
-        // Escape key to close mobile dropdown
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeMobileMenu();
-            }
-        });
     </script>
 </body>
 </html>
