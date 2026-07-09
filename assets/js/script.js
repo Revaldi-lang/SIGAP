@@ -272,13 +272,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 })();
 
-function handleLogout(event) {
+async function handleLogout(event) {
     if (event) event.preventDefault();
+    // Set flag BEFORE clearing session so onAuthStateChange knows this was intentional
+    localStorage.setItem('sigap_logged_out', 'true');
     localStorage.removeItem('sigap_session');
     localStorage.removeItem('sigap_session_last_activity');
     try {
         if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-            supabaseClient.auth.signOut();
+            await supabaseClient.auth.signOut();
         }
     } catch (e) {
         console.warn('Supabase sign out skipped:', e.message);
@@ -460,8 +462,23 @@ function initSupabaseAndSync() {
 
         // Listen for Supabase Auth state changes (useful for Google OAuth redirect)
         supabaseClient.auth.onAuthStateChange(async (event, session) => {
-            if (session && session.user) {
+            // If user intentionally logged out, do NOT re-create the session
+            if (localStorage.getItem('sigap_logged_out') === 'true') {
+                // If Supabase still has a lingering session, sign out again to fully clear it
+                if (session) {
+                    await supabaseClient.auth.signOut();
+                }
+                localStorage.removeItem('sigap_logged_out');
+                return;
+            }
+
+            // Only process SIGNED_IN events (initial login or OAuth redirect callback)
+            if (event === 'SIGNED_IN' && session && session.user) {
                 const user = session.user;
+                
+                // If a local session already exists, skip (user is already logged in)
+                const existingSession = localStorage.getItem('sigap_session');
+                if (existingSession) return;
                 
                 // Map Google user profile to standard SIGAP session format
                 const sessionData = {
