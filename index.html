@@ -501,10 +501,18 @@
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
+            const nav = document.querySelector('nav');
+            if (!menu || !nav) return;
+            // Ensure menu sits directly below the navbar (handles dynamic heights)
+            const navHeight = Math.ceil(nav.getBoundingClientRect().height) || 56;
+            menu.style.top = navHeight + 'px';
+
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
+                menu.classList.add('block');
             } else {
                 menu.classList.add('hidden');
+                menu.classList.remove('block');
             }
         }
 
