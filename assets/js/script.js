@@ -276,8 +276,12 @@ function handleLogout(event) {
     if (event) event.preventDefault();
     localStorage.removeItem('sigap_session');
     localStorage.removeItem('sigap_session_last_activity');
-    if (supabaseClient) {
-        supabaseClient.auth.signOut();
+    try {
+        if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+            supabaseClient.auth.signOut();
+        }
+    } catch (e) {
+        console.warn('Supabase sign out skipped:', e.message);
     }
     window.location.replace('index.html');
 }
@@ -838,10 +842,12 @@ if (togglePassword && passwordInput) {
         passwordInput.setAttribute('type', type);
         if (confirmPasswordInput) confirmPasswordInput.setAttribute('type', type);
         
-        if (type === 'text') {
-            eyeIcon.className = "fa-solid fa-eye-slash text-xs";
-        } else {
-            eyeIcon.className = "fa-solid fa-eye text-xs";
+        if (eyeIcon) {
+            if (type === 'text') {
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                eyeIcon.textContent = 'visibility';
+            }
         }
     });
 }
@@ -1337,7 +1343,7 @@ function initDetailPage() {
             var mapDetail = L.map('mapDetail').setView([aduan.lat, aduan.lng], 16);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
-                attribution: 'Â© OpenStreetMap'
+                attribution: '© OpenStreetMap'
             }).addTo(mapDetail);
 
             var pinColor = aduan.status === 'baru' ? '#ef4444' : aduan.status === 'proses' ? '#f59e0b' : '#22c55e';
@@ -1638,7 +1644,7 @@ function initPetaDampak() {
     // Tambahkan Layer Peta
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: 'Â© OpenStreetMap contributors - Proyek SIGAP'
+        attribution: '© OpenStreetMap contributors - Proyek SIGAP'
     }).addTo(map);
 
     // Konfigurasi Warna Pin Marker
@@ -1777,6 +1783,13 @@ function renderDasborPelapor() {
     const sessionStr = localStorage.getItem('sigap_session');
     const session = sessionStr ? JSON.parse(sessionStr) : null;
     const pelaporAktif = session ? session.username : "Budi Santoso";
+    
+    // Update welcome title dynamically if elements exist
+    const welcomeTitle = document.querySelector('main h1.font-headline-lg');
+    if (welcomeTitle && session) {
+        welcomeTitle.innerText = `Selamat Datang, ${session.username}`;
+    }
+
     const aduanSaya = listAduan.filter(x => x.pelapor === pelaporAktif);
 
     const total = aduanSaya.length;
@@ -1893,7 +1906,7 @@ function initMapSelector() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: 'Â© OpenStreetMap contributors'
+        attribution: '© OpenStreetMap contributors'
     }).addTo(mapSelector);
 
     var pinColor = '#ef4444';
@@ -1943,6 +1956,9 @@ function kirimAduanBaru(event) {
     const nextIdNum = Math.max(...listAduan.map(x => parseInt(x.id))) + 1;
     const nextId = "0" + nextIdNum;
 
+    const sessionAktif = getSession();
+    const namaPelapor = sessionAktif ? sessionAktif.username : "Masyarakat";
+
     const newAduan = {
         id: nextId,
         lat: parseFloat(lat),
@@ -1951,7 +1967,7 @@ function kirimAduanBaru(event) {
         kategoriLabel: kategoriLabel,
         deskripsi: deskripsi,
         status: "baru",
-        pelapor: "Budi Santoso",
+        pelapor: namaPelapor,
         waktu: "Hari ini, " + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) + " WIB",
         lokasi: lokasi,
         wilayah: "Kota Malang",
@@ -1959,7 +1975,7 @@ function kirimAduanBaru(event) {
         dinas: "Dinas Terkait (Menunggu Verifikasi)",
         foto: "assets/images/jalanrusak.jpg",
         logs: [
-            { judul: "Laporan Terkirim & Menunggu Verifikasi", waktu: "Baru Saja", aktor: "Budi Santoso" }
+            { judul: "Laporan Terkirim & Menunggu Verifikasi", waktu: "Baru Saja", aktor: namaPelapor }
         ]
     };
 
@@ -1982,7 +1998,7 @@ function initPetaDampakPelapor() {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: 'Â© OpenStreetMap contributors - Proyek SIGAP'
+        attribution: '© OpenStreetMap contributors - Proyek SIGAP'
     }).addTo(map);
 
     function createIcon(color) {
@@ -2186,12 +2202,12 @@ function initProfilePelapor() {
     const session = JSON.parse(sessionStr);
 
     const users = getUsers();
-    const user = users.find(x => x.email === session.email || x.id === 'user-bs') || {
+    const user = users.find(x => x.email.toLowerCase() === session.email.toLowerCase()) || {
         username: session.username,
         email: session.email,
-        identitas: "NIK: 3573012345670001",
-        telepon: "081234567890",
-        alamat: "Jl. Ijen No. 12, Klojen, Kota Malang"
+        identitas: "-",
+        telepon: "",
+        alamat: ""
     };
 
     const elName = document.getElementById('profile-name');
@@ -2217,7 +2233,7 @@ function simpanProfilUmumPelapor(event) {
     const session = JSON.parse(sessionStr);
 
     const users = getUsers();
-    const userIndex = users.findIndex(x => x.email === session.email || x.id === 'user-bs');
+    const userIndex = users.findIndex(x => x.email.toLowerCase() === session.email.toLowerCase());
     
     if (userIndex !== -1) {
         users[userIndex].username = name;
@@ -2297,6 +2313,28 @@ function simpanProfilSandiPelapor(event) {
 // 15. DYNAMIC NAVBAR USER PROFILE (index.html)
 // =========================================
 function updateNavbarSession() {
+    // Dynamically update sidebar profile username from current session
+    const sidebarSessionStr = localStorage.getItem('sigap_session');
+    if (sidebarSessionStr) {
+        try {
+            const sidebarSession = JSON.parse(sidebarSessionStr);
+            if (sidebarSession && sidebarSession.username) {
+                const sidebarNameH3 = document.querySelector('aside h3.font-label-md');
+                const sidebarNameH4 = document.querySelector('aside h4.font-label-md');
+                if (sidebarNameH3) sidebarNameH3.innerText = sidebarSession.username;
+                if (sidebarNameH4) sidebarNameH4.innerText = sidebarSession.username;
+                
+                // Also update sidebar role label
+                const sidebarRoleP = document.querySelector('aside .tracking-wider.uppercase.font-semibold');
+                if (sidebarRoleP) {
+                    sidebarRoleP.innerText = sidebarSession.role === 'admin' ? 'Administrator' : 'Masyarakat';
+                }
+            }
+        } catch (e) {
+            console.error("Error updating sidebar profile name:", e);
+        }
+    }
+
     const desktopContainer = document.getElementById('nav-portal-container-desktop');
     const mobileContainer = document.getElementById('nav-portal-container-mobile');
     
