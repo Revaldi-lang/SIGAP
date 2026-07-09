@@ -1405,7 +1405,7 @@ function initDetailPage() {
             });
 
             L.marker([aduan.lat, aduan.lng], {icon: customIcon}).addTo(mapDetail)
-             .bindPopup(`<div class="text-center"><p class="font-bold text-gray-800 text-sm">Lokasi Laporan #${aduan.id}</p><p class="text-xs text-gray-500">${aduan.lokasi}</p></div>`).openPopup();
+             .bindPopup(`<div class="text-center"><p class="font-bold text-gray-800 text-sm">Lokasi Laporan #${aduan.id}</p><p class="text-xs text-gray-500">${aduan.lokasi}</p></div>`, { autoPanPadding: L.point(15, 15) }).openPopup();
         }, 100);
     }
 }
@@ -1768,7 +1768,7 @@ function initPetaDampak() {
                     </div>
                 `;
                 
-                marker.bindPopup(popupContent);
+                marker.bindPopup(popupContent, { autoPanPadding: L.point(15, 15) });
                 markerLayer.addLayer(marker); 
             }
         });
@@ -1964,7 +1964,12 @@ function initMapSelector() {
     const mapSelectorDiv = document.getElementById('mapSelector');
     if (!mapSelectorDiv || typeof L === 'undefined') return;
 
-    var mapSelector = L.map('mapSelector', { zoomControl: false }).setView([-7.983908, 112.621391], 13);
+    var isMobile = (typeof L !== 'undefined' && L.Browser) ? L.Browser.mobile : false;
+    var mapSelector = L.map('mapSelector', { 
+        zoomControl: false,
+        dragging: !isMobile,
+        tap: !isMobile
+    }).setView([-7.983908, 112.621391], 13);
     L.control.zoom({ position: 'bottomright' }).addTo(mapSelector);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -2113,7 +2118,7 @@ function initPetaDampakPelapor() {
                         <a href="detail-laporan-pelapor.html?id=${laporan.id}" class="block w-full text-center bg-blue-600 text-white py-1.5 rounded-md text-xs font-semibold hover:bg-blue-700 mt-2">Lihat Detail</a>
                     </div>
                 `;
-                marker.bindPopup(popupContent);
+                marker.bindPopup(popupContent, { autoPanPadding: L.point(15, 15) });
                 markerLayer.addLayer(marker);
             }
         });
