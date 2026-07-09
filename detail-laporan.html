@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="id">
 <head>
     <meta charset="utf-8"/>
@@ -122,7 +122,7 @@
 </head>
 <body class="bg-background text-on-surface">
     <!-- Sidebar Navigation Shell -->
-    <aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-stack-md z-50">
+    <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-stack-md z-50 transition-transform duration-300 -translate-x-full md:translate-x-0">
         <div class="flex items-center gap-3 px-4 py-6 mb-stack-lg">
             <div class="bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center justify-center">
                 <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
@@ -175,9 +175,12 @@
     </aside>
 
     <!-- Main Content Canvas -->
-    <main class="ml-64 min-h-screen p-margin-desktop">
+    <main class="ml-0 md:ml-64 min-h-screen p-margin-mobile md:p-margin-desktop">
         <!-- Header -->
         <header class="flex justify-between items-center mb-12">
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center mr-2 shrink-0">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
             <div>
                 <nav class="flex items-center gap-2 text-on-surface-variant mb-4">
                     <a class="font-label-sm text-label-sm hover:underline" href="laporan.html">Laporan Masuk</a>
@@ -190,7 +193,7 @@
                 </div>
                 <p class="text-xs text-gray-500 mt-1 flex items-center gap-2">
                     <span><i class="fa-solid fa-user text-gray-400"></i> Pelapor</span>
-                    <span>•</span>
+                    <span>â€¢</span>
                     <span><i class="fa-solid fa-calendar text-gray-400"></i> Waktu</span>
                 </p>
             </div>
@@ -291,3 +294,4 @@
     <script src="assets/js/script.js"></script>
 </body>
 </html>
+
