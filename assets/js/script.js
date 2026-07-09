@@ -1390,7 +1390,12 @@ function initDetailPage() {
         }
 
         setTimeout(() => {
-            var mapDetail = L.map('mapDetail').setView([aduan.lat, aduan.lng], 16);
+            var mapDetail = L.map('mapDetail', {
+                dragging: typeof L !== 'undefined' && !L.Browser.mobile,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                tap: typeof L !== 'undefined' && !L.Browser.mobile
+            }).setView([aduan.lat, aduan.lng], 16);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
@@ -2214,7 +2219,14 @@ function initDetailPagePelapor() {
     }
 
     if (document.getElementById('mapDetailPelapor') && typeof L !== 'undefined') {
-        var mapDetail = L.map('mapDetailPelapor', { zoomControl: false, attributionControl: false }).setView([aduan.lat, aduan.lng], 15);
+        var mapDetail = L.map('mapDetailPelapor', {
+            zoomControl: false,
+            attributionControl: false,
+            dragging: typeof L !== 'undefined' && !L.Browser.mobile,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            tap: typeof L !== 'undefined' && !L.Browser.mobile
+        }).setView([aduan.lat, aduan.lng], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(mapDetail);
 
         var markerColor = aduan.status === 'baru' ? '#ef4444' : aduan.status === 'proses' ? '#f59e0b' : '#22c55e';
@@ -2595,6 +2607,8 @@ function initMobileSidebar() {
     const sidebar = document.getElementById('sidebar');
     
     if (!btn || !sidebar) return;
+    if (btn.dataset.sidebarInitialized === 'true') return;
+    btn.dataset.sidebarInitialized = 'true';
     
     // Create overlay dynamically if it doesn't exist
     let overlay = document.getElementById('sidebar-overlay');
@@ -2648,4 +2662,50 @@ function initMobileSidebar() {
     
     btn.addEventListener('click', toggleSidebar);
     overlay.addEventListener('click', toggleSidebar);
+}
+
+// =========================================
+// 17. MOBILE TOP NAVIGATION DROPDOWN MENU
+// =========================================
+function closeMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const toggleButton = document.getElementById('mobile-menu-toggle');
+    const menuIcon = document.getElementById('mobile-menu-icon');
+    if (menu) {
+        menu.classList.add('hidden');
+        menu.classList.remove('block');
+    }
+    if (backdrop) {
+        backdrop.classList.add('hidden');
+    }
+    if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false');
+    if (menuIcon) menuIcon.textContent = 'menu';
+}
+
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const nav = document.querySelector('nav') || document.querySelector('header');
+    const toggleButton = document.getElementById('mobile-menu-toggle');
+    const menuIcon = document.getElementById('mobile-menu-icon');
+    if (!menu || !nav) return;
+
+    const navHeight = Math.ceil(nav.getBoundingClientRect().height) || 64;
+    menu.style.top = navHeight + 'px';
+
+    const isHidden = menu.classList.contains('hidden');
+    if (isHidden) {
+        menu.classList.remove('hidden');
+        menu.classList.add('block');
+        if (backdrop) backdrop.classList.remove('hidden');
+        if (toggleButton) toggleButton.setAttribute('aria-expanded', 'true');
+        if (menuIcon) menuIcon.textContent = 'close';
+    } else {
+        menu.classList.remove('block');
+        menu.classList.add('hidden');
+        if (backdrop) backdrop.classList.add('hidden');
+        if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false');
+        if (menuIcon) menuIcon.textContent = 'menu';
+    }
 }

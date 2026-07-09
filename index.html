@@ -132,7 +132,7 @@
 
     <!-- TopNavBar -->
     <nav class="bg-surface border-b border-outline-variant fixed top-10 left-0 w-full z-50 transition-all duration-200 ease-in-out h-20" style="top: inherit;">
-        <div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-full">
+        <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-full">
             <div class="flex items-center gap-stack-md">
                 <div class="bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center justify-center">
                     <img alt="SIGAP Logo" class="h-8 w-auto object-contain" src="sigap.png" onerror="this.src='sigap.jpg'"/>
@@ -491,47 +491,9 @@
         </div>
     </div>
 
+    <script src="assets/js/script.js"></script>
     <!-- SCRIPTS -->
     <script>
-        function closeMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const backdrop = document.getElementById('mobile-menu-backdrop');
-            const toggleButton = document.getElementById('mobile-menu-toggle');
-            const menuIcon = document.getElementById('mobile-menu-icon');
-            if (menu) {
-                menu.classList.add('hidden');
-                menu.classList.remove('block');
-            }
-            if (backdrop) {
-                backdrop.classList.add('hidden');
-            }
-            if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false');
-            if (menuIcon) menuIcon.textContent = 'menu';
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const backdrop = document.getElementById('mobile-menu-backdrop');
-            const nav = document.querySelector('nav');
-            const toggleButton = document.getElementById('mobile-menu-toggle');
-            const menuIcon = document.getElementById('mobile-menu-icon');
-            if (!menu || !nav) return;
-
-            const navHeight = Math.ceil(nav.getBoundingClientRect().height) || 64;
-            menu.style.top = navHeight + 'px';
-
-            const isHidden = menu.classList.contains('hidden');
-            if (isHidden) {
-                menu.classList.remove('hidden');
-                menu.classList.add('block');
-                if (backdrop) backdrop.classList.remove('hidden');
-                if (toggleButton) toggleButton.setAttribute('aria-expanded', 'true');
-                if (menuIcon) menuIcon.textContent = 'close';
-            } else {
-                closeMobileMenu();
-            }
-        }
-
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeMobileMenu();
@@ -540,32 +502,37 @@
 
         function bukaModalAkses() {
             const modal = document.getElementById('modal-role-selector');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('.transform').classList.remove('scale-95');
-            }, 10);
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.querySelector('.transform').classList.remove('scale-95');
+                }, 10);
+            }
         }
 
         function tutupModalAkses() {
             const modal = document.getElementById('modal-role-selector');
-            modal.classList.add('opacity-0');
-            modal.querySelector('.transform').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
+            if (modal) {
+                modal.classList.add('opacity-0');
+                modal.querySelector('.transform').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
         }
 
         // Simple scroll interaction for navbar
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
-            if (window.scrollY > 20) {
-                nav.classList.add('shadow-sm', 'bg-white/90', 'backdrop-blur-md');
-            } else {
-                nav.classList.remove('shadow-sm', 'bg-white/90', 'backdrop-blur-md');
+            if (nav) {
+                if (window.scrollY > 20) {
+                    nav.classList.add('shadow-sm', 'bg-white/90', 'backdrop-blur-md');
+                } else {
+                    nav.classList.remove('shadow-sm', 'bg-white/90', 'backdrop-blur-md');
+                }
             }
         });
     </script>
-    <script src="assets/js/script.js"></script>
 </body>
 </html>

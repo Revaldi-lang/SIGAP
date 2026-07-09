@@ -16,7 +16,7 @@ img, video, canvas, svg {
     height: auto;
 }
 
-button, a, input, textarea, select {
+button, a, input:not([type="checkbox"]):not([type="radio"]), textarea, select {
     min-height: 44px;
     touch-action: manipulation;
 }
@@ -171,13 +171,20 @@ button, a, input, textarea, select {
    MOBILE / RESPONSIVE ADJUSTMENTS
    ========================================================================= */
 @media (max-width: 768px) {
-    nav {
-        position: sticky !important;
+    nav, header.fixed {
+        position: fixed !important;
         top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
         height: 64px !important;
         padding: 0.5rem 0 !important;
-        background: rgba(255,255,255,0.98) !important;
+        background: rgba(255, 255, 255, 0.98) !important;
         border-bottom-width: 1px !important;
+        z-index: 99999 !important;
+    }
+
+    nav ~ main, header.fixed ~ main, header.fixed + main {
+        padding-top: 80px !important;
     }
 
     nav .md\:flex { display: none !important; }
@@ -237,6 +244,27 @@ button, a, input, textarea, select {
     main { padding-bottom: 0.5rem; }
 
     button, a.button, .btn { padding: 12px 14px !important; font-size: 15px !important; }
+
+    /* Expose white text for main call to action buttons inside mobile dropdown */
+    #mobile-menu button.bg-primary {
+        color: #ffffff !important;
+    }
+
+    /* Stack flex headers inside main content on mobile dashboards */
+    main header.flex {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 1rem !important;
+        margin-bottom: 2rem !important;
+    }
+    main header.flex > button#mobile-menu-btn {
+        align-self: flex-start !important;
+        margin-bottom: -0.5rem !important;
+    }
+    main header.flex > div {
+        width: 100% !important;
+    }
 }
 
 @media (max-width: 420px) {
