@@ -324,7 +324,7 @@ const defaultLaporan = [
         wilayah: "Kec. Klojen, Kota Malang",
         urgensi: "Tinggi",
         dinas: "Dinas PUPR (Pekerjaan Umum)",
-        foto: "assets/images/jalanrusak.jpg", // fallback ke jalanrusak.jpg di root jika file assets tidak ada
+        foto: "assets/images/kategori_jalan.jpg", // gambar default sesuai kategori
         logs: [
             { judul: "Validasi Masuk Sistem", waktu: "Hari ini, 10:16 WIB", aktor: "Sistem Otomatis" },
             { judul: "Aduan Dikirim", waktu: "Hari ini, 10:15 WIB", aktor: "Budi Santoso (Mobile App)" }
@@ -344,7 +344,7 @@ const defaultLaporan = [
         wilayah: "Kec. Lowokwaru, Kota Malang",
         urgensi: "Sedang",
         dinas: "Dinas Perhubungan",
-        foto: "assets/images/jalanrusak.jpg",
+        foto: "assets/images/kategori_penerangan.jpg",
         logs: [
             { judul: "Pengiriman Regu Lapangan", waktu: "Kemarin, 18:00 WIB", aktor: "Admin Utama" },
             { judul: "Aduan Diverifikasi", waktu: "Kemarin, 17:10 WIB", aktor: "Admin Utama" },
@@ -365,7 +365,7 @@ const defaultLaporan = [
         wilayah: "Kec. Blimbing, Kota Malang",
         urgensi: "Sedang",
         dinas: "Dinas PUPR (Pekerjaan Umum)",
-        foto: "assets/images/jalanrusak.jpg",
+        foto: "assets/images/kategori_drainase.jpg",
         logs: [
             { judul: "Perbaikan Selesai & Konfirmasi Fisik", waktu: "06 Juni 2026, 14:00 WIB", aktor: "Petugas Lapangan" },
             { judul: "Regu Lapangan Meluncur", waktu: "05 Juni 2026, 08:30 WIB", aktor: "Admin Utama" },
@@ -386,7 +386,7 @@ const defaultLaporan = [
         wilayah: "Kec. Klojen, Kota Malang",
         urgensi: "Tinggi",
         dinas: "Dinas Lingkungan Hidup",
-        foto: "assets/images/jalanrusak.jpg",
+        foto: "assets/images/kategori_fasilitas.jpg",
         logs: [
             { judul: "Validasi Masuk Sistem", waktu: "2 Hari Lalu", aktor: "Sistem Otomatis" },
             { judul: "Aduan Dikirim", waktu: "2 Hari Lalu", aktor: "Diana Putri" }
@@ -626,8 +626,8 @@ async function pullFromSupabase() {
                     };
                 });
 
-                // Map photo
-                let fotoUrl = "assets/images/jalanrusak.jpg";
+                // Map photo — use category image as fallback if no upload exists
+                let fotoUrl = getKategoriFoto(l.kategori);
                 if (l.foto_laporan && l.foto_laporan.length > 0) {
                     fotoUrl = l.foto_laporan[0].file_path;
                 }
@@ -1326,7 +1326,10 @@ function initDetailPage() {
     // Foto Bukti
     const imgElement = document.querySelector('img[alt="Foto Jalan Berlubang"]');
     if (imgElement) {
-        imgElement.src = 'jalanrusak.jpg';
+        const fotoSrc = aduan.foto || getKategoriFoto(aduan.kategori);
+        imgElement.src = fotoSrc;
+        imgElement.alt = aduan.kategoriLabel;
+        imgElement.onerror = function() { this.src = getKategoriFoto(aduan.kategori); };
     }
 
     // Dropdown Action Form
@@ -2002,7 +2005,7 @@ function kirimAduanBaru(event) {
         wilayah: "Kota Malang",
         urgensi: urgensi,
         dinas: "Dinas Terkait (Menunggu Verifikasi)",
-        foto: "assets/images/jalanrusak.jpg",
+        foto: getKategoriFoto(kategori),
         logs: [
             { judul: "Laporan Terkirim & Menunggu Verifikasi", waktu: "Baru Saja", aktor: namaPelapor }
         ]
@@ -2155,10 +2158,9 @@ function initDetailPagePelapor() {
     }
 
     if (elFoto) {
-        elFoto.src = aduan.foto || 'jalanrusak.jpg';
-        elFoto.onerror = function() {
-            this.src = 'jalanrusak.jpg';
-        };
+        const fotoSrc = (aduan.foto && aduan.foto !== 'assets/images/jalanrusak.jpg') ? aduan.foto : getKategoriFoto(aduan.kategori);
+        elFoto.src = fotoSrc;
+        elFoto.onerror = function() { this.src = getKategoriFoto(aduan.kategori); };
     }
 
     if (elStatusBadge) {
