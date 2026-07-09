@@ -194,7 +194,7 @@ html { scroll-behavior: smooth; }
     .grid.md\:grid-cols-3 { grid-template-columns: 1fr !important; }
 
     /* Improve mobile menu readability */
-    #mobile-menu { display: block !important; }
+    #mobile-menu { display: block; }
 
     /* Improve tappable area for small buttons */
     button, a.button, .btn { padding: 12px 14px !important; font-size: 15px !important; }

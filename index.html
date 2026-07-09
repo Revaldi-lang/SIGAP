@@ -152,8 +152,8 @@
                         Masuk Portal
                     </button>
                 </div>
-                <button onclick="toggleMobileMenu()" class="md:hidden text-primary">
-                    <span class="material-symbols-outlined">menu</span>
+                <button id="mobile-menu-toggle" onclick="toggleMobileMenu()" class="md:hidden text-primary" aria-expanded="false">
+                    <span id="mobile-menu-icon" class="material-symbols-outlined">menu</span>
                 </button>
             </div>
         </div>
@@ -494,17 +494,25 @@
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const nav = document.querySelector('nav');
+            const toggleButton = document.getElementById('mobile-menu-toggle');
+            const menuIcon = document.getElementById('mobile-menu-icon');
             if (!menu || !nav) return;
+
             // Ensure menu sits directly below the navbar (handles dynamic heights)
             const navHeight = Math.ceil(nav.getBoundingClientRect().height) || 56;
             menu.style.top = navHeight + 'px';
 
-            if (menu.classList.contains('hidden')) {
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
                 menu.classList.remove('hidden');
                 menu.classList.add('block');
+                if (toggleButton) toggleButton.setAttribute('aria-expanded', 'true');
+                if (menuIcon) menuIcon.textContent = 'close';
             } else {
                 menu.classList.add('hidden');
                 menu.classList.remove('block');
+                if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false');
+                if (menuIcon) menuIcon.textContent = 'menu';
             }
         }
 
