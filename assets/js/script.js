@@ -457,9 +457,55 @@ let supabaseClient = null;
     }
 })();
 
+async function handleSupabaseSession(session) {
+    if (!session || !session.user) return;
+    const user = session.user;
+    
+    // Map Google user profile to standard SIGAP session format
+    const sessionData = {
+        role: 'pelapor',
+        email: user.email,
+        username: user.user_metadata.full_name || user.email.split('@')[0],
+        id: user.id
+    };
+    localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+    localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+
+    // Create user profile in our custom database table if it doesn't exist
+    const dbUsers = getUsers();
+    const userExists = dbUsers.some(u => u.email.toLowerCase() === user.email.toLowerCase());
+    
+    if (!userExists) {
+        const newUser = {
+            id: user.id.toString(),
+            username: user.user_metadata.full_name || user.email.split('@')[0],
+            email: user.email,
+            identitas: "-",
+            role: "Masyarakat",
+            status: "Aktif",
+            registered: "Google Sign-In",
+            password: "oauth_authenticated"
+        };
+        dbUsers.push(newUser);
+        saveUsers(dbUsers);
+    }
+
+    // If currently on login page, redirect to dashboard (supports both .html and clean urls)
+    if (window.location.pathname.includes('login-masyarakat')) {
+        window.location.replace('dashboard-pelapor.html');
+    }
+}
+
 function initSupabaseAndSync() {
     if (typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Immediate check to handle race condition where hash is parsed before listener is registered
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (session && session.user) {
+                handleSupabaseSession(session);
+            }
+        });
 
         // Listen for Supabase Auth state changes (useful for Google OAuth redirect)
         supabaseClient.auth.onAuthStateChange(async (event, session) => {
@@ -475,45 +521,7 @@ function initSupabaseAndSync() {
 
             // Process SIGNED_IN or INITIAL_SESSION events (handles redirect callback and refresh session)
             if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session && session.user) {
-                const user = session.user;
-                
-                // If a local session already exists, skip (user is already logged in)
-                const existingSession = localStorage.getItem('sigap_session');
-                if (existingSession) return;
-                
-                // Map Google user profile to standard SIGAP session format
-                const sessionData = {
-                    role: 'pelapor',
-                    email: user.email,
-                    username: user.user_metadata.full_name || user.email.split('@')[0],
-                    id: user.id
-                };
-                localStorage.setItem('sigap_session', JSON.stringify(sessionData));
-                localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-
-                // Create user profile in our custom database table if it doesn't exist
-                const dbUsers = getUsers();
-                const userExists = dbUsers.some(u => u.email.toLowerCase() === user.email.toLowerCase());
-                
-                if (!userExists) {
-                    const newUser = {
-                        id: user.id.toString(),
-                        username: user.user_metadata.full_name || user.email.split('@')[0],
-                        email: user.email,
-                        identitas: "-",
-                        role: "Masyarakat",
-                        status: "Aktif",
-                        registered: "Google Sign-In",
-                        password: "oauth_authenticated"
-                    };
-                    dbUsers.push(newUser);
-                    saveUsers(dbUsers);
-                }
-
-                // If currently on login page, redirect to dashboard (supports both .html and clean urls)
-                if (window.location.pathname.includes('login-masyarakat')) {
-                    window.location.replace('dashboard-pelapor.html');
-                }
+                handleSupabaseSession(session);
             }
         });
 
