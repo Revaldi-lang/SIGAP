@@ -21,6 +21,10 @@ button, a, input, textarea, select {
     touch-action: manipulation;
 }
 
+input[type="checkbox"], input[type="radio"] {
+    min-height: auto;
+}
+
 /* 1. CUSTOM SCROLLBAR MODERN (Khusus Webkit Browser seperti Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
     width: 6px;
