@@ -1629,13 +1629,26 @@ function verifikasiPengguna(rowId) {
     }
 }
 
-function hapusPengguna(rowId) {
+async function hapusPengguna(rowId) {
     const dbUsers = getUsers();
     const target = dbUsers.find(x => x.id === rowId);
     if (!target) return;
 
     const konfirmasi = confirm(`Apakah Anda yakin ingin menghapus akun milik "${target.username}"?`);
     if (konfirmasi) {
+        // Hapus dari Supabase secara remote
+        if (supabaseClient) {
+            try {
+                const { error } = await supabaseClient.from('users').delete().eq('email', target.email);
+                if (error) throw error;
+                console.log("Berhasil menghapus user dari Supabase:", target.email);
+            } catch (err) {
+                console.error("Gagal menghapus user dari Supabase:", err.message);
+                alert("Gagal menghapus akun di server database: " + err.message);
+                return; // Batalkan penghapusan lokal jika server gagal
+            }
+        }
+
         const filtered = dbUsers.filter(x => x.id !== rowId);
         saveUsers(filtered);
         
