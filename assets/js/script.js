@@ -944,7 +944,7 @@ function handleRegister(event) {
         email: email,
         identitas: 'NIK: ' + nik,
         role: "Masyarakat",
-        status: "Menunggu Verifikasi",
+        status: "Aktif",
         registered: "Baru Saja",
         password: password
     };
@@ -952,7 +952,7 @@ function handleRegister(event) {
     saveUsers(dbUsers);
 
     setTimeout(() => {
-        alert("Pendaftaran Berhasil!\nAkun Anda telah terdaftar dan menunggu verifikasi admin. Silakan masuk.");
+        alert("Pendaftaran Berhasil!\nAkun Anda telah aktif. Silakan masuk.");
         window.location.replace('login-masyarakat.html');
     }, 300);
 }
