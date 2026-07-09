@@ -498,6 +498,8 @@ async function handleSupabaseSession(session) {
     try {
         reRenderActivePage();
         if (typeof bindLogoutTriggers === 'function') bindLogoutTriggers();
+        if (typeof updateNavbarSession === 'function') updateNavbarSession();
+        if (typeof initMobileSidebar === 'function') initMobileSidebar();
     } catch (e) {
         console.warn('Failed to re-render page after Supabase session:', e && e.message);
     }
