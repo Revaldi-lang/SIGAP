@@ -528,7 +528,7 @@ async function loginDenganGoogle() {
     }
     
     try {
-        const redirectUrl = window.location.origin + window.location.pathname.replace('login-masyarakat.html', 'dashboard-pelapor.html');
+        const redirectUrl = window.location.origin + window.location.pathname;
         const { error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
