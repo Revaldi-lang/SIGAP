@@ -208,7 +208,7 @@ input[type="checkbox"], input[type="radio"] {
 
     .grid.md\:grid-cols-3 { grid-template-columns: 1fr !important; }
 
-    #mobile-menu {
+    #mobile-menu:not(.hidden) {
         display: block;
         position: fixed;
         top: 64px;
@@ -224,7 +224,7 @@ input[type="checkbox"], input[type="radio"] {
         box-shadow: 0 12px 25px rgba(0,0,0,0.08);
     }
 
-    #mobile-menu a, #mobile-menu button {
+    #mobile-menu a, #mobile-menu button:not(.bg-primary) {
         display: block;
         width: 100%;
         padding: 0.9rem 0.75rem;
@@ -234,7 +234,7 @@ input[type="checkbox"], input[type="radio"] {
         min-height: 48px;
     }
 
-    #mobile-menu a:hover, #mobile-menu button:hover {
+    #mobile-menu a:hover, #mobile-menu button:not(.bg-primary):hover {
         background: rgba(0,19,96,0.04);
     }
 
