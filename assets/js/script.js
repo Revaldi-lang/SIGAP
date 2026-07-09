@@ -494,6 +494,13 @@ async function handleSupabaseSession(session) {
     if (window.location.pathname.includes('login-masyarakat')) {
         window.location.replace('dashboard-pelapor.html');
     }
+    // Ensure UI updates immediately in the current tab after session is created
+    try {
+        reRenderActivePage();
+        if (typeof bindLogoutTriggers === 'function') bindLogoutTriggers();
+    } catch (e) {
+        console.warn('Failed to re-render page after Supabase session:', e && e.message);
+    }
 }
 
 function initSupabaseAndSync() {
