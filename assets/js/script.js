@@ -88,8 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const usersStr = localStorage.getItem('sigap_users');
             const users = usersStr ? JSON.parse(usersStr) : [];
             const matchedUser = users.find(u => u.email.toLowerCase() === parsedSession.email.toLowerCase());
-            if (matchedUser && matchedUser.status === 'Aktif') {
-                const expectedRole = (matchedUser.role === 'Administrator' || matchedUser.role === 'Petugas PUPR') ? 'admin' : 'pelapor';
+            if (parsedSession.role === 'pelapor' || (matchedUser && matchedUser.status === 'Aktif')) {
+                const role = matchedUser ? matchedUser.role : 'Masyarakat';
+                const expectedRole = (role === 'Administrator' || role === 'Petugas PUPR') ? 'admin' : 'pelapor';
                 if (parsedSession.role === expectedRole) {
                     session = parsedSession;
                 }
