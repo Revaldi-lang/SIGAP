@@ -32,7 +32,7 @@ function getRedirectUrl(url) {
 
 // Global SIGAP Logo Click Handler — navigates to index.html from any page
 document.addEventListener('DOMContentLoaded', function() {
-    const logoImgs = document.querySelectorAll('img[src="sigap.png"], img[src="sigap.jpg"]');
+    const logoImgs = document.querySelectorAll('img[src*="sigap.png"], img[src*="sigap.jpg"]');
     logoImgs.forEach(function(img) {
         // Jika logo sudah dibungkus <a href="index.html">, skip (sudah benar)
         const parent = img.closest('a');
