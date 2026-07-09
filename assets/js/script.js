@@ -276,6 +276,9 @@ function handleLogout(event) {
     if (event) event.preventDefault();
     localStorage.removeItem('sigap_session');
     localStorage.removeItem('sigap_session_last_activity');
+    if (supabaseClient) {
+        supabaseClient.auth.signOut();
+    }
     window.location.replace('index.html');
 }
 
@@ -450,7 +453,72 @@ let supabaseClient = null;
 function initSupabaseAndSync() {
     if (typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Listen for Supabase Auth state changes (useful for Google OAuth redirect)
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+            if (session && session.user) {
+                const user = session.user;
+                
+                // Map Google user profile to standard SIGAP session format
+                const sessionData = {
+                    role: 'pelapor',
+                    email: user.email,
+                    username: user.user_metadata.full_name || user.email.split('@')[0],
+                    id: user.id
+                };
+                localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+                localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+
+                // Create user profile in our custom database table if it doesn't exist
+                const dbUsers = getUsers();
+                const userExists = dbUsers.some(u => u.email.toLowerCase() === user.email.toLowerCase());
+                
+                if (!userExists) {
+                    const newUser = {
+                        id: user.id.toString(),
+                        username: user.user_metadata.full_name || user.email.split('@')[0],
+                        email: user.email,
+                        identitas: "-",
+                        role: "Masyarakat",
+                        status: "Aktif",
+                        registered: "Google Sign-In",
+                        password: "oauth_authenticated"
+                    };
+                    dbUsers.push(newUser);
+                    saveUsers(dbUsers);
+                }
+
+                // If currently on login page, redirect to dashboard
+                if (window.location.pathname.includes('login-masyarakat.html')) {
+                    window.location.replace('dashboard-pelapor.html');
+                }
+            }
+        });
+
         pullFromSupabase();
+    }
+}
+
+// Function to trigger Google Sign-In redirect via Supabase
+async function loginDenganGoogle() {
+    if (!supabaseClient) {
+        alert("Koneksi database sedang disiapkan, silakan coba beberapa saat lagi.");
+        return;
+    }
+    
+    try {
+        const redirectUrl = window.location.origin + window.location.pathname.replace('login-masyarakat.html', 'dashboard-pelapor.html');
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: redirectUrl
+            }
+        });
+        
+        if (error) throw error;
+    } catch (err) {
+        console.error("Error logging in with Google:", err.message);
+        alert("Gagal masuk dengan Google: " + err.message);
     }
 }
 
