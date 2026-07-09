@@ -418,6 +418,315 @@ const defaultUsers = [
     }
 ];
 
+// =========================================
+// SUPABASE CLIENT-SIDE SYNCHRONIZATION ENGINE
+// =========================================
+const SUPABASE_URL = "https://qoojwiiioxaesvgqtkyw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvb2p3aWlpb3hhZXN2Z3F0a3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MTQ4NDgsImV4cCI6MjA5OTA5MDg0OH0.3MeuyAjWLZHNfWJXY757TjBvWBQ2tlA5LssY0MreBgU";
+let supabaseClient = null;
+
+// Dynamically load external scripts (Supabase and Bcrypt)
+(function loadExternalLibraries() {
+    // Load Supabase JS SDK
+    if (typeof supabase === 'undefined') {
+        const supScript = document.createElement('script');
+        supScript.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+        supScript.onload = () => {
+            initSupabaseAndSync();
+        };
+        document.head.appendChild(supScript);
+    } else {
+        initSupabaseAndSync();
+    }
+
+    // Load Bcrypt JS for secure client-side password hashing
+    if (typeof dcodeIO === 'undefined') {
+        const bcryptScript = document.createElement('script');
+        bcryptScript.src = "https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js";
+        document.head.appendChild(bcryptScript);
+    }
+})();
+
+function initSupabaseAndSync() {
+    if (typeof supabase !== 'undefined') {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        pullFromSupabase();
+    }
+}
+
+// Function to map kategori code to human readable label
+function getKategoriLabel(kategori) {
+    const labels = {
+        'jalan': 'Jalan Berlubang',
+        'penerangan': 'Penerangan Jalan',
+        'drainase': 'Drainase rusak',
+        'fasilitas': 'Fasilitas Sosial / Taman',
+        'lainnya': 'Laporan Lainnya'
+    };
+    return labels[kategori] || 'Laporan Umum';
+}
+
+// Helper to check if a string is a valid bcrypt hash
+function isBcryptHash(str) {
+    return typeof str === 'string' && (str.startsWith('$2b$') || str.startsWith('$2a$'));
+}
+
+// Pull data from Supabase and cache locally in localStorage
+async function pullFromSupabase() {
+    if (!supabaseClient) return;
+
+    try {
+        console.log("Supabase: Syncing database state...");
+
+        // 1. Fetch Users
+        const { data: dbUsers, error: errUsers } = await supabaseClient
+            .from('users')
+            .select('*');
+
+        if (!errUsers && dbUsers) {
+            const mappedUsers = dbUsers.map(u => ({
+                id: u.id.toString(),
+                username: u.name,
+                email: u.email,
+                identitas: u.nik || "-",
+                role: u.role,
+                status: u.status === 'Menunggu' ? 'Menunggu Verifikasi' : u.status,
+                registered: "Terdaftar",
+                password: u.password
+            }));
+            localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
+        }
+
+        // 2. Fetch Laporan with nested logs and photos
+        const { data: dbLaporan, error: errLaporan } = await supabaseClient
+            .from('laporan')
+            .select(`
+                *,
+                users ( name ),
+                activity_log ( * ),
+                foto_laporan ( * )
+            `);
+
+        if (!errLaporan && dbLaporan) {
+            const mappedLaporan = dbLaporan.map(l => {
+                // Map activity logs
+                const mappedLogs = (l.activity_log || []).map(log => {
+                    let waktuStr = "Baru Saja";
+                    let aktorStr = "Sistem";
+                    if (log.deskripsi && log.deskripsi.includes('|')) {
+                        const parts = log.deskripsi.split('|');
+                        waktuStr = parts[0].trim();
+                        aktorStr = parts[1].replace('Oleh', '').trim();
+                    }
+                    return {
+                        judul: log.judul,
+                        waktu: waktuStr,
+                        aktor: aktorStr
+                    };
+                });
+
+                // Map photo
+                let fotoUrl = "assets/images/jalanrusak.jpg";
+                if (l.foto_laporan && l.foto_laporan.length > 0) {
+                    fotoUrl = l.foto_laporan[0].file_path;
+                }
+
+                return {
+                    id: l.nomor_laporan.replace("RPT-", ""),
+                    lat: parseFloat(l.lat),
+                    lng: parseFloat(l.lng),
+                    kategori: l.kategori,
+                    kategoriLabel: getKategoriLabel(l.kategori),
+                    deskripsi: l.deskripsi,
+                    status: l.status,
+                    pelapor: l.users ? l.users.name : "Masyarakat",
+                    waktu: "Tersinkron",
+                    lokasi: l.lokasi,
+                    wilayah: l.wilayah,
+                    urgensi: l.urgensi,
+                    dinas: l.dinas_tujuan,
+                    foto: fotoUrl,
+                    logs: mappedLogs.length > 0 ? mappedLogs : [
+                        { judul: "Aduan Dikirim", waktu: "Baru Saja", aktor: l.users ? l.users.name : "Pelapor" }
+                    ]
+                };
+            });
+
+            localStorage.setItem('sigap_laporan', JSON.stringify(mappedLaporan));
+        }
+
+        console.log("Supabase: Sync complete!");
+        
+        // Re-render UI elements to show the synced database state
+        reRenderActivePage();
+
+    } catch (err) {
+        console.error("Error pulling data from Supabase:", err);
+    }
+}
+
+// Push local changes of Laporan to Supabase
+async function pushLaporanToSupabase(listAduan) {
+    if (!supabaseClient) return;
+
+    try {
+        // Fetch current users to map user_id from pelapor name
+        const { data: dbUsers } = await supabaseClient.from('users').select('id, name');
+        const userMap = {};
+        if (dbUsers) {
+            dbUsers.forEach(u => {
+                userMap[u.name.toLowerCase()] = u.id;
+            });
+        }
+
+        const session = getSession();
+        const currentUserId = session ? parseInt(session.id) : null;
+
+        for (const aduan of listAduan) {
+            let mappedUserId = userMap[aduan.pelapor.toLowerCase()] || currentUserId || 3;
+            const nomorLaporan = `RPT-${aduan.id}`;
+
+            // 1. Upsert Laporan
+            const { data: upserted, error: errU } = await supabaseClient
+                .from('laporan')
+                .upsert({
+                    nomor_laporan: nomorLaporan,
+                    user_id: mappedUserId,
+                    kategori: aduan.kategori,
+                    deskripsi: aduan.deskripsi,
+                    lokasi: aduan.lokasi,
+                    wilayah: aduan.wilayah,
+                    lat: parseFloat(aduan.lat),
+                    lng: parseFloat(aduan.lng),
+                    urgensi: aduan.urgensi,
+                    status: aduan.status,
+                    dinas_tujuan: aduan.dinas
+                }, { onConflict: 'nomor_laporan' })
+                .select();
+
+            if (upserted && upserted.length > 0) {
+                const dbLaporanId = upserted[0].id;
+
+                // 2. Sync activity logs
+                if (aduan.logs && aduan.logs.length > 0) {
+                    const logsToInsert = aduan.logs.map(log => {
+                        let logActorId = userMap[log.aktor.toLowerCase()] || null;
+                        let actorType = 'system';
+                        if (log.aktor.toLowerCase().includes('admin') || log.aktor.toLowerCase().includes('petugas')) {
+                            actorType = 'admin';
+                        } else if (logActorId) {
+                            actorType = 'pelapor';
+                        }
+                        return {
+                            laporan_id: dbLaporanId,
+                            actor_id: logActorId,
+                            actor_type: actorType,
+                            judul: log.judul,
+                            deskripsi: `${log.waktu} | Oleh ${log.aktor}`
+                        };
+                    });
+
+                    // Clear old logs and insert new ones
+                    await supabaseClient.from('activity_log').delete().eq('laporan_id', dbLaporanId);
+                    await supabaseClient.from('activity_log').insert(logsToInsert);
+                }
+
+                // 3. Sync foto
+                if (aduan.foto && aduan.foto !== 'assets/images/jalanrusak.jpg') {
+                    const fotoToInsert = {
+                        laporan_id: dbLaporanId,
+                        file_path: aduan.foto,
+                        file_name: aduan.foto.split('/').pop(),
+                        file_size: 1024 * 100 // dummy size
+                    };
+                    await supabaseClient.from('foto_laporan').delete().eq('laporan_id', dbLaporanId);
+                    await supabaseClient.from('foto_laporan').insert(fotoToInsert);
+                }
+            }
+        }
+    } catch (err) {
+        console.error("Error pushing laporan to Supabase:", err);
+    }
+}
+
+// Push local changes of Users to Supabase
+async function pushUsersToSupabase(listUsers) {
+    if (!supabaseClient) return;
+
+    try {
+        for (const u of listUsers) {
+            let userPassword = u.password;
+            
+            // Hash password securely in client if not already hashed
+            if (userPassword && !isBcryptHash(userPassword) && typeof dcodeIO !== 'undefined' && dcodeIO.bcrypt) {
+                const salt = dcodeIO.bcrypt.genSaltSync(10);
+                userPassword = dcodeIO.bcrypt.hashSync(userPassword, salt);
+            }
+
+            const isNumericId = !isNaN(u.id);
+
+            const userObj = {
+                name: u.username,
+                email: u.email,
+                password: userPassword,
+                nik: u.identitas === '-' ? null : u.identitas,
+                role: u.role === 'Administrator' ? 'Administrator' : (u.role === 'Petugas PUPR' ? 'Petugas PUPR' : 'Masyarakat'),
+                status: u.status === 'Menunggu Verifikasi' ? 'Menunggu' : (u.status === 'Menunggu' ? 'Menunggu' : u.status)
+            };
+
+            if (isNumericId) {
+                userObj.id = parseInt(u.id);
+            }
+
+            await supabaseClient.from('users').upsert(userObj, { onConflict: 'email' });
+        }
+    } catch (err) {
+        console.error("Error pushing users to Supabase:", err);
+    }
+}
+
+// Get session helper
+function getSession() {
+    const sessionStr = localStorage.getItem('sigap_session');
+    if (!sessionStr) return null;
+    try {
+        return JSON.parse(sessionStr);
+    } catch {
+        return null;
+    }
+}
+
+// Trigger render functions dynamically based on current page context
+function reRenderActivePage() {
+    if (document.getElementById('current-date')) {
+        renderDashboard();
+    }
+    if (document.getElementById('search-input') || document.getElementById('filter-kategori')) {
+        renderLaporanTable();
+    }
+    if (document.getElementById('mapDetail')) {
+        initDetailPage();
+    }
+    if (document.getElementById('search-user')) {
+        renderUsersTable();
+    }
+    if (document.getElementById('mapPeta')) {
+        initPetaDampak();
+    }
+    if (document.getElementById('pelapor-total-laporan')) {
+        renderDasborPelapor();
+    }
+    if (document.getElementById('mapPetaPelapor')) {
+        initPetaDampakPelapor();
+    }
+    if (document.getElementById('mapDetailPelapor')) {
+        initDetailPagePelapor();
+    }
+    if (document.getElementById('pelapor-name-display')) {
+        initProfilePelapor();
+    }
+}
+
 // 2. INITIALIZATION ENGINE
 function getLaporan() {
     if (!localStorage.getItem('sigap_laporan')) {
@@ -428,59 +737,22 @@ function getLaporan() {
 
 function saveLaporan(data) {
     localStorage.setItem('sigap_laporan', JSON.stringify(data));
+    pushLaporanToSupabase(data);
 }
 
 function getUsers() {
     if (!localStorage.getItem('sigap_users')) {
         localStorage.setItem('sigap_users', JSON.stringify(defaultUsers));
     }
-    let users = JSON.parse(localStorage.getItem('sigap_users'));
-    
-    // Pastikan semua defaultUsers tersinkronisasi dan aktif di local storage
-    let updated = false;
-    defaultUsers.forEach(defUser => {
-        const index = users.findIndex(u => u.email.toLowerCase() === defUser.email.toLowerCase());
-        if (index === -1) {
-            users.push(defUser);
-            updated = true;
-        } else {
-            // Jika user default ada tapi password, role, atau statusnya tidak sinkron, perbarui
-            if (users[index].password !== defUser.password || 
-                users[index].role !== defUser.role || 
-                users[index].status !== defUser.status) {
-                users[index].password = defUser.password;
-                users[index].role = defUser.role;
-                users[index].status = defUser.status;
-                updated = true;
-            }
-        }
-    });
-    
-    // Migrasi: Pastikan semua pengguna default/lama di localStorage memiliki sandi
-    users.forEach(user => {
-        if (!user.password) {
-            const matchedDefault = defaultUsers.find(d => d.email === user.email);
-            if (matchedDefault) {
-                user.password = matchedDefault.password;
-                updated = true;
-            } else {
-                user.password = "warga123"; // Sandi cadangan default
-                updated = true;
-            }
-        }
-    });
-    
-    if (updated) {
-        localStorage.setItem('sigap_users', JSON.stringify(users));
-    }
-    return users;
+    return JSON.parse(localStorage.getItem('sigap_users'));
 }
 
 function saveUsers(data) {
     localStorage.setItem('sigap_users', JSON.stringify(data));
+    pushUsersToSupabase(data);
 }
 
-// Jalankan inisialisasi awal saat script dimuat
+// Initial sync call
 getLaporan();
 getUsers();
 
@@ -512,9 +784,14 @@ function handleLogin(event) {
     const passwordInput = sanitizeInput(document.getElementById('password').value);
     const btn = event.target.querySelector('button[type="submit"]');
 
-    // Cari user di database lokal
     const users = getUsers();
-    const matchedUser = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() && u.password === passwordInput);
+    const matchedUser = users.find(u => {
+        if (u.email.toLowerCase() !== emailInput.toLowerCase()) return false;
+        if (isBcryptHash(u.password) && typeof dcodeIO !== 'undefined' && dcodeIO.bcrypt) {
+            return dcodeIO.bcrypt.compareSync(passwordInput, u.password);
+        }
+        return u.password === passwordInput;
+    });
 
     if (!matchedUser) {
         alert("Gagal Masuk! Alamat email atau kata sandi yang Anda masukkan salah.");
@@ -557,9 +834,14 @@ function handleLoginMasyarakat(event) {
     const passwordInput = sanitizeInput(document.getElementById('password').value);
     const btn = document.getElementById('btnLogin');
 
-    // Cari user di database lokal
     const users = getUsers();
-    const matchedUser = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() && u.password === passwordInput);
+    const matchedUser = users.find(u => {
+        if (u.email.toLowerCase() !== emailInput.toLowerCase()) return false;
+        if (isBcryptHash(u.password) && typeof dcodeIO !== 'undefined' && dcodeIO.bcrypt) {
+            return dcodeIO.bcrypt.compareSync(passwordInput, u.password);
+        }
+        return u.password === passwordInput;
+    });
 
     if (!matchedUser) {
         alert("Gagal Masuk! Alamat email atau kata sandi yang Anda masukkan salah.");
