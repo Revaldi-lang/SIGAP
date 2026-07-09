@@ -205,3 +205,10 @@
     nav { padding: 0.4rem 0 !important; }
 }
 
+/* Ensure navbar sits above top-alert and other overlays to keep mobile controls clickable */
+nav {
+    z-index: 99999 !important;
+}
+
+nav button { z-index: 100000 !important; position: relative; }
+
