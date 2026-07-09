@@ -555,6 +555,18 @@ function getKategoriLabel(kategori) {
     return labels[kategori] || 'Laporan Umum';
 }
 
+// Function to get the default placeholder image based on report category
+function getKategoriFoto(kategori) {
+    const images = {
+        'jalan':       'assets/images/kategori_jalan.jpg',
+        'penerangan':  'assets/images/kategori_penerangan.jpg',
+        'drainase':    'assets/images/kategori_drainase.jpg',
+        'fasilitas':   'assets/images/kategori_fasilitas.jpg',
+        'lainnya':     'assets/images/kategori_lainnya.jpg'
+    };
+    return images[kategori] || 'assets/images/kategori_jalan.jpg';
+}
+
 // Helper to check if a string is a valid bcrypt hash
 function isBcryptHash(str) {
     return typeof str === 'string' && (str.startsWith('$2b$') || str.startsWith('$2a$'));
