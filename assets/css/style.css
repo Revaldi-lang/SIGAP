@@ -257,4 +257,26 @@ nav {
 
 nav button { z-index: 100000 !important; position: relative; }
 
+/* 7. MOBILE RESPONSIVENESS & UI/UX OPTIMIZATIONS */
+.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Password Eye Icon Wrapper to isolate Google Material Symbols text fallbacks */
+.eye-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: 0;
+}
+.eye-icon-wrapper span, .eye-icon-wrapper i {
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+}
+
 
