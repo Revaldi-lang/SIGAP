@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const parsedSession = JSON.parse(sessionStr);
             const usersStr = localStorage.getItem('sigap_users');
             const users = usersStr ? JSON.parse(usersStr) : [];
-            const matchedUser = users.find(u => u.email.toLowerCase() === parsedSession.email.toLowerCase() && u.id === parsedSession.id);
+            const matchedUser = users.find(u => u.email.toLowerCase() === parsedSession.email.toLowerCase());
             if (matchedUser && matchedUser.status === 'Aktif') {
                 const expectedRole = (matchedUser.role === 'Administrator' || matchedUser.role === 'Petugas PUPR') ? 'admin' : 'pelapor';
                 if (parsedSession.role === expectedRole) {
