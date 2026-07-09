@@ -472,8 +472,8 @@ function initSupabaseAndSync() {
                 return;
             }
 
-            // Only process SIGNED_IN events (initial login or OAuth redirect callback)
-            if (event === 'SIGNED_IN' && session && session.user) {
+            // Process SIGNED_IN or INITIAL_SESSION events (handles redirect callback and refresh session)
+            if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session && session.user) {
                 const user = session.user;
                 
                 // If a local session already exists, skip (user is already logged in)
@@ -509,8 +509,8 @@ function initSupabaseAndSync() {
                     saveUsers(dbUsers);
                 }
 
-                // If currently on login page, redirect to dashboard
-                if (window.location.pathname.includes('login-masyarakat.html')) {
+                // If currently on login page, redirect to dashboard (supports both .html and clean urls)
+                if (window.location.pathname.includes('login-masyarakat')) {
                     window.location.replace('dashboard-pelapor.html');
                 }
             }
