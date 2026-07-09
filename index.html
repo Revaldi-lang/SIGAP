@@ -172,6 +172,8 @@
         </div>
     </nav>
 
+    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/40 hidden z-[99997]" onclick="closeMobileMenu()"></div>
+
     <main class="pt-20">
         <!-- Hero Section -->
         <section class="hero-gradient relative overflow-hidden py-24 md:py-32 px-margin-mobile md:px-margin-desktop">
@@ -491,30 +493,50 @@
 
     <!-- SCRIPTS -->
     <script>
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            const toggleButton = document.getElementById('mobile-menu-toggle');
+            const menuIcon = document.getElementById('mobile-menu-icon');
+            if (menu) {
+                menu.classList.add('hidden');
+                menu.classList.remove('block');
+            }
+            if (backdrop) {
+                backdrop.classList.add('hidden');
+            }
+            if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false');
+            if (menuIcon) menuIcon.textContent = 'menu';
+        }
+
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
             const nav = document.querySelector('nav');
             const toggleButton = document.getElementById('mobile-menu-toggle');
             const menuIcon = document.getElementById('mobile-menu-icon');
             if (!menu || !nav) return;
 
-            // Ensure menu sits directly below the navbar (handles dynamic heights)
-            const navHeight = Math.ceil(nav.getBoundingClientRect().height) || 56;
+            const navHeight = Math.ceil(nav.getBoundingClientRect().height) || 64;
             menu.style.top = navHeight + 'px';
 
             const isHidden = menu.classList.contains('hidden');
             if (isHidden) {
                 menu.classList.remove('hidden');
                 menu.classList.add('block');
+                if (backdrop) backdrop.classList.remove('hidden');
                 if (toggleButton) toggleButton.setAttribute('aria-expanded', 'true');
                 if (menuIcon) menuIcon.textContent = 'close';
             } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('block');
-                if (toggleButton) toggleButton.setAttribute('aria-expanded', 'false');
-                if (menuIcon) menuIcon.textContent = 'menu';
+                closeMobileMenu();
             }
         }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
 
         function bukaModalAkses() {
             const modal = document.getElementById('modal-role-selector');
