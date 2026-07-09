@@ -143,4 +143,65 @@
 #timeline-pelapor .text-slate-500 {
     color: #444653 !important;
 }
-
+
+/* =========================================================================
+   MOBILE / RESPONSIVE ADJUSTMENTS
+   ========================================================================= */
+@media (max-width: 768px) {
+    /* Make navbar less tall and not overlap content */
+    nav {
+        position: sticky !important;
+        top: 0 !important;
+        height: auto !important;
+        padding: 0.5rem 0 !important;
+        background: rgba(255,255,255,0.98) !important;
+        border-bottom-width: 1px !important;
+    }
+
+    /* Hide desktop-only navigation links to avoid overflow */
+    nav .md\:flex { display: none !important; }
+
+    /* Ensure portal button visible and full width on mobile */
+    #nav-portal-container-desktop { display: none !important; }
+    #nav-portal-container-mobile { display: block !important; }
+    #nav-portal-container-mobile button { width: 100%; }
+
+    /* Hero spacing/tipography adjustments */
+    .hero-gradient { padding-top: 3.5rem; padding-bottom: 4.5rem; }
+    h1.font-display-lg { font-size: 28px !important; line-height: 1.2 !important; }
+    .font-body-lg { font-size: 14px !important; }
+
+    /* Make hero action buttons stack vertically and full width */
+    .hero-gradient .flex { flex-direction: column; gap: 0.75rem; }
+    .hero-gradient .flex button, .hero-gradient .flex a { width: 100%; }
+
+    /* Make hero image adapt */
+    .hero-gradient .aspect-video, .hero-gradient .aspect-square { height: 220px !important; min-height: 160px; border-radius: 0.75rem; }
+
+    /* CTA boxes and cards full width with comfortable padding */
+    .tonal-card { padding: 1rem !important; }
+
+    /* Modal role selector should fill viewport nicely */
+    #modal-role-selector .transform { width: calc(100% - 32px) !important; max-width: none !important; margin: 0 16px !important; }
+    #modal-role-selector .rounded-2xl { border-radius: 0.75rem !important; }
+
+    /* Footer spacing */
+    footer .max-w-container-max { padding-left: 16px; padding-right: 16px; }
+
+    /* Smaller gap for feature grid */
+    .grid.md\:grid-cols-3 { grid-template-columns: 1fr !important; }
+
+    /* Improve mobile menu readability */
+    #mobile-menu { display: block !important; }
+
+    /* Improve tappable area for small buttons */
+    button, a.button, .btn { padding: 12px 14px !important; font-size: 15px !important; }
+}
+
+@media (max-width: 420px) {
+    /* Extra small phones: reduce hero text further */
+    h1.font-display-lg { font-size: 24px !important; }
+    .hero-gradient .aspect-video, .hero-gradient .aspect-square { height: 180px !important; }
+    nav { padding: 0.4rem 0 !important; }
+}
+
