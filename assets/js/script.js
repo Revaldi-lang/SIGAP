@@ -920,7 +920,7 @@ function initDetailPage() {
     if (reporterMeta) {
         reporterMeta.innerHTML = `
             <span><i class="fa-solid fa-user text-gray-400"></i> ${escapeHTML(aduan.pelapor)}</span>
-            <span>â€¢</span>
+            <span class="mx-2 text-gray-300">|</span>
             <span><i class="fa-solid fa-calendar text-gray-400"></i> ${escapeHTML(aduan.waktu)}</span>
         `;
     }
@@ -969,7 +969,7 @@ function initDetailPage() {
                 <div class="relative mb-4">
                     <span class="absolute -left-[21px] top-0 bg-blue-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
                     <p class="font-bold text-gray-800">${escapeHTML(log.judul)}</p>
-                    <p class="text-gray-500">${escapeHTML(log.waktu)} â€¢ Oleh ${escapeHTML(log.aktor)}</p>
+                    <p class="text-gray-500">${escapeHTML(log.waktu)} <span class="mx-1 text-gray-300">|</span> Oleh ${escapeHTML(log.aktor)}</p>
                 </div>
             `;
             timelineContainer.insertAdjacentHTML('beforeend', logItem);
@@ -1507,7 +1507,7 @@ function renderDasborPelapor() {
                             <div class="flex flex-wrap items-center gap-2">
                                 <span class="text-[10px] font-mono font-bold text-slate-500">#${escapeHTML(aduan.id)}</span>
                                 <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded-full font-bold border-2 border-blue-500/20 uppercase tracking-wider">${escapeHTML(aduan.kategoriLabel)}</span>
-                                <span class="text-slate-600 text-xs font-mono">â€¢ ${escapeHTML(aduan.waktu)}</span>
+                                <span class="text-slate-600 text-xs font-mono"><span class="mx-1 text-slate-500">|</span> ${escapeHTML(aduan.waktu)}</span>
                             </div>
                             <h4 class="font-bold text-white text-base mt-1.5 leading-snug">${escapeHTML(aduan.lokasi)}</h4>
                             <p class="text-slate-400 text-xs mt-1 max-w-xl leading-relaxed">${escapeHTML(aduan.deskripsi)}</p>
@@ -1810,7 +1810,7 @@ function initDetailPagePelapor() {
                     <div class="relative">
                         <span class="absolute -left-[21px] top-0 ${dotBg} text-white w-4 h-4 rounded-full flex items-center justify-center text-[8px]"><i class="fa-solid fa-circle"></i></span>
                         <p class="font-bold text-slate-200">${escapeHTML(log.judul)}</p>
-                        <p class="text-slate-500">${escapeHTML(log.waktu)} â€¢ Oleh ${escapeHTML(log.aktor)}</p>
+                        <p class="text-slate-500">${escapeHTML(log.waktu)} <span class="mx-1 text-slate-600">|</span> Oleh ${escapeHTML(log.aktor)}</p>
                     </div>
                 `;
                 timeline.insertAdjacentHTML('beforeend', logHtml);
