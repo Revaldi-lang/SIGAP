@@ -176,16 +176,18 @@
     <!-- Main Content Area -->
     <main class="ml-0 md:ml-64 min-h-screen px-margin-mobile md:px-margin-desktop py-stack-lg max-w-[1440px]">
         <!-- Top Bar / Header -->
-        <header class="flex justify-between items-center mb-12">
-            <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center mr-2 shrink-0">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            <div>
-                <h1 class="font-display-lg text-display-lg text-primary mb-1">Manajemen Pengguna</h1>
-                <p class="font-body-md text-on-surface-variant">Kelola akun, peran, dan status akses dari admin, petugas, serta warga.</p>
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-12">
+            <div class="flex items-center gap-3">
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h1 class="font-display-lg text-2xl md:text-display-lg text-primary font-bold mb-1">Manajemen Pengguna</h1>
+                    <p class="font-body-md text-on-surface-variant text-xs md:text-sm">Kelola akun, peran, dan status akses dari admin, petugas, serta warga.</p>
+                </div>
             </div>
-            <div>
-                <button onclick="bukaModal()" class="bg-primary text-on-primary font-bold py-3 px-6 rounded-lg text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98]">
+            <div class="flex items-center shrink-0">
+                <button onclick="bukaModal()" class="w-full sm:w-auto bg-primary text-on-primary font-bold py-2.5 px-5 rounded-lg text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[44px]">
                     <span class="material-symbols-outlined">person_add</span> Tambah Pengguna
                 </button>
             </div>
@@ -228,7 +230,7 @@
                     <thead>
                         <tr class="bg-surface-container-low text-xs font-semibold uppercase text-on-surface-variant border-b border-outline-variant">
                             <th class="px-6 py-4">Profil Pengguna</th>
-                            <th class="px-6 py-4">Kontak &amp; NIK / NIP</th>
+                            <th class="px-6 py-4 hidden md:table-cell">Kontak &amp; NIK / NIP</th>
                             <th class="px-6 py-4">Peran (Role)</th>
                             <th class="px-6 py-4">Status Akun</th>
                             <th class="px-6 py-4 text-center">Aksi</th>

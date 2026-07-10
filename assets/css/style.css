@@ -175,7 +175,7 @@ input[type="checkbox"], input[type="radio"] {
    MOBILE / RESPONSIVE ADJUSTMENTS
    ========================================================================= */
 @media (max-width: 768px) {
-    nav {
+    nav.landing-nav {
         position: sticky !important;
         top: 0 !important;
         height: 64px !important;
@@ -184,7 +184,7 @@ input[type="checkbox"], input[type="radio"] {
         border-bottom-width: 1px !important;
     }
 
-    nav .md\:flex { display: none !important; }
+    nav.landing-nav .md\:flex { display: none !important; }
 
     #nav-portal-container-desktop { display: none !important; }
     #nav-portal-container-mobile { display: block !important; }
@@ -247,15 +247,15 @@ input[type="checkbox"], input[type="radio"] {
     /* Extra small phones: reduce hero text further */
     h1.font-display-lg { font-size: 24px !important; }
     .hero-gradient .aspect-video, .hero-gradient .aspect-square { height: 180px !important; }
-    nav { padding: 0.4rem 0 !important; }
+    nav.landing-nav { padding: 0.4rem 0 !important; }
 }
 
 /* Ensure navbar sits above top-alert and other overlays to keep mobile controls clickable */
-nav {
+nav.landing-nav {
     z-index: 99999 !important;
 }
 
-nav button { z-index: 100000 !important; position: relative; }
+nav.landing-nav button { z-index: 100000 !important; position: relative; }
 
 /* 7. MOBILE RESPONSIVENESS & UI/UX OPTIMIZATIONS */
 .overflow-x-auto {

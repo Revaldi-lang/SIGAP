@@ -175,17 +175,19 @@
     <!-- Main Content Area -->
     <main class="ml-0 md:ml-64 min-h-screen px-margin-mobile md:px-margin-desktop py-stack-lg max-w-[1440px]">
         <!-- Top Bar / Header -->
-        <header class="flex justify-between items-center mb-12">
-            <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center mr-2 shrink-0">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            <div>
-                <h1 class="font-display-lg text-display-lg text-primary mb-1">Manajemen Laporan</h1>
-                <p class="font-body-md text-on-surface-variant">Kelola, verifikasi, dan tindak lanjuti aduan infrastruktur dari masyarakat.</p>
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-12">
+            <div class="flex items-center gap-3">
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h1 class="font-display-lg text-2xl md:text-display-lg text-primary font-bold mb-1">Manajemen Laporan</h1>
+                    <p class="font-body-md text-on-surface-variant text-xs md:text-sm">Kelola, verifikasi, dan tindak lanjuti aduan infrastruktur dari masyarakat.</p>
+                </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center shrink-0">
                 <span class="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">
-                    Menampilkan <span id="count-visible">0</span> Laporan
+                    <span id="count-visible">0</span> Laporan
                 </span>
             </div>
         </header>
@@ -240,7 +242,7 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-surface-container-low text-xs font-semibold uppercase text-on-surface-variant border-b border-outline-variant">
-                            <th class="px-4 sm:px-6 py-3 w-20">ID</th>
+                            <th class="px-4 sm:px-6 py-3 w-20 hidden md:table-cell">ID</th>
                             <th class="px-4 sm:px-6 py-3">Pelapor / Waktu</th>
                             <th class="px-4 sm:px-6 py-3">Deskripsi &amp; Kategori</th>
                             <th class="px-4 sm:px-6 py-3">Lokasi / Wilayah</th>

@@ -183,24 +183,26 @@
     <!-- Main Content Area -->
     <main class="ml-0 md:ml-64 min-h-screen px-margin-mobile md:px-margin-desktop py-stack-lg max-w-[1440px]">
         <!-- Top Bar / Header -->
-        <header class="flex justify-between items-center mb-section-gap">
-            <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center mr-2 shrink-0">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            <div>
-                <h1 class="font-display-lg text-display-lg text-primary mb-1">Beranda Dashboard</h1>
-                <p class="font-body-md text-on-surface-variant" id="current-date">Memuat tanggal...</p>
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-12">
+            <div class="flex items-center gap-3">
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h1 class="font-display-lg text-2xl md:text-display-lg text-primary font-bold mb-1">Beranda Dashboard</h1>
+                    <p class="font-body-md text-on-surface-variant text-xs md:text-sm" id="current-date">Memuat tanggal...</p>
+                </div>
             </div>
-            <div class="flex items-center gap-4">
-                <div class="relative">
+            <div class="flex items-center w-full sm:w-auto gap-4">
+                <div class="relative w-full sm:w-64">
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
-                    <input id="searchDashboard" class="pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 text-label-md" placeholder="Cari laporan..." type="text"/>
+                    <input id="searchDashboard" class="pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-full text-label-md" placeholder="Cari laporan..." type="text"/>
                 </div>
             </div>
         </header>
 
         <!-- Statistics Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-section-gap">
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-6 md:mb-12">
             <!-- Card 1 (Total) -->
             <div class="bg-surface-container-lowest p-6 rounded-xl card-shadow flex flex-col gap-4">
                 <div class="flex justify-between items-start">

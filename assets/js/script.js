@@ -1139,10 +1139,12 @@ function renderDashboard() {
                             <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span> ${labelStatus}
                         </span>
                     </td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-right space-x-2">
-                        ${aduan.status === 'baru' ? `<button onclick="prosesLaporanDasbor('${aduan.id}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>` : ''}
-                        ${aduan.status === 'proses' ? `<button onclick="selesaikanLaporanDasbor('${aduan.id}')" class="bg-green-50 text-green-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-green-600 hover:text-white transition">Selesaikan</button>` : ''}
-                        <a href="detail-laporan.html?id=${aduan.id}" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-right">
+                        <div class="flex justify-end gap-1.5 flex-wrap">
+                            ${aduan.status === 'baru' ? `<button onclick="prosesLaporanDasbor('${aduan.id}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-blue-600 hover:text-white transition">Proses</button>` : ''}
+                            ${aduan.status === 'proses' ? `<button onclick="selesaikanLaporanDasbor('${aduan.id}')" class="bg-green-50 text-green-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-green-600 hover:text-white transition">Selesaikan</button>` : ''}
+                            <a href="detail-laporan.html?id=${aduan.id}" class="inline-block bg-gray-50 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition text-center">Detail</a>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -1206,18 +1208,18 @@ function renderLaporanTable() {
 
         const row = `
             <tr data-kategori="${escapeHTML(aduan.kategori)}" data-status="${escapeHTML(aduan.status)}" class="laporan-row hover:bg-gray-50 transition">
-                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400">#${escapeHTML(aduan.id)}</td>
+                <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono font-bold text-gray-400 hidden md:table-cell">#${escapeHTML(aduan.id)}</td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <p class="font-semibold text-gray-900 target-pencarian">${escapeHTML(aduan.pelapor)}</p>
                     <span class="text-xs text-gray-400">${escapeHTML(aduan.waktu)}</span>
                 </td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-0.5 rounded-full font-medium inline-block mb-1">${escapeHTML(aduan.kategoriLabel)}</span>
-                    <p class="text-gray-600 text-xs max-w-xs truncate">${escapeHTML(aduan.deskripsi)}</p>
+                    <p class="text-gray-600 text-xs max-w-xs truncate hidden sm:block">${escapeHTML(aduan.deskripsi)}</p>
                 </td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                     <p class="font-medium target-pencarian">${escapeHTML(aduan.lokasi)}</p>
-                    <span class="text-xs text-gray-400">${escapeHTML(aduan.wilayah)}</span>
+                    <span class="text-xs text-gray-400 hidden sm:inline">${escapeHTML(aduan.wilayah)}</span>
                 </td>
                 <td class="px-4 sm:px-6 py-3 sm:py-4">
                     <span class="inline-flex items-center gap-1 ${badgeClass} px-2 py-1 rounded-md text-xs font-semibold">
@@ -1495,14 +1497,19 @@ function renderUsersTable() {
             <tr id="${user.id}" data-role="${escapeHTML(user.role)}" class="user-row hover:bg-gray-50 transition">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold uppercase">${initials}</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold uppercase shrink-0">${initials}</div>
                         <div>
                             <p id="name-${user.id}" class="font-bold text-gray-900">${escapeHTML(user.username)}</p>
-                            <span class="text-xs text-gray-500">Terdaftar: ${escapeHTML(user.registered)}</span>
+                            <!-- Mobile-only email and NIK/NIP block -->
+                            <div class="md:hidden mt-1 text-xs text-gray-500 space-y-0.5">
+                                <p>${escapeHTML(user.email)}</p>
+                                <p class="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded inline-block">${escapeHTML(user.identitas)}</p>
+                            </div>
+                            <span class="text-xs text-gray-500 hidden md:inline">Terdaftar: ${escapeHTML(user.registered)}</span>
                         </div>
                     </div>
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 hidden md:table-cell">
                     <p id="email-${user.id}" class="text-gray-800 font-medium text-sm">${escapeHTML(user.email)}</p>
                     <span class="text-xs text-gray-400 font-mono">${escapeHTML(user.identitas)}</span>
                 </td>
@@ -1532,8 +1539,8 @@ function jalankanFilterUser() {
     rows.forEach(row => {
         const id = row.getAttribute('id');
         const roleBaris = row.getAttribute('data-role');
-        const nama = document.getElementById('name-' + id).innerText.toLowerCase();
-        const email = document.getElementById('email-' + id).innerText.toLowerCase();
+        const nama = document.getElementById('name-' + id).textContent.toLowerCase();
+        const email = document.getElementById('email-' + id).textContent.toLowerCase();
 
         const matchSearch = nama.includes(searchVal) || email.includes(searchVal);
         const matchRole = (roleVal === 'semua') || (roleBaris === roleVal);
