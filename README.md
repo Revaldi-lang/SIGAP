@@ -46,11 +46,18 @@ Platform ini mengusung pendekatan modern **Aesthetics & Visual Excellence** deng
 
 ## 🛠️ Tech Stack & Arsitektur
 
-*   **Markup**: HTML5 (Semantic elements)
-*   **Styling & UI**: Tailwind CSS (CDN), FontAwesome Icons v6, Google Fonts (Plus Jakarta Sans)
-*   **Javascript Engine**: Vanilla JS (ES6+)
-*   **Maps & GIS**: LeafletJS
-*   **Database & Persistensi**: `localStorage` Database & Dynamic Page Sync
+Platform SIGAP dibangun menggunakan teknologi statis murni (*client-side*) yang berjalan sepenuhnya di sisi browser:
+
+*   **Markup**: HTML5 dengan struktur elemen semantik untuk optimasi SEO dan aksesibilitas.
+*   **Styling & UI**: 
+    - **Tailwind CSS v3 (CDN)**: Digunakan untuk tata letak responsif dan utilitas gaya yang konsisten, lengkap dengan plugin `@tailwindcss/forms` dan `@tailwindcss/container-queries`.
+    - **Vanilla CSS**: Digunakan untuk gaya kustom tambahan dan transisi animasi halus pada [style.css](file:///c:/Users/user/OneDrive/Desktop/SIGAP/assets/css/style.css).
+*   **Ikonografi & Tipografi**:
+    - **FontAwesome Icons v6** & **Material Symbols Outlined**: Untuk penyediaan simbol navigasi, tombol, dan visualisasi aksi.
+    - **Google Fonts (Plus Jakarta Sans)**: Font utama untuk memberikan kesan premium, modern, dan keterbacaan yang tinggi.
+*   **Javascript Engine**: Vanilla JS (ES6+) murni tanpa *framework* berat (React/Vue), memastikan waktu muat (*load time*) yang instan dan interaksi yang gegas.
+*   **Maps & GIS**: **LeafletJS API** (CSS & JS CDN) untuk rendering peta spasial interaktif, penandaan lokasi koordinat GPS, dan peta sebaran aduan.
+*   **Database & Sesi**: Web Storage API (**localStorage**) untuk persistensi data laporan, akun pengguna, logs riwayat, sesi aktif, serta sinkronisasi dinamis antardasbor secara lokal.
 
 ---
 
@@ -59,27 +66,36 @@ Platform ini mengusung pendekatan modern **Aesthetics & Visual Excellence** deng
 ```bash
 ├── assets/
 │   ├── css/
-│   │   └── style.css            # Custom styling tambahan
+│   │   └── style.css            # Kustomisasi CSS tambahan & animasi transisi
+│   ├── images/                  # Aset gambar dan ikon kategori laporan
+│   │   ├── jalanrusak.jpg
+│   │   ├── kategori_drainase.jpg
+│   │   ├── kategori_fasilitas.jpg
+│   │   ├── kategori_jalan.jpg
+│   │   ├── kategori_lainnya.jpg
+│   │   ├── kategori_penerangan.jpg
+│   │   └── sigap.png            # Logo utama aplikasi SIGAP
 │   └── js/
-│       └── script.js            # Core engine database lokal, filter, login, & render profile
-├── sigap.png                    # Logo utama SIGAP
-├── index.html                   # Landing Page utama (Beranda)
-├── login.html                   # Portal masuk Admin & Petugas PUPR/Dishub
-├── login-masyarakat.html        # Portal masuk Masyarakat/Pelapor
-├── register.html                # Pendaftaran akun Warga baru
-├── dashboard-pelapor.html       # Dasbor khusus Pelapor/Masyarakat
-├── buat-laporan.html            # Formulir pengaduan baru dengan penanda peta GPS
-├── detail-laporan-pelapor.html  # Rincian & linimasa penanganan laporan untuk Pelapor
-├── pengaturan-profil-pelapor.html# Pengaturan profil & keamanan sandi Pelapor
-├── sigap.html                   # Dasbor utama Administrator Pemda
-├── laporan.html                 # Tabel rekapitulasi aduan & disposisi penanganan oleh Admin
-├── detail-laporan.html          # Detail tinjauan aduan, peta detail, & form status bagi Admin
-├── peta.html                    # Peta spasial sebaran aduan bagi Admin
-├── peta-pelapor.html            # Peta spasial sebaran aduan bagi Warga
-├── manajemen-user.html          # Manajemen catalog pengguna (Warga, Admin, Petugas) oleh Administrator
+│       └── script.js            # Core engine: database lokal, validasi sesi, & render profil
+├── prisma/                      # Folder Prisma ORM (dicadangkan untuk pengembangan backend masa depan)
+├── index.html                   # Beranda & Landing Page utama SIGAP
+├── login.html                   # Portal masuk khusus Administrator & Petugas
+├── login-masyarakat.html        # Portal masuk khusus Masyarakat/Pelapor
+├── register.html                # Halaman pendaftaran akun Warga baru
+├── dashboard-pelapor.html       # Dasbor utama bagi Masyarakat/Pelapor
+├── buat-laporan.html            # Formulir pengaduan baru dengan penanda peta GPS interaktif
+├── detail-laporan-pelapor.html  # Detil & linimasa penanganan laporan untuk Pelapor
+├── pengaturan-profil-pelapor.html # Pengaturan profil, informasi pribadi & kata sandi Pelapor
+├── sigap.html                   # Dasbor utama bagi Administrator Pemda
+├── laporan.html                 # Rekapitulasi tabel aduan & formulir disposisi bagi Admin
+├── detail-laporan.html          # Detil tinjauan aduan, peta detail, & form status bagi Admin
+├── peta.html                    # Peta spasial sebaran titik aduan untuk Administrator
+├── peta-pelapor.html            # Peta spasial sebaran titik aduan untuk Masyarakat
+├── manajemen-user.html          # Manajemen katalog & kontrol status pengguna (Aktif/Blokir) oleh Admin
 └── pengaturan-profil.html       # Pengaturan profil & keamanan sandi Administrator/Petugas
 ```
 
+---
 ---
 
 ## 🔑 Akun Uji Coba Default
