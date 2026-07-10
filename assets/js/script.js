@@ -832,7 +832,7 @@ function reRenderActivePage() {
     if (document.getElementById('mapPeta')) {
         initPetaDampak();
     }
-    if (document.getElementById('pelapor-total-laporan')) {
+    if (document.getElementById('list-aduan-saya')) {
         renderDasborPelapor();
     }
     if (document.getElementById('mapPetaPelapor')) {
@@ -2293,6 +2293,18 @@ function initProfilePelapor() {
     if (elEmail) elEmail.value = user.email;
     if (elPhone) elPhone.value = user.telepon || '081234567890';
     if (elAddress) elAddress.value = user.alamat || 'Jl. Ijen No. 12, Klojen, Kota Malang';
+
+    // Update avatar banner name dynamically
+    const bannerName = document.querySelector('main h3.text-lg.font-bold.text-on-surface');
+    if (bannerName) bannerName.innerText = user.username;
+
+    // Update avatar initials dynamically
+    const avatarInitials = document.getElementById('avatar-initials');
+    if (avatarInitials) {
+        const words = user.username.split(' ');
+        const initials = (words[0] ? words[0][0] : 'U') + (words[1] ? words[1][0] : '');
+        avatarInitials.innerText = initials.toUpperCase();
+    }
 }
 
 function simpanProfilUmumPelapor(event) {
