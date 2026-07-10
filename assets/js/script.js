@@ -1965,6 +1965,7 @@ function renderDasborPelapor() {
 // =========================================
 // 11. LOGIKA FORM ADUAN BARU (buat-laporan.html)
 // =========================================
+let selectorMap = null;
 let selectorMapMarker = null;
 
 function initMapSelector() {
@@ -1972,17 +1973,17 @@ function initMapSelector() {
     if (!mapSelectorDiv || typeof L === 'undefined') return;
 
     var isMobile = (typeof L !== 'undefined' && L.Browser) ? L.Browser.mobile : false;
-    var mapSelector = L.map('mapSelector', { 
+    selectorMap = L.map('mapSelector', { 
         zoomControl: false,
         dragging: !isMobile,
         tap: !isMobile
     }).setView([-7.983908, 112.621391], 13);
-    L.control.zoom({ position: 'bottomright' }).addTo(mapSelector);
+    L.control.zoom({ position: 'bottomright' }).addTo(selectorMap);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors'
-    }).addTo(mapSelector);
+    }).addTo(selectorMap);
 
     var pinColor = '#ef4444';
     var selectorIcon = L.divIcon({
@@ -1992,7 +1993,7 @@ function initMapSelector() {
         iconAnchor: [10, 10]
     });
 
-    mapSelector.on('click', function(e) {
+    selectorMap.on('click', function(e) {
         const lat = e.latlng.lat.toFixed(6);
         const lng = e.latlng.lng.toFixed(6);
 
@@ -2002,10 +2003,50 @@ function initMapSelector() {
         if (selectorMapMarker) {
             selectorMapMarker.setLatLng(e.latlng);
         } else {
-            selectorMapMarker = L.marker(e.latlng, {icon: selectorIcon}).addTo(mapSelector)
+            selectorMapMarker = L.marker(e.latlng, {icon: selectorIcon}).addTo(selectorMap)
                                 .bindPopup(`<div class="text-center text-xs font-bold text-gray-800"><p>Titik Kerusakan Terpilih</p></div>`).openPopup();
         }
     });
+
+    // Auto-geocoding listener on address input (with 800ms debounce to prevent API spam)
+    const inputLokasi = document.getElementById('input-lokasi');
+    if (inputLokasi) {
+        let debounceTimer = null;
+        inputLokasi.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            const address = inputLokasi.value.trim();
+            if (address.length < 5) return; // Minimum query length for geocoding
+
+            debounceTimer = setTimeout(() => {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=id&limit=1&q=${encodeURIComponent(address)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const lat = parseFloat(data[0].lat);
+                            const lng = parseFloat(data[0].lon);
+                            const latlng = L.latLng(lat, lng);
+
+                            // Update lat/lng inputs
+                            document.getElementById('input-lat').value = lat.toFixed(6);
+                            document.getElementById('input-lng').value = lng.toFixed(6);
+
+                            // Move map focus and marker
+                            if (selectorMap) {
+                                selectorMap.setView(latlng, 16);
+                                
+                                if (selectorMapMarker) {
+                                    selectorMapMarker.setLatLng(latlng);
+                                } else {
+                                    selectorMapMarker = L.marker(latlng, {icon: selectorIcon}).addTo(selectorMap)
+                                                        .bindPopup(`<div class="text-center text-xs font-bold text-gray-800"><p>Titik Kerusakan Terpilih</p></div>`).openPopup();
+                                }
+                            }
+                        }
+                    })
+                    .catch(err => console.error("Geocoding error:", err));
+            }, 800);
+        });
+    }
 }
 
 function kirimAduanBaru(event) {
