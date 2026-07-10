@@ -9,19 +9,12 @@
 </p>
 
 <p align="center">
-  <a href="https://sigap-liard.vercel.app">
-    <img src="https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel Deployment" />
-  </a>
-  <a href="https://supabase.com">
-    <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Backend" />
-  </a>
+  🌐 <b>Website Live:</b> <a href="https://sigap-liard.vercel.app">sigap-liard.vercel.app</a>
 </p>
 
 ---
 
 **SIGAP** adalah platform digital pelayanan aspirasi dan pengaduan infrastruktur daerah terintegrasi. Platform ini dirancang untuk memangkas birokrasi dan menjembatani komunikasi antara masyarakat umum dan instansi pemerintah daerah terkait (seperti Dinas Pekerjaan Umum dan Penataan Ruang/PUPR, Dinas Perhubungan, dll.) dalam melaporkan serta menyelesaikan kendala fasilitas publik (jalan berlubang, lampu penerangan padam, saluran drainase tersumbat, dll.).
-
-Platform ini mengusung pendekatan modern **Aesthetics & Visual Excellence** dengan dominansi skema warna *warm cream* minimalis yang teduh dan aksen *royal blue* yang premium, interaktif, serta responsif sepenuhnya untuk perangkat mobile maupun desktop.
 
 ---
 
