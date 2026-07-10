@@ -191,8 +191,17 @@ input[type="checkbox"], input[type="radio"] {
     #nav-portal-container-mobile button { width: 100%; min-height: 48px; }
 
     .hero-gradient { padding-top: 3rem; padding-bottom: 4rem; }
-    h1.font-display-lg { font-size: 28px !important; line-height: 1.2 !important; }
+    h1.font-display-lg { font-size: 24px !important; line-height: 1.2 !important; }
     .font-body-lg { font-size: 14px !important; }
+
+    /* Custom Responsive Font Sizes */
+    .text-display-lg { font-size: 24px !important; line-height: 1.3 !important; }
+    .text-headline-lg { font-size: 20px !important; line-height: 1.3 !important; }
+    .text-headline-md { font-size: 18px !important; line-height: 1.3 !important; }
+    .text-body-lg { font-size: 15px !important; line-height: 1.5 !important; }
+    .text-body-md { font-size: 14px !important; line-height: 1.5 !important; }
+    .text-label-md { font-size: 12px !important; line-height: 1.4 !important; }
+    .text-label-sm { font-size: 10px !important; line-height: 1.4 !important; }
 
     .hero-gradient .flex { flex-direction: column; gap: 0.75rem; }
     .hero-gradient .flex button, .hero-gradient .flex a { width: 100%; min-height: 48px; justify-content: center; }
@@ -245,7 +254,10 @@ input[type="checkbox"], input[type="radio"] {
 
 @media (max-width: 420px) {
     /* Extra small phones: reduce hero text further */
-    h1.font-display-lg { font-size: 24px !important; }
+    h1.font-display-lg { font-size: 20px !important; }
+    .text-display-lg { font-size: 20px !important; }
+    .text-headline-lg { font-size: 18px !important; }
+    .text-headline-md { font-size: 16px !important; }
     .hero-gradient .aspect-video, .hero-gradient .aspect-square { height: 180px !important; }
     nav.landing-nav { padding: 0.4rem 0 !important; }
 }
