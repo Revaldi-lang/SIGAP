@@ -2619,6 +2619,8 @@ function initMobileSidebar() {
     const sidebar = document.getElementById('sidebar');
     
     if (!btn || !sidebar) return;
+    if (btn.dataset.hasSidebarListener) return;
+    btn.dataset.hasSidebarListener = "true";
     
     // Create overlay dynamically if it doesn't exist
     let overlay = document.getElementById('sidebar-overlay');
