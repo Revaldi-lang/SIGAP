@@ -358,7 +358,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return true;
   };
 
-  const tambahLaporan = (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => {
+  const tambahLaporan = async (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => {
     const id = (laporan.length > 0 ? (Math.max(...laporan.map(x => parseInt(x.id))) + 1).toString().padStart(4, '0') : '0149');
     
     const getDinasTujuan = (kategori: string) => {
@@ -392,9 +392,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setLaporan(updated);
     localStorage.setItem('sigap_laporan', JSON.stringify(updated));
 
-    supabase.from('users').select('id').eq('name', laporanBaru.pelapor).single().then(({ data: userObj }) => {
+    try {
+      const { data: userObj } = await supabase
+        .from('users')
+        .select('id')
+        .eq('name', laporanBaru.pelapor)
+        .single();
+
       const uId = userObj ? userObj.id : (currentUser ? parseInt(currentUser.id.toString()) || 3 : 3);
-      supabase.from('laporan').insert({
+      
+      const { error: insertError } = await supabase.from('laporan').insert({
         nomor_laporan: `RPT-${id}`,
         user_id: uId,
         kategori: laporanBaru.kategori,
@@ -406,29 +413,44 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         urgensi: laporanBaru.urgensi,
         status: 'baru',
         dinas_tujuan: targetDinas
-      }).then(({ error }) => {
-        if (error) {
-          console.error('Supabase insert aduan error:', error);
-        } else {
-          supabase.from('laporan').select('id').eq('nomor_laporan', `RPT-${id}`).single().then(({ data: lapObj }) => {
-            if (lapObj) {
-              supabase.from('activity_log').insert({
-                laporan_id: lapObj.id,
-                judul: 'Aduan Dikirim',
-                deskripsi: `Baru Saja | Oleh ${laporanBaru.pelapor}`
-              });
-              if (laporanBaru.foto) {
-                supabase.from('foto_laporan').insert({
-                  laporan_id: lapObj.id,
-                  file_path: laporanBaru.foto
-                });
-              }
-            }
+      });
+
+      if (insertError) {
+        console.error('Supabase insert aduan error:', insertError);
+        return;
+      }
+
+      const { data: lapObj } = await supabase
+        .from('laporan')
+        .select('id')
+        .eq('nomor_laporan', `RPT-${id}`)
+        .single();
+
+      if (lapObj) {
+        await supabase.from('activity_log').insert({
+          laporan_id: lapObj.id,
+          judul: 'Aduan Dikirim',
+          deskripsi: `Baru Saja | Oleh ${laporanBaru.pelapor}`
+        });
+
+        if (laporanBaru.foto) {
+          const timestamp = Date.now();
+          const fileName = `foto_${timestamp}.png`;
+          const fileSize = laporanBaru.foto.length;
+
+          await supabase.from('foto_laporan').insert({
+            laporan_id: lapObj.id,
+            file_path: laporanBaru.foto,
+            file_name: fileName,
+            file_size: fileSize
           });
         }
-        pullFromSupabase();
-      });
-    });
+      }
+    } catch (err) {
+      console.error('Error in tambahLaporan transaction:', err);
+    } finally {
+      await pullFromSupabase();
+    }
   };
 
   const updateStatusLaporan = (id: string, status: 'baru' | 'proses' | 'selesai', dinas: string, catatan: string) => {
