@@ -253,13 +253,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const cachedLaporan = localStorage.getItem('sigap_laporan');
       if (cachedLaporan) setLaporan(JSON.parse(cachedLaporan));
 
-      // 3. Supabase Sync on mount
+      // 3. Supabase Sync on mount (non-blocking)
       if (supabase) {
-        // Handle Google OAuth session
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session && session.user) {
-          await handleSupabaseSession(session);
-        }
+        // Run session check and data pull in background
+        Promise.all([
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session && session.user) {
+              return handleSupabaseSession(session);
+            }
+          }),
+          pullFromSupabase()
+        ]).catch(err => console.error('Background sync error:', err));
 
         // Listen to Auth Changes
         supabase.auth.onAuthStateChange(async (event, session) => {
@@ -272,8 +276,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             await handleSupabaseSession(session);
           }
         });
-
-        await pullFromSupabase();
       }
 
       setLoading(false);
