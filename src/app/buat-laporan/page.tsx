@@ -136,8 +136,8 @@ export default function BuatLaporan() {
                         className="peer sr-only"
                       />
                       <div className="p-3 border border-[#D3C5B1] rounded-xl text-center peer-checked:border-[#001360] peer-checked:bg-[#001360]/5 group-hover:bg-[#F6F3EC] transition-all h-full flex flex-col items-center justify-center">
-                        <span className="material-symbols-outlined block mb-1 text-sm">${cat.icon}</span>
-                        <span className="text-[10px] font-bold leading-tight">${cat.label}</span>
+                        <span className="material-symbols-outlined block mb-1 text-sm">{cat.icon}</span>
+                        <span className="text-[10px] font-bold leading-tight">{cat.label}</span>
                       </div>
                     </label>
                   ))}
@@ -193,7 +193,7 @@ export default function BuatLaporan() {
                           onChange={() => setUrgensi(urg.id as any)}
                           className="w-4 h-4 text-[#001360] border-[#D3C5B1] focus:ring-[#001360]"
                         />
-                        <span className={`font-semibold ${urg.colorClass}`}>${urg.label}</span>
+                        <span className={`font-semibold ${urg.colorClass}`}>{urg.label}</span>
                       </label>
                     ))}
                   </div>

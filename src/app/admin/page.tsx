@@ -109,7 +109,7 @@ export default function AdminDashboard() {
               </button>
               <div>
                 <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-1">Beranda Dashboard</h1>
-                <p className="text-xs text-[#4E4639] font-mono">${currentDate}</p>
+                <p className="text-xs text-[#4E4639] font-mono">{currentDate}</p>
               </div>
             </div>
             <div className="flex items-center w-full sm:w-auto gap-4">

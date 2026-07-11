@@ -62,7 +62,7 @@ export default function PetaPelapor() {
                   />
                   <span className="inline-flex items-center gap-1.5">
                     <span className={`w-2.5 h-2.5 rounded-full ${filter.colorClass}`}></span>
-                    ${filter.label}
+                    {filter.label}
                   </span>
                 </label>
               ))}

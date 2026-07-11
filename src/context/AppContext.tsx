@@ -376,7 +376,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               supabase.from('activity_log').insert({
                 laporan_id: lapObj.id,
                 judul: 'Aduan Dikirim',
-                deskripsi: `Baru Saja | Oleh &1{laporanBaru.pelapor}`.replace('&1', '$')
+                deskripsi: `Baru Saja | Oleh ${laporanBaru.pelapor}`
               });
               if (laporanBaru.foto) {
                 supabase.from('foto_laporan').insert({

@@ -175,24 +175,24 @@ export default function DashboardPelapor() {
                     >
                       <div className="flex items-start gap-4">
                         <div className={`p-3.5 rounded-xl border ${cat.wrapperClass} text-sm flex items-center justify-center shrink-0`}>
-                          <span className="material-symbols-outlined">${cat.icon}</span>
+                          <span className="material-symbols-outlined">{cat.icon}</span>
                         </div>
                         <div>
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[9px] font-mono font-bold text-[#807667]">#${aduan.id}</span>
+                            <span className="text-[9px] font-mono font-bold text-[#807667]">#{aduan.id}</span>
                             <span className="bg-[#001360]/10 text-[#001360] text-[9px] px-2 py-0.5 rounded-full font-bold border border-[#001360]/10 uppercase tracking-wider">
-                              ${aduan.kategoriLabel}
+                              {aduan.kategoriLabel}
                             </span>
-                            <span className="text-[#807667] text-[10px]"><span className="mx-1 text-[#D3C5B1]">|</span> ${aduan.waktu}</span>
+                            <span className="text-[#807667] text-[10px]"><span className="mx-1 text-[#D3C5B1]">|</span> {aduan.waktu}</span>
                           </div>
-                          <h4 className="font-bold text-[#1C1B18] text-sm mt-1.5 leading-snug">${aduan.lokasi}</h4>
-                          <p className="text-[#4E4639] text-xs mt-1 max-w-xl leading-relaxed">${aduan.deskripsi}</p>
+                          <h4 className="font-bold text-[#1C1B18] text-sm mt-1.5 leading-snug">{aduan.lokasi}</h4>
+                          <p className="text-[#4E4639] text-xs mt-1 max-w-xl leading-relaxed">{aduan.deskripsi}</p>
                         </div>
                       </div>
 
                       <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 border-t sm:border-t-0 border-[#D3C5B1]/30 pt-3 sm:pt-0 shrink-0">
                         <span className={`inline-flex items-center gap-1.5 ${stat.badgeClass} px-3 py-1 rounded-full text-[9px] font-bold border uppercase tracking-wider`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${stat.dotClass}`}></span> ${stat.label}
+                          <span className={`w-1.5 h-1.5 rounded-full ${stat.dotClass}`}></span> {stat.label}
                         </span>
                         <Link
                           href={`/detail-laporan-pelapor?id=${aduan.id}`}
