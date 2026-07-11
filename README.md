@@ -4,6 +4,13 @@
 
 ---
 
+## 🌐 Live Demo (Vercel)
+
+Aplikasi SIGAP telah dideploy dan dapat diakses secara online melalui Vercel pada tautan berikut:
+👉 **[https://sigap-next.vercel.app](https://sigap-next.vercel.app)** *(silakan sesuaikan dengan domain Vercel Anda)*
+
+---
+
 ## ⚡ Tech Stack Utama
 
 SIGAP dibangun menggunakan arsitektur modern berkinerja tinggi:
@@ -116,6 +123,19 @@ npm run build
 npm run start
 ```
 Perintah ini akan melakukan pengecekan sintaks TypeScript/ESLint secara ketat dan melakukan prerendering halaman statis.
+
+---
+
+## ☁️ Panduan Deploy ke Vercel
+
+Untuk menjalankan web ini di server cloud Vercel secara otomatis dari repositori GitHub Anda:
+
+1. **Hubungkan Repositori:** Hubungkan repositori GitHub **Revaldi-lang/SIGAP** ke akun Vercel Anda.
+2. **Atur Environment Variables:** Daftarkan variabel lingkungan database Supabase Anda pada panel **Project Settings -> Environment Variables** di Vercel:
+   *   `NEXT_PUBLIC_SUPABASE_URL` = *(URL Supabase Anda)*
+   *   `NEXT_PUBLIC_SUPABASE_ANON_KEY` = *(Anon Key Supabase Anda)*
+3. **Pilih Framework Preset:** Vercel akan otomatis mendeteksi proyek Next.js Anda. Pastikan **Framework Preset** terkonfigurasi ke **Next.js**.
+4. **Deploy:** Lakukan redeploy atau push commit terbaru untuk memulai kompilasi serverless Next.js secara otomatis.
 
 ---
 
