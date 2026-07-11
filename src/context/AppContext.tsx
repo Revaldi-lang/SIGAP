@@ -161,27 +161,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const handleSupabaseSession = useCallback(async (session: Session) => {
     const user = session.user;
-    const mappedUser: User = {
-      id: user.id,
-      username: (user.user_metadata.full_name as string) || user.email?.split('@')[0] || 'User',
-      email: user.email || '',
-      identitas: '-',
-      role: 'Masyarakat',
-      status: 'Aktif',
-      registered: 'Google Sign-In'
-    };
-
-    setCurrentUser(mappedUser);
-
-    const sessionData = {
-      role: 'pelapor',
-      email: user.email,
-      username: mappedUser.username,
-      id: user.id
-    };
-    localStorage.setItem('sigap_session', JSON.stringify(sessionData));
-    localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-
     try {
       const { data: existing } = await supabase
         .from('users')
@@ -189,16 +168,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .eq('email', user.email)
         .single();
 
+      let dbUserId: string;
+      let dbUserRole: 'Masyarakat' | 'Administrator' | 'Petugas PUPR' | 'Petugas' = 'Masyarakat';
+      let dbUserStatus: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi' = 'Aktif';
+      let dbUserNik = '-';
+      let dbUserName = (user.user_metadata.full_name as string) || user.email?.split('@')[0] || 'User';
+
       if (!existing) {
+        const generatedId = Math.floor(100000 + Math.random() * 900000);
+        dbUserId = generatedId.toString();
         await supabase.from('users').insert({
-          id: user.id,
-          name: mappedUser.username,
+          id: generatedId,
+          name: dbUserName,
           email: user.email,
           role: 'Masyarakat',
           status: 'Aktif',
-          password: 'oauth_authenticated'
+          password: 'oauth_authenticated',
+          nik: '-'
         });
+      } else {
+        dbUserId = existing.id.toString();
+        dbUserRole = (existing.role as 'Masyarakat' | 'Administrator' | 'Petugas PUPR' | 'Petugas') || 'Masyarakat';
+        const rawStatus = existing.status || 'Aktif';
+        dbUserStatus = (rawStatus === 'Menunggu' ? 'Menunggu Verifikasi' : rawStatus) as 'Aktif' | 'Blokir' | 'Menunggu Verifikasi';
+        dbUserNik = existing.nik || '-';
+        dbUserName = existing.name || dbUserName;
       }
+
+      const mappedUser: User = {
+        id: dbUserId,
+        username: dbUserName,
+        email: user.email || '',
+        identitas: dbUserNik,
+        role: dbUserRole,
+        status: dbUserStatus,
+        registered: 'Google Sign-In'
+      };
+
+      setCurrentUser(mappedUser);
+
+      const sessionData = {
+        role: dbUserRole === 'Masyarakat' ? 'pelapor' : dbUserRole,
+        email: user.email,
+        username: dbUserName,
+        id: dbUserId
+      };
+      localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+      localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+
     } catch (err) {
       console.error('Supabase user upsert error:', err);
     }

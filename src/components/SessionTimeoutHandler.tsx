@@ -25,11 +25,11 @@ export default function SessionTimeoutHandler() {
     // Throttle writes to localStorage: at most once every 5 seconds
     if (now - lastActivityRef.current > 5000 || showWarning) {
       localStorage.setItem('sigap_session_last_activity', now.toString());
-    }
-    lastActivityRef.current = now;
-    if (showWarning) {
-      setShowWarning(false);
-      setCountdown(60);
+      lastActivityRef.current = now;
+      if (showWarning) {
+        setShowWarning(false);
+        setCountdown(60);
+      }
     }
   }, [showWarning]);
 
@@ -49,7 +49,8 @@ export default function SessionTimeoutHandler() {
     const inactivityInterval = setInterval(() => {
       if (showWarning) return; // Managed by countdown timer
 
-      const lastActivity = parseInt(localStorage.getItem('sigap_session_last_activity') || '0') || lastActivityRef.current;
+      const storedActivity = localStorage.getItem('sigap_session_last_activity');
+      const lastActivity = storedActivity ? (parseInt(storedActivity) || lastActivityRef.current) : lastActivityRef.current;
       const elapsed = Date.now() - lastActivity;
 
       if (elapsed >= WARNING_TIMEOUT) {
