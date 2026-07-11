@@ -2,17 +2,51 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-surface-container-low border-t border-outline-variant py-8 mt-auto">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#4E4639]">
-        <div className="flex items-center gap-3">
-          <img alt="SIGAP Logo" className="h-5 w-auto object-contain opacity-60" src="/assets/images/sigap.png" />
-          <p>© 2026 SIGAP - Sistem Informasi Gerak Aduan Publik. Hak Cipta Dilindungi.</p>
+    <footer className="bg-[#1E1B18] text-[#E6DFD5] pt-16 pb-8 px-6 md:px-12 w-full mt-auto">
+      <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
+        <div className="md:col-span-6 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-white/10 p-2 rounded-xl border border-white/10 flex items-center justify-center">
+              <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" />
+            </div>
+            <span className="font-bold text-white text-lg">SIGAP</span>
+          </div>
+          <p className="text-xs text-[#E6DFD5]/85 leading-relaxed max-w-md">
+            SIGAP adalah platform Layanan Aspirasi &amp; Pengaduan Infrastruktur Daerah Nasional yang terintegrasi langsung dengan instansi teknis pemerintah daerah di seluruh Indonesia untuk pelayanan publik transparan.
+          </p>
         </div>
-        <div className="flex gap-6">
-          <a href="#" className="hover:underline">Kebijakan Privasi</a>
-          <a href="#" className="hover:underline">Syarat & Ketentuan</a>
-          <a href="#" className="hover:underline">Pemerintah Kota Malang</a>
+
+        <div className="md:col-span-3 space-y-4">
+          <h5 className="text-sm font-bold uppercase tracking-wider text-white">Navigasi</h5>
+          <ul className="space-y-2.5 text-xs text-[#E6DFD5]/80">
+            <li><a className="hover:text-blue-400 transition-colors" href="#info-section">Kegunaan</a></li>
+            <li><a className="hover:text-blue-400 transition-colors" href="#alur-section">Cara Melapor</a></li>
+            <li><a className="hover:text-blue-400 transition-colors" href="#proses-section">SOP Kerja</a></li>
+            <li><a className="hover:text-blue-400 transition-colors" href="#suara-warga-section">Suara Warga</a></li>
+          </ul>
         </div>
+
+        <div className="md:col-span-3 space-y-4">
+          <h5 className="text-sm font-bold uppercase tracking-wider text-white">Hubungi Bantuan</h5>
+          <ul className="space-y-2.5 text-xs text-[#E6DFD5]/80">
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-sm mt-0.5 text-blue-400">location_on</span>
+              <span>Pusat Layanan SIGAP Nasional, DKI Jakarta, Indonesia</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm text-blue-400">phone</span>
+              <span>Hotline 112 (Bebas Pulsa)</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm text-blue-400">mail</span>
+              <span>support@sigap.go.id</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="max-w-[1280px] mx-auto pt-8 text-center text-xs text-[#E6DFD5]/60">
+        <p>Copyright &copy; 2026 SIGAP Indonesia. Seluruh hak cipta dilindungi.</p>
       </div>
     </footer>
   );
