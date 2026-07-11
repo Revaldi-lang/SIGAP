@@ -1,16 +1,17 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
     <footer className="bg-[#1E1B18] text-[#E6DFD5] pt-16 pb-8 px-6 md:px-12 w-full mt-auto">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
         <div className="md:col-span-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-white/10 p-2 rounded-xl border border-white/10 flex items-center justify-center">
-              <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" />
+          <Link href="/" className="flex items-center gap-3 min-h-[44px] w-max">
+            <div className="bg-white/10 p-2 rounded-xl border border-white/10 flex items-center justify-center w-11 h-11 shrink-0">
+              <img alt="SIGAP Logo" className="h-7 w-auto object-contain" src="/assets/images/sigap.png" />
             </div>
             <span className="font-bold text-white text-lg">SIGAP</span>
-          </div>
+          </Link>
           <p className="text-xs text-[#E6DFD5]/85 leading-relaxed max-w-md">
             SIGAP adalah platform Layanan Aspirasi &amp; Pengaduan Infrastruktur Daerah Nasional yang terintegrasi langsung dengan instansi teknis pemerintah daerah di seluruh Indonesia untuk pelayanan publik transparan.
           </p>

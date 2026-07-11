@@ -74,8 +74,8 @@ export default function RegisterWarga() {
     <div className="page-shell flex items-center justify-center min-h-screen p-4">
       <div className="w-full max-w-xl legacy-card rounded-[1.25rem] p-4 sm:p-8 animate-fade-in">
         <div className="text-center mb-6">
-          <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-16 h-16 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition" style={{ width: '64px', height: '64px' }}>
-            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="w-full h-full object-contain" style={{ height: '48px', width: 'auto' }} />
+          <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-11 h-11 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition shrink-0">
+            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-7 w-auto object-contain" />
           </Link>
           <h2 className="text-2xl font-bold text-[#1C1B18] tracking-tight">Daftar Akun SIGAP</h2>
           <p className="text-xs text-[#4E4639] mt-1">Lengkapi data diri Anda untuk mulai melaporkan aduan infrastruktur.</p>
