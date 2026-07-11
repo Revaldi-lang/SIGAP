@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ModalAkses from '@/components/ModalAkses';
@@ -14,7 +13,6 @@ export default function LandingPage() {
   // Dynamic statistics from database with fallbacks
   const totalAduan = loading ? '15,642' : laporan.length.toLocaleString();
   const totalSelesai = loading ? '15,310' : laporan.filter(l => l.status === 'selesai').length.toLocaleString();
-  const totalProses = loading ? '232' : laporan.filter(l => l.status === 'proses').length.toLocaleString();
 
   return (
     <div className="min-h-screen page-shell flex flex-col pt-20">
@@ -240,7 +238,7 @@ export default function LandingPage() {
                     ))}
                   </div>
                   <p className="text-sm italic text-[#1C1B18] mb-6 leading-relaxed">
-                    "Laporan saya tentang jalan berlubang besar di depan komplek direspons sangat cepat. Dalam waktu singkat, regu perbaikan jalan dinas sudah datang menambal."
+                    &quot;Laporan saya tentang jalan berlubang besar di depan komplek direspons sangat cepat. Dalam waktu singkat, regu perbaikan jalan dinas sudah datang menambal.&quot;
                   </p>
                 </div>
                 <div className="flex items-center gap-4 pt-4 border-t border-[#D3C5B1]/50">
@@ -266,7 +264,7 @@ export default function LandingPage() {
                     ))}
                   </div>
                   <p className="text-sm italic text-[#1C1B18] mb-6 leading-relaxed">
-                    "Lampu penerangan jalan padam berbulan-bulan. Setelah saya laporkan lewat SIGAP dan sematkan koordinat peta, dinas Dishub langsung mengganti bohlam baru esok harinya!"
+                    &quot;Lampu penerangan jalan padam berbulan-bulan. Setelah saya laporkan lewat SIGAP dan sematkan koordinat peta, dinas Dishub langsung mengganti bohlam baru esok harinya!&quot;
                   </p>
                 </div>
                 <div className="flex items-center gap-4 pt-4 border-t border-[#D3C5B1]/50">
@@ -292,7 +290,7 @@ export default function LandingPage() {
                     ))}
                   </div>
                   <p className="text-sm italic text-[#1C1B18] mb-6 leading-relaxed">
-                    "Transparansi pelacakan di SIGAP ini luar biasa. Kita bisa tahu persis laporan sudah diverifikasi, diproses oleh dinas apa, dan mendapat foto bukti perbaikan."
+                    &quot;Transparansi pelacakan di SIGAP ini luar biasa. Kita bisa tahu persis laporan sudah diverifikasi, diproses oleh dinas apa, dan mendapat foto bukti perbaikan.&quot;
                   </p>
                 </div>
                 <div className="flex items-center gap-4 pt-4 border-t border-[#D3C5B1]/50">

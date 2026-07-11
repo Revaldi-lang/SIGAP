@@ -298,7 +298,7 @@ export default function AdminManajemenUser() {
                 <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Peran (Role)</label>
                 <select
                   value={roleInput}
-                  onChange={e => setRoleInput(e.target.value as any)}
+                  onChange={e => setRoleInput(e.target.value as 'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR')}
                   className="legacy-input w-full px-3 py-2 text-xs font-semibold"
                 >
                   <option value="Administrator">Administrator</option>

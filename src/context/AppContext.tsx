@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 
 export interface User {
@@ -38,6 +39,28 @@ export interface Laporan {
   logs: ActivityLog[];
 }
 
+const getKategoriLabel = (kategori: string) => {
+  const labels: Record<string, string> = {
+    'jalan': 'Jalan Berlubang',
+    'penerangan': 'Penerangan Jalan',
+    'drainase': 'Drainase rusak',
+    'fasilitas': 'Fasilitas Sosial / Taman',
+    'lainnya': 'Laporan Lainnya'
+  };
+  return labels[kategori] || 'Laporan Umum';
+};
+
+const getKategoriFoto = (kategori: string) => {
+  const images: Record<string, string> = {
+    'jalan': '/assets/images/kategori_jalan.jpg',
+    'penerangan': '/assets/images/kategori_penerangan.jpg',
+    'drainase': '/assets/images/kategori_drainase.jpg',
+    'fasilitas': '/assets/images/kategori_fasilitas.jpg',
+    'lainnya': '/assets/images/kategori_lainnya.jpg'
+  };
+  return images[kategori] || '/assets/images/kategori_jalan.jpg';
+};
+
 interface AppContextType {
   currentUser: User | null;
   users: User[];
@@ -61,6 +84,127 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [users, setUsers] = useState<User[]>([]);
   const [laporan, setLaporan] = useState<Laporan[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const pullFromSupabase = useCallback(async () => {
+    try {
+      const { data: dbUsers } = await supabase.from('users').select('*');
+      if (dbUsers) {
+        const mappedUsers: User[] = dbUsers.map(u => ({
+          id: u.id.toString(),
+          username: u.name,
+          email: u.email,
+          identitas: u.nik || '-',
+          role: u.role,
+          status: u.status === 'Menunggu' ? 'Menunggu Verifikasi' : u.status,
+          registered: 'Terdaftar'
+        }));
+        setUsers(mappedUsers);
+        localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
+      }
+
+      const { data: dbLaporan } = await supabase.from('laporan').select(`
+        *,
+        users ( name ),
+        activity_log ( * ),
+        foto_laporan ( * )
+      `);
+
+      if (dbLaporan) {
+        const mappedLaporan: Laporan[] = dbLaporan.map(l => {
+          const mappedLogs = (l.activity_log || []).map((log: { judul: string; deskripsi: string | null }) => {
+            let waktuStr = 'Baru Saja';
+            let aktorStr = 'Sistem';
+            if (log.deskripsi && log.deskripsi.includes('|')) {
+              const parts = log.deskripsi.split('|');
+              waktuStr = parts[0].trim();
+              aktorStr = parts[1].replace('Oleh', '').trim();
+            }
+            return {
+              judul: log.judul,
+              waktu: waktuStr,
+              aktor: aktorStr
+            };
+          });
+
+          let fotoUrl = getKategoriFoto(l.kategori);
+          if (l.foto_laporan && l.foto_laporan.length > 0) {
+            fotoUrl = l.foto_laporan[0].file_path;
+          }
+
+          return {
+            id: l.nomor_laporan.replace('RPT-', ''),
+            lat: parseFloat(l.lat),
+            lng: parseFloat(l.lng),
+            kategori: l.kategori,
+            kategoriLabel: getKategoriLabel(l.kategori),
+            deskripsi: l.deskripsi,
+            status: l.status,
+            pelapor: l.users ? l.users.name : 'Masyarakat',
+            waktu: 'Tersinkron',
+            lokasi: l.lokasi,
+            wilayah: l.wilayah,
+            urgensi: l.urgensi,
+            dinas: l.dinas_tujuan,
+            foto: fotoUrl,
+            logs: mappedLogs.length > 0 ? mappedLogs : [
+              { judul: 'Aduan Dikirim', waktu: 'Baru Saja', aktor: l.users ? l.users.name : 'Pelapor' }
+            ]
+          };
+        });
+        setLaporan(mappedLaporan);
+        localStorage.setItem('sigap_laporan', JSON.stringify(mappedLaporan));
+      }
+    } catch (e) {
+      console.error('Error pulling from Supabase:', e);
+    }
+  }, []);
+
+  const handleSupabaseSession = useCallback(async (session: Session) => {
+    const user = session.user;
+    const mappedUser: User = {
+      id: user.id,
+      username: (user.user_metadata.full_name as string) || user.email?.split('@')[0] || 'User',
+      email: user.email || '',
+      identitas: '-',
+      role: 'Masyarakat',
+      status: 'Aktif',
+      registered: 'Google Sign-In'
+    };
+
+    setCurrentUser(mappedUser);
+
+    const sessionData = {
+      role: 'pelapor',
+      email: user.email,
+      username: mappedUser.username,
+      id: user.id
+    };
+    localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+    localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+
+    try {
+      const { data: existing } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', user.email)
+        .single();
+
+      if (!existing) {
+        await supabase.from('users').insert({
+          id: user.id,
+          name: mappedUser.username,
+          email: user.email,
+          role: 'Masyarakat',
+          status: 'Aktif',
+          password: 'oauth_authenticated'
+        });
+      }
+    } catch (err) {
+      console.error('Supabase user upsert error:', err);
+    }
+
+    await pullFromSupabase();
+  }, [pullFromSupabase]);
 
   // Initialize data from localstorage & sync with Supabase
   useEffect(() => {
@@ -119,150 +263,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     initializeData();
-  }, []);
-
-  const handleSupabaseSession = async (session: any) => {
-    const user = session.user;
-    const mappedUser: User = {
-      id: user.id,
-      username: user.user_metadata.full_name || user.email.split('@')[0],
-      email: user.email,
-      identitas: '-',
-      role: 'Masyarakat',
-      status: 'Aktif',
-      registered: 'Google Sign-In'
-    };
-
-    setCurrentUser(mappedUser);
-
-    const sessionData = {
-      role: 'pelapor',
-      email: user.email,
-      username: mappedUser.username,
-      id: user.id
-    };
-    localStorage.setItem('sigap_session', JSON.stringify(sessionData));
-    localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-
-    try {
-      const { data: existing } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', user.email)
-        .single();
-
-      if (!existing) {
-        await supabase.from('users').insert({
-          id: user.id,
-          name: mappedUser.username,
-          email: user.email,
-          role: 'Masyarakat',
-          status: 'Aktif',
-          password: 'oauth_authenticated'
-        });
-      }
-    } catch (err) {
-      console.error('Supabase user upsert error:', err);
-    }
-
-    await pullFromSupabase();
-  };
-
-  const pullFromSupabase = async () => {
-    try {
-      const { data: dbUsers } = await supabase.from('users').select('*');
-      if (dbUsers) {
-        const mappedUsers: User[] = dbUsers.map(u => ({
-          id: u.id.toString(),
-          username: u.name,
-          email: u.email,
-          identitas: u.nik || '-',
-          role: u.role,
-          status: u.status === 'Menunggu' ? 'Menunggu Verifikasi' : u.status,
-          registered: 'Terdaftar'
-        }));
-        setUsers(mappedUsers);
-        localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
-      }
-
-      const { data: dbLaporan } = await supabase.from('laporan').select(`
-        *,
-        users ( name ),
-        activity_log ( * ),
-        foto_laporan ( * )
-      `);
-
-      if (dbLaporan) {
-        const mappedLaporan: Laporan[] = dbLaporan.map(l => {
-          const mappedLogs = (l.activity_log || []).map((log: any) => {
-            let waktuStr = 'Baru Saja';
-            let aktorStr = 'Sistem';
-            if (log.deskripsi && log.deskripsi.includes('|')) {
-              const parts = log.deskripsi.split('|');
-              waktuStr = parts[0].trim();
-              aktorStr = parts[1].replace('Oleh', '').trim();
-            }
-            return {
-              judul: log.judul,
-              waktu: waktuStr,
-              aktor: aktorStr
-            };
-          });
-
-          let fotoUrl = getKategoriFoto(l.kategori);
-          if (l.foto_laporan && l.foto_laporan.length > 0) {
-            fotoUrl = l.foto_laporan[0].file_path;
-          }
-
-          return {
-            id: l.nomor_laporan.replace('RPT-', ''),
-            lat: parseFloat(l.lat),
-            lng: parseFloat(l.lng),
-            kategori: l.kategori,
-            kategoriLabel: getKategoriLabel(l.kategori),
-            deskripsi: l.deskripsi,
-            status: l.status,
-            pelapor: l.users ? l.users.name : 'Masyarakat',
-            waktu: 'Tersinkron',
-            lokasi: l.lokasi,
-            wilayah: l.wilayah,
-            urgensi: l.urgensi,
-            dinas: l.dinas_tujuan,
-            foto: fotoUrl,
-            logs: mappedLogs.length > 0 ? mappedLogs : [
-              { judul: 'Aduan Dikirim', waktu: 'Baru Saja', aktor: l.users ? l.users.name : 'Pelapor' }
-            ]
-          };
-        });
-        setLaporan(mappedLaporan);
-        localStorage.setItem('sigap_laporan', JSON.stringify(mappedLaporan));
-      }
-    } catch (e) {
-      console.error('Error pulling from Supabase:', e);
-    }
-  };
-
-  const getKategoriLabel = (kategori: string) => {
-    const labels: Record<string, string> = {
-      'jalan': 'Jalan Berlubang',
-      'penerangan': 'Penerangan Jalan',
-      'drainase': 'Drainase rusak',
-      'fasilitas': 'Fasilitas Sosial / Taman',
-      'lainnya': 'Laporan Lainnya'
-    };
-    return labels[kategori] || 'Laporan Umum';
-  };
-
-  const getKategoriFoto = (kategori: string) => {
-    const images: Record<string, string> = {
-      'jalan': '/assets/images/kategori_jalan.jpg',
-      'penerangan': '/assets/images/kategori_penerangan.jpg',
-      'drainase': '/assets/images/kategori_drainase.jpg',
-      'fasilitas': '/assets/images/kategori_fasilitas.jpg',
-      'lainnya': '/assets/images/kategori_lainnya.jpg'
-    };
-    return images[kategori] || '/assets/images/kategori_jalan.jpg';
-  };
+  }, [handleSupabaseSession, pullFromSupabase]);
 
   const login = (email: string, role: string): boolean => {
     const matched = users.find(u => u.email.toLowerCase() === email.toLowerCase());
@@ -338,7 +339,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return true;
   };
 
-  const tambahLaporan = (laporanBaru: any) => {
+  const tambahLaporan = (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => {
     const id = (laporan.length > 0 ? (Math.max(...laporan.map(x => parseInt(x.id))) + 1).toString().padStart(4, '0') : '0149');
     const fullLaporan: Laporan = {
       ...laporanBaru,
@@ -363,8 +364,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         deskripsi: laporanBaru.deskripsi,
         lokasi: laporanBaru.lokasi,
         wilayah: laporanBaru.wilayah,
-        lat: parseFloat(laporanBaru.lat),
-        lng: parseFloat(laporanBaru.lng),
+        lat: laporanBaru.lat,
+        lng: laporanBaru.lng,
         urgensi: laporanBaru.urgensi,
         status: 'baru'
       }).then(({ error }) => {

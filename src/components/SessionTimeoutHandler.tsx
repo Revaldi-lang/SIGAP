@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '@/context/AppContext';
 
-const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 const WARNING_TIMEOUT = 29 * 60 * 1000; // 29 minutes (1 minute warning)
 const TIMER_INTERVAL = 1000; // 1 second
 
@@ -11,20 +10,34 @@ export default function SessionTimeoutHandler() {
   const { currentUser, logout } = useApp();
   const [showWarning, setShowWarning] = useState(false);
   const [countdown, setCountdown] = useState(60);
-  const lastActivityRef = useRef<number>(Date.now());
+  const lastActivityRef = useRef<number>(0);
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const resetTimer = () => {
-    lastActivityRef.current = Date.now();
-    localStorage.setItem('sigap_session_last_activity', lastActivityRef.current.toString());
+  const handleAutomaticLogout = useCallback(async () => {
+    setShowWarning(false);
+    await logout();
+    alert('Sesi Anda telah berakhir secara otomatis karena tidak ada aktivitas.');
+    window.location.href = '/';
+  }, [logout]);
+
+  const resetTimer = useCallback(() => {
+    const now = Date.now();
+    // Throttle writes to localStorage: at most once every 5 seconds
+    if (now - lastActivityRef.current > 5000 || showWarning) {
+      localStorage.setItem('sigap_session_last_activity', now.toString());
+    }
+    lastActivityRef.current = now;
     if (showWarning) {
       setShowWarning(false);
       setCountdown(60);
     }
-  };
+  }, [showWarning]);
 
   useEffect(() => {
     if (!currentUser) return;
+
+    // Initialize last activity timestamp on mount
+    lastActivityRef.current = Date.now();
 
     // Track user actions
     const actions = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
@@ -32,7 +45,7 @@ export default function SessionTimeoutHandler() {
       window.addEventListener(event, resetTimer);
     });
 
-    // Check inactivity every second
+    // Check inactivity every 10 seconds
     const inactivityInterval = setInterval(() => {
       if (showWarning) return; // Managed by countdown timer
 
@@ -51,7 +64,7 @@ export default function SessionTimeoutHandler() {
       });
       clearInterval(inactivityInterval);
     };
-  }, [currentUser, showWarning]);
+  }, [currentUser, showWarning, resetTimer]);
 
   // Countdown timer when warning modal is shown
   useEffect(() => {
@@ -77,14 +90,7 @@ export default function SessionTimeoutHandler() {
         clearInterval(countdownIntervalRef.current);
       }
     };
-  }, [showWarning]);
-
-  const handleAutomaticLogout = async () => {
-    setShowWarning(false);
-    await logout();
-    alert('Sesi Anda telah berakhir secara otomatis karena tidak ada aktivitas.');
-    window.location.href = '/';
-  };
+  }, [showWarning, handleAutomaticLogout]);
 
   const handleKeepLoggedIn = () => {
     resetTimer();

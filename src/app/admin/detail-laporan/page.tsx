@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -10,26 +10,17 @@ import { useApp } from '@/context/AppContext';
 
 const MapDetailView = dynamic(() => import('@/components/MapDetailView'), { ssr: false });
 
-function DetailContent() {
-  const searchParams = useSearchParams();
-  const reportId = searchParams.get('id');
+function DetailContent({ reportId }: { reportId: string }) {
   const { laporan, updateStatusLaporan } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const aduan = laporan.find(l => l.id === reportId);
 
   // Form States
-  const [status, setStatus] = useState<'baru' | 'proses' | 'selesai'>('baru');
-  const [dinas, setDinas] = useState('');
+  const [status, setStatus] = useState<'baru' | 'proses' | 'selesai'>(aduan?.status || 'baru');
+  const [dinas, setDinas] = useState(aduan?.dinas || '');
   const [catatan, setCatatan] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (aduan) {
-      setStatus(aduan.status);
-      setDinas(aduan.dinas || '');
-    }
-  }, [aduan]);
 
   if (!aduan) {
     return (
@@ -187,7 +178,7 @@ function DetailContent() {
                       <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Status Laporan</label>
                       <select
                         value={status}
-                        onChange={e => setStatus(e.target.value as any)}
+                        onChange={e => setStatus(e.target.value as 'baru' | 'proses' | 'selesai')}
                         className="w-full px-3 py-2 text-xs border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none bg-white text-[#1C1B18] font-semibold"
                       >
                         <option value="baru">Baru Masuk</option>
@@ -286,6 +277,12 @@ function DetailContent() {
   );
 }
 
+function DetailLaporanWrapper() {
+  const searchParams = useSearchParams();
+  const reportId = searchParams.get('id') || '';
+  return <DetailContent key={reportId} reportId={reportId} />;
+}
+
 export default function DetailLaporanAdmin() {
   return (
     <Suspense fallback={
@@ -293,7 +290,7 @@ export default function DetailLaporanAdmin() {
         <div className="w-12 h-12 border-4 border-[#001360] border-t-transparent rounded-full animate-spin"></div>
       </div>
     }>
-      <DetailContent />
+      <DetailLaporanWrapper />
     </Suspense>
   );
 }

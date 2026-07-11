@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import AuthGuard from '@/components/AuthGuard';
 import Sidebar from '@/components/Sidebar';
@@ -132,7 +131,7 @@ export default function BuatLaporan() {
                         name="category"
                         value={cat.id}
                         checked={kategori === cat.id}
-                        onChange={() => setKategori(cat.id as any)}
+                        onChange={() => setKategori(cat.id as 'jalan' | 'penerangan' | 'drainase' | 'fasilitas' | 'lainnya')}
                         className="peer sr-only"
                       />
                       <div className="p-3 border border-[#D3C5B1] rounded-xl text-center peer-checked:border-[#001360] peer-checked:bg-[#001360]/5 group-hover:bg-[#F6F3EC] transition-all h-full flex flex-col items-center justify-center">
@@ -190,7 +189,7 @@ export default function BuatLaporan() {
                           name="urgency"
                           value={urg.id}
                           checked={urgensi === urg.id}
-                          onChange={() => setUrgensi(urg.id as any)}
+                          onChange={() => setUrgensi(urg.id as 'Rendah' | 'Sedang' | 'Tinggi')}
                           className="w-4 h-4 text-[#001360] border-[#D3C5B1] focus:ring-[#001360]"
                         />
                         <span className={`font-semibold ${urg.colorClass}`}>{urg.label}</span>
