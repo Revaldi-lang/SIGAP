@@ -360,11 +360,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const tambahLaporan = (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => {
     const id = (laporan.length > 0 ? (Math.max(...laporan.map(x => parseInt(x.id))) + 1).toString().padStart(4, '0') : '0149');
+    
+    const getDinasTujuan = (kategori: string) => {
+      switch (kategori) {
+        case 'jalan':
+        case 'drainase':
+          return 'Dinas PUPR';
+        case 'penerangan':
+          return 'Dinas Perhubungan';
+        case 'fasilitas':
+          return 'Dinas Lingkungan Hidup';
+        default:
+          return 'Dinas PUPR';
+      }
+    };
+
+    const targetDinas = getDinasTujuan(laporanBaru.kategori);
+
     const fullLaporan: Laporan = {
       ...laporanBaru,
       id,
       kategoriLabel: getKategoriLabel(laporanBaru.kategori),
       waktu: 'Baru Saja',
+      dinas: targetDinas,
       logs: [
         { judul: 'Aduan Dikirim', waktu: 'Baru Saja', aktor: laporanBaru.pelapor }
       ]
@@ -375,7 +393,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('sigap_laporan', JSON.stringify(updated));
 
     supabase.from('users').select('id').eq('name', laporanBaru.pelapor).single().then(({ data: userObj }) => {
-      const uId = userObj ? userObj.id : (currentUser ? currentUser.id : 3);
+      const uId = userObj ? userObj.id : (currentUser ? parseInt(currentUser.id.toString()) || 3 : 3);
       supabase.from('laporan').insert({
         nomor_laporan: `RPT-${id}`,
         user_id: uId,
@@ -386,7 +404,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         lat: laporanBaru.lat,
         lng: laporanBaru.lng,
         urgensi: laporanBaru.urgensi,
-        status: 'baru'
+        status: 'baru',
+        dinas_tujuan: targetDinas
       }).then(({ error }) => {
         if (error) {
           console.error('Supabase insert aduan error:', error);
