@@ -36,10 +36,54 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(180deg, #FDF9F3 0%, #FEFDF8 100%);
   color: var(--foreground);
   font-family: "Plus Jakarta Sans", sans-serif;
   overflow-x: hidden;
+}
+
+.page-shell {
+  background-color: #FDF9F3;
+  min-height: 100vh;
+}
+
+.page-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E1DA;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 19, 96, 0.04);
+}
+
+.page-section {
+  background: #FCF9F8;
+  border: 1px solid #E5E1DA;
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 32px rgba(0, 19, 96, 0.04);
+}
+
+.page-title {
+  color: #001360;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  color: #4E4639;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 19, 96, 0.1);
+  background: rgba(0, 19, 96, 0.08);
+  color: #001360;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 img, video, canvas, svg {

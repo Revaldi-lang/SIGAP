@@ -67,7 +67,7 @@ export default function AdminPengaturanProfil() {
 
   return (
     <AuthGuard allowedRoles={['Administrator', 'Petugas', 'Petugas PUPR']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
@@ -91,7 +91,7 @@ export default function AdminPengaturanProfil() {
           </header>
 
           {/* Avatar Banner Card */}
-          <div className="bg-white p-6 border border-[#D3C5B1] rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8 shadow-sm">
+          <div className="page-card p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8">
             <div className="relative group">
               <img
                 src={foto}

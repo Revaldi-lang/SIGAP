@@ -23,7 +23,7 @@ export default function PetaPelapor() {
 
   return (
     <AuthGuard allowedRoles={['Masyarakat']}>
-      <div className="min-h-screen bg-[#FEFDF8] flex flex-col">
+      <div className="min-h-screen page-shell flex flex-col">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -45,7 +45,7 @@ export default function PetaPelapor() {
           </header>
 
           {/* Filter Map Panel */}
-          <section className="bg-white p-4 border border-[#D3C5B1] rounded-xl mb-6 flex flex-wrap gap-6 items-center shadow-sm shrink-0">
+          <section className="page-card p-4 rounded-xl mb-6 flex flex-wrap gap-6 items-center shrink-0">
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#4E4639]">Filter Status Laporan:</span>
             <div className="flex flex-wrap gap-5">
               {[
@@ -70,7 +70,7 @@ export default function PetaPelapor() {
           </section>
 
           {/* Interactive Map Container */}
-          <section className="flex-grow bg-white border border-[#D3C5B1] rounded-2xl overflow-hidden relative shadow-sm min-h-[480px] flex flex-col">
+          <section className="flex-grow page-card rounded-2xl overflow-hidden relative min-h-[480px] flex flex-col">
             <MapImpactView
               laporan={laporan}
               statusFilters={statusFilters}

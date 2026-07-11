@@ -79,7 +79,7 @@ export default function AdminLaporanManajemen() {
 
   return (
     <AuthGuard allowedRoles={['Administrator', 'Petugas', 'Petugas PUPR']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
@@ -108,7 +108,7 @@ export default function AdminLaporanManajemen() {
           </header>
 
           {/* Search & Filter Card */}
-          <section className="bg-white p-6 border border-[#D3C5B1] rounded-2xl mb-8 shadow-sm">
+          <section className="page-card p-6 rounded-2xl mb-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Search */}
               <div>
@@ -169,7 +169,7 @@ export default function AdminLaporanManajemen() {
           </section>
 
           {/* Reports Table Container */}
-          <section className="bg-white border border-[#D3C5B1] rounded-2xl overflow-hidden shadow-sm">
+          <section className="page-card rounded-2xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>

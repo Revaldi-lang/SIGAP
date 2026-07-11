@@ -82,7 +82,7 @@ export default function DashboardPelapor() {
 
   return (
     <AuthGuard allowedRoles={['Masyarakat']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -116,7 +116,7 @@ export default function DashboardPelapor() {
           {/* Status Bento Grid */}
           <div className="grid grid-cols-12 gap-6 mb-16">
             {/* Total Card */}
-            <div className="col-span-12 md:col-span-4 bg-white border border-[#D3C5B1] rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+            <div className="col-span-12 md:col-span-4 page-card p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-[10px] font-bold uppercase tracking-widest text-[#4E4639] mb-2">Total Laporan</h2>
                 <p className="text-4xl font-extrabold text-[#001360] font-display">{total}</p>
@@ -171,7 +171,7 @@ export default function DashboardPelapor() {
                   return (
                     <div
                       key={aduan.id}
-                      className="group bg-white hover:bg-slate-50 border border-[#D3C5B1] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300 shadow-sm"
+                      className="group page-card rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300"
                     >
                       <div className="flex items-start gap-4">
                         <div className={`p-3.5 rounded-xl border ${cat.wrapperClass} text-sm flex items-center justify-center shrink-0`}>

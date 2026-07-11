@@ -54,7 +54,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
 
   return (
     <>
-      <nav className="bg-[#FEFDF8] border-b border-[#D3C5B1] fixed top-0 left-0 w-full z-50 transition-all duration-200 h-20">
+      <nav className="bg-white/95 backdrop-blur-sm border-b border-[#E5E1DA] fixed top-0 left-0 w-full z-50 transition-all duration-200 h-20 shadow-[0_8px_24px_rgba(0,19,96,0.04)]">
         <div className="flex justify-between items-center w-full px-6 md:px-16 max-w-[1280px] mx-auto h-full">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-4">

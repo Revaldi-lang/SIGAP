@@ -114,7 +114,7 @@ function DetailContent() {
 
   return (
     <AuthGuard allowedRoles={['Administrator', 'Petugas', 'Petugas PUPR']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
@@ -150,7 +150,7 @@ function DetailContent() {
             {/* Left Column: Report Details & Form */}
             <div className="lg:col-span-8 space-y-6">
               {/* Visual Proof Section */}
-              <section className="bg-white border border-[#D3C5B1] rounded-2xl overflow-hidden shadow-sm">
+              <section className="page-card rounded-2xl overflow-hidden">
                 <div className="p-6 border-b border-[#D3C5B1]/50 flex justify-between items-center bg-white">
                   <h2 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider">Bukti Visual Kerusakan</h2>
                   <span className={"text-[10px] px-3 py-1 rounded-md font-bold border uppercase tracking-wider " + getUrgencyClass(aduan.urgensi)}>
@@ -239,7 +239,7 @@ function DetailContent() {
             {/* Right Column: Location & Logs */}
             <div className="lg:col-span-4 space-y-6">
               {/* Location */}
-              <section className="bg-white border border-[#D3C5B1] p-6 rounded-2xl space-y-4 shadow-sm">
+              <section className="page-card p-6 rounded-2xl space-y-4">
                 <h3 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider">Lokasi Titik Aduan</h3>
                 
                 <MapDetailView lat={aduan.lat} lng={aduan.lng} kategori={aduan.kategori} />
@@ -263,7 +263,7 @@ function DetailContent() {
               </section>
 
               {/* Timeline Logs */}
-              <section className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
+              <section className="page-card p-6 rounded-2xl">
                 <h3 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider mb-6">Log Alur Riwayat</h3>
                 <div className="relative pl-4 border-l-2 border-[#D3C5B1]/50 ml-2 space-y-6">
                   {aduan.logs.map((log, index) => (

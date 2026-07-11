@@ -71,8 +71,8 @@ export default function RegisterWarga() {
   }
 
   return (
-    <div className="bg-[#FEFDF8] flex items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-xl bg-white border border-[#D3C5B1] rounded-2xl shadow-xl p-4 sm:p-8 animate-fade-in">
+    <div className="page-shell flex items-center justify-center min-h-screen p-4">
+      <div className="w-full max-w-xl bg-white border border-[#E5E1DA] rounded-[1.5rem] shadow-[0_18px_50px_rgba(0,19,96,0.08)] p-4 sm:p-8 animate-fade-in">
         <div className="text-center mb-6">
           <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-16 h-16 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition" style={{ width: '64px', height: '64px' }}>
             <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="w-full h-full object-contain" style={{ height: '48px', width: 'auto' }} />

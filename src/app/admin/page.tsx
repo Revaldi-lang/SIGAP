@@ -91,7 +91,7 @@ export default function AdminDashboard() {
 
   return (
     <AuthGuard allowedRoles={['Administrator', 'Petugas', 'Petugas PUPR']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
           </section>
 
           {/* Recent Activity Table */}
-          <section className="bg-white border border-[#D3C5B1] rounded-2xl overflow-hidden shadow-sm">
+          <section className="page-card rounded-2xl overflow-hidden">
             <div className="px-6 py-5 border-b border-[#D3C5B1]/50 bg-white">
               <h3 className="font-bold text-[#1C1B18] text-base">Aduan Infrastruktur Terbaru</h3>
               <p className="text-xs text-[#4E4639] mt-0.5">Daftar laporan aduan masuk yang memerlukan tindakan disposisi atau perbaikan.</p>

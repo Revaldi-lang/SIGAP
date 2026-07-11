@@ -91,7 +91,7 @@ export default function AdminManajemenUser() {
 
   return (
     <AuthGuard allowedRoles={['Administrator']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
@@ -123,7 +123,7 @@ export default function AdminManajemenUser() {
           </header>
 
           {/* Search & Filter Card */}
-          <section className="bg-white p-6 border border-[#D3C5B1] rounded-2xl mb-8 shadow-sm">
+          <section className="page-card p-6 rounded-2xl mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="sm:col-span-2">
                 <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Cari Pengguna</label>
@@ -165,7 +165,7 @@ export default function AdminManajemenUser() {
           </section>
 
           {/* Users Table */}
-          <section className="bg-white border border-[#D3C5B1] rounded-2xl overflow-hidden shadow-sm">
+          <section className="page-card rounded-2xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>

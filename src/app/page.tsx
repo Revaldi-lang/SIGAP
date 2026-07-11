@@ -17,7 +17,7 @@ export default function LandingPage() {
   const totalProses = loading ? '232' : laporan.filter(l => l.status === 'proses').length.toLocaleString();
 
   return (
-    <div className="min-h-screen bg-[#FEFDF8] flex flex-col pt-20">
+    <div className="min-h-screen page-shell flex flex-col pt-20">
       {/* Navbar */}
       <Navbar onOpenAuthModal={() => setAuthModalOpen(true)} />
 
@@ -26,7 +26,7 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-28 px-6 md:px-16" style={{ background: 'radial-gradient(circle at top right, rgba(0, 19, 96, 0.05) 0%, transparent 70%)' }}>
+        <section className="relative overflow-hidden py-20 md:py-28 px-6 md:px-16" style={{ background: 'linear-gradient(135deg, #FDF9F3 0%, #FEFDF8 100%)' }}>
           <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <span className="text-[10px] font-bold text-[#001360] tracking-widest uppercase bg-[#001360]/10 px-3 py-1 rounded border border-[#001360]/10">

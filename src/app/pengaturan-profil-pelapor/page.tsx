@@ -56,12 +56,12 @@ export default function PengaturanProfilPelapor() {
 
   return (
     <AuthGuard allowedRoles={['Masyarakat']}>
-      <div className="min-h-screen bg-[#FEFDF8]">
+      <div className="min-h-screen page-shell">
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Main Content Area */}
-        <main className="ml-0 md:ml-64 p-6 md:p-16 min-h-screen max-w-[1024px]">
+        <main className="ml-0 md:ml-64 p-6 md:p-16 min-h-screen max-w-[1100px]">
           {/* Header */}
           <header className="flex justify-between items-center mb-12">
             <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export default function PengaturanProfilPelapor() {
           </header>
 
           {/* Avatar Banner Card */}
-          <div className="bg-white p-6 border border-[#D3C5B1] rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8 shadow-sm">
+          <div className="page-card p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8">
             <div className="relative group">
               <div className="w-20 h-20 rounded-full bg-[#001360] text-white flex items-center justify-center text-2xl font-bold border border-white/20 shadow-md">
                 {getInitials(currentUser?.username || 'User')}
