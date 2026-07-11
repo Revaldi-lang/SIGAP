@@ -49,7 +49,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
 
   const getProfileUrl = () => {
     if (!currentUser) return '/';
-    return currentUser.role === 'Masyarakat' ? '/pengaturan-profil-pelapor' : '/pengaturan-profil';
+    return currentUser.role === 'Masyarakat' ? '/pengaturan-profil-pelapor' : '/admin/pengaturan-profil';
   };
 
   return (
