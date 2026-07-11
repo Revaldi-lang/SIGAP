@@ -7,7 +7,7 @@
 ## 🌐 Live Demo (Vercel)
 
 Aplikasi SIGAP telah dideploy dan dapat diakses secara online melalui Vercel pada tautan berikut:
-👉 **[https://sigap-next.vercel.app](https://sigap-next.vercel.app)** *(silakan sesuaikan dengan domain Vercel Anda)*
+👉 **[https://sigap-liard.vercel.app/](https://sigap-liard.vercel.app/)**
 
 ---
 
