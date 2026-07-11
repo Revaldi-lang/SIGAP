@@ -14,15 +14,15 @@ export default function AdminPengaturanProfil() {
 }
 
 function PengaturanProfilForm() {
-  const { currentUser } = useApp();
+  const { currentUser, updateUserProfile, updateUserPassword } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'umum' | 'keamanan'>('umum');
 
   // Form States - Initialize directly from currentUser (guaranteed non-null)
   const [nama, setNama] = useState(currentUser?.username || '');
   const [email, setEmail] = useState(currentUser?.email || '');
-  const [telepon, setTelepon] = useState('081234567890');
-  const [foto, setFoto] = useState('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80');
+  const [telepon, setTelepon] = useState(currentUser?.telepon || '081234567890');
+  const [foto, setFoto] = useState(currentUser?.foto || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80');
 
   // Keamanan States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -45,12 +45,17 @@ function PengaturanProfilForm() {
     reader.readAsDataURL(file);
   };
 
-  const handleSaveUmum = (e: React.FormEvent) => {
+  const handleSaveUmum = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Informasi profil umum administrator berhasil diperbarui!');
+    const success = await updateUserProfile(nama, email, telepon, undefined, foto);
+    if (success) {
+      alert('Informasi profil umum administrator berhasil diperbarui!');
+    } else {
+      alert('Gagal memperbarui informasi profil.');
+    }
   };
 
-  const handleSaveSandi = (e: React.FormEvent) => {
+  const handleSaveSandi = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       alert('Konfirmasi kata sandi baru tidak cocok.');
@@ -60,10 +65,14 @@ function PengaturanProfilForm() {
       alert('Kata sandi baru harus minimal 8 karakter.');
       return;
     }
-    alert('Kata sandi Anda berhasil diperbarui!');
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
+    
+    const result = await updateUserPassword(currentPassword, newPassword);
+    alert(result.message);
+    if (result.success) {
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    }
   };
 
   return (

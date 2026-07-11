@@ -81,9 +81,13 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
               <div className="relative">
                 <button
                   onClick={handleProfileClick}
-                  className="w-10 h-10 rounded-full bg-[#001360] hover:bg-[#223aa8] text-white font-bold flex items-center justify-center text-sm shadow-md transition-all active:scale-95 border border-white/20"
+                  className="w-10 h-10 rounded-full bg-[#001360] hover:bg-[#223aa8] text-white font-bold flex items-center justify-center text-sm shadow-md transition-all active:scale-95 border border-white/20 overflow-hidden"
                 >
-                  {getInitials(currentUser.username)}
+                  {currentUser.foto ? (
+                    <img src={currentUser.foto} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    getInitials(currentUser.username)
+                  )}
                 </button>
 
                 {profileDropdownOpen && (

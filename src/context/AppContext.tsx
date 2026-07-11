@@ -15,6 +15,7 @@ export interface User {
   password?: string;
   telepon?: string;
   alamat?: string;
+  foto?: string;
 }
 
 export interface ActivityLog {
@@ -78,7 +79,7 @@ interface AppContextType {
   hapusUserPermanen: (email: string) => Promise<boolean>;
   hapusLaporan: (id: string) => Promise<boolean>;
   syncData: () => Promise<void>;
-  updateUserProfile: (username: string, email: string, telepon?: string, alamat?: string) => Promise<boolean>;
+  updateUserProfile: (username: string, email: string, telepon?: string, alamat?: string, foto?: string) => Promise<boolean>;
   updateUserPassword: (currentPassword: string, newPassword: string) => Promise<{ success: boolean; message: string }>;
 }
 
@@ -587,14 +588,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const updateUserProfile = async (username: string, email: string, telepon?: string, alamat?: string): Promise<boolean> => {
+  const updateUserProfile = async (username: string, email: string, telepon?: string, alamat?: string, foto?: string): Promise<boolean> => {
     if (!currentUser) return false;
     try {
       if (supabase) {
         // Try updating everything including telepon and alamat first, just in case those columns exist in Supabase
         const { error } = await supabase
           .from('users')
-          .update({ name: username, email: email, telepon: telepon, alamat: alamat } as any)
+          .update({ name: username, email: email, telepon: telepon, alamat: alamat, foto: foto } as any)
           .eq('id', parseInt(currentUser.id));
         
         if (error) {
@@ -614,13 +615,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       if (alamat) {
         localStorage.setItem('sigap_user_address_' + currentUser.id, alamat);
       }
+      if (foto) {
+        localStorage.setItem('sigap_user_foto_' + currentUser.id, foto);
+      }
 
       const updatedUser: User = {
         ...currentUser,
         username,
         email,
         telepon: telepon || currentUser.telepon,
-        alamat: alamat || currentUser.alamat
+        alamat: alamat || currentUser.alamat,
+        foto: foto || currentUser.foto
       };
 
       setCurrentUser(updatedUser);
@@ -631,7 +636,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         username: updatedUser.username,
         id: updatedUser.id,
         telepon: updatedUser.telepon,
-        alamat: updatedUser.alamat
+        alamat: updatedUser.alamat,
+        foto: updatedUser.foto
       };
       localStorage.setItem('sigap_session', JSON.stringify(sessionData));
 
@@ -643,7 +649,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             username,
             email,
             telepon,
-            alamat
+            alamat,
+            foto
           };
         }
         return u;
