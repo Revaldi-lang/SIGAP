@@ -128,7 +128,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
           let fotoUrl = getKategoriFoto(l.kategori);
           if (l.foto_laporan && l.foto_laporan.length > 0) {
-            fotoUrl = l.foto_laporan[0].file_path;
+            const rawPath = l.foto_laporan[0].file_path;
+            if (rawPath && rawPath.startsWith('local_storage_ref_')) {
+              const reportIdRef = rawPath.replace('local_storage_ref_', '');
+              const cachedFoto = localStorage.getItem('sigap_foto_data_' + reportIdRef);
+              fotoUrl = cachedFoto || getKategoriFoto(l.kategori);
+            } else {
+              fotoUrl = rawPath || getKategoriFoto(l.kategori);
+            }
           }
 
           return {
@@ -391,6 +398,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const updated = [fullLaporan, ...laporan];
     setLaporan(updated);
     localStorage.setItem('sigap_laporan', JSON.stringify(updated));
+    if (laporanBaru.foto) {
+      localStorage.setItem('sigap_foto_data_' + id, laporanBaru.foto);
+    }
 
     try {
       const { data: userObj } = await supabase
@@ -440,7 +450,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
           await supabase.from('foto_laporan').insert({
             laporan_id: lapObj.id,
-            file_path: laporanBaru.foto,
+            file_path: 'local_storage_ref_' + id,
             file_name: fileName,
             file_size: fileSize
           });
