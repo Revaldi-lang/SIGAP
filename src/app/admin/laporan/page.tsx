@@ -108,7 +108,7 @@ export default function AdminLaporanManajemen() {
           </header>
 
           {/* Search & Filter Card */}
-          <section className="page-card p-6 rounded-2xl mb-8">
+          <section className="legacy-card p-6 rounded-xl mb-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Search */}
               <div>
@@ -169,7 +169,7 @@ export default function AdminLaporanManajemen() {
           </section>
 
           {/* Reports Table Container */}
-          <section className="page-card rounded-2xl overflow-hidden">
+          <section className="legacy-card rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>

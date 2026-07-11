@@ -123,7 +123,7 @@ export default function AdminManajemenUser() {
           </header>
 
           {/* Search & Filter Card */}
-          <section className="page-card p-6 rounded-2xl mb-8">
+          <section className="legacy-card p-6 rounded-xl mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="sm:col-span-2">
                 <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Cari Pengguna</label>
@@ -165,7 +165,7 @@ export default function AdminManajemenUser() {
           </section>
 
           {/* Users Table */}
-          <section className="page-card rounded-2xl overflow-hidden">
+          <section className="legacy-card rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -249,7 +249,7 @@ export default function AdminManajemenUser() {
       {/* Add User Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-[#1E1B18]/75 backdrop-blur-sm z-[100] flex items-center justify-center animate-fade-in">
-          <div className="bg-white border border-[#D3C5B1] rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative mx-4">
+          <div className="legacy-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden relative mx-4">
             <div className="bg-[#001360] text-white px-6 py-4 flex items-center justify-between">
               <h3 className="font-bold text-sm flex items-center gap-2">
                 <span className="material-symbols-outlined">person_add</span> Tambah Pengguna Baru
@@ -290,7 +290,7 @@ export default function AdminManajemenUser() {
                   value={identitasInput}
                   onChange={e => setIdentitasInput(e.target.value)}
                   placeholder="Masukkan NIK atau NIP..."
-                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none text-xs text-[#1C1B18] font-mono"
+                  className="legacy-input w-full px-3 py-2 text-xs font-mono"
                 />
               </div>
 
@@ -299,7 +299,7 @@ export default function AdminManajemenUser() {
                 <select
                   value={roleInput}
                   onChange={e => setRoleInput(e.target.value as any)}
-                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none text-xs text-[#1C1B18] font-semibold"
+                  className="legacy-input w-full px-3 py-2 text-xs font-semibold"
                 >
                   <option value="Administrator">Administrator</option>
                   <option value="Petugas PUPR">Petugas Lapangan</option>

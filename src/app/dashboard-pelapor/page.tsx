@@ -116,7 +116,7 @@ export default function DashboardPelapor() {
           {/* Status Bento Grid */}
           <div className="grid grid-cols-12 gap-6 mb-16">
             {/* Total Card */}
-            <div className="col-span-12 md:col-span-4 page-card p-6 flex flex-col justify-between">
+            <div className="col-span-12 md:col-span-4 legacy-card p-6 flex flex-col justify-between rounded-xl">
               <div>
                 <h2 className="text-[10px] font-bold uppercase tracking-widest text-[#4E4639] mb-2">Total Laporan</h2>
                 <p className="text-4xl font-extrabold text-[#001360] font-display">{total}</p>
@@ -125,17 +125,17 @@ export default function DashboardPelapor() {
 
             {/* Split Stats */}
             <div className="col-span-12 md:col-span-8 grid grid-cols-3 gap-4">
-              <div className="bg-white border border-[#D3C5B1] rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-sm">
+              <div className="legacy-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
                 <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Ditinjau</p>
                 <p className="text-2xl font-bold text-[#001360]">{baru}</p>
                 <span className="mt-2 inline-block h-1 w-6 bg-[#001360]/20 rounded-full"></span>
               </div>
-              <div className="bg-white border border-[#D3C5B1] rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-sm">
+              <div className="legacy-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
                 <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Diproses</p>
                 <p className="text-2xl font-bold text-amber-500">{proses}</p>
                 <span className="mt-2 inline-block h-1 w-6 bg-amber-500/20 rounded-full"></span>
               </div>
-              <div className="bg-white border border-[#D3C5B1] rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-sm">
+              <div className="legacy-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
                 <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Selesai</p>
                 <p className="text-2xl font-bold text-emerald-600">{selesai}</p>
                 <span className="mt-2 inline-block h-1 w-6 bg-emerald-600/20 rounded-full"></span>
@@ -153,7 +153,7 @@ export default function DashboardPelapor() {
             {/* List Container */}
             <div className="space-y-4">
               {myReports.length === 0 ? (
-                <div className="text-center py-16 border border-dashed border-[#D3C5B1] rounded-2xl bg-[#F6F3EC]/30">
+                <div className="text-center py-16 border border-dashed border-[#D3C5B1] rounded-xl bg-[#F6F3EC]/30">
                   <span className="material-symbols-outlined text-4xl text-[#807667] mb-2">folder_open</span>
                   <p className="text-sm font-bold text-[#1C1B18]">Belum Ada Aduan</p>
                   <p className="text-xs text-[#4E4639] mt-1 mb-4">Anda belum mengirimkan laporan aduan infrastruktur.</p>
@@ -171,7 +171,7 @@ export default function DashboardPelapor() {
                   return (
                     <div
                       key={aduan.id}
-                      className="group page-card rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300"
+                      className="group legacy-card rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300"
                     >
                       <div className="flex items-start gap-4">
                         <div className={`p-3.5 rounded-xl border ${cat.wrapperClass} text-sm flex items-center justify-center shrink-0`}>

@@ -218,7 +218,7 @@ function DetailContent() {
                         value={catatan}
                         onChange={e => setCatatan(e.target.value)}
                         placeholder="Masukkan instruksi penanganan..."
-                        className="w-full px-3 py-2 text-xs border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none text-[#1C1B18] resize-none"
+                        className="legacy-input w-full px-3 py-2 text-xs resize-none"
                       />
                     </div>
 
@@ -226,7 +226,7 @@ function DetailContent() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-[#001360] text-white font-bold py-2.5 px-5 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md disabled:opacity-50"
+                        className="legacy-btn-primary py-2.5 px-5 rounded-lg text-xs uppercase tracking-wider disabled:opacity-50"
                       >
                         <span className="material-symbols-outlined text-sm">save</span> Simpan Perubahan
                       </button>

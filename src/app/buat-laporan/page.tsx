@@ -145,7 +145,7 @@ export default function BuatLaporan() {
               </div>
 
               {/* Location Name & Details */}
-              <div className="page-card p-6 rounded-2xl space-y-5">
+              <div className="legacy-card p-6 rounded-xl space-y-5">
                 <div>
                   <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2" htmlFor="input-lokasi">
                     Nama Jalan / Lokasi Kerusakan
@@ -237,7 +237,7 @@ export default function BuatLaporan() {
 
             {/* Right Column: Location & Submit */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="page-card rounded-2xl overflow-hidden flex flex-col">
+              <div className="legacy-card rounded-xl overflow-hidden flex flex-col">
                 <div className="p-6 border-b border-[#D3C5B1]/50">
                   <h2 className="text-sm font-bold text-[#1C1B18] mb-1">Lokasi Kejadian</h2>
                   <p className="text-[11px] text-[#4E4639]">Ketik alamat atau klik pada peta digital di bawah ini untuk menandai titik presisi kerusakan.</p>

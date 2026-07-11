@@ -129,7 +129,7 @@ export default function AdminDashboard() {
           {/* Stats Bento Grid */}
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {/* Card 1: Total */}
-            <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
+            <div className="legacy-card p-6 rounded-xl flex flex-col gap-4">
               <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
                 <span className="material-symbols-outlined">analytics</span>
               </div>
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Card 2: Baru */}
-            <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
+            <div className="legacy-card p-6 rounded-xl flex flex-col gap-4">
               <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-red-600">
                 <span className="material-symbols-outlined">campaign</span>
               </div>
@@ -151,7 +151,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Card 3: Proses */}
-            <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
+            <div className="legacy-card p-6 rounded-xl flex flex-col gap-4">
               <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
                 <span className="material-symbols-outlined">pending_actions</span>
               </div>
@@ -162,7 +162,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Card 4: Selesai */}
-            <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
+            <div className="legacy-card p-6 rounded-xl flex flex-col gap-4">
               <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
                 <span className="material-symbols-outlined">verified</span>
               </div>
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
           </section>
 
           {/* Recent Activity Table */}
-          <section className="page-card rounded-2xl overflow-hidden">
+          <section className="legacy-card rounded-xl overflow-hidden">
             <div className="px-6 py-5 border-b border-[#D3C5B1]/50 bg-white">
               <h3 className="font-bold text-[#1C1B18] text-base">Aduan Infrastruktur Terbaru</h3>
               <p className="text-xs text-[#4E4639] mt-0.5">Daftar laporan aduan masuk yang memerlukan tindakan disposisi atau perbaikan.</p>

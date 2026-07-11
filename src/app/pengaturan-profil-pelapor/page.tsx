@@ -80,7 +80,7 @@ export default function PengaturanProfilPelapor() {
           </header>
 
           {/* Avatar Banner Card */}
-          <div className="page-card p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8">
+          <div className="legacy-card p-6 rounded-xl flex flex-col sm:flex-row items-center gap-6 mb-8">
             <div className="relative group">
               <div className="w-20 h-20 rounded-full bg-[#001360] text-white flex items-center justify-center text-2xl font-bold border border-white/20 shadow-md">
                 {getInitials(currentUser?.username || 'User')}
@@ -161,7 +161,7 @@ export default function PengaturanProfilPelapor() {
                       required
                       value={telepon}
                       onChange={e => setTelepon(e.target.value)}
-                      className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] font-mono"
+                      className="legacy-input w-full px-3 py-2 text-xs font-mono"
                     />
                   </div>
                 </div>

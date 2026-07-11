@@ -89,7 +89,7 @@ export default function LandingPage() {
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {/* Feature 1 */}
-              <div className="bg-white border border-[#D3C5B1] hover:border-[#001360] p-8 flex flex-col gap-4 rounded-2xl transition duration-300 shadow-sm">
+              <div className="legacy-card hover:border-[#001360] p-8 flex flex-col gap-4 rounded-xl transition duration-300">
                 <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
                   <span className="material-symbols-outlined">description</span>
                 </div>
@@ -99,7 +99,7 @@ export default function LandingPage() {
                 </p>
               </div>
               {/* Feature 2 */}
-              <div className="bg-white border border-[#D3C5B1] hover:border-[#001360] p-8 flex flex-col gap-4 rounded-2xl transition duration-300 shadow-sm">
+              <div className="legacy-card hover:border-[#001360] p-8 flex flex-col gap-4 rounded-xl transition duration-300">
                 <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
                   <span className="material-symbols-outlined">folder_open</span>
                 </div>
@@ -109,7 +109,7 @@ export default function LandingPage() {
                 </p>
               </div>
               {/* Feature 3 */}
-              <div className="bg-white border border-[#D3C5B1] hover:border-[#001360] p-8 flex flex-col gap-4 rounded-2xl transition duration-300 shadow-sm">
+              <div className="legacy-card hover:border-[#001360] p-8 flex flex-col gap-4 rounded-xl transition duration-300">
                 <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
                   <span className="material-symbols-outlined">notifications_active</span>
                 </div>
@@ -232,7 +232,7 @@ export default function LandingPage() {
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {/* Testimonial 1 */}
-              <div className="bg-white border border-[#D3C5B1] p-8 rounded-2xl flex flex-col justify-between shadow-sm">
+              <div className="legacy-card p-8 rounded-xl flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex gap-1 text-amber-500 mb-4">
                     {[...Array(5)].map((_, i) => (
@@ -258,7 +258,7 @@ export default function LandingPage() {
                 </div>
               </div>
               {/* Testimonial 2 */}
-              <div className="bg-white border border-[#D3C5B1] p-8 rounded-2xl flex flex-col justify-between shadow-sm">
+              <div className="legacy-card p-8 rounded-xl flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex gap-1 text-amber-500 mb-4">
                     {[...Array(5)].map((_, i) => (
@@ -284,7 +284,7 @@ export default function LandingPage() {
                 </div>
               </div>
               {/* Testimonial 3 */}
-              <div className="bg-white border border-[#D3C5B1] p-8 rounded-2xl flex flex-col justify-between shadow-sm">
+              <div className="legacy-card p-8 rounded-xl flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex gap-1 text-amber-500 mb-4">
                     {[...Array(5)].map((_, i) => (

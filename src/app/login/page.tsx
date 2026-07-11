@@ -47,7 +47,7 @@ export default function AdminLogin() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 page-shell">
-      <div className="bg-white border border-[#E5E1DA] rounded-[1.5rem] shadow-[0_18px_50px_rgba(0,19,96,0.08)] flex w-full max-w-4xl overflow-hidden min-h-[500px] animate-fade-in">
+      <div className="legacy-card rounded-[1.25rem] flex w-full max-w-4xl overflow-hidden min-h-[500px] animate-fade-in">
         {/* Left Banner Area */}
         <div className="w-1/2 bg-[#001360] text-white p-12 hidden md:flex flex-col justify-center relative overflow-hidden">
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-blue-500 opacity-20 blur-3xl"></div>
