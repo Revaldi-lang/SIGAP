@@ -49,7 +49,7 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
   return (
     <>
       <aside
-        className={`fixed left-0 top-0 h-full w-64 bg-[#FCF9F8] border-r border-[#E5E1DA] flex flex-col p-6 z-50 transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-6 z-50 transition-transform duration-300 md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

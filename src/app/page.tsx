@@ -32,23 +32,23 @@ export default function LandingPage() {
               <span className="text-[10px] font-bold text-[#001360] tracking-widest uppercase bg-[#001360]/10 px-3 py-1 rounded border border-[#001360]/10">
                 Portal Resmi Pelayanan
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-bold text-[#001360] max-w-xl leading-tight">
+              <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-bold text-primary max-w-xl leading-tight">
                 Efisiensi Publik Dalam Satu Genggaman.
               </h1>
-              <p className="text-base sm:text-lg text-[#4E4639] max-w-md leading-relaxed">
+              <p className="font-body-lg text-base sm:text-lg text-on-surface-variant max-w-md leading-relaxed">
                 SIGAP menghadirkan transparansi dan kemudahan akses bagi setiap warga negara. Lapor, pantau, dan selesaikan urusan aduan Anda dengan standar layanan terbaik.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <button
                   onClick={() => setAuthModalOpen(true)}
-                  className="bg-[#001360] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 cursor-pointer"
+                  className="bg-primary text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 cursor-pointer"
                 >
                   Buat Laporan Sekarang
                   <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </button>
                 <a
                   href="#info-section"
-                  className="border border-[#001360] text-[#001360] px-8 py-4 rounded-lg font-semibold hover:bg-[#001360]/5 transition-all text-center inline-block"
+                  className="border border-primary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary/5 transition-all text-center inline-block"
                 >
                   Pelajari Selengkapnya
                 </a>
