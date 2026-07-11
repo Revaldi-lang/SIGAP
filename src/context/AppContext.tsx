@@ -110,6 +110,35 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }));
         setUsers(mappedUsers);
         localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
+
+        // Sync currentUser with their updated database info (e.g. for profile photo updates across devices)
+        setCurrentUser(prev => {
+          if (!prev) return null;
+          const matched = mappedUsers.find(u => u.id === prev.id);
+          if (matched) {
+            const updatedUser: User = {
+              ...prev,
+              username: matched.username,
+              email: matched.email,
+              role: matched.role,
+              telepon: matched.telepon || prev.telepon,
+              alamat: matched.alamat || prev.alamat,
+              foto: matched.foto || prev.foto
+            };
+            const sessionData = {
+              role: updatedUser.role === 'Masyarakat' ? 'pelapor' : updatedUser.role,
+              email: updatedUser.email,
+              username: updatedUser.username,
+              id: updatedUser.id,
+              telepon: updatedUser.telepon,
+              alamat: updatedUser.alamat,
+              foto: updatedUser.foto
+            };
+            localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+            return updatedUser;
+          }
+          return prev;
+        });
       }
 
       const { data: dbLaporan } = await supabase.from('laporan').select(`
@@ -474,7 +503,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
           await supabase.from('foto_laporan').insert({
             laporan_id: lapObj.id,
-            file_path: 'local_storage_ref_' + id,
+            file_path: laporanBaru.foto,
             file_name: fileName,
             file_size: fileSize
           });

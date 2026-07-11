@@ -29,6 +29,16 @@ function PengaturanProfilPelaporForm() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // Sync state if currentUser gets updated asynchronously (e.g., from DB sync on mount)
+  React.useEffect(() => {
+    if (currentUser) {
+      if (currentUser.username) setNama(currentUser.username);
+      if (currentUser.email) setEmail(currentUser.email);
+      if (currentUser.telepon) setTelepon(currentUser.telepon);
+      if (currentUser.alamat) setAlamat(currentUser.alamat);
+    }
+  }, [currentUser]);
+
   const getInitials = (name: string) => {
     if (!name) return 'U';
     return name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();

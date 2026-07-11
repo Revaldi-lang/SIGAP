@@ -29,6 +29,16 @@ function PengaturanProfilForm() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // Sync state if currentUser gets updated asynchronously (e.g., from DB sync on mount)
+  React.useEffect(() => {
+    if (currentUser) {
+      if (currentUser.username) setNama(currentUser.username);
+      if (currentUser.email) setEmail(currentUser.email);
+      if (currentUser.telepon) setTelepon(currentUser.telepon);
+      if (currentUser.foto) setFoto(currentUser.foto);
+    }
+  }, [currentUser]);
+
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
