@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛡️ SIGAP - Sistem Informasi Gerak Aduan Publik
 
-## Getting Started
+**SIGAP** adalah platform pelayanan pengaduan dan aspirasi infrastruktur publik terintegrasi yang dirancang untuk mempercepat koordinasi antara masyarakat umum dan instansi pemerintah daerah. Dengan antarmuka yang modern, responsif, dan intuitif, SIGAP mendigitalisasi alur pelaporan fisik menjadi sistem pemantauan real-time yang transparan.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ⚡ Tech Stack Utama
+
+SIGAP dibangun menggunakan arsitektur modern berkinerja tinggi:
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white)
+
+- **Framework Utama:** React / Next.js 14+ (App Router)
+- **Bahasa Pemrograman:** TypeScript (Keamanan Tipe Data & Auto-complete)
+- **Styling Engine:** Tailwind CSS v4 (Desain Utility-first Responsif)
+- **Backend-as-a-Service (BaaS):** Supabase (Otentikasi, Database PostgreSQL, dan Real-time Subscriptions)
+- **Peta Spasial (Web-GIS):** Leaflet & React Leaflet (Visualisasi Koordinat Geografis)
+
+---
+
+## 📁 Struktur Direktori Proyek
+
+Platform ini menerapkan standar penataan folder Next.js App Router yang bersih dan modular:
+
+```text
+SIGAP/
+├── legacy-html/                 # 📂 Arsip cadangan berkas HTML/JS/CSS statis lama
+├── public/                      # 📂 Aset gambar publik statis (Logo, Foto Kategori)
+│   └── assets/images/
+├── src/
+│   ├── app/                     # 📂 Folder Routing Next.js (App Router)
+│   │   ├── admin/               #   ├── Dasbor Aparatur Pemda & Manajemen Laporan
+│   │   │   ├── detail-laporan/  #   │   └── Detail peninjauan, disposisi, & validasi
+│   │   │   ├── laporan/         #   │   └── Tabel filter pencarian laporan
+│   │   │   ├── manajemen-user/  #   │   └── Kontrol akses & pemblokiran user
+│   │   │   ├── pengaturan-profil#   │   └── Profil satker dinas
+│   │   │   └── peta/            #   │   └── Peta spasial monitoring aduan
+│   │   ├── buat-laporan/        #   ├── Form buat aduan warga (Leaflet Map Selector)
+│   │   ├── dashboard-pelapor/   #   ├── Halaman utama dasbor warga
+│   │   ├── detail-laporan-pelapor/# Halaman pelacakan linimasa aduan pelapor
+│   │   ├── login/               #   ├── Portal masuk admin
+│   │   ├── login-masyarakat/    #   ├── Portal masuk warga (Google OAuth)
+│   │   ├── pengaturan-profil-pelapor/# Pengaturan biodata & sandi warga
+│   │   ├── peta-pelapor/        #   ├── Peta dampak spasial warga se-kota
+│   │   ├── register/            #   ├── Pendaftaran warga baru
+│   │   ├── globals.css          #   └── CSS global & tema Tailwind CSS v4
+│   │   └── layout.tsx           #   └── Wrapper layout utama & provider konteks
+│   ├── components/              # 📂 Komponen UI Reusable
+│   │   ├── AuthGuard.tsx        #   ├── Pelindung rute login & hak akses
+│   │   ├── Footer.tsx           #   ├── Footer informasi bantuan
+│   │   ├── MapDetailView.tsx    #   ├── Peta detail aduan (Readonly)
+│   │   ├── MapImpactView.tsx    #   ├── Peta sebaran se-kota (Colored Pins)
+│   │   ├── MapSelector.tsx      #   ├── Peta selektor koordinat aduan
+│   │   ├── ModalAkses.tsx       #   ├── Modal pemilih rute login
+│   │   ├── Navbar.tsx           #   ├── Navigasi dinas & profile dropdown
+│   │   ├── SessionTimeoutHandler.tsx # Pemicu modal keluar otomatis sesi tidak aktif
+│   │   └── Sidebar.tsx          #   └── Panel menu navigasi samping
+│   ├── context/
+│   │   └── AppContext.tsx       # 📂 Global State Management (Supabase SDK sync)
+│   └── lib/
+│       └── supabase.ts          # 📂 Inisialisasi client koneksi Supabase
+├── .env.local                   # 🔐 Variabel lingkungan lokal (Supabase Keys)
+├── next.config.ts               # ⚙️ Konfigurasi framework Next.js
+├── package.json                 # ⚙️ Dependensi proyek & NPM scripts
+├── tsconfig.json                # ⚙️ Konfigurasi compiler TypeScript
+└── README.md                    # 📝 Informasi berkas petunjuk ini
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Panduan Membuka & Menjalankan Web Secara Lokal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Ikuti langkah-langkah di bawah ini untuk memasang dependensi dan menjalankan server pengembangan SIGAP di komputer Anda:
 
-## Learn More
+### 1. Prasyarat Sistem
+Pastikan Anda sudah menginstal:
+*   [Node.js](https://nodejs.org/) (Versi LTS terbaru, disarankan v18 ke atas)
+*   [Git](https://git-scm.com/)
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Kloning Repositori
+Buka terminal/command prompt, lalu jalankan perintah berikut:
+```bash
+git clone https://github.com/Revaldi-lang/SIGAP.git
+cd SIGAP
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Pasang Dependensi Node Modules
+Unduh dan pasang seluruh pustaka dependensi yang dibutuhkan proyek:
+```bash
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Konfigurasi Variabel Lingkungan (.env)
+Buat berkas bernama `.env.local` di direktori utama (root folder) proyek, lalu masukkan URL dan Anon Key dari proyek Supabase Anda:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://alamat-proyek-supabase-anda.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhnd2V4amVjeXRqZXN...
+```
 
-## Deploy on Vercel
+### 5. Jalankan Server Pengembangan
+Nyalakan server lokal Next.js untuk memulai proses pengembangan interaktif:
+```bash
+npm run dev
+```
+Setelah server menyala, buka tautan berikut di browser Anda:
+👉 **[http://localhost:3000](http://localhost:3000)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 6. Membuat Build Produksi
+Untuk menguji hasil kompilasi produksi yang teroptimasi, jalankan perintah:
+```bash
+npm run build
+npm run start
+```
+Perintah ini akan melakukan pengecekan sintaks TypeScript/ESLint secara ketat dan melakukan prerendering halaman statis.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔒 Fitur Keamanan Keanggotaan & Hak Akses
+1.  **Masyarakat / Pelapor:** Akun dengan peran ini dapat membuat laporan, mengunggah foto kerusakan, dan melacak status progresnya. Akun warga didaftarkan lewat portal register atau masuk instan dengan Google OAuth.
+2.  **Administrator:** Akun dengan peran ini memiliki panel khusus untuk meninjau seluruh laporan, mengelola pengguna (blokir/hapus), serta mendelegasikan (disposisi) laporan ke instansi dinas teknis daerah terkait.
