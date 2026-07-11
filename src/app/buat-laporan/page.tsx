@@ -20,12 +20,19 @@ export default function BuatLaporan() {
   const [urgensi, setUrgensi] = useState<'Rendah' | 'Sedang' | 'Tinggi'>('Sedang');
   const [lat, setLat] = useState(-7.983908);
   const [lng, setLng] = useState(112.621391);
+  const [wilayah, setWilayah] = useState('Klojen');
   const [foto, setFoto] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleMapChange = (newLat: number, newLng: number) => {
+  const handleMapChange = (newLat: number, newLng: number, newAddress?: string, newWilayah?: string) => {
     setLat(newLat);
     setLng(newLng);
+    if (newAddress) {
+      setLokasi(newAddress);
+    }
+    if (newWilayah) {
+      setWilayah(newWilayah);
+    }
   };
 
   const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +80,7 @@ export default function BuatLaporan() {
         status: 'baru',
         pelapor: actorName,
         lokasi,
-        wilayah: 'Klojen',
+        wilayah,
         urgensi,
         foto: foto || ''
       });

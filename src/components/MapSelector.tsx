@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 interface MapSelectorProps {
   lat: number;
   lng: number;
-  onChange: (lat: number, lng: number) => void;
+  onChange: (lat: number, lng: number, address?: string, wilayah?: string) => void;
   address: string;
 }
 
@@ -44,6 +44,19 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
       const clickLat = e.latlng.lat;
       const clickLng = e.latlng.lng;
       onChange(clickLat, clickLng);
+
+      // Reverse geocode to get street name (address) and wilayah (region)
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lat=${clickLat}&lon=${clickLng}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.address) {
+            const addr = data.address;
+            const roadName = addr.road || addr.suburb || addr.neighbourhood || addr.village || data.display_name.split(',')[0];
+            const wil = addr.city_district || addr.suburb || addr.town || addr.municipality || addr.village || addr.city || 'Klojen';
+            onChange(clickLat, clickLng, roadName, wil);
+          }
+        })
+        .catch(err => console.error('Reverse geocoding error:', err));
     });
 
     return () => {
@@ -95,14 +108,16 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
     if (!address || address.trim().length < 5) return;
 
     const debounceTimer = setTimeout(() => {
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=id&limit=1&q=${encodeURIComponent(address)}`)
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&countrycodes=id&limit=1&q=${encodeURIComponent(address)}`)
         .then(response => response.json())
         .then(data => {
           if (data && data.length > 0) {
             const geocodeLat = parseFloat(data[0].lat);
             const geocodeLng = parseFloat(data[0].lon);
+            const addr = data[0].address || {};
+            const wil = addr.city_district || addr.suburb || addr.town || addr.municipality || addr.village || addr.city || 'Klojen';
             
-            onChange(geocodeLat, geocodeLng);
+            onChange(geocodeLat, geocodeLng, undefined, wil);
             if (mapRef.current) {
               mapRef.current.setView([geocodeLat, geocodeLng], 16);
             }
