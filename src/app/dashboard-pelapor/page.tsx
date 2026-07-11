@@ -89,7 +89,7 @@ export default function DashboardPelapor() {
         {/* Main Content Area */}
         <main className="ml-0 md:ml-64 p-6 md:p-16 min-h-screen">
           {/* Header */}
-          <header className="flex justify-between items-center mb-12">
+          <header className="flex flex-col sm:flex-row sm:justify-between sm:items-start md:items-center gap-4 mb-12">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(true)}
@@ -106,8 +106,8 @@ export default function DashboardPelapor() {
                 </p>
               </div>
             </div>
-            <div>
-              <span className="text-[10px] font-bold text-[#001360] tracking-widest uppercase bg-[#001360]/10 px-3 py-1.5 rounded border border-[#001360]/10">
+            <div className="self-start sm:self-auto pl-11 sm:pl-0">
+              <span className="inline-block text-[10px] font-bold text-[#001360] tracking-widest uppercase bg-[#001360]/10 px-3 py-1.5 rounded border border-[#001360]/10 whitespace-nowrap">
                 {total} Aduan Aktif
               </span>
             </div>
