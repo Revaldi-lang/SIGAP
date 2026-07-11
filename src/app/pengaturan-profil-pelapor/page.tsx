@@ -14,15 +14,15 @@ export default function PengaturanProfilPelapor() {
 }
 
 function PengaturanProfilPelaporForm() {
-  const { currentUser } = useApp();
+  const { currentUser, updateUserProfile, updateUserPassword } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'umum' | 'keamanan'>('umum');
 
   // Informasi Umum States - Initialize directly from currentUser (guaranteed non-null)
   const [nama, setNama] = useState(currentUser?.username || '');
   const [email, setEmail] = useState(currentUser?.email || '');
-  const [telepon, setTelepon] = useState('081234567890');
-  const [alamat, setAlamat] = useState('Jl. Ijen No. 12, Klojen, Kota Malang');
+  const [telepon, setTelepon] = useState(currentUser?.telepon || '081234567890');
+  const [alamat, setAlamat] = useState(currentUser?.alamat || 'Jl. Ijen No. 12, Klojen, Kota Malang');
 
   // Keamanan States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -34,12 +34,17 @@ function PengaturanProfilPelaporForm() {
     return name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
   };
 
-  const handleSaveUmum = (e: React.FormEvent) => {
+  const handleSaveUmum = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Informasi profil umum Anda berhasil diperbarui!');
+    const success = await updateUserProfile(nama, email, telepon, alamat);
+    if (success) {
+      alert('Informasi profil umum Anda berhasil diperbarui!');
+    } else {
+      alert('Gagal memperbarui informasi profil.');
+    }
   };
 
-  const handleSaveSandi = (e: React.FormEvent) => {
+  const handleSaveSandi = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       alert('Konfirmasi kata sandi baru tidak cocok.');
@@ -49,10 +54,14 @@ function PengaturanProfilPelaporForm() {
       alert('Kata sandi baru harus minimal 8 karakter.');
       return;
     }
-    alert('Kata sandi Anda berhasil diperbarui!');
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
+    
+    const result = await updateUserPassword(currentPassword, newPassword);
+    alert(result.message);
+    if (result.success) {
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    }
   };
 
   return (
@@ -158,7 +167,7 @@ function PengaturanProfilPelaporForm() {
                   <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">NIK Penduduk (KTP)</label>
                   <input
                     type="text"
-                    value="357301XXXXXXXXXX"
+                    value={currentUser?.identitas || '-'}
                     disabled
                     className="w-full px-3 py-2 bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg text-[#807667] font-mono cursor-not-allowed text-xs"
                     title="NIK terverifikasi tidak dapat diubah secara mandiri"

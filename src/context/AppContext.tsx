@@ -13,6 +13,8 @@ export interface User {
   status: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi';
   registered: string;
   password?: string;
+  telepon?: string;
+  alamat?: string;
 }
 
 export interface ActivityLog {
@@ -76,6 +78,8 @@ interface AppContextType {
   hapusUserPermanen: (email: string) => Promise<boolean>;
   hapusLaporan: (id: string) => Promise<boolean>;
   syncData: () => Promise<void>;
+  updateUserProfile: (username: string, email: string, telepon?: string, alamat?: string) => Promise<boolean>;
+  updateUserPassword: (currentPassword: string, newPassword: string) => Promise<{ success: boolean; message: string }>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -97,7 +101,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           identitas: u.nik || '-',
           role: u.role,
           status: u.status === 'Menunggu' ? 'Menunggu Verifikasi' : u.status,
-          registered: 'Terdaftar'
+          registered: 'Terdaftar',
+          password: u.password,
+          telepon: u.telepon || localStorage.getItem('sigap_user_phone_' + u.id) || '081234567890',
+          alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
         }));
         setUsers(mappedUsers);
         localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
@@ -210,7 +217,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         identitas: dbUserNik,
         role: dbUserRole,
         status: dbUserStatus,
-        registered: 'Google Sign-In'
+        registered: 'Google Sign-In',
+        telepon: existing?.telepon || localStorage.getItem('sigap_user_phone_' + dbUserId) || '081234567890',
+        alamat: existing?.alamat || localStorage.getItem('sigap_user_address_' + dbUserId) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
       };
 
       setCurrentUser(mappedUser);
@@ -219,7 +228,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         role: dbUserRole === 'Masyarakat' ? 'pelapor' : dbUserRole,
         email: user.email,
         username: dbUserName,
-        id: dbUserId
+        id: dbUserId,
+        telepon: mappedUser.telepon,
+        alamat: mappedUser.alamat
       };
       localStorage.setItem('sigap_session', JSON.stringify(sessionData));
       localStorage.setItem('sigap_session_last_activity', Date.now().toString());
@@ -247,7 +258,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             identitas: '-',
             role: mappedRole,
             status: 'Aktif',
-            registered: 'Cached Session'
+            registered: 'Cached Session',
+            telepon: parsed.telepon || localStorage.getItem('sigap_user_phone_' + parsed.id) || '081234567890',
+            alamat: parsed.alamat || localStorage.getItem('sigap_user_address_' + parsed.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
           });
         } catch (e) {
           console.error(e);
@@ -301,7 +314,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       role: mappedRole,
       email: matched.email,
       username: matched.username,
-      id: matched.id
+      id: matched.id,
+      telepon: matched.telepon || localStorage.getItem('sigap_user_phone_' + matched.id) || '081234567890',
+      alamat: matched.alamat || localStorage.getItem('sigap_user_address_' + matched.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
     };
 
     localStorage.setItem('sigap_session', JSON.stringify(sessionData));
@@ -572,6 +587,115 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const updateUserProfile = async (username: string, email: string, telepon?: string, alamat?: string): Promise<boolean> => {
+    if (!currentUser) return false;
+    try {
+      if (supabase) {
+        // Try updating everything including telepon and alamat first, just in case those columns exist in Supabase
+        const { error } = await supabase
+          .from('users')
+          .update({ name: username, email: email, telepon: telepon, alamat: alamat } as any)
+          .eq('id', parseInt(currentUser.id));
+        
+        if (error) {
+          // If that failed (likely because columns don't exist), fall back to name and email only
+          console.warn('Update with telepon/alamat failed, falling back to name/email:', error.message);
+          const { error: fallbackError } = await supabase
+            .from('users')
+            .update({ name: username, email: email })
+            .eq('id', parseInt(currentUser.id));
+          if (fallbackError) throw fallbackError;
+        }
+      }
+
+      if (telepon) {
+        localStorage.setItem('sigap_user_phone_' + currentUser.id, telepon);
+      }
+      if (alamat) {
+        localStorage.setItem('sigap_user_address_' + currentUser.id, alamat);
+      }
+
+      const updatedUser: User = {
+        ...currentUser,
+        username,
+        email,
+        telepon: telepon || currentUser.telepon,
+        alamat: alamat || currentUser.alamat
+      };
+
+      setCurrentUser(updatedUser);
+      
+      const sessionData = {
+        role: updatedUser.role === 'Masyarakat' ? 'pelapor' : updatedUser.role,
+        email: updatedUser.email,
+        username: updatedUser.username,
+        id: updatedUser.id,
+        telepon: updatedUser.telepon,
+        alamat: updatedUser.alamat
+      };
+      localStorage.setItem('sigap_session', JSON.stringify(sessionData));
+
+      // Update in users list
+      const updatedUsers = users.map(u => {
+        if (u.id === currentUser.id) {
+          return {
+            ...u,
+            username,
+            email,
+            telepon,
+            alamat
+          };
+        }
+        return u;
+      });
+      setUsers(updatedUsers);
+      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers));
+
+      return true;
+    } catch (err) {
+      console.error('Failed to update user profile:', err);
+      return false;
+    }
+  };
+
+  const updateUserPassword = async (currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> => {
+    if (!currentUser) return { success: false, message: 'User tidak teridentifikasi.' };
+    
+    // Find the user in users array to get the password
+    const userInDb = users.find(u => u.id === currentUser.id);
+    if (!userInDb) return { success: false, message: 'Data user tidak ditemukan.' };
+
+    // If password is set in DB, check it
+    if (userInDb.password && userInDb.password !== 'oauth_authenticated' && userInDb.password !== currentPassword) {
+      return { success: false, message: 'Kata sandi saat ini salah.' };
+    }
+
+    try {
+      if (supabase) {
+        const { error } = await supabase
+          .from('users')
+          .update({ password: newPassword })
+          .eq('id', parseInt(currentUser.id));
+        if (error) throw error;
+      }
+
+      // Update in users state & localStorage
+      const updatedUsers = users.map(u => {
+        if (u.id === currentUser.id) {
+          return { ...u, password: newPassword };
+        }
+        return u;
+      });
+      setUsers(updatedUsers);
+      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers));
+
+      return { success: true, message: 'Kata sandi Anda berhasil diperbarui!' };
+    } catch (err) {
+      console.error('Failed to update password:', err);
+      return { success: false, message: 'Terjadi kesalahan sistem saat memperbarui kata sandi.' };
+    }
+  };
+
   const syncData = async () => {
     await pullFromSupabase();
   };
@@ -591,7 +715,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       updateStatusUser,
       hapusUserPermanen,
       hapusLaporan,
-      syncData
+      syncData,
+      updateUserProfile,
+      updateUserPassword
     }}>
       {children}
     </AppContext.Provider>
