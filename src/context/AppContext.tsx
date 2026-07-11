@@ -74,6 +74,7 @@ interface AppContextType {
   updateStatusLaporan: (id: string, status: 'baru' | 'proses' | 'selesai', dinas: string, catatan: string) => void;
   updateStatusUser: (email: string, status: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi') => void;
   hapusUserPermanen: (email: string) => Promise<boolean>;
+  hapusLaporan: (id: string) => Promise<boolean>;
   syncData: () => Promise<void>;
 }
 
@@ -539,6 +540,38 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const hapusLaporan = async (id: string): Promise<boolean> => {
+    try {
+      const updated = laporan.filter(l => l.id !== id);
+      setLaporan(updated);
+      localStorage.setItem('sigap_laporan', JSON.stringify(updated));
+
+      // Remove the base64 photo if stored locally
+      localStorage.removeItem('sigap_foto_data_' + id);
+
+      if (supabase) {
+        const { data: lapObj } = await supabase
+          .from('laporan')
+          .select('id')
+          .eq('nomor_laporan', `RPT-${id}`)
+          .single();
+
+        if (lapObj) {
+          await supabase.from('foto_laporan').delete().eq('laporan_id', lapObj.id);
+          await supabase.from('activity_log').delete().eq('laporan_id', lapObj.id);
+          await supabase.from('laporan').delete().eq('id', lapObj.id);
+        } else {
+          await supabase.from('laporan').delete().eq('nomor_laporan', `RPT-${id}`);
+        }
+        await pullFromSupabase();
+      }
+      return true;
+    } catch (err) {
+      console.error('Error deleting report:', err);
+      return false;
+    }
+  };
+
   const syncData = async () => {
     await pullFromSupabase();
   };
@@ -557,6 +590,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       updateStatusLaporan,
       updateStatusUser,
       hapusUserPermanen,
+      hapusLaporan,
       syncData
     }}>
       {children}

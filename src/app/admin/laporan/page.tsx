@@ -7,7 +7,7 @@ import Sidebar from '@/components/Sidebar';
 import { useApp } from '@/context/AppContext';
 
 export default function AdminLaporanManajemen() {
-  const { laporan, loading } = useApp();
+  const { laporan, loading, hapusLaporan } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedKategori, setSelectedKategori] = useState('semua');
@@ -205,13 +205,27 @@ export default function AdminLaporanManajemen() {
                             {getStatusText(aduan.status)}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-right">
+                        <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
                           <Link
                             href={`/admin/detail-laporan?id=${aduan.id}`}
                             className="bg-white hover:bg-[#001360] text-[#001360] hover:text-white border border-[#D3C5B1] hover:border-[#001360] px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-sm inline-flex items-center gap-1 cursor-pointer"
                           >
                             Tinjau Laporan <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span>
                           </Link>
+                          {aduan.status === 'selesai' && (
+                            <button
+                              onClick={() => {
+                                if (confirm('Apakah Anda yakin ingin menghapus laporan aduan ini secara permanen dari database?')) {
+                                  hapusLaporan(aduan.id);
+                                }
+                              }}
+                              className="bg-red-50 hover:bg-red-600 text-red-600 hover:text-white border border-red-200 hover:border-red-600 p-2 rounded-lg text-xs font-bold transition-all shadow-sm inline-flex items-center justify-center cursor-pointer active:scale-95"
+                              title="Hapus Laporan Selesai"
+                              type="button"
+                            >
+                              <span className="material-symbols-outlined text-sm">delete</span>
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))
