@@ -105,7 +105,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           registered: 'Terdaftar',
           password: u.password,
           telepon: u.telepon || localStorage.getItem('sigap_user_phone_' + u.id) || '081234567890',
-          alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
+          alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+          foto: u.avatar_url || localStorage.getItem('sigap_user_foto_' + u.id) || undefined
         }));
         setUsers(mappedUsers);
         localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
@@ -189,6 +190,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       let dbUserStatus: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi' = 'Aktif';
       let dbUserNik = '-';
       let dbUserName = (user.user_metadata.full_name as string) || user.email?.split('@')[0] || 'User';
+      const dbUserAvatar = existing?.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || undefined;
 
       if (!existing) {
         const generatedId = Math.floor(100000 + Math.random() * 900000);
@@ -200,7 +202,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           role: 'Masyarakat',
           status: 'Aktif',
           password: 'oauth_authenticated',
-          nik: '-'
+          nik: '-',
+          avatar_url: dbUserAvatar
         });
       } else {
         dbUserId = existing.id.toString();
@@ -220,7 +223,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         status: dbUserStatus,
         registered: 'Google Sign-In',
         telepon: existing?.telepon || localStorage.getItem('sigap_user_phone_' + dbUserId) || '081234567890',
-        alamat: existing?.alamat || localStorage.getItem('sigap_user_address_' + dbUserId) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
+        alamat: existing?.alamat || localStorage.getItem('sigap_user_address_' + dbUserId) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+        foto: dbUserAvatar || localStorage.getItem('sigap_user_foto_' + dbUserId) || undefined
       };
 
       setCurrentUser(mappedUser);
@@ -231,7 +235,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         username: dbUserName,
         id: dbUserId,
         telepon: mappedUser.telepon,
-        alamat: mappedUser.alamat
+        alamat: mappedUser.alamat,
+        foto: mappedUser.foto
       };
       localStorage.setItem('sigap_session', JSON.stringify(sessionData));
       localStorage.setItem('sigap_session_last_activity', Date.now().toString());
@@ -261,7 +266,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             status: 'Aktif',
             registered: 'Cached Session',
             telepon: parsed.telepon || localStorage.getItem('sigap_user_phone_' + parsed.id) || '081234567890',
-            alamat: parsed.alamat || localStorage.getItem('sigap_user_address_' + parsed.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
+            alamat: parsed.alamat || localStorage.getItem('sigap_user_address_' + parsed.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+            foto: parsed.foto || localStorage.getItem('sigap_user_foto_' + parsed.id) || undefined
           });
         } catch (e) {
           console.error(e);
@@ -317,7 +323,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       username: matched.username,
       id: matched.id,
       telepon: matched.telepon || localStorage.getItem('sigap_user_phone_' + matched.id) || '081234567890',
-      alamat: matched.alamat || localStorage.getItem('sigap_user_address_' + matched.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang'
+      alamat: matched.alamat || localStorage.getItem('sigap_user_address_' + matched.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+      foto: matched.foto || localStorage.getItem('sigap_user_foto_' + matched.id) || undefined
     };
 
     localStorage.setItem('sigap_session', JSON.stringify(sessionData));
@@ -592,15 +599,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!currentUser) return false;
     try {
       if (supabase) {
-        // Try updating everything including telepon and alamat first, just in case those columns exist in Supabase
+        // Update name, email, and avatar_url in Supabase users table
         const { error } = await supabase
           .from('users')
-          .update({ name: username, email: email, telepon: telepon, alamat: alamat, foto: foto } as any)
+          .update({ name: username, email: email, avatar_url: foto })
           .eq('id', parseInt(currentUser.id));
         
         if (error) {
-          // If that failed (likely because columns don't exist), fall back to name and email only
-          console.warn('Update with telepon/alamat failed, falling back to name/email:', error.message);
+          console.warn('Update with avatar_url failed, falling back to name/email:', error.message);
           const { error: fallbackError } = await supabase
             .from('users')
             .update({ name: username, email: email })

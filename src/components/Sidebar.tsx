@@ -64,8 +64,12 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
         {/* User Profile Area */}
         <div className="px-2 mb-6 border-b border-[#D3C5B1]/50 pb-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#001360] flex items-center justify-center text-white font-bold text-sm shadow-md border border-white/20">
-              {getInitials(currentUser?.username || 'User')}
+            <div className="w-10 h-10 rounded-full bg-[#001360] flex items-center justify-center text-white font-bold text-sm shadow-md border border-white/20 overflow-hidden">
+              {currentUser?.foto ? (
+                <img src={currentUser.foto} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                getInitials(currentUser?.username || 'User')
+              )}
             </div>
             <div className="overflow-hidden">
               <h3 className="font-bold text-[#1C1B18] text-xs truncate max-w-[130px]">

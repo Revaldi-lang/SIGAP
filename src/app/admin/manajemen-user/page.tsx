@@ -191,8 +191,12 @@ export default function AdminManajemenUser() {
                       <tr key={user.id} className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-[#001360] text-white flex items-center justify-center font-bold text-xs">
-                              {getInitials(user.username)}
+                            <div className="w-8 h-8 rounded-full bg-[#001360] text-white flex items-center justify-center font-bold text-xs overflow-hidden">
+                              {user.foto ? (
+                                <img src={user.foto} alt="Avatar" className="w-full h-full object-cover" />
+                              ) : (
+                                getInitials(user.username)
+                              )}
                             </div>
                             <div>
                               <p className="font-bold text-[#1C1B18]">{user.username}</p>
