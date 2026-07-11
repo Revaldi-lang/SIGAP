@@ -96,7 +96,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
                       </span>
                     </div>
                     <Link href={getDashboardUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#1C1B18] hover:bg-slate-50 transition-colors">
-                      <span className="material-symbols-outlined text-sm text-[#001360]">gauge</span> Dasbor Utama
+                      <span className="material-symbols-outlined text-sm text-[#001360]">dashboard</span> Dasbor Utama
                     </Link>
                     <Link href={getProfileUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#1C1B18] hover:bg-slate-50 transition-colors">
                       <span className="material-symbols-outlined text-sm text-[#001360]">person</span> Pengaturan Profil
@@ -153,7 +153,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
                 </div>
                 <div className="grid grid-cols-2 gap-2 mt-2">
                   <Link href={getDashboardUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-[#D3C5B1] text-xs font-bold text-[#1C1B18] py-2.5 rounded-xl transition text-center">
-                    <span className="material-symbols-outlined text-xs text-[#001360]">gauge</span> Dasbor
+                    <span className="material-symbols-outlined text-xs text-[#001360]">dashboard</span> Dasbor
                   </Link>
                   <Link href={getProfileUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-[#D3C5B1] text-xs font-bold text-[#1C1B18] py-2.5 rounded-xl transition text-center">
                     <span className="material-symbols-outlined text-xs text-[#001360]">person</span> Profil
