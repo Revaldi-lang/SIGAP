@@ -30,46 +30,48 @@
   --spacing-gutter: 24px;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  background: linear-gradient(180deg, #F7F6F2 0%, #FCFAF6 100%);
-  color: var(--foreground);
-  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
+  body {
+    background: linear-gradient(180deg, #F7F6F2 0%, #FCFAF6 100%);
+    color: var(--foreground);
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
 
-body,
-p,
-span,
-div,
-li,
-label,
-button,
-a,
-input,
-select,
-textarea {
-  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+  body,
+  p,
+  span,
+  div,
+  li,
+  label,
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  letter-spacing: -0.02em;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: -0.02em;
+  }
 }
 
 .page-shell {
@@ -177,29 +179,31 @@ h6 {
   background-color: #F6F3F2;
 }
 
-input:not([type='checkbox']):not([type='radio']):not([type='file']),
-select,
-textarea {
-  width: 100%;
-  border: 1px solid #D3C5B1;
-  border-radius: 0.5rem;
-  background-color: #FFFFFF;
-  color: #1C1B18;
-  padding: 0.625rem 0.875rem;
-  font-size: 0.875rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
+@layer base {
+  input:not([type='checkbox']):not([type='radio']):not([type='file']),
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid #D3C5B1;
+    border-radius: 0.5rem;
+    background-color: #FFFFFF;
+    color: #1C1B18;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
-select:focus,
-textarea:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 19, 96, 0.15);
-}
+  input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+  select:focus,
+  textarea:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px rgba(0, 19, 96, 0.15);
+  }
 
-button {
-  cursor: pointer;
+  button {
+    cursor: pointer;
+  }
 }
 
 .bg-surface { background-color: #FDF9F3; }
@@ -280,13 +284,15 @@ img, video, canvas, svg {
   height: auto;
 }
 
-button, a, input, textarea, select {
-  min-height: 44px;
-  touch-action: manipulation;
-}
+@layer base {
+  button, a, input, textarea, select {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
 
-input[type="checkbox"], input[type="radio"] {
-  min-height: auto;
+  input[type="checkbox"], input[type="radio"] {
+    min-height: auto;
+  }
 }
 
 /* 1. CUSTOM SCROLLBAR MODERN */
