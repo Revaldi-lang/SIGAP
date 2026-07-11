@@ -1,0 +1,294 @@
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import AuthGuard from '@/components/AuthGuard';
+import Sidebar from '@/components/Sidebar';
+import { useApp } from '@/context/AppContext';
+
+const MapSelector = dynamic(() => import('@/components/MapSelector'), { ssr: false });
+
+export default function BuatLaporan() {
+  const { currentUser, tambahLaporan } = useApp();
+  const router = useRouter();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [kategori, setKategori] = useState<'jalan' | 'penerangan' | 'drainase' | 'fasilitas' | 'lainnya'>('jalan');
+  const [lokasi, setLokasi] = useState('');
+  const [deskripsi, setDeskripsi] = useState('');
+  const [urgensi, setUrgensi] = useState<'Rendah' | 'Sedang' | 'Tinggi'>('Sedang');
+  const [lat, setLat] = useState(-7.983908);
+  const [lng, setLng] = useState(112.621391);
+  const [foto, setFoto] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleMapChange = (newLat: number, newLng: number) => {
+    setLat(newLat);
+    setLng(newLng);
+  };
+
+  const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Ukuran file maksimal adalah 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFoto(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeFoto = () => {
+    setFoto('');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!lokasi.trim() || !deskripsi.trim()) {
+      alert('Harap lengkapi semua kolom form.');
+      return;
+    }
+
+    if (!lat || !lng) {
+      alert('Harap pilih titik lokasi pada peta.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const actorName = currentUser?.username || 'Pelapor';
+      await tambahLaporan({
+        lat,
+        lng,
+        kategori,
+        deskripsi,
+        status: 'baru',
+        pelapor: actorName,
+        lokasi,
+        wilayah: 'Klojen',
+        urgensi,
+        foto: foto || ''
+      });
+
+      alert('Aduan berhasil dikirim!');
+      router.push('/dashboard-pelapor');
+    } catch (err) {
+      console.error(err);
+      alert('Terjadi kesalahan saat mengirim aduan.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <AuthGuard allowedRoles={['Masyarakat']}>
+      <div className="min-h-screen bg-[#FEFDF8]">
+        {/* Navigation Sidebar */}
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+        {/* Main Content Area */}
+        <main className="ml-0 md:ml-64 p-6 md:p-16 min-h-screen">
+          {/* Header */}
+          <header className="flex items-center gap-3 mb-12">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
+              type="button"
+            >
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#001360]">Buat Aduan Infrastruktur Baru</h1>
+              <p className="text-xs text-[#4E4639] mt-0.5">Laporkan kendala kerusakan jalan, saluran air, dan fasilitas umum kota.</p>
+            </div>
+          </header>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Left Column: Form Fields */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Category selector */}
+              <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
+                <h2 className="text-sm font-bold text-[#1C1B18] mb-4 uppercase tracking-wider">Kategori Laporan</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {[
+                    { id: 'jalan', label: 'Jalan & Trotoar', icon: 'road' },
+                    { id: 'penerangan', label: 'Penerangan', icon: 'lightbulb' },
+                    { id: 'drainase', label: 'Saluran Air', icon: 'water' },
+                    { id: 'fasilitas', label: 'Fasum / Taman', icon: 'eco' }
+                  ].map(cat => (
+                    <label key={cat.id} className="relative cursor-pointer group">
+                      <input
+                        type="radio"
+                        name="category"
+                        value={cat.id}
+                        checked={kategori === cat.id}
+                        onChange={() => setKategori(cat.id as any)}
+                        className="peer sr-only"
+                      />
+                      <div className="p-3 border border-[#D3C5B1] rounded-xl text-center peer-checked:border-[#001360] peer-checked:bg-[#001360]/5 group-hover:bg-[#F6F3EC] transition-all h-full flex flex-col items-center justify-center">
+                        <span className="material-symbols-outlined block mb-1 text-sm">${cat.icon}</span>
+                        <span className="text-[10px] font-bold leading-tight">${cat.label}</span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location Name & Details */}
+              <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl space-y-5 shadow-sm">
+                <div>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2" htmlFor="input-lokasi">
+                    Nama Jalan / Lokasi Kerusakan
+                  </label>
+                  <input
+                    id="input-lokasi"
+                    type="text"
+                    required
+                    value={lokasi}
+                    onChange={e => setLokasi(e.target.value)}
+                    placeholder="Contoh: Jl. Ijen No. 12 (depan gerbang Katedral)"
+                    className="w-full bg-white border border-[#D3C5B1] rounded-lg p-3 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2" htmlFor="input-deskripsi">
+                    Deskripsi Kejadian
+                  </label>
+                  <textarea
+                    id="input-deskripsi"
+                    required
+                    rows={4}
+                    value={deskripsi}
+                    onChange={e => setDeskripsi(e.target.value)}
+                    placeholder="Jelaskan detail permasalahan yang Anda temukan secara rinci..."
+                    className="w-full bg-white border border-[#D3C5B1] rounded-lg p-4 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition-all resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Tingkat Urgensi</label>
+                  <div className="flex gap-6">
+                    {[
+                      { id: 'Rendah', label: 'Normal', colorClass: 'text-[#4E4639]' },
+                      { id: 'Sedang', label: 'Penting', colorClass: 'text-[#001360]' },
+                      { id: 'Tinggi', label: 'Mendesak', colorClass: 'text-red-600 font-bold' }
+                    ].map(urg => (
+                      <label key={urg.id} className="flex items-center gap-2 cursor-pointer text-xs">
+                        <input
+                          type="radio"
+                          name="urgency"
+                          value={urg.id}
+                          checked={urgensi === urg.id}
+                          onChange={() => setUrgensi(urg.id as any)}
+                          className="w-4 h-4 text-[#001360] border-[#D3C5B1] focus:ring-[#001360]"
+                        />
+                        <span className={`font-semibold ${urg.colorClass}`}>${urg.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Photo Upload Card */}
+              <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
+                <h2 className="text-sm font-bold text-[#1C1B18] mb-1">Unggah Bukti</h2>
+                <p className="text-[11px] text-[#4E4639] mb-4">Tambahkan foto visual lokasi untuk mempercepat verifikasi laporan.</p>
+
+                {foto ? (
+                  <div className="relative border border-[#D3C5B1] rounded-xl overflow-hidden max-w-sm">
+                    <img src={foto} alt="Preview Bukti" className="w-full h-48 object-cover" />
+                    <button
+                      type="button"
+                      onClick={removeFoto}
+                      className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1.5 hover:bg-red-700 transition"
+                    >
+                      <span className="material-symbols-outlined text-xs block">delete</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="border-2 border-dashed border-[#D3C5B1] hover:border-[#001360] bg-[#F6F3EC]/30 rounded-xl p-6 text-center cursor-pointer transition relative">
+                    <input
+                      type="file"
+                      id="input-foto"
+                      accept="image/*"
+                      onChange={handleFotoChange}
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                    />
+                    <div className="space-y-2">
+                      <span className="material-symbols-outlined text-4xl text-[#807667]">cloud_upload</span>
+                      <p className="text-xs text-[#4E4639]"><span className="font-bold text-[#001360]">Pilih berkas foto</span> atau tarik gambar ke sini</p>
+                      <p className="text-[10px] text-[#807667]">Mendukung format PNG, JPG, JPEG maks 5MB</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Column: Location & Submit */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="bg-white border border-[#D3C5B1] rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div className="p-6 border-b border-[#D3C5B1]/50">
+                  <h2 className="text-sm font-bold text-[#1C1B18] mb-1">Lokasi Kejadian</h2>
+                  <p className="text-[11px] text-[#4E4639]">Ketik alamat atau klik pada peta digital di bawah ini untuk menandai titik presisi kerusakan.</p>
+                </div>
+                
+                {/* Dynamically Loaded Map */}
+                <div className="p-4 border-b border-[#D3C5B1]/50">
+                  <MapSelector lat={lat} lng={lng} onChange={handleMapChange} address={lokasi} />
+                </div>
+
+                <div className="p-6 space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Latitude</label>
+                      <input
+                        type="text"
+                        readOnly
+                        value={lat.toFixed(6)}
+                        className="w-full bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg px-3 py-2 text-xs font-mono text-[#4E4639] outline-none cursor-not-allowed"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Longitude</label>
+                      <input
+                        type="text"
+                        readOnly
+                        value={lng.toFixed(6)}
+                        className="w-full bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg px-3 py-2 text-xs font-mono text-[#4E4639] outline-none cursor-not-allowed"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#001360] text-white font-bold py-3.5 px-6 rounded-xl text-xs transition-all hover:opacity-90 flex items-center justify-center gap-2 uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-50"
+                  >
+                    {isSubmitting ? (
+                      <>Mengirim Laporan...</>
+                    ) : (
+                      <>
+                        <span className="material-symbols-outlined text-sm">send</span> Kirim Laporan Aduan
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}

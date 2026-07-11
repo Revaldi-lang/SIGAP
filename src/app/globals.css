@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #FEFDF8;
+  --foreground: #1C1B18;
+}
+
+@theme {
+  --color-primary: #001360;
+  --color-on-primary: #FFFFFF;
+  --color-primary-container: #E8ECFF;
+  --color-on-primary-container: #000E3D;
+  --color-surface: #FEFDF8;
+  --color-on-surface: #1C1B18;
+  --color-surface-container-low: #F6F3EC;
+  --color-surface-container: #F0EDE6;
+  --color-surface-container-high: #EAE7E0;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-on-surface-variant: #4E4639;
+  --color-outline: #807667;
+  --color-outline-variant: #D3C5B1;
+  --color-error: #BA1A1A;
+  --color-on-error: #FFFFFF;
+
+  --font-sans: "Plus Jakarta Sans", var(--font-geist-sans), sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+
+  --spacing-gutter: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+button, a, input, textarea, select {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  min-height: auto;
+}
+
+/* 1. CUSTOM SCROLLBAR MODERN */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
+
+/* 2. CUSTOM SELECTION */
+::selection {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* 3. EFEK GLASSMORPHISM UTILITY */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 4. PENYESUAIAN PETA LEAFLET */
+.leaflet-container {
+  z-index: 10;
+  font-family: inherit;
+}
+.leaflet-container:focus {
+  outline: none; 
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 5. ANIMASI PIN PETA (GLOWING / RADAR EFFECT) */
+.custom-div-icon div {
+  position: relative;
+  transition: all 0.3s ease;
+}
+.custom-div-icon div:hover {
+  transform: scale(1.2);
+}
+.custom-div-icon.urgent-pin::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: rgba(239, 68, 68, 0.4);
+  border-radius: 50%;
+  z-index: -1;
+  animation: radarGlow 2s infinite ease-in-out;
+}
+
+/* 6. ANIMASI KEYFRAMES CUSTOM */
+@keyframes radarGlow {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes fadeInSmooth {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeInSmooth 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Eye Icon Wrapper to prevent Google Material Symbols text fallbacks */
+.eye-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 0;
+}
+.eye-icon-wrapper span, .eye-icon-wrapper i {
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+/* Momentum scrolling utility */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
