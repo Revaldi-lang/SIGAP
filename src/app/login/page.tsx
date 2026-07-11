@@ -56,7 +56,7 @@ export default function AdminLogin() {
           <div className="relative z-10 space-y-6">
             <Link href="/" className="flex items-center gap-3 w-max">
               <div className="bg-white/10 p-2 rounded-xl border border-white/10 flex items-center justify-center">
-                <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-8 w-auto object-contain" />
+                <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-8 w-auto object-contain" style={{ height: '32px', width: 'auto' }} />
               </div>
               <span className="font-bold text-lg text-white">SIGAP</span>
             </Link>

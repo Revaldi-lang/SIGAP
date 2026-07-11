@@ -56,7 +56,7 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
         {/* Brand Area */}
         <div className="flex items-center gap-3 px-2 py-4 mb-6">
           <div className="bg-[#001360]/10 p-2 rounded-xl border border-[#001360]/20 flex items-center justify-center">
-            <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" />
+            <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" style={{ height: '32px', width: 'auto' }} />
           </div>
           <span className="font-bold text-lg text-[#001360]">SIGAP</span>
         </div>

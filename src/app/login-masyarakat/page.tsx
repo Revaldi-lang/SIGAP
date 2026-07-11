@@ -48,8 +48,8 @@ export default function LoginMasyarakat() {
     <div className="bg-[#FEFDF8] flex items-center justify-center min-h-screen p-4">
       <div className="w-full max-w-md bg-white border border-[#D3C5B1] rounded-2xl shadow-xl p-4 sm:p-8 animate-fade-in">
         <div className="text-center mb-6">
-          <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-16 h-16 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition">
-            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="w-full h-full object-contain" />
+          <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-16 h-16 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition" style={{ width: '64px', height: '64px' }}>
+            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="w-full h-full object-contain" style={{ height: '48px', width: 'auto' }} />
           </Link>
           <h2 className="text-2xl font-bold text-[#1C1B18] tracking-tight">Portal Warga / Pelapor</h2>
           <p className="text-xs text-[#4E4639] mt-1">Silakan masuk untuk membuat aduan atau melacak berkas laporan Anda.</p>
