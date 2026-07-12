@@ -23,6 +23,7 @@ function PengaturanProfilForm() {
   const [nama, setNama] = useState(currentUser?.username || '');
   const [email, setEmail] = useState(currentUser?.email || '');
   const [telepon, setTelepon] = useState(currentUser?.telepon || '');
+  const [alamat, setAlamat] = useState(currentUser?.alamat || '');
   const [foto, setFoto] = useState(currentUser?.foto || '');
   const [uploading, setUploading] = useState(false);
 
@@ -37,6 +38,7 @@ function PengaturanProfilForm() {
       if (currentUser.username) setNama(currentUser.username);
       if (currentUser.email) setEmail(currentUser.email);
       if (currentUser.telepon) setTelepon(currentUser.telepon);
+      if (currentUser.alamat) setAlamat(currentUser.alamat);
       if (currentUser.foto) setFoto(currentUser.foto);
     }
   }, [currentUser]);
@@ -45,32 +47,64 @@ function PengaturanProfilForm() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // 1. Strict MIME type whitelist — reject anything not in this list
+    const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+      alert('Format file tidak didukung. Hanya JPEG, PNG, WebP, dan GIF yang diperbolehkan.');
+      e.target.value = '';
+      return;
+    }
+
+    // 2. File size cap (2 MB)
     if (file.size > 2 * 1024 * 1024) {
       alert('Ukuran file maksimal adalah 2MB.');
+      e.target.value = '';
       return;
     }
 
     if (!currentUser?.id) return;
 
-    setUploading(true);
-    try {
-      const ext = file.name.split('.').pop();
-      const filePath = `avatars/${currentUser.id}.${ext}`;
+    // 3. Magic-byte check — verify actual file signature before uploading to Supabase
+    //    This prevents zip bombs or disguised executables from reaching the server.
+    const validateAndUpload = async () => {
+      const headerBuffer = await file.slice(0, 12).arrayBuffer();
+      const arr = new Uint8Array(headerBuffer);
+      const header = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
 
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, { upsert: true, contentType: file.type });
+      const isJpeg = header.startsWith('ffd8ff');
+      const isPng  = header.startsWith('89504e47');
+      const isGif  = header.startsWith('47494638');
+      const isWebP = header.slice(0, 8) === '52494646' && header.slice(16, 24) === '57454250';
 
-      if (uploadError) throw uploadError;
+      if (!isJpeg && !isPng && !isGif && !isWebP) {
+        alert('File ditolak: konten file tidak valid atau bukan gambar asli.');
+        e.target.value = '';
+        return;
+      }
 
-      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
-      setFoto(data.publicUrl);
-    } catch (err) {
-      console.error('Upload foto gagal:', err);
-      alert('Gagal mengunggah foto. Silakan coba lagi.');
-    } finally {
-      setUploading(false);
-    }
+      // 4. All checks passed — proceed with Supabase upload
+      setUploading(true);
+      try {
+        const ext = file.name.split('.').pop();
+        const filePath = `avatars/${currentUser.id}.${ext}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(filePath, file, { upsert: true, contentType: file.type });
+
+        if (uploadError) throw uploadError;
+
+        const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+        setFoto(data.publicUrl);
+      } catch (err) {
+        console.error('Upload foto gagal:', err);
+        alert('Gagal mengunggah foto. Silakan coba lagi.');
+      } finally {
+        setUploading(false);
+      }
+    };
+
+    validateAndUpload();
   };
 
   const handleSaveUmum = async (e: React.FormEvent) => {
@@ -79,7 +113,7 @@ function PengaturanProfilForm() {
       alert('Harap tunggu, foto sedang diunggah...');
       return;
     }
-    const success = await updateUserProfile(nama, email, telepon, undefined, foto || undefined);
+    const success = await updateUserProfile(nama, email, telepon, alamat, foto || undefined);
     if (success) {
       alert('Informasi profil umum administrator berhasil diperbarui!');
     } else {
@@ -274,6 +308,16 @@ function PengaturanProfilForm() {
                   title="Instansi ditentukan berdasarkan peran akun Anda"
                 />
               </div>
+              <div>
+                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Instansi / Kantor</label>
+                <textarea
+                  rows={3}
+                  value={alamat}
+                  onChange={e => setAlamat(e.target.value)}
+                  placeholder="Masukkan alamat kantor atau instansi..."
+                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] resize-none"
+                />
+              </div>
               <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
                 <button
                   type="submit"
@@ -310,7 +354,7 @@ function PengaturanProfilForm() {
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     placeholder="Minimal 8 karakter..."
-                    className="w-full bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
                 <div>
@@ -321,7 +365,7 @@ function PengaturanProfilForm() {
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Ulangi kata sandi baru..."
-                    className="w-full bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
               </div>

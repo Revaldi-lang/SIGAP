@@ -39,16 +39,47 @@ export default function BuatLaporan() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran file maksimal adalah 5MB.');
+    // 1. Strict MIME type whitelist — reject anything not in this list
+    const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+      alert('Format file tidak didukung. Hanya JPEG, PNG, WebP, dan GIF yang diperbolehkan.');
+      e.target.value = '';
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFoto(reader.result as string);
+    // 2. File size cap (5 MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Ukuran file maksimal adalah 5MB.');
+      e.target.value = '';
+      return;
+    }
+
+    // 3. Magic-byte check — read the first 12 bytes and verify the real file signature
+    //    This catches zip bombs or malicious files that spoof their extension.
+    const headerReader = new FileReader();
+    headerReader.onloadend = () => {
+      const arr = new Uint8Array(headerReader.result as ArrayBuffer);
+      const header = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+
+      const isJpeg = header.startsWith('ffd8ff');
+      const isPng  = header.startsWith('89504e47');
+      const isGif  = header.startsWith('47494638');
+      const isWebP = header.slice(0, 8) === '52494646' && header.slice(16, 24) === '57454250';
+
+      if (!isJpeg && !isPng && !isGif && !isWebP) {
+        alert('File ditolak: konten file tidak valid atau bukan gambar asli.');
+        e.target.value = '';
+        return;
+      }
+
+      // 4. All checks passed — read as Data URL to preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     };
-    reader.readAsDataURL(file);
+    headerReader.readAsArrayBuffer(file.slice(0, 12));
   };
 
   const removeFoto = () => {
