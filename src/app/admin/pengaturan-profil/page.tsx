@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AuthGuard from '@/components/AuthGuard';
 import Sidebar from '@/components/Sidebar';
 import { useApp } from '@/context/AppContext';
@@ -32,8 +32,8 @@ function PengaturanProfilForm() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Sync state if currentUser gets updated asynchronously
-  useEffect(() => {
+  // Sync state if currentUser gets updated asynchronously (e.g., from DB sync on mount)
+  React.useEffect(() => {
     if (currentUser) {
       if (currentUser.username) setNama(currentUser.username);
       if (currentUser.email) setEmail(currentUser.email);
@@ -47,6 +47,7 @@ function PengaturanProfilForm() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // 1. Strict MIME type whitelist — reject anything not in this list
     const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     if (!ALLOWED_MIME_TYPES.includes(file.type)) {
       alert('Format file tidak didukung. Hanya JPEG, PNG, WebP, dan GIF yang diperbolehkan.');
@@ -54,6 +55,7 @@ function PengaturanProfilForm() {
       return;
     }
 
+    // 2. File size cap (2 MB)
     if (file.size > 2 * 1024 * 1024) {
       alert('Ukuran file maksimal adalah 2MB.');
       e.target.value = '';
@@ -62,6 +64,8 @@ function PengaturanProfilForm() {
 
     if (!currentUser?.id) return;
 
+    // 3. Magic-byte check — verify actual file signature before uploading to Supabase
+    //    This prevents zip bombs or disguised executables from reaching the server.
     const validateAndUpload = async () => {
       const headerBuffer = await file.slice(0, 12).arrayBuffer();
       const arr = new Uint8Array(headerBuffer);
@@ -78,6 +82,7 @@ function PengaturanProfilForm() {
         return;
       }
 
+      // 4. All checks passed — upload file to Supabase Storage
       setUploading(true);
       try {
         const ext = file.name.split('.').pop();
@@ -92,6 +97,8 @@ function PengaturanProfilForm() {
         const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
         const publicUrl = data.publicUrl;
 
+        // 5. Immediately persist avatar_url to the database so it syncs across ALL devices.
+        //    Using email as identifier (avoids parseInt overflow issues).
         const { error: dbError } = await supabase
           .from('users')
           .update({ avatar_url: publicUrl })
@@ -99,10 +106,13 @@ function PengaturanProfilForm() {
 
         if (dbError) {
           console.error('[Avatar] Failed to save avatar_url to DB:', dbError.message);
+          // Non-fatal: photo is in Storage, just not linked in DB yet
         }
 
+        // 6. Update localStorage cache for offline/same-device use
         localStorage.setItem('sigap_user_foto_' + currentUser.id, publicUrl);
 
+        // 7. Update local form state (add cache-buster so UI shows new photo immediately)
         const cacheBustedUrl = publicUrl + (publicUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
         setFoto(cacheBustedUrl);
       } catch (err) {
@@ -122,6 +132,9 @@ function PengaturanProfilForm() {
       alert('Harap tunggu, foto sedang diunggah...');
       return;
     }
+    // Pass foto directly (not foto || undefined) so that:
+    //   - A new/updated photo URL is always synced to the database
+    //   - If user cleared the photo, avatar_url is set to null in the database
     const success = await updateUserProfile(nama, email, telepon, alamat, foto);
     if (success) {
       alert('Informasi profil umum administrator berhasil diperbarui!');
@@ -156,26 +169,26 @@ function PengaturanProfilForm() {
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
       {/* Main Content Area */}
-      <main className="ml-0 md:ml-64 p-6 md:p-10 min-h-screen">
+      <main className="ml-0 md:ml-64 p-6 md:p-12 min-h-screen max-w-[1024px]">
         {/* Header */}
-        <header className="flex justify-between items-center mb-10">
+        <header className="flex justify-between items-center mb-12">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-xl flex items-center justify-center shrink-0 min-h-[44px] min-w-[44px]"
+              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-0.5">Pengaturan Profil</h1>
-              <p className="text-sm text-[#807667]">Kelola data diri, foto profil, dan keamanan sandi login Anda.</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-1">Pengaturan Profil</h1>
+              <p className="text-xs text-[#4E4639]">Kelola data diri, foto profil, dan keamanan sandi login Anda.</p>
             </div>
           </div>
         </header>
 
         {/* Avatar Banner Card */}
-        <div className="legacy-card p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8">
+        <div className="legacy-card p-6 rounded-xl flex flex-col sm:flex-row items-center gap-6 mb-8">
           <div className="relative group">
             {foto ? (
               <img
@@ -208,15 +221,15 @@ function PengaturanProfilForm() {
           </div>
           <div className="text-center sm:text-left flex-grow">
             <h3 className="text-base font-bold text-[#1C1B18]">Foto Profil Anda</h3>
-            <p className="text-xs text-[#807667] mt-1">
+            <p className="text-xs text-[#4E4639] mt-1">
               {uploading ? 'Sedang mengunggah foto...' : 'Disarankan format PNG/JPG rasio 1:1 maks 2MB.'}
             </p>
-            <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2.5">
+            <div className="mt-3 flex flex-wrap justify-center sm:justify-start gap-2">
               <button
                 type="button"
                 onClick={() => document.getElementById('upload-avatar')?.click()}
                 disabled={uploading}
-                className="bg-[#001360] text-white text-xs font-semibold py-2 px-5 rounded-[28px] hover:bg-[#223aa8] transition-all disabled:opacity-50 disabled:cursor-not-allowed min-h-[36px]"
+                className="bg-[#001360] text-white text-[10px] font-bold py-2 px-4 rounded-lg hover:opacity-90 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {uploading ? 'Mengunggah...' : 'Ganti Foto'}
               </button>
@@ -224,7 +237,7 @@ function PengaturanProfilForm() {
                 type="button"
                 onClick={() => setFoto('')}
                 disabled={uploading || !foto}
-                className="bg-[#F6F3EC] border border-[#D3C5B1] hover:bg-white text-[#4E4639] text-xs font-semibold py-2 px-5 rounded-[28px] transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]"
+                className="bg-[#F6F3EC] border border-[#D3C5B1] hover:bg-white text-[#4E4639] text-[10px] font-bold py-2 px-4 rounded-lg transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Hapus
               </button>
@@ -236,20 +249,20 @@ function PengaturanProfilForm() {
         <div className="border-b border-[#D3C5B1] flex gap-6 mb-6">
           <button
             onClick={() => setActiveTab('umum')}
-            className={"pb-3 font-semibold text-sm transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
+            className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'umum'
                 ? 'border-[#001360] text-[#001360]'
-                : 'border-transparent text-[#807667] hover:text-[#1C1B18]'
+                : 'border-transparent text-[#4E4639] hover:text-[#1C1B18]'
             )}
           >
             <span className="material-symbols-outlined text-sm">badge</span> Informasi Umum
           </button>
           <button
             onClick={() => setActiveTab('keamanan')}
-            className={"pb-3 font-semibold text-sm transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
+            className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'keamanan'
                 ? 'border-[#001360] text-[#001360]'
-                : 'border-transparent text-[#807667] hover:text-[#1C1B18]'
+                : 'border-transparent text-[#4E4639] hover:text-[#1C1B18]'
             )}
           >
             <span className="material-symbols-outlined text-sm">lock</span> Keamanan Akun
@@ -258,84 +271,79 @@ function PengaturanProfilForm() {
 
         {/* Panel Informasi Umum */}
         {activeTab === 'umum' && (
-          <div className="bg-white border border-[#E5E2E1] rounded-2xl p-6 shadow-[0_2px_4px_rgba(0,19,96,0.04)]">
-            <form onSubmit={handleSaveUmum} className="space-y-5">
+          <div className="bg-white border border-[#D3C5B1] rounded-2xl p-6 shadow-sm">
+            <form onSubmit={handleSaveUmum} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Nama Lengkap</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nama Lengkap</label>
                   <input
                     type="text"
                     required
                     value={nama}
                     onChange={e => setNama(e.target.value)}
                     placeholder="Masukkan nama lengkap..."
-                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
-                    style={{ minHeight: '48px' }}
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Alamat Email</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Contoh: admin@pemda.go.id"
-                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
-                    style={{ minHeight: '48px' }}
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Nomor Telepon Kerja</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nomor Telepon Kerja</label>
                   <input
                     type="text"
                     value={telepon}
                     onChange={e => setTelepon(e.target.value)}
                     placeholder="Masukkan nomor telepon kerja..."
-                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
-                    style={{ minHeight: '48px' }}
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">NIP Pegawai</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">NIP Pegawai</label>
                   <input
                     type="text"
                     value={currentUser?.identitas || ''}
                     disabled
-                    className="w-full px-4 py-3 bg-[#F6F3EC] border border-[#D3C5B1] rounded-xl text-[#807667] font-mono cursor-not-allowed text-sm"
+                    className="legacy-input w-full px-3 py-2 text-xs font-mono"
                     placeholder="NIP belum diatur"
                     title="NIP tidak dapat diubah secara mandiri"
-                    style={{ minHeight: '48px' }}
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Instansi / Satuan Kerja</label>
+                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Instansi / Satuan Kerja</label>
                 <input
                   type="text"
                   value={currentUser?.role === 'Petugas PUPR' ? 'Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)' : currentUser?.role === 'Administrator' ? 'Administrator Sistem SIGAP' : currentUser?.role || ''}
                   disabled
-                  className="w-full px-4 py-3 bg-[#F6F3EC] border border-[#D3C5B1] rounded-xl text-[#807667] cursor-not-allowed text-sm font-medium"
+                  className="w-full px-3 py-2 bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg text-[#807667] cursor-not-allowed text-xs"
                   title="Instansi ditentukan berdasarkan peran akun Anda"
-                  style={{ minHeight: '48px' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Alamat Instansi / Kantor</label>
+                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Instansi / Kantor</label>
                 <textarea
                   rows={3}
                   value={alamat}
                   onChange={e => setAlamat(e.target.value)}
                   placeholder="Masukkan alamat kantor atau instansi..."
-                  className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18] resize-none"
+                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] resize-none"
                 />
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#E5E2E1]">
+              <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
                 <button
                   type="submit"
-                  className="bg-[#001360] text-white font-semibold py-3 px-6 rounded-[28px] text-sm transition-all hover:bg-[#223aa8] flex items-center gap-2 cursor-pointer shadow-md min-h-[48px]"
+                  className="bg-[#001360] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">save</span> Simpan Perubahan
                 </button>
@@ -346,50 +354,47 @@ function PengaturanProfilForm() {
 
         {/* Panel Keamanan */}
         {activeTab === 'keamanan' && (
-          <div className="bg-white border border-[#E5E2E1] rounded-2xl p-6 shadow-[0_2px_4px_rgba(0,19,96,0.04)] flex-grow">
-            <form onSubmit={handleSaveSandi} className="space-y-5">
+          <div className="bg-white border border-[#D3C5B1] rounded-2xl p-6 shadow-sm">
+            <form onSubmit={handleSaveSandi} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Kata Sandi Sekarang</label>
+                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi Sekarang</label>
                 <input
                   type="password"
                   required
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
                   placeholder="Masukkan kata sandi saat ini..."
-                  className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
-                  style={{ minHeight: '48px' }}
+                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Kata Sandi Baru</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi Baru</label>
                   <input
                     type="password"
                     required
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     placeholder="Minimal 8 karakter..."
-                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
-                    style={{ minHeight: '48px' }}
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Konfirmasi Kata Sandi Baru</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Konfirmasi Kata Sandi Baru</label>
                   <input
                     type="password"
                     required
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Ulangi kata sandi baru..."
-                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
-                    style={{ minHeight: '48px' }}
+                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
                   />
                 </div>
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#E5E2E1]">
+              <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
                 <button
                   type="submit"
-                  className="bg-[#001360] text-white font-semibold py-3 px-6 rounded-[28px] text-sm transition-all hover:bg-[#223aa8] flex items-center gap-2 cursor-pointer shadow-md min-h-[48px]"
+                  className="bg-[#001360] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">key</span> Perbarui Kata Sandi
                 </button>

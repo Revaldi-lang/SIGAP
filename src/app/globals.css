@@ -1,87 +1,34 @@
 @import "tailwindcss";
 
-/* ============================================================
-   SIGAP × TOMORRO DESIGN SYSTEM
-   Navy Blue Foundation — Tomorro Structure & Typography
-   ============================================================ */
-
-/* 1. DESIGN TOKENS */
 :root {
-  /* Primary — Navy Blue (SIGAP brand) */
-  --color-navy:          #001360;   /* Primary brand color */
-  --color-navy-deep:     #000E3D;   /* Deeper navy for hover */
-  --color-navy-light:    #223aa8;   /* Lighter navy variant */
-  --color-navy-muted:    rgba(0, 19, 96, 0.08); /* Tinted bg */
-  --color-navy-glow:     rgba(0, 19, 96, 0.15); /* Focus ring */
-
-  /* Accent / Container */
-  --color-primary-container: #E8ECFF;   /* Light blue container */
-  --color-on-container:      #000E3D;
-
-  /* Neutral scale */
-  --color-white:         #FFFFFF;
-  --color-cream:         #FEFDF8;   /* Soft background */
-  --color-cream-alt:     #F6F3EC;   /* Section background */
-  --color-border:        #D3C5B1;   /* Default borders */
-  --color-border-light:  #E5E2E1;   /* Light borders */
-  --color-muted:         #807667;   /* Secondary/placeholder text */
-  --color-disabled:      #B7BDA5;   /* Disabled states */
-
-  /* Surface scale */
-  --color-surface:       #FEFDF8;
-  --color-surface-low:   #F6F3EC;
-  --color-surface-high:  #F0EDED;
-
-  /* Dark surface */
-  --color-dark-footer:   #1E1B18;
-
-  /* Semantic */
-  --color-success:       #26A200;
-  --color-error:         #BA1A1A;
-  --color-warning:       #D97706;
-  --color-on-error:      #FFFFFF;
-
-  /* Text roles */
-  --text-dark:           #1C1B18;   /* Primary text */
-  --text-secondary:      #4E4639;   /* Secondary text */
-  --text-muted:          #807667;   /* Muted/placeholder */
-  --text-light:          #FFFFFF;   /* On dark surfaces */
-  --text-primary:        #001360;   /* Brand color text */
-
-  /* Legacy compat */
-  --background:          #FEFDF8;
-  --foreground:          #1C1B18;
-
-  --spacing-gutter:      24px;
+  --background: #FEFDF8;
+  --foreground: #1C1B18;
 }
 
 @theme {
-  --color-primary:                #001360;
-  --color-on-primary:             #FFFFFF;
-  --color-primary-container:      #E8ECFF;
-  --color-on-primary-container:   #000E3D;
-  --color-surface:                #FEFDF8;
-  --color-on-surface:             #1C1B18;
-  --color-surface-container-low:  #F6F3EC;
-  --color-surface-container:      #F0EDED;
+  --color-primary: #001360;
+  --color-on-primary: #FFFFFF;
+  --color-primary-container: #E8ECFF;
+  --color-on-primary-container: #000E3D;
+  --color-surface: #FEFDF8;
+  --color-on-surface: #1C1B18;
+  --color-surface-container-low: #F6F3EC;
+  --color-surface-container: #F0EDE6;
   --color-surface-container-high: #EAE7E0;
   --color-surface-container-lowest: #FFFFFF;
-  --color-on-surface-variant:     #4E4639;
-  --color-outline:                #807667;
-  --color-outline-variant:        #D3C5B1;
-  --color-error:                  #BA1A1A;
-  --color-on-error:               #FFFFFF;
+  --color-on-surface-variant: #4E4639;
+  --color-outline: #807667;
+  --color-outline-variant: #D3C5B1;
+  --color-error: #BA1A1A;
+  --color-on-error: #FFFFFF;
 
-  --font-sans:    var(--font-rubik), "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-rubik), "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-body:    var(--font-rubik), "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --spacing-gutter: 24px;
 }
 
-/* ============================================================
-   2. BASE STYLES
-   ============================================================ */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -89,256 +36,204 @@
   }
 
   body {
-    background-color: var(--color-cream);
-    color: var(--text-dark);
-    font-family: "Rubik", "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background: linear-gradient(180deg, #F7F6F2 0%, #FCFAF6 100%);
+    color: var(--foreground);
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
     line-height: 1.6;
     font-weight: 400;
-    letter-spacing: 0em;
+    letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
-  body, p, span, div, li, label, button, a, input, select, textarea {
-    font-family: "Rubik", "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  body,
+  p,
+  span,
+  div,
+  li,
+  label,
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: "Rubik", "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    letter-spacing: -0.01em;
-    color: var(--text-primary);
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: -0.02em;
   }
+}
 
-  button {
-    cursor: pointer;
-  }
+.page-shell {
+  background-color: #FDF9F3;
+  min-height: 100vh;
+}
 
-  button, a, input, textarea, select {
-    min-height: 44px;
-    touch-action: manipulation;
-  }
+.page-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E2E1;
+  border-radius: 0.875rem;
+  box-shadow: 0 8px 24px rgba(0, 19, 96, 0.04);
+}
 
-  input[type="checkbox"], input[type="radio"] {
-    min-height: auto;
-  }
+.page-section {
+  background: #FCF9F8;
+  border: 1px solid #E5E2E1;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 19, 96, 0.04);
+}
 
-  /* Default input styles — Tomorro spec */
+.tonal-card {
+  background: #F6F3F2;
+  border: 1px solid #E5E2E1;
+  border-radius: 1rem;
+}
+
+.card-shadow {
+  border: 1px solid #E5E2E1;
+  transition: all 0.2s ease;
+}
+
+.card-shadow:hover {
+  border-color: #001360;
+  box-shadow: 0 4px 20px rgba(0, 19, 96, 0.05);
+}
+
+.page-title {
+  color: #001360;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  color: #4E4639;
+}
+
+.legacy-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E2E1;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 19, 96, 0.04);
+}
+
+.legacy-input {
+  width: 100%;
+  border: 1px solid #D3C5B1;
+  border-radius: 0.5rem;
+  background-color: #FFFFFF;
+  color: #1C1B18;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legacy-input:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgba(0, 19, 96, 0.15);
+}
+
+.legacy-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #001360;
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.legacy-btn-primary:hover {
+  opacity: 0.92;
+}
+
+.legacy-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #D3C5B1;
+  background-color: #FFFFFF;
+  color: #001360;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.legacy-btn-secondary:hover {
+  background-color: #F6F3F2;
+}
+
+@layer base {
   input:not([type='checkbox']):not([type='radio']):not([type='file']),
   select,
   textarea {
     width: 100%;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border: 1px solid #D3C5B1;
+    border-radius: 0.5rem;
     background-color: #FFFFFF;
-    color: var(--text-dark);
-    padding: 12px 16px;
-    font-size: 16px;
+    color: #1C1B18;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
     outline: none;
-    min-height: 48px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
   select:focus,
   textarea:focus {
-    border-color: var(--color-navy);
-    box-shadow: 0 0 0 3px var(--color-navy-glow);
+    border-color: transparent;
+    box-shadow: 0 0 0 2px rgba(0, 19, 96, 0.15);
+  }
+
+  button {
+    cursor: pointer;
   }
 }
 
-/* ============================================================
-   3. LAYOUT SHELLS
-   ============================================================ */
-.page-shell {
-  background-color: var(--color-cream);
-  min-height: 100vh;
-}
-
-.page-card {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border-light);
-  border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0, 19, 96, 0.05);
-}
-
-.page-section {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border-light);
-  border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0, 19, 96, 0.05);
-}
-
-.tonal-card {
-  background: var(--color-cream-alt);
-  border: 1px solid var(--color-border-light);
-  border-radius: 16px;
-}
-
-.card-shadow {
-  border: 1px solid var(--color-border-light);
-  transition: all 0.2s ease;
-}
-
-.card-shadow:hover {
-  border-color: var(--color-navy);
-  box-shadow: 0 4px 20px rgba(0, 19, 96, 0.10);
-}
-
-/* ============================================================
-   4. LEGACY CARD & INPUT (Tomorro-structured, navy palette)
-   ============================================================ */
-.legacy-card {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border-light);
-  border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0, 19, 96, 0.04);
-}
-
-.legacy-input {
-  width: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: #FFFFFF;
-  color: var(--text-dark);
-  padding: 12px 16px;
-  font-size: 16px;
-  outline: none;
-  min-height: 48px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.legacy-input:focus {
-  border-color: var(--color-navy);
-  box-shadow: 0 0 0 3px var(--color-navy-glow);
-}
-
-/* ============================================================
-   5. BUTTON SYSTEM — Tomorro shape, Navy palette
-   ============================================================ */
-
-/* Primary Button — Navy solid, pill shape */
-.legacy-btn-primary,
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 28px;          /* Tomorro pill radius */
-  background-color: var(--color-navy);
-  color: #FFFFFF;
-  font-family: "Rubik", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  padding: 12px 20px;
-  min-height: 48px;
-  border: none;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.legacy-btn-primary:hover,
-.btn-primary:hover {
-  background-color: var(--color-navy-light);
-}
-
-.legacy-btn-primary:active,
-.btn-primary:active {
-  background-color: var(--color-navy-deep);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.legacy-btn-primary:disabled,
-.btn-primary:disabled {
-  background-color: var(--color-disabled);
-  color: var(--color-muted);
-  opacity: 0.6;
-}
-
-/* Secondary Button — Light navy tint */
-.legacy-btn-secondary,
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 28px;
-  background-color: var(--color-primary-container);
-  color: var(--color-navy);
-  font-family: "Rubik", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  padding: 12px 20px;
-  min-height: 48px;
-  border: none;
-  transition: background-color 0.2s ease;
-}
-
-.legacy-btn-secondary:hover,
-.btn-secondary:hover {
-  background-color: #D6DCFF;
-}
-
-.legacy-btn-secondary:active,
-.btn-secondary:active {
-  background-color: #BFC9FF;
-}
-
-/* Ghost Button */
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: "Rubik", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 0;
-  border: none;
-  min-height: 48px;
-  min-width: 48px;
-  transition: color 0.2s ease;
-}
-
-.btn-ghost:hover {
-  color: var(--color-navy);
-}
-
-/* ============================================================
-   6. TYPOGRAPHY UTILITIES
-   ============================================================ */
-.page-title {
-  color: var(--text-primary);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-.page-subtitle {
-  color: var(--text-secondary);
-}
+.bg-surface { background-color: #FDF9F3; }
+.bg-surface-container-lowest { background-color: #FFFFFF; }
+.bg-surface-container-low { background-color: #F6F3F2; }
+.bg-surface-container { background-color: #F0EDED; }
+.bg-surface-container-high { background-color: #EAE7E7; }
+.border-outline-variant { border-color: #E5E2E1; }
+.border-outline { border-color: #757684; }
+.text-on-surface { color: #1C1B18; }
+.text-on-surface-variant { color: #444653; }
+.text-primary { color: #001360; }
+.text-primary-container { color: #000E3D; }
 
 .font-display-lg {
   font-size: 48px;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   font-weight: 700;
 }
 
 .font-headline-lg {
   font-size: 32px;
-  line-height: 1.25;
+  line-height: 1.3;
   letter-spacing: -0.01em;
   font-weight: 600;
 }
 
 .font-headline-md {
   font-size: 24px;
-  line-height: 1.35;
+  line-height: 1.4;
   font-weight: 600;
 }
 
@@ -357,52 +252,49 @@
 .font-label-md {
   font-size: 14px;
   line-height: 1.4;
+  letter-spacing: 0.01em;
   font-weight: 500;
 }
 
 .font-label-sm {
   font-size: 12px;
   line-height: 1.4;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   font-weight: 600;
 }
 
-/* ============================================================
-   7. COLOR UTILITIES (semantic mapping)
-   ============================================================ */
-.bg-surface                    { background-color: var(--color-cream); }
-.bg-surface-container-lowest   { background-color: #FFFFFF; }
-.bg-surface-container-low      { background-color: #F6F3EC; }
-.bg-surface-container          { background-color: #F0EDED; }
-.bg-surface-container-high     { background-color: #EAE7E0; }
-.border-outline-variant         { border-color: var(--color-border-light); }
-.border-outline                 { border-color: var(--color-muted); }
-.text-on-surface                { color: var(--text-dark); }
-.text-on-surface-variant        { color: var(--text-secondary); }
-.text-primary                   { color: var(--color-navy); }
-.text-primary-container         { color: var(--color-navy-deep); }
-
-/* ============================================================
-   8. STATUS CHIPS
-   ============================================================ */
 .status-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   border-radius: 9999px;
-  border: 1px solid rgba(0, 19, 96, 0.12);
+  border: 1px solid rgba(0, 19, 96, 0.1);
   background: rgba(0, 19, 96, 0.08);
-  color: var(--color-navy);
-  padding: 0.4rem 0.75rem;
+  color: #001360;
+  padding: 0.4rem 0.7rem;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-/* ============================================================
-   9. SCROLLBAR
-   ============================================================ */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+@layer base {
+  button, a, input, textarea, select {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    min-height: auto;
+  }
+}
+
+/* 1. CUSTOM SCROLLBAR MODERN */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -411,24 +303,20 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 19, 96, 0.20);
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 19, 96, 0.40);
+  background: rgba(148, 163, 184, 0.6);
 }
 
-/* ============================================================
-   10. SELECTION
-   ============================================================ */
+/* 2. CUSTOM SELECTION */
 ::selection {
-  background-color: #001360;
+  background-color: #2563eb;
   color: #ffffff;
 }
 
-/* ============================================================
-   11. GLASSMORPHISM UTILITY
-   ============================================================ */
+/* 3. EFEK GLASSMORPHISM UTILITY */
 .glass-effect {
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
@@ -436,24 +324,20 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* ============================================================
-   12. MAP / LEAFLET
-   ============================================================ */
+/* 4. PENYESUAIAN PETA LEAFLET */
 .leaflet-container {
   z-index: 10;
   font-family: inherit;
 }
 .leaflet-container:focus {
-  outline: none;
+  outline: none; 
 }
 .leaflet-popup-content-wrapper {
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 19, 96, 0.12);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* ============================================================
-   13. MAP PIN ANIMATIONS
-   ============================================================ */
+/* 5. ANIMASI PIN PETA (GLOWING / RADAR EFFECT) */
 .custom-div-icon div {
   position: relative;
   transition: all 0.3s ease;
@@ -474,35 +358,22 @@
   animation: radarGlow 2s infinite ease-in-out;
 }
 
-/* ============================================================
-   14. KEYFRAMES
-   ============================================================ */
+/* 6. ANIMASI KEYFRAMES CUSTOM */
 @keyframes radarGlow {
-  0%   { transform: scale(0.8); opacity: 0.8; }
+  0% { transform: scale(0.8); opacity: 0.8; }
   100% { transform: scale(2.5); opacity: 0; }
 }
 
 @keyframes fadeInSmooth {
   from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInFromLeft {
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeInSmooth 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeInSmooth 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-slide-in {
-  animation: slideInFromLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* ============================================================
-   15. EYE ICON WRAPPER
-   ============================================================ */
+/* Eye Icon Wrapper to prevent Google Material Symbols text fallbacks */
 .eye-icon-wrapper {
   display: flex;
   align-items: center;
@@ -513,24 +384,13 @@
   white-space: nowrap;
   text-indent: 0;
 }
-.eye-icon-wrapper span,
-.eye-icon-wrapper i {
+.eye-icon-wrapper span, .eye-icon-wrapper i {
   width: 24px;
   height: 24px;
   overflow: hidden;
 }
 
-/* ============================================================
-   16. MOMENTUM SCROLLING
-   ============================================================ */
+/* Momentum scrolling utility */
 .overflow-x-auto {
   -webkit-overflow-scrolling: touch;
-}
-
-/* ============================================================
-   17. IMAGES & MEDIA
-   ============================================================ */
-img, video, canvas, svg {
-  max-width: 100%;
-  height: auto;
 }

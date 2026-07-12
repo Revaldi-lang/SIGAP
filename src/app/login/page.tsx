@@ -79,47 +79,47 @@ export default function AdminLogin() {
           </div>
 
           {errorMsg && (
-            <div className="bg-red-50 text-red-600 text-sm p-4 rounded-xl border border-red-200 mb-5 font-medium text-center">
+            <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg border border-red-200 mb-4 font-semibold text-center">
               {errorMsg}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Email Administrator</label>
+              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Email Administrator</label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667]/60 text-sm">mail</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">mail</span>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="admin@sigap.go.id"
-                  className="block w-full pl-10 pr-3 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18] transition"
+                  className="block w-full pl-10 pr-3 py-2.5 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] transition"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-semibold text-[#1C1B18]">Kata Sandi</label>
+                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider">Kata Sandi</label>
                 <button
                   type="button"
                   onClick={() => alert('Sandi di-reset oleh Admin Utama (admin@sigap.go.id)')}
-                  className="text-sm font-semibold text-[#001360] hover:underline focus:outline-none"
+                  className="text-[10px] font-bold text-[#001360] hover:underline focus:outline-none"
                 >
                   Lupa Sandi?
                 </button>
               </div>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667]/60 text-sm">lock</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">lock</span>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="block w-full pl-10 pr-12 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18] transition"
+                  placeholder="********"
+                  className="block w-full pl-10 pr-10 py-2.5 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] transition"
                 />
                 <button
                   type="button"
@@ -145,15 +145,15 @@ export default function AdminLogin() {
             <div>
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 bg-[#001360] text-white rounded-[28px] font-semibold text-sm transition shadow-lg hover:bg-[#223aa8] flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer min-h-[48px]"
+                className="w-full py-3 px-4 bg-[#001360] text-white rounded-lg font-bold text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
               >
                 Masuk Dasbor <span className="material-symbols-outlined text-sm">login</span>
               </button>
             </div>
           </form>
 
-          <div className="mt-8 pt-5 border-t border-[#E5E2E1] text-center">
-            <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-[#807667] hover:text-[#001360] transition font-medium">
+          <div className="mt-8 pt-4 border-t border-[#D3C5B1]/50 text-center">
+            <Link href="/" className="inline-flex items-center gap-1.5 text-[11px] text-[#4E4639] hover:text-[#001360] transition font-bold">
               <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali ke Halaman Utama
             </Link>
           </div>

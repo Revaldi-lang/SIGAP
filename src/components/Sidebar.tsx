@@ -48,36 +48,23 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
 
   return (
     <>
-      {/* Dark Navy Sidebar — Tomorro-structured */}
       <aside
-        className={`fixed left-0 top-0 h-full w-64 flex flex-col z-50 transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-6 z-50 transition-transform duration-300 md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        style={{ background: '#001360' }}
       >
         {/* Brand Area */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 px-6 py-5 border-b min-h-[72px] shrink-0"
-          style={{ borderColor: 'rgba(255,255,255,0.10)' }}
-          onClick={onClose}
-        >
-          <div className="bg-white/10 p-2 rounded-xl border border-white/15 flex items-center justify-center w-10 h-10 shrink-0">
-            <img alt="SIGAP Logo" className="h-7 w-auto object-contain" src="/assets/images/sigap.png" />
+        <Link href="/" className="flex items-center gap-3 px-2 py-4 mb-6 min-h-[44px]" onClick={onClose}>
+          <div className="bg-[#001360]/10 p-2 rounded-xl border border-[#001360]/20 flex items-center justify-center w-12 h-12 shrink-0">
+            <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" />
           </div>
-          <span className="font-bold text-lg text-white tracking-tight">SIGAP</span>
+          <span className="font-bold text-lg text-[#001360]">SIGAP</span>
         </Link>
 
         {/* User Profile Area */}
-        <div
-          className="px-6 py-4 border-b shrink-0"
-          style={{ borderColor: 'rgba(255,255,255,0.10)' }}
-        >
+        <div className="px-2 mb-6 border-b border-[#D3C5B1]/50 pb-6">
           <div className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs overflow-hidden shrink-0 border-2"
-              style={{ background: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.25)' }}
-            >
+            <div className="w-10 h-10 rounded-full bg-[#001360] flex items-center justify-center text-white font-bold text-sm shadow-md border border-white/20 overflow-hidden">
               {currentUser?.foto ? (
                 <img src={currentUser.foto} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
@@ -85,27 +72,18 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
               )}
             </div>
             <div className="overflow-hidden">
-              <h3 className="font-semibold text-white text-xs truncate max-w-[140px]">
+              <h3 className="font-bold text-[#1C1B18] text-xs truncate max-w-[130px]">
                 {currentUser?.username || 'Budi Santoso'}
               </h3>
-              <span
-                className="inline-block text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mt-1"
-                style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.75)', border: '1px solid rgba(255,255,255,0.2)' }}
-              >
+              <p className="text-[9px] text-[#4E4639] tracking-wider uppercase font-bold mt-0.5">
                 {currentUser?.role || 'Masyarakat'}
-              </span>
+              </p>
             </div>
           </div>
         </div>
 
         {/* Main Navigation */}
-        <nav className="flex-grow px-3 py-4 space-y-1 overflow-y-auto">
-          <p
-            className="px-3 text-[9px] font-bold uppercase tracking-widest mb-3"
-            style={{ color: 'rgba(255,255,255,0.30)' }}
-          >
-            Menu Utama
-          </p>
+        <nav className="flex-grow space-y-1">
           {menus.map(menu => {
             const active = isLinkActive(menu.path);
             return (
@@ -113,25 +91,15 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
                 key={menu.path}
                 href={menu.path}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 text-xs font-semibold`}
-                style={
+                className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all text-xs font-semibold ${
                   active
-                    ? { background: 'rgba(255,255,255,0.15)', color: '#FFFFFF', borderLeft: '3px solid rgba(255,255,255,0.8)' }
-                    : { color: 'rgba(255,255,255,0.65)' }
-                }
-                onMouseEnter={e => {
-                  if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)';
-                }}
-                onMouseLeave={e => {
-                  if (!active) (e.currentTarget as HTMLElement).style.background = '';
-                }}
+                    ? 'bg-[#001360] text-white font-bold shadow-md'
+                    : 'text-[#4E4639] hover:bg-[#FEFDF8] hover:text-[#001360]'
+                }`}
               >
                 <span
-                  className="material-symbols-outlined text-[18px] shrink-0"
-                  style={{
-                    fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0",
-                    color: active ? '#FFFFFF' : 'rgba(255,255,255,0.65)'
-                  }}
+                  className="material-symbols-outlined text-sm"
+                  style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0" }}
                 >
                   {menu.icon}
                 </span>
@@ -143,54 +111,34 @@ export default function Sidebar({ isOpen, onClose, isAdmin = false }: SidebarPro
 
         {/* CTA Action for Citizens */}
         {!isAdmin && (
-          <div
-            className="px-4 py-3 border-t"
-            style={{ borderColor: 'rgba(255,255,255,0.10)' }}
-          >
+          <div className="px-2 pb-4">
             <Link
               href="/buat-laporan"
               onClick={onClose}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-[28px] text-xs font-bold transition-all active:scale-[0.98]"
-              style={{ background: 'rgba(255,255,255,0.15)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.25)' }}
-              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.22)'}
-              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.15)'}
+              className="w-full bg-[#001360] text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all text-xs font-bold shadow-md"
             >
-              <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                add_circle
-              </span>
+              <span className="material-symbols-outlined text-sm">add_circle</span>
               <span>Buat Laporan</span>
             </Link>
           </div>
         )}
 
-        {/* Logout */}
-        <div
-          className="px-3 py-3 border-t shrink-0"
-          style={{ borderColor: 'rgba(255,255,255,0.10)' }}
-        >
+        {/* Logout Action */}
+        <div className="border-t border-[#D3C5B1]/50 pt-4 space-y-1">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors text-left text-xs font-semibold"
-            style={{ color: 'rgba(255,255,255,0.45)' }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.background = 'rgba(239,68,68,0.15)';
-              (e.currentTarget as HTMLElement).style.color = '#ef4444';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.background = '';
-              (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.45)';
-            }}
+            className="w-full flex items-center gap-4 text-red-600 hover:bg-red-50 px-4 py-3 rounded-lg transition-colors text-left text-xs font-bold"
           >
-            <span className="material-symbols-outlined text-[18px] shrink-0">logout</span>
+            <span className="material-symbols-outlined text-sm text-red-600">logout</span>
             <span>Keluar Sesi</span>
           </button>
         </div>
       </aside>
 
-      {/* Mobile Backdrop */}
+      {/* Backdrop for Mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-[40] md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/40 z-[40] md:hidden"
           onClick={onClose}
         ></div>
       )}

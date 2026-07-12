@@ -133,19 +133,19 @@ export default function BuatLaporan() {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Main Content Area */}
-        <main className="ml-0 md:ml-64 p-6 md:p-10 min-h-screen">
+        <main className="ml-0 md:ml-64 p-6 md:p-16 min-h-screen max-w-[1440px]">
           {/* Header */}
-          <header className="flex items-center gap-3 mb-10">
+          <header className="flex items-center gap-3 mb-12">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-xl flex items-center justify-center shrink-0 min-h-[44px] min-w-[44px]"
+              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-0.5">Buat Aduan Infrastruktur Baru</h1>
-              <p className="text-sm text-[#807667]">Laporkan kendala kerusakan jalan, saluran air, dan fasilitas umum kota.</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#001360]">Buat Aduan Infrastruktur Baru</h1>
+              <p className="text-xs text-[#4E4639] mt-0.5">Laporkan kendala kerusakan jalan, saluran air, dan fasilitas umum kota.</p>
             </div>
           </header>
 
@@ -154,8 +154,8 @@ export default function BuatLaporan() {
             {/* Left Column: Form Fields */}
             <div className="lg:col-span-7 space-y-6">
               {/* Category selector */}
-              <div className="bg-white border border-[#E5E2E1] p-6 rounded-2xl shadow-[0_2px_4px_rgba(0,19,96,0.04)]">
-                <h2 className="text-sm font-semibold text-[#1C1B18] mb-4 uppercase tracking-wider">Kategori Laporan</h2>
+              <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
+                <h2 className="text-sm font-bold text-[#1C1B18] mb-4 uppercase tracking-wider">Kategori Laporan</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[
                     { id: 'jalan', label: 'Jalan & Trotoar', icon: 'road' },
@@ -172,9 +172,9 @@ export default function BuatLaporan() {
                         onChange={() => setKategori(cat.id as 'jalan' | 'penerangan' | 'drainase' | 'fasilitas' | 'lainnya')}
                         className="peer sr-only"
                       />
-                      <div className="p-4 border border-[#D3C5B1] rounded-xl text-center peer-checked:border-[#001360] peer-checked:bg-[#001360]/5 group-hover:bg-[#F6F3EC] transition-all h-full flex flex-col items-center justify-center min-h-[80px]">
-                        <span className="material-symbols-outlined block mb-2 text-xl text-[#001360]">{cat.icon}</span>
-                        <span className="text-xs font-semibold text-[#1C1B18] leading-tight">{cat.label}</span>
+                      <div className="p-3 border border-[#D3C5B1] rounded-xl text-center peer-checked:border-[#001360] peer-checked:bg-[#001360]/5 group-hover:bg-[#F6F3EC] transition-all h-full flex flex-col items-center justify-center">
+                        <span className="material-symbols-outlined block mb-1 text-sm">{cat.icon}</span>
+                        <span className="text-[10px] font-bold leading-tight">{cat.label}</span>
                       </div>
                     </label>
                   ))}
@@ -182,9 +182,9 @@ export default function BuatLaporan() {
               </div>
 
               {/* Location Name & Details */}
-              <div className="legacy-card p-6 rounded-2xl space-y-6">
+              <div className="legacy-card p-6 rounded-xl space-y-5">
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2" htmlFor="input-lokasi">
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2" htmlFor="input-lokasi">
                     Nama Jalan / Lokasi Kerusakan
                   </label>
                   <input
@@ -194,44 +194,43 @@ export default function BuatLaporan() {
                     value={lokasi}
                     onChange={e => setLokasi(e.target.value)}
                     placeholder="Contoh: Jl. Ijen No. 12 (depan gerbang Katedral)"
-                    className="w-full bg-white border border-[#D3C5B1] rounded-lg p-3 text-sm text-[#1C1B18] focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none transition-all"
-                    style={{ minHeight: '48px' }}
+                    className="w-full bg-white border border-[#D3C5B1] rounded-lg p-3 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2" htmlFor="input-deskripsi">
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2" htmlFor="input-deskripsi">
                     Deskripsi Kejadian
                   </label>
                   <textarea
                     id="input-deskripsi"
                     required
-                    rows={5}
+                    rows={4}
                     value={deskripsi}
                     onChange={e => setDeskripsi(e.target.value)}
                     placeholder="Jelaskan detail permasalahan yang Anda temukan secara rinci..."
-                    className="w-full bg-white border border-[#D3C5B1] rounded-lg p-4 text-sm text-[#1C1B18] focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none transition-all resize-none"
+                    className="w-full bg-white border border-[#D3C5B1] rounded-lg p-4 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition-all resize-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Tingkat Urgensi</label>
+                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Tingkat Urgensi</label>
                   <div className="flex gap-6">
                     {[
                       { id: 'Rendah', label: 'Normal', colorClass: 'text-[#4E4639]' },
                       { id: 'Sedang', label: 'Penting', colorClass: 'text-[#001360]' },
                       { id: 'Tinggi', label: 'Mendesak', colorClass: 'text-red-600 font-bold' }
                     ].map(urg => (
-                      <label key={urg.id} className="flex items-center gap-2 cursor-pointer text-sm font-medium">
+                      <label key={urg.id} className="flex items-center gap-2 cursor-pointer text-xs">
                         <input
                           type="radio"
                           name="urgency"
                           value={urg.id}
                           checked={urgensi === urg.id}
                           onChange={() => setUrgensi(urg.id as 'Rendah' | 'Sedang' | 'Tinggi')}
-                          className="w-4 h-4 text-[#001360] border-[#D3C5B1] focus:ring-[#001360]/20"
+                          className="w-4 h-4 text-[#001360] border-[#D3C5B1] focus:ring-[#001360]"
                         />
-                        <span className={`${urg.colorClass}`}>{urg.label}</span>
+                        <span className={`font-semibold ${urg.colorClass}`}>{urg.label}</span>
                       </label>
                     ))}
                   </div>
@@ -239,9 +238,9 @@ export default function BuatLaporan() {
               </div>
 
               {/* Photo Upload Card */}
-              <div className="bg-white border border-[#E5E2E1] p-6 rounded-2xl shadow-[0_2px_4px_rgba(0,19,96,0.04)]">
-                <h2 className="text-sm font-semibold text-[#1C1B18] mb-1">Unggah Bukti</h2>
-                <p className="text-xs text-[#807667] mb-4">Tambahkan foto visual lokasi untuk mempercepat verifikasi laporan.</p>
+              <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
+                <h2 className="text-sm font-bold text-[#1C1B18] mb-1">Unggah Bukti</h2>
+                <p className="text-[11px] text-[#4E4639] mb-4">Tambahkan foto visual lokasi untuk mempercepat verifikasi laporan.</p>
 
                 {foto ? (
                   <div className="relative border border-[#D3C5B1] rounded-xl overflow-hidden max-w-sm">
@@ -249,13 +248,13 @@ export default function BuatLaporan() {
                     <button
                       type="button"
                       onClick={removeFoto}
-                      className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-2 hover:bg-red-700 transition"
+                      className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1.5 hover:bg-red-700 transition"
                     >
                       <span className="material-symbols-outlined text-xs block">delete</span>
                     </button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-[#D3C5B1] hover:border-[#001360] bg-[#F6F3EC]/30 rounded-xl p-8 text-center cursor-pointer transition relative">
+                  <div className="border-2 border-dashed border-[#D3C5B1] hover:border-[#001360] bg-[#F6F3EC]/30 rounded-xl p-6 text-center cursor-pointer transition relative">
                     <input
                       type="file"
                       id="input-foto"
@@ -265,8 +264,8 @@ export default function BuatLaporan() {
                     />
                     <div className="space-y-2">
                       <span className="material-symbols-outlined text-4xl text-[#807667]">cloud_upload</span>
-                      <p className="text-sm text-[#4E4639]"><span className="font-semibold text-[#001360]">Pilih berkas foto</span> atau tarik gambar ke sini</p>
-                      <p className="text-xs text-[#807667]">Mendukung format PNG, JPG, JPEG maks 5MB</p>
+                      <p className="text-xs text-[#4E4639]"><span className="font-bold text-[#001360]">Pilih berkas foto</span> atau tarik gambar ke sini</p>
+                      <p className="text-[10px] text-[#807667]">Mendukung format PNG, JPG, JPEG maks 5MB</p>
                     </div>
                   </div>
                 )}
@@ -275,37 +274,35 @@ export default function BuatLaporan() {
 
             {/* Right Column: Location & Submit */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="legacy-card rounded-2xl overflow-hidden flex flex-col">
-                <div className="p-6 border-b border-[#E5E2E1]">
-                  <h2 className="text-sm font-semibold text-[#1C1B18] mb-1">Lokasi Kejadian</h2>
-                  <p className="text-xs text-[#807667]">Ketik alamat atau klik pada peta digital di bawah ini untuk menandai titik presisi kerusakan.</p>
+              <div className="legacy-card rounded-xl overflow-hidden flex flex-col">
+                <div className="p-6 border-b border-[#D3C5B1]/50">
+                  <h2 className="text-sm font-bold text-[#1C1B18] mb-1">Lokasi Kejadian</h2>
+                  <p className="text-[11px] text-[#4E4639]">Ketik alamat atau klik pada peta digital di bawah ini untuk menandai titik presisi kerusakan.</p>
                 </div>
                 
                 {/* Dynamically Loaded Map */}
-                <div className="p-4 border-b border-[#E5E2E1]">
+                <div className="p-4 border-b border-[#D3C5B1]/50">
                   <MapSelector lat={lat} lng={lng} onChange={handleMapChange} address={lokasi} />
                 </div>
 
-                <div className="p-6 space-y-5">
+                <div className="p-6 space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-[#807667] mb-1">Latitude</label>
+                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Latitude</label>
                       <input
                         type="text"
                         readOnly
                         value={lat.toFixed(6)}
-                        className="w-full bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg px-3 py-2.5 text-xs font-mono text-[#4E4639] outline-none cursor-not-allowed"
-                        style={{ minHeight: '44px' }}
+                        className="w-full bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg px-3 py-2 text-xs font-mono text-[#4E4639] outline-none cursor-not-allowed"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#807667] mb-1">Longitude</label>
+                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Longitude</label>
                       <input
                         type="text"
                         readOnly
                         value={lng.toFixed(6)}
-                        className="w-full bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg px-3 py-2.5 text-xs font-mono text-[#4E4639] outline-none cursor-not-allowed"
-                        style={{ minHeight: '44px' }}
+                        className="w-full bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg px-3 py-2 text-xs font-mono text-[#4E4639] outline-none cursor-not-allowed"
                       />
                     </div>
                   </div>
@@ -313,7 +310,7 @@ export default function BuatLaporan() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#001360] text-white font-semibold py-3.5 px-6 rounded-[28px] text-sm transition-all hover:bg-[#223aa8] flex items-center justify-center gap-2 uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-50 min-h-[48px]"
+                    className="w-full bg-[#001360] text-white font-bold py-3.5 px-6 rounded-xl text-xs transition-all hover:opacity-90 flex items-center justify-center gap-2 uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>Mengirim Laporan...</>
