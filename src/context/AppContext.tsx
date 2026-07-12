@@ -104,8 +104,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           status: u.status === 'Menunggu' ? 'Menunggu Verifikasi' : u.status,
           registered: 'Terdaftar',
           password: u.password,
-          telepon: u.telepon || localStorage.getItem('sigap_user_phone_' + u.id) || '081234567890',
-          alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+          telepon: u.telepon || localStorage.getItem('sigap_user_phone_' + u.id) || '',
+          alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || '',
           foto: u.avatar_url || localStorage.getItem('sigap_user_foto_' + u.id) || undefined
         }));
         setUsers(mappedUsers);
@@ -251,8 +251,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         role: dbUserRole,
         status: dbUserStatus,
         registered: 'Google Sign-In',
-        telepon: existing?.telepon || localStorage.getItem('sigap_user_phone_' + dbUserId) || '081234567890',
-        alamat: existing?.alamat || localStorage.getItem('sigap_user_address_' + dbUserId) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+        telepon: existing?.telepon || localStorage.getItem('sigap_user_phone_' + dbUserId) || '',
+        alamat: existing?.alamat || localStorage.getItem('sigap_user_address_' + dbUserId) || '',
         foto: dbUserAvatar || localStorage.getItem('sigap_user_foto_' + dbUserId) || undefined
       };
 
@@ -294,8 +294,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             role: mappedRole,
             status: 'Aktif',
             registered: 'Cached Session',
-            telepon: parsed.telepon || localStorage.getItem('sigap_user_phone_' + parsed.id) || '081234567890',
-            alamat: parsed.alamat || localStorage.getItem('sigap_user_address_' + parsed.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+            telepon: parsed.telepon || localStorage.getItem('sigap_user_phone_' + parsed.id) || '',
+            alamat: parsed.alamat || localStorage.getItem('sigap_user_address_' + parsed.id) || '',
             foto: parsed.foto || localStorage.getItem('sigap_user_foto_' + parsed.id) || undefined
           });
         } catch (e) {
@@ -351,8 +351,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       email: matched.email,
       username: matched.username,
       id: matched.id,
-      telepon: matched.telepon || localStorage.getItem('sigap_user_phone_' + matched.id) || '081234567890',
-      alamat: matched.alamat || localStorage.getItem('sigap_user_address_' + matched.id) || 'Jl. Ijen No. 12, Klojen, Kota Malang',
+      telepon: matched.telepon || localStorage.getItem('sigap_user_phone_' + matched.id) || '',
+      alamat: matched.alamat || localStorage.getItem('sigap_user_address_' + matched.id) || '',
       foto: matched.foto || localStorage.getItem('sigap_user_foto_' + matched.id) || undefined
     };
 

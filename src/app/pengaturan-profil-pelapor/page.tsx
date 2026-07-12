@@ -21,8 +21,8 @@ function PengaturanProfilPelaporForm() {
   // Informasi Umum States - Initialize directly from currentUser (guaranteed non-null)
   const [nama, setNama] = useState(currentUser?.username || '');
   const [email, setEmail] = useState(currentUser?.email || '');
-  const [telepon, setTelepon] = useState(currentUser?.telepon || '081234567890');
-  const [alamat, setAlamat] = useState(currentUser?.alamat || 'Jl. Ijen No. 12, Klojen, Kota Malang');
+  const [telepon, setTelepon] = useState(currentUser?.telepon || '');
+  const [alamat, setAlamat] = useState(currentUser?.alamat || '');
 
   // Keamanan States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -190,6 +190,7 @@ function PengaturanProfilPelaporForm() {
                   rows={3}
                   value={alamat}
                   onChange={e => setAlamat(e.target.value)}
+                  placeholder="Masukkan alamat domisili lengkap Anda..."
                   className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] resize-none"
                 />
               </div>
