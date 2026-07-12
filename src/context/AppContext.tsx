@@ -121,9 +121,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               username: matched.username,
               email: matched.email,
               role: matched.role,
-              telepon: matched.telepon || prev.telepon,
-              alamat: matched.alamat || prev.alamat,
-              foto: matched.foto || prev.foto
+              identitas: matched.identitas,
+              // Prefer DB value; fall back to prev state (which may come from localStorage)
+              telepon: matched.telepon || prev.telepon || localStorage.getItem('sigap_user_phone_' + prev.id) || '',
+              alamat: matched.alamat || prev.alamat || localStorage.getItem('sigap_user_address_' + prev.id) || '',
+              foto: matched.foto || prev.foto || localStorage.getItem('sigap_user_foto_' + prev.id) || undefined,
             };
             const sessionData = {
               role: updatedUser.role === 'Masyarakat' ? 'pelapor' : updatedUser.role,
@@ -251,9 +253,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         role: dbUserRole,
         status: dbUserStatus,
         registered: 'Google Sign-In',
-        telepon: existing?.telepon || localStorage.getItem('sigap_user_phone_' + dbUserId) || '',
-        alamat: existing?.alamat || localStorage.getItem('sigap_user_address_' + dbUserId) || '',
-        foto: dbUserAvatar || localStorage.getItem('sigap_user_foto_' + dbUserId) || undefined
+        telepon: existing?.telepon || '',
+        alamat: existing?.alamat || '',
+        foto: dbUserAvatar || undefined
       };
 
       setCurrentUser(mappedUser);
@@ -294,9 +296,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             role: mappedRole,
             status: 'Aktif',
             registered: 'Cached Session',
-            telepon: parsed.telepon || localStorage.getItem('sigap_user_phone_' + parsed.id) || '',
-            alamat: parsed.alamat || localStorage.getItem('sigap_user_address_' + parsed.id) || '',
-            foto: parsed.foto || localStorage.getItem('sigap_user_foto_' + parsed.id) || undefined
+            telepon: parsed.telepon || '',
+            alamat: parsed.alamat || '',
+            foto: parsed.foto || undefined
           });
         } catch (e) {
           console.error(e);
@@ -351,9 +353,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       email: matched.email,
       username: matched.username,
       id: matched.id,
-      telepon: matched.telepon || localStorage.getItem('sigap_user_phone_' + matched.id) || '',
-      alamat: matched.alamat || localStorage.getItem('sigap_user_address_' + matched.id) || '',
-      foto: matched.foto || localStorage.getItem('sigap_user_foto_' + matched.id) || undefined
+      telepon: matched.telepon || '',
+      alamat: matched.alamat || '',
+      foto: matched.foto || undefined
     };
 
     localStorage.setItem('sigap_session', JSON.stringify(sessionData));
@@ -628,39 +630,57 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!currentUser) return false;
     try {
       if (supabase) {
-        // Update name, email, avatar_url, telepon, and alamat in Supabase users table
-        const { error } = await supabase
+        // Step 1: Update core fields that always exist in the schema
+        const coreUpdate: Record<string, string | null | undefined> = {
+          name: username,
+          email: email,
+        };
+        if (foto !== undefined) coreUpdate.avatar_url = foto || null;
+
+        const { error: coreError } = await supabase
           .from('users')
-          .update({ name: username, email: email, avatar_url: foto, telepon: telepon, alamat: alamat })
+          .update(coreUpdate)
           .eq('id', parseInt(currentUser.id));
-        
-        if (error) {
-          console.warn('Update with avatar_url failed, falling back to name/email/telepon/alamat:', error.message);
-          const { error: fallbackError } = await supabase
+
+        if (coreError) {
+          console.error('[updateUserProfile] Core update failed:', coreError.message, coreError.code);
+          throw coreError;
+        }
+
+        // Step 2: Try to update telepon and alamat (columns may not exist yet)
+        if (telepon !== undefined || alamat !== undefined) {
+          const extraUpdate: Record<string, string | undefined> = {};
+          if (telepon !== undefined) extraUpdate.telepon = telepon;
+          if (alamat !== undefined) extraUpdate.alamat = alamat;
+
+          const { error: extraError } = await supabase
             .from('users')
-            .update({ name: username, email: email, telepon: telepon, alamat: alamat })
+            .update(extraUpdate)
             .eq('id', parseInt(currentUser.id));
-          if (fallbackError) throw fallbackError;
+
+          if (extraError) {
+            // Column may not exist yet — log warning but don't fail the whole operation
+            console.warn(
+              '[updateUserProfile] Could not save telepon/alamat to DB (column may not exist yet).',
+              'Error:', extraError.message,
+              '\nSQL to fix: ALTER TABLE users ADD COLUMN IF NOT EXISTS telepon TEXT; ALTER TABLE users ADD COLUMN IF NOT EXISTS alamat TEXT;'
+            );
+          }
         }
       }
 
-      if (telepon) {
-        localStorage.setItem('sigap_user_phone_' + currentUser.id, telepon);
-      }
-      if (alamat) {
-        localStorage.setItem('sigap_user_address_' + currentUser.id, alamat);
-      }
-      if (foto) {
-        localStorage.setItem('sigap_user_foto_' + currentUser.id, foto);
-      }
+      // Always save to localStorage as a reliable cross-session cache
+      if (telepon !== undefined) localStorage.setItem('sigap_user_phone_' + currentUser.id, telepon);
+      if (alamat !== undefined)  localStorage.setItem('sigap_user_address_' + currentUser.id, alamat);
+      if (foto   !== undefined)  localStorage.setItem('sigap_user_foto_' + currentUser.id, foto);
 
       const updatedUser: User = {
         ...currentUser,
         username,
         email,
-        telepon: telepon || currentUser.telepon,
-        alamat: alamat || currentUser.alamat,
-        foto: foto || currentUser.foto
+        telepon: telepon !== undefined ? telepon : currentUser.telepon,
+        alamat:  alamat  !== undefined ? alamat  : currentUser.alamat,
+        foto:    foto    !== undefined ? foto    : currentUser.foto,
       };
 
       setCurrentUser(updatedUser);
@@ -683,9 +703,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             ...u,
             username,
             email,
-            telepon,
-            alamat,
-            foto
+            telepon: telepon !== undefined ? telepon : u.telepon,
+            alamat:  alamat  !== undefined ? alamat  : u.alamat,
+            foto:    foto    !== undefined ? foto    : u.foto,
           };
         }
         return u;
@@ -695,7 +715,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       return true;
     } catch (err) {
-      console.error('Failed to update user profile:', err);
+      console.error('[updateUserProfile] Failed:', err);
       return false;
     }
   };

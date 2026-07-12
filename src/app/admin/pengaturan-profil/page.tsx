@@ -256,19 +256,22 @@ function PengaturanProfilForm() {
                   <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">NIP Pegawai</label>
                   <input
                     type="text"
-                    value="19870412 201101 1 003"
+                    value={currentUser?.identitas || ''}
                     disabled
                     className="legacy-input w-full px-3 py-2 text-xs font-mono"
+                    placeholder="NIP belum diatur"
+                    title="NIP tidak dapat diubah secara mandiri"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Instansi Satuan Kerja</label>
+                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Instansi / Satuan Kerja</label>
                 <input
                   type="text"
-                  value="Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)"
+                  value={currentUser?.role === 'Petugas PUPR' ? 'Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)' : currentUser?.role === 'Administrator' ? 'Administrator Sistem SIGAP' : currentUser?.role || ''}
                   disabled
                   className="w-full px-3 py-2 bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg text-[#807667] cursor-not-allowed text-xs"
+                  title="Instansi ditentukan berdasarkan peran akun Anda"
                 />
               </div>
               <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
