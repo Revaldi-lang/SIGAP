@@ -69,7 +69,7 @@ interface AppContextType {
   users: User[];
   laporan: Laporan[];
   loading: boolean;
-  login: (email: string, role: string) => boolean;
+  login: (email: string, password: string, portal: 'pelapor' | 'admin') => { success: boolean; reason?: string };
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   registerWarga: (username: string, email: string, identitas: string, sandi: string) => boolean;
@@ -343,9 +343,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     initializeData();
   }, [handleSupabaseSession, pullFromSupabase]);
 
-  const login = (email: string, role: string): boolean => {
+  const login = (email: string, password: string, portal: 'pelapor' | 'admin'): { success: boolean; reason?: string } => {
     const matched = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (!matched) return false;
+
+    // 1. User not found
+    if (!matched) return { success: false, reason: 'not_found' };
+
+    // 2. Account is blocked
+    if (matched.status === 'Blokir') return { success: false, reason: 'blocked' };
+
+    // 3. Portal role enforcement:
+    //    - Citizen portal ('pelapor'): only 'Masyarakat' accounts allowed
+    //    - Admin portal ('admin'): only non-Masyarakat accounts allowed
+    if (portal === 'pelapor' && matched.role !== 'Masyarakat') {
+      return { success: false, reason: 'wrong_portal' };
+    }
+    if (portal === 'admin' && matched.role === 'Masyarakat') {
+      return { success: false, reason: 'wrong_portal' };
+    }
+
+    // 4. Password check (skip for OAuth-authenticated accounts)
+    if (matched.password && matched.password !== 'oauth_authenticated') {
+      if (matched.password !== password) {
+        return { success: false, reason: 'wrong_password' };
+      }
+    }
 
     const mappedRole = matched.role === 'Masyarakat' ? 'pelapor' : matched.role;
     const sessionData = {
@@ -362,7 +384,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('sigap_session_last_activity', Date.now().toString());
 
     setCurrentUser(matched);
-    return true;
+    return { success: true };
   };
 
   const loginGoogle = async () => {

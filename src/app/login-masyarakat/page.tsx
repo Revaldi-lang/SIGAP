@@ -27,10 +27,14 @@ export default function LoginMasyarakat() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
-    
-    const success = login(email, 'pelapor');
-    if (success) {
+
+    const result = login(email, password, 'pelapor');
+    if (result.success) {
       router.push('/dashboard-pelapor');
+    } else if (result.reason === 'wrong_portal') {
+      setErrorMsg('Akun ini bukan akun masyarakat. Gunakan portal Admin / Petugas untuk masuk.');
+    } else if (result.reason === 'blocked') {
+      setErrorMsg('Akun Anda telah diblokir. Hubungi administrator untuk informasi lebih lanjut.');
     } else {
       setErrorMsg('Alamat email atau kata sandi salah / akun belum terdaftar.');
     }

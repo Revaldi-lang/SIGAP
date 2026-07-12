@@ -28,10 +28,13 @@ export default function AdminLogin() {
     e.preventDefault();
     setErrorMsg('');
 
-    // Call Context Login
-    const success = login(email, 'admin');
-    if (success) {
+    const result = login(email, password, 'admin');
+    if (result.success) {
       router.push('/admin');
+    } else if (result.reason === 'wrong_portal') {
+      setErrorMsg('Akun ini bukan akun admin / petugas. Gunakan portal Masyarakat untuk masuk.');
+    } else if (result.reason === 'blocked') {
+      setErrorMsg('Akun ini telah diblokir. Hubungi administrator utama sistem.');
     } else {
       setErrorMsg('Kredensial email atau kata sandi administrator salah.');
     }
