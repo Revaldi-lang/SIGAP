@@ -163,26 +163,26 @@ function PengaturanProfilPelaporForm() {
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Main Content Area */}
-      <main className="ml-0 md:ml-64 p-6 md:p-12 min-h-screen max-w-[1024px] flex flex-col">
+      <main className="ml-0 md:ml-64 p-6 md:p-10 min-h-screen">
         {/* Header */}
-        <header className="flex justify-between items-center mb-12 shrink-0">
+        <header className="flex justify-between items-center mb-10 shrink-0">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
+              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-xl flex items-center justify-center shrink-0 min-h-[44px] min-w-[44px]"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-1">Pengaturan Profil</h1>
-              <p className="text-xs text-[#4E4639]">Kelola data diri, foto profil, dan keamanan sandi akun pelapor Anda.</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-0.5">Pengaturan Profil</h1>
+              <p className="text-sm text-[#807667]">Kelola data diri, foto profil, dan keamanan sandi akun pelapor Anda.</p>
             </div>
           </div>
         </header>
 
         {/* Avatar Banner Card */}
-        <div className="legacy-card p-6 rounded-xl flex flex-col sm:flex-row items-center gap-6 mb-8 shrink-0">
+        <div className="legacy-card p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 mb-8 shrink-0">
           <div className="relative group">
             {foto ? (
               <img
@@ -217,15 +217,15 @@ function PengaturanProfilPelaporForm() {
             <h3 className="text-base font-bold text-[#1C1B18]">
               {uploading ? 'Sedang mengunggah foto...' : (nama || 'Nama Pengguna')}
             </h3>
-            <p className="text-xs text-[#4E4639] mt-0.5">
+            <p className="text-xs text-[#807667] mt-0.5">
               {uploading ? 'Mohon tunggu sebentar...' : (email || 'email@domain.com')}
             </p>
-            <div className="mt-3 flex flex-wrap justify-center sm:justify-start gap-2">
+            <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2.5">
               <button
                 type="button"
                 onClick={() => document.getElementById('upload-avatar-pelapor')?.click()}
                 disabled={uploading}
-                className="bg-[#001360] text-white text-[10px] font-bold py-2 px-4 rounded-lg hover:opacity-90 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[#001360] text-white text-xs font-semibold py-2 px-5 rounded-[28px] hover:bg-[#223aa8] transition-all disabled:opacity-50 disabled:cursor-not-allowed min-h-[36px]"
               >
                 {uploading ? 'Mengunggah...' : 'Ganti Foto'}
               </button>
@@ -233,12 +233,12 @@ function PengaturanProfilPelaporForm() {
                 type="button"
                 onClick={() => setFoto('')}
                 disabled={uploading || !foto}
-                className="bg-[#F6F3EC] border border-[#D3C5B1] hover:bg-white text-[#4E4639] text-[10px] font-bold py-2 px-4 rounded-lg transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="bg-[#F6F3EC] border border-[#D3C5B1] hover:bg-white text-[#4E4639] text-xs font-semibold py-2 px-5 rounded-[28px] transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]"
               >
                 Hapus
               </button>
             </div>
-            <span className="inline-block bg-[#001360]/10 text-[#001360] text-[9px] font-bold px-2 py-0.5 rounded-full border border-[#001360]/10 uppercase tracking-wider mt-3">
+            <span className="inline-block bg-[#001360]/08 text-[#001360] text-[9px] font-bold px-2 py-0.5 rounded-full border border-[#001360]/15 uppercase tracking-wider mt-3.5">
               Pelapor / Warga
             </span>
           </div>
@@ -248,20 +248,20 @@ function PengaturanProfilPelaporForm() {
         <div className="border-b border-[#D3C5B1] flex gap-6 mb-6 shrink-0">
           <button
             onClick={() => setActiveTab('umum')}
-            className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
+            className={"pb-3 font-semibold text-sm transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'umum'
                 ? 'border-[#001360] text-[#001360]'
-                : 'border-transparent text-[#4E4639] hover:text-[#1C1B18]'
+                : 'border-transparent text-[#807667] hover:text-[#1C1B18]'
             )}
           >
             <span className="material-symbols-outlined text-sm">badge</span> Informasi Umum
           </button>
           <button
             onClick={() => setActiveTab('keamanan')}
-            className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
+            className={"pb-3 font-semibold text-sm transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'keamanan'
                 ? 'border-[#001360] text-[#001360]'
-                : 'border-transparent text-[#4E4639] hover:text-[#1C1B18]'
+                : 'border-transparent text-[#807667] hover:text-[#1C1B18]'
             )}
           >
             <span className="material-symbols-outlined text-sm">lock</span> Keamanan Akun
@@ -270,67 +270,71 @@ function PengaturanProfilPelaporForm() {
 
         {/* Panel Informasi Umum */}
         {activeTab === 'umum' && (
-          <div className="bg-white border border-[#D3C5B1] rounded-2xl p-6 shadow-sm flex-grow">
-            <form onSubmit={handleSaveUmum} className="space-y-4">
+          <div className="bg-white border border-[#E5E2E1] rounded-2xl p-6 shadow-[0_2px_4px_rgba(0,19,96,0.04)] flex-grow">
+            <form onSubmit={handleSaveUmum} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nama Lengkap</label>
+                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Nama Lengkap</label>
                   <input
                     type="text"
                     required
                     value={nama}
                     onChange={e => setNama(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
+                    style={{ minHeight: '48px' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
+                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Alamat Email</label>
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
+                    style={{ minHeight: '48px' }}
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nomor Telepon / WhatsApp</label>
+                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Nomor Telepon / WhatsApp</label>
                   <input
                     type="text"
                     required
                     value={telepon}
                     onChange={e => setTelepon(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
+                    style={{ minHeight: '48px' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">NIK Penduduk (KTP)</label>
+                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">NIK Penduduk (KTP)</label>
                   <input
                     type="text"
                     value={currentUser?.identitas || '-'}
                     disabled
-                    className="w-full px-3 py-2 bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg text-[#807667] font-mono cursor-not-allowed text-xs"
+                    className="w-full px-4 py-3 bg-[#F6F3EC] border border-[#D3C5B1] rounded-xl text-[#807667] font-mono cursor-not-allowed text-sm"
                     title="NIK terverifikasi tidak dapat diubah secara mandiri"
+                    style={{ minHeight: '48px' }}
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Domisili</label>
+                <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Alamat Domisili</label>
                 <textarea
                   rows={3}
                   value={alamat}
                   onChange={e => setAlamat(e.target.value)}
                   placeholder="Masukkan alamat domisili lengkap Anda..."
-                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] resize-none"
+                  className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18] resize-none"
                 />
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
+              <div className="flex justify-end pt-4 border-t border-[#E5E2E1]">
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="bg-[#001360] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-[#001360] text-white font-semibold py-3 px-6 rounded-[28px] text-sm transition-all hover:bg-[#223aa8] flex items-center gap-2 cursor-pointer shadow-md disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px]"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">save</span> Simpan Perubahan
                 </button>
@@ -341,47 +345,50 @@ function PengaturanProfilPelaporForm() {
 
         {/* Panel Keamanan */}
         {activeTab === 'keamanan' && (
-          <div className="bg-white border border-[#D3C5B1] rounded-2xl p-6 shadow-sm flex-grow">
-            <form onSubmit={handleSaveSandi} className="space-y-4">
+          <div className="bg-white border border-[#E5E2E1] rounded-2xl p-6 shadow-[0_2px_4px_rgba(0,19,96,0.04)] flex-grow">
+            <form onSubmit={handleSaveSandi} className="space-y-5">
               <div>
-                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi Sekarang</label>
+                <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Kata Sandi Sekarang</label>
                 <input
                   type="password"
                   required
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
                   placeholder="Masukkan kata sandi saat ini..."
-                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                  className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
+                  style={{ minHeight: '48px' }}
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi Baru</label>
+                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Kata Sandi Baru</label>
                   <input
                     type="password"
                     required
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     placeholder="Minimal 8 karakter..."
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
+                    style={{ minHeight: '48px' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Konfirmasi Kata Sandi Baru</label>
+                  <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Konfirmasi Kata Sandi Baru</label>
                   <input
                     type="password"
                     required
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Ulangi kata sandi baru..."
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18]"
+                    style={{ minHeight: '48px' }}
                   />
                 </div>
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
+              <div className="flex justify-end pt-4 border-t border-[#E5E2E1]">
                 <button
                   type="submit"
-                  className="bg-[#001360] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
+                  className="bg-[#001360] text-white font-semibold py-3 px-6 rounded-[28px] text-sm transition-all hover:bg-[#223aa8] flex items-center gap-2 cursor-pointer shadow-md min-h-[48px]"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">key</span> Perbarui Kata Sandi
                 </button>

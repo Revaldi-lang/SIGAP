@@ -110,23 +110,23 @@ function DetailContent({ reportId }: { reportId: string }) {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
 
         {/* Main Content Area */}
-        <main className="ml-0 md:ml-64 p-6 md:p-12 min-h-screen">
+        <main className="ml-0 md:ml-64 p-6 md:p-10 min-h-screen">
           {/* Header */}
-          <header className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4 mb-12">
+          <header className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4 mb-10">
             <div>
-              <nav className="flex items-center gap-2 text-[#4E4639] mb-4">
-                <Link className="text-[10px] font-bold uppercase tracking-wider hover:underline" href="/admin/laporan">Manajemen Laporan</Link>
+              <nav className="flex items-center gap-2 text-[#807667] mb-4">
+                <Link className="text-xs font-semibold uppercase tracking-wider hover:underline" href="/admin/laporan">Manajemen Laporan</Link>
                 <span className="material-symbols-outlined text-xs">chevron_right</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#001360]">Detail Laporan</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#001360]">Detail Laporan</span>
               </nav>
               <div className="flex items-center gap-3">
                 <span className="font-mono text-[#807667] font-bold text-lg">#{aduan.id}</span>
                 <h1 className="text-xl sm:text-2xl font-bold text-[#001360]">{aduan.kategoriLabel}</h1>
               </div>
-              <p className="text-[10px] text-[#807667] mt-2 flex items-center gap-3 font-semibold">
+              <p className="text-sm text-[#807667] mt-2 flex items-center gap-3 font-semibold">
                 <span>Pelapor: {aduan.pelapor}</span>
                 <span>•</span>
-                <span>Status: {aduan.waktu}</span>
+                <span>Waktu: {aduan.waktu}</span>
               </p>
             </div>
             <div>
@@ -142,9 +142,9 @@ function DetailContent({ reportId }: { reportId: string }) {
             <div className="lg:col-span-8 space-y-6">
               {/* Visual Proof Section */}
               <section className="page-card rounded-2xl overflow-hidden">
-                <div className="p-6 border-b border-[#D3C5B1]/50 flex justify-between items-center bg-white">
-                  <h2 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider">Bukti Visual Kerusakan</h2>
-                  <span className={"text-[10px] px-3 py-1 rounded-md font-bold border uppercase tracking-wider " + getUrgencyClass(aduan.urgensi)}>
+                <div className="p-6 border-b border-[#E5E2E1] flex justify-between items-center bg-white">
+                  <h2 className="text-sm font-semibold text-[#1C1B18] uppercase tracking-wider">Bukti Visual Kerusakan</h2>
+                  <span className={"text-xs px-3 py-1 rounded-md font-bold border uppercase tracking-wider " + getUrgencyClass(aduan.urgensi)}>
                     Urgensi: {aduan.urgensi}
                   </span>
                 </div>
@@ -163,23 +163,24 @@ function DetailContent({ reportId }: { reportId: string }) {
               {/* Information Grid */}
               <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Description */}
-                <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
-                  <h3 className="text-xs font-bold text-[#807667] uppercase tracking-wider mb-4 border-b border-[#D3C5B1]/50 pb-2">Deskripsi Kerusakan Warga</h3>
-                  <p className="text-xs sm:text-sm text-[#4E4639] leading-relaxed whitespace-pre-line">{aduan.deskripsi}</p>
+                <div className="bg-white border border-[#E5E2E1] p-6 rounded-2xl shadow-[0_2px_4px_rgba(0,19,96,0.04)]">
+                  <h3 className="text-xs font-semibold text-[#807667] uppercase tracking-wider mb-4 border-b border-[#E5E2E1] pb-2">Deskripsi Kerusakan Warga</h3>
+                  <p className="text-sm text-[#4E4639] leading-relaxed whitespace-pre-line">{aduan.deskripsi}</p>
                 </div>
 
                 {/* Status Action Form */}
-                <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
-                  <h3 className="text-xs font-bold text-[#807667] uppercase tracking-wider mb-4 border-b border-[#D3C5B1]/50 pb-2 flex items-center gap-1.5">
+                <div className="bg-white border border-[#E5E2E1] p-6 rounded-2xl shadow-[0_2px_4px_rgba(0,19,96,0.04)]">
+                  <h3 className="text-xs font-semibold text-[#807667] uppercase tracking-wider mb-4 border-b border-[#E5E2E1] pb-2 flex items-center gap-1.5">
                     <span className="material-symbols-outlined text-sm">settings_suggest</span> Pembaruan Status &amp; Validasi
                   </h3>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Status Laporan</label>
+                      <label className="block text-xs font-semibold text-[#1C1B18] mb-2">Status Laporan</label>
                       <select
                         value={status}
                         onChange={e => setStatus(e.target.value as 'baru' | 'proses' | 'selesai')}
-                        className="w-full px-3 py-2 text-xs border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none bg-white text-[#1C1B18] font-semibold"
+                        className="w-full px-4 py-2.5 text-sm border border-[#D3C5B1] rounded-xl focus:ring-2 focus:ring-[#001360]/20 focus:border-[#001360] outline-none bg-white text-[#1C1B18] font-medium"
+                        style={{ minHeight: '48px' }}
                       >
                         <option value="baru">Baru Masuk</option>
                         <option value="proses">Validasikan &amp; Proses Perbaikan</option>
@@ -188,11 +189,12 @@ function DetailContent({ reportId }: { reportId: string }) {
                     </div>
                     
                     <div>
-                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Disposisi Instansi</label>
+                      <label className="block text-xs font-semibold text-[#1C1B18] mb-2">Disposisi Instansi</label>
                       <select
                         value={dinas}
                         onChange={e => setDinas(e.target.value)}
-                        className="w-full px-3 py-2 text-xs border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none bg-white text-[#1C1B18] font-semibold"
+                        className="w-full px-4 py-2.5 text-sm border border-[#D3C5B1] rounded-xl focus:ring-2 focus:ring-[#001360]/20 focus:border-[#001360] outline-none bg-white text-[#1C1B18] font-medium"
+                        style={{ minHeight: '48px' }}
                       >
                         <option value="">Pilih Dinas Terkait</option>
                         <option value="Dinas PUPR">Dinas PUPR (Pekerjaan Umum)</option>
@@ -202,22 +204,22 @@ function DetailContent({ reportId }: { reportId: string }) {
                     </div>
 
                     <div>
-                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Catatan Intervensi Teknis</label>
+                      <label className="block text-xs font-semibold text-[#1C1B18] mb-2">Catatan Intervensi Teknis</label>
                       <textarea
                         required
                         rows={3}
                         value={catatan}
                         onChange={e => setCatatan(e.target.value)}
                         placeholder="Masukkan instruksi penanganan..."
-                        className="legacy-input w-full px-3 py-2 text-xs resize-none"
+                        className="w-full px-4 py-3 bg-white border border-[#D3C5B1] rounded-xl focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none text-sm text-[#1C1B18] resize-none"
                       />
                     </div>
 
-                    <div className="flex justify-end pt-1">
+                    <div className="flex justify-end pt-2">
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="legacy-btn-primary py-2.5 px-5 rounded-lg text-xs uppercase tracking-wider disabled:opacity-50"
+                        className="bg-[#001360] hover:bg-[#223aa8] text-white font-semibold py-2.5 px-6 rounded-[28px] text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer disabled:opacity-50 min-h-[44px]"
                       >
                         <span className="material-symbols-outlined text-sm">save</span> Simpan Perubahan
                       </button>
@@ -231,11 +233,11 @@ function DetailContent({ reportId }: { reportId: string }) {
             <div className="lg:col-span-4 space-y-6">
               {/* Location */}
               <section className="page-card p-6 rounded-2xl space-y-4">
-                <h3 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider">Lokasi Titik Aduan</h3>
+                <h3 className="text-sm font-semibold text-[#1C1B18] uppercase tracking-wider">Lokasi Titik Aduan</h3>
                 
                 <MapDetailView lat={aduan.lat} lng={aduan.lng} kategori={aduan.kategori} />
                 
-                <div className="text-[11px] space-y-2 bg-[#F6F3EC] p-4 rounded-xl border border-[#D3C5B1]/50">
+                <div className="text-xs space-y-2 bg-[#F6F3EC] p-4 rounded-xl border border-[#D3C5B1]/50">
                   <div className="flex justify-between gap-4">
                     <span className="text-[#4E4639] font-medium shrink-0">Alamat:</span>
                     <span className="text-[#1C1B18] font-bold text-right">{aduan.lokasi}</span>
@@ -255,15 +257,15 @@ function DetailContent({ reportId }: { reportId: string }) {
 
               {/* Timeline Logs */}
               <section className="page-card p-6 rounded-2xl">
-                <h3 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider mb-6">Log Alur Riwayat</h3>
-                <div className="relative pl-4 border-l-2 border-[#D3C5B1]/50 ml-2 space-y-6">
+                <h3 className="text-sm font-semibold text-[#1C1B18] uppercase tracking-wider mb-6">Log Alur Riwayat</h3>
+                <div className="relative pl-4 border-l-2 border-[#E5E2E1] ml-2 space-y-6">
                   {aduan.logs.map((log, index) => (
                     <div key={index} className="relative">
                       {/* Timeline Bullet */}
                       <span className="absolute -left-[23px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-[#001360] shadow-sm"></span>
                       <div>
-                        <h4 className="font-bold text-[#1C1B18] text-xs">{log.judul}</h4>
-                        <p className="text-[10px] text-[#4E4639] mt-1">{log.aktor} • {log.waktu}</p>
+                        <h4 className="font-semibold text-[#1C1B18] text-xs">{log.judul}</h4>
+                        <p className="text-[10px] text-[#807667] mt-1">{log.aktor} • {log.waktu}</p>
                       </div>
                     </div>
                   ))}

@@ -20,7 +20,6 @@ export default function PetaPelapor() {
       setStatusFilters([...statusFilters, status]);
     }
   };
-
   return (
     <AuthGuard allowedRoles={['Masyarakat']}>
       <div className="min-h-screen page-shell flex flex-col">
@@ -28,39 +27,39 @@ export default function PetaPelapor() {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Main Content Area */}
-        <main className="ml-0 md:ml-64 p-6 md:p-12 min-h-screen flex flex-col">
+        <main className="ml-0 md:ml-64 p-6 md:p-10 min-h-screen flex flex-col">
           {/* Header */}
           <header className="flex items-center gap-3 mb-6 shrink-0">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center mr-2 shrink-0"
+              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-xl flex items-center justify-center shrink-0 min-h-[44px] min-w-[44px]"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-1">Peta Sebaran Laporan Warga</h1>
-              <p className="text-xs text-[#4E4639]">Lihat sebaran spasial lokasi aduan infrastruktur dari masyarakat luas secara real-time.</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-0.5">Peta Sebaran Laporan Warga</h1>
+              <p className="text-sm text-[#807667]">Lihat sebaran spasial lokasi aduan infrastruktur dari masyarakat luas secara real-time.</p>
             </div>
           </header>
 
           {/* Filter Map Panel */}
-          <section className="page-card p-4 rounded-xl mb-6 flex flex-wrap gap-6 items-center shrink-0">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#4E4639]">Filter Status Laporan:</span>
+          <section className="page-card p-5 rounded-2xl mb-6 flex flex-wrap gap-6 items-center shrink-0">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#807667]">Filter Status Laporan:</span>
             <div className="flex flex-wrap gap-5">
               {[
                 { id: 'baru', label: 'Baru Masuk', colorClass: 'bg-[#ef4444]' },
                 { id: 'proses', label: 'Sedang Diproses', colorClass: 'bg-[#f59e0b]' },
                 { id: 'selesai', label: 'Selesai Perbaikan', colorClass: 'bg-[#22c55e]' }
               ].map(filter => (
-                <label key={filter.id} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[#1C1B18]">
+                <label key={filter.id} className="flex items-center gap-2 cursor-pointer text-sm font-semibold text-[#1C1B18]">
                   <input
                     type="checkbox"
                     checked={statusFilters.includes(filter.id)}
                     onChange={() => handleFilterChange(filter.id)}
-                    className="rounded border-[#D3C5B1] text-[#001360] focus:ring-[#001360] h-4 w-4"
+                    className="rounded border-[#D3C5B1] text-[#001360] focus:ring-[#001360]/20 h-4 w-4 cursor-pointer animate-pulse-none"
                   />
-                  <span className="inline-flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1.5 ml-1">
                     <span className={`w-2.5 h-2.5 rounded-full ${filter.colorClass}`}></span>
                     {filter.label}
                   </span>
