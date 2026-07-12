@@ -1,8 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Session } from '@supabase/supabase-js';
+import { createClient, Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import bcrypt from 'bcryptjs';
 
 export interface User {
   id: string;
@@ -364,7 +365,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     // 4. Password check (skip for OAuth-authenticated accounts)
     if (matched.password && matched.password !== 'oauth_authenticated') {
-      if (matched.password !== password) {
+      const isBcrypt = matched.password.startsWith('$2a$') || matched.password.startsWith('$2b$') || matched.password.startsWith('$2y$');
+      const isMatch = isBcrypt
+        ? bcrypt.compareSync(password, matched.password)
+        : matched.password === password;
+
+      if (!isMatch) {
         return { success: false, reason: 'wrong_password' };
       }
     }
@@ -412,6 +418,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (emailExists) return false;
 
     const id = Date.now().toString();
+    const hashedPassword = bcrypt.hashSync(sandi, 10);
     const newUser: User = {
       id,
       username,
@@ -419,7 +426,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       identitas,
       role: 'Masyarakat',
       status: 'Aktif',
-      registered: 'Pendaftaran Mandiri'
+      registered: 'Pendaftaran Mandiri',
+      password: hashedPassword
     };
 
     const updated = [...users, newUser];
@@ -433,7 +441,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       nik: identitas,
       role: 'Masyarakat',
       status: 'Aktif',
-      password: sandi
+      password: hashedPassword
     }).then(({ error }) => {
       if (error) console.error('Supabase user insert error:', error);
       pullFromSupabase();
@@ -756,16 +764,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!userInDb) return { success: false, message: 'Data user tidak ditemukan.' };
 
     // If password is set in DB, check it
-    if (userInDb.password && userInDb.password !== 'oauth_authenticated' && userInDb.password !== currentPassword) {
-      return { success: false, message: 'Kata sandi saat ini salah.' };
+    if (userInDb.password && userInDb.password !== 'oauth_authenticated') {
+      const isBcrypt = userInDb.password.startsWith('$2a$') || userInDb.password.startsWith('$2b$') || userInDb.password.startsWith('$2y$');
+      const isMatch = isBcrypt
+        ? bcrypt.compareSync(currentPassword, userInDb.password)
+        : userInDb.password === currentPassword;
+
+      if (!isMatch) {
+        return { success: false, message: 'Kata sandi saat ini salah.' };
+      }
     }
 
     try {
+      const hashedPassword = bcrypt.hashSync(newPassword, 10);
       if (supabase) {
         // Use email as the stable identifier — avoids parseInt(id) issues
         const { error } = await supabase
           .from('users')
-          .update({ password: newPassword })
+          .update({ password: hashedPassword })
           .eq('email', currentUser.email);
         if (error) throw error;
       }
@@ -773,7 +789,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Update in users state & localStorage
       const updatedUsers = users.map(u => {
         if (u.id === currentUser.id) {
-          return { ...u, password: newPassword };
+          return { ...u, password: hashedPassword };
         }
         return u;
       });
