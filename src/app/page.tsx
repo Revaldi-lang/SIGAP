@@ -30,70 +30,69 @@ export default function LandingPage() {
             style={{ backgroundImage: 'radial-gradient(#ffffff 0.8px, transparent 0.8px)', backgroundSize: '24px 24px' }}
           />
 
-          <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-16 items-center relative z-10">
-            <div className="space-y-7">
-              {/* Badge */}
-              <span className="inline-flex items-center gap-2 text-[11px] font-bold text-white/90 tracking-widest uppercase bg-white/10 border border-white/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Portal Resmi Pelayanan
-              </span>
+          <div className="max-w-[1280px] mx-auto flex flex-col items-center text-center relative z-10">
+            {/* Badge */}
+            <span className="inline-flex items-center gap-2 text-[11px] font-bold text-white/90 tracking-widest uppercase bg-white/10 border border-white/20 px-4 py-1.5 rounded-full backdrop-blur-sm mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Portal Resmi Pelayanan
+            </span>
 
-              <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold text-white max-w-xl leading-tight" style={{ letterSpacing: '-0.02em' }}>
-                Efisiensi Publik Dalam Satu Genggaman.
-              </h1>
+            <h1 className="font-display-lg text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-bold text-white max-w-4xl leading-tight" style={{ letterSpacing: '-0.02em' }}>
+              Efisiensi Publik Dalam Satu Genggaman.
+            </h1>
 
-              <p className="font-body-lg text-base sm:text-lg text-white/75 max-w-md leading-relaxed">
-                SIGAP menghadirkan transparansi dan kemudahan akses bagi setiap warga negara. Lapor, pantau, dan selesaikan urusan aduan Anda dengan standar layanan terbaik.
-              </p>
+            <p className="font-body-lg text-base sm:text-lg md:text-xl text-white/75 max-w-2xl leading-relaxed mt-6">
+              SIGAP menghadirkan transparansi dan kemudahan akses bagi setiap warga negara. Lapor, pantau, dan selesaikan urusan aduan Anda dengan standar layanan terbaik.
+            </p>
 
-              <div className="flex flex-wrap gap-4 pt-2">
-                {/* Primary CTA — Tomorro pill shape, navy palette: white on dark */}
-                <button
-                  onClick={() => setAuthModalOpen(true)}
-                  className="bg-white text-[#001360] px-8 py-3.5 rounded-[28px] font-bold flex items-center justify-center gap-2 hover:bg-slate-100 transition-all active:scale-95 cursor-pointer min-h-[48px] text-sm shadow-lg"
-                >
-                  Buat Laporan Sekarang
-                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </button>
+            <div className="flex flex-wrap justify-center gap-4 mt-8 w-full">
+              {/* Primary CTA — Tomorro pill shape, navy palette: white on dark */}
+              <button
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-white text-[#001360] px-8 py-3.5 rounded-[28px] font-bold flex items-center justify-center gap-2 hover:bg-slate-100 transition-all active:scale-95 cursor-pointer min-h-[48px] text-sm shadow-lg"
+              >
+                Buat Laporan Sekarang
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
 
-                {/* Secondary CTA */}
-                <a
-                  href="#info-section"
-                  className="border border-white/40 text-white px-8 py-3.5 rounded-[28px] font-semibold hover:bg-white/10 transition-all text-center inline-flex items-center min-h-[48px] text-sm"
-                >
-                  Pelajari Selengkapnya
-                </a>
+              {/* Secondary CTA */}
+              <a
+                href="#info-section"
+                className="border border-white/40 text-white px-8 py-3.5 rounded-[28px] font-semibold hover:bg-white/10 transition-all text-center inline-flex items-center min-h-[48px] text-sm justify-center"
+              >
+                Pelajari Selengkapnya
+              </a>
+            </div>
+
+            {/* Stats Row */}
+            <div className="flex justify-center gap-12 md:gap-20 pt-8 border-t border-white/10 mt-12 w-full max-w-3xl">
+              <div>
+                <div className="text-3xl sm:text-4xl font-bold text-white">{loading ? '98%' : '100%'}</div>
+                <div className="text-[11px] font-bold text-white/50 uppercase tracking-wider mt-1">Penyelesaian</div>
               </div>
-
-              {/* Stats Row */}
-              <div className="flex gap-8 pt-4 border-t border-white/10 mt-2">
-                <div>
-                  <div className="text-2xl font-bold text-white">{loading ? '98%' : '100%'}</div>
-                  <div className="text-[10px] font-bold text-white/50 uppercase tracking-wider mt-0.5">Penyelesaian</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-white">{totalAduan}</div>
-                  <div className="text-[10px] font-bold text-white/50 uppercase tracking-wider mt-0.5">Laporan Masuk</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-white">{totalSelesai}</div>
-                  <div className="text-[10px] font-bold text-white/50 uppercase tracking-wider mt-0.5">Laporan Selesai</div>
-                </div>
+              <div>
+                <div className="text-3xl sm:text-4xl font-bold text-white">{totalAduan}</div>
+                <div className="text-[11px] font-bold text-white/50 uppercase tracking-wider mt-1">Laporan Masuk</div>
+              </div>
+              <div>
+                <div className="text-3xl sm:text-4xl font-bold text-white">{totalSelesai}</div>
+                <div className="text-[11px] font-bold text-white/50 uppercase tracking-wider mt-1">Laporan Selesai</div>
               </div>
             </div>
 
-            {/* Hero Image */}
-            <div className="relative hidden md:block">
+            {/* Centered Hero Image Block */}
+            <div className="relative w-full max-w-4xl mt-16 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
               <div
-                className="aspect-square bg-slate-700 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+                className="aspect-[16/10] sm:aspect-[16/9] w-full bg-slate-700"
                 style={{
-                  backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80')",
+                  backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80')",
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
               />
-              {/* Floating Card */}
-              <div className="absolute -bottom-6 -left-8 bg-white p-5 rounded-2xl border border-[#E5E2E1] max-w-[260px] shadow-xl animate-fade-in">
+              
+              {/* Floating Card - overlayed inside the image block for clean presentation */}
+              <div className="absolute bottom-6 left-6 bg-white p-5 rounded-2xl border border-[#E5E2E1] max-w-[260px] shadow-xl text-left hidden md:block">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="material-symbols-outlined text-emerald-600 text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
                   <span className="font-bold text-xs text-[#1C1B18]">Data Terenkripsi</span>
