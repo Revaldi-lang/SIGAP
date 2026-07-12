@@ -529,13 +529,47 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         });
 
         if (laporanBaru.foto) {
+          let publicUrl = laporanBaru.foto; // Default to base64 as fallback
+
+          try {
+            if (laporanBaru.foto.startsWith('data:')) {
+              // Convert base64 data URL to Blob for Supabase Storage upload
+              const parts = laporanBaru.foto.split(';base64,');
+              const contentType = parts[0].split(':')[1];
+              const raw = window.atob(parts[1]);
+              const rawLength = raw.length;
+              const uInt8Array = new Uint8Array(rawLength);
+              for (let i = 0; i < rawLength; ++i) {
+                uInt8Array[i] = raw.charCodeAt(i);
+              }
+              const blob = new Blob([uInt8Array], { type: contentType });
+
+              const ext = contentType.split('/')[1] || 'png';
+              const filePath = `reports/${id}_${Date.now()}.${ext}`;
+
+              // Upload report photo to 'avatars' storage bucket under 'reports/' directory
+              const { error: uploadError } = await supabase.storage
+                .from('avatars')
+                .upload(filePath, blob, { upsert: true, contentType });
+
+              if (uploadError) {
+                console.error('[tambahLaporan] Storage upload failed:', uploadError.message);
+              } else {
+                const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+                publicUrl = data.publicUrl;
+              }
+            }
+          } catch (e) {
+            console.error('Error converting/uploading report photo to storage, falling back to base64:', e);
+          }
+
           const timestamp = Date.now();
           const fileName = `foto_${timestamp}.png`;
           const fileSize = laporanBaru.foto.length;
 
           await supabase.from('foto_laporan').insert({
             laporan_id: lapObj.id,
-            file_path: laporanBaru.foto,
+            file_path: publicUrl, // Save the actual public URL in the database
             file_name: fileName,
             file_size: fileSize
           });
