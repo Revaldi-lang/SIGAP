@@ -550,7 +550,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         });
 
         if (laporanBaru.foto) {
-          let publicUrl = laporanBaru.foto; // Default to base64 as fallback
+          let publicUrl = laporanBaru.foto;
+          if (publicUrl.startsWith('data:')) {
+            publicUrl = `local_storage_ref_${id}`; // Safe fallback to avoid database length limit errors (varchar 500)
+          }
 
           try {
             if (laporanBaru.foto.startsWith('data:')) {
@@ -581,7 +584,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               }
             }
           } catch (e) {
-            console.error('Error converting/uploading report photo to storage, falling back to base64:', e);
+            console.error('Error converting/uploading report photo to storage, falling back to local_storage_ref:', e);
           }
 
           const timestamp = Date.now();
