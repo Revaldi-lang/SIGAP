@@ -112,8 +112,9 @@ function PengaturanProfilForm() {
         // 6. Update localStorage cache for offline/same-device use
         localStorage.setItem('sigap_user_foto_' + currentUser.id, publicUrl);
 
-        // 7. Update local form state
-        setFoto(publicUrl);
+        // 7. Update local form state (add cache-buster so UI shows new photo immediately)
+        const cacheBustedUrl = publicUrl + (publicUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+        setFoto(cacheBustedUrl);
       } catch (err) {
         console.error('Upload foto gagal:', err);
         alert('Gagal mengunggah foto. Silakan coba lagi.');

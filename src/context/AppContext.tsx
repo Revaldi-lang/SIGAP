@@ -92,6 +92,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [laporan, setLaporan] = useState<Laporan[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Append a cache-buster to Supabase Storage URLs so browsers always load the
+  // latest version and don't serve stale images from the browser cache.
+  const addCacheBuster = (url?: string): string | undefined => {
+    if (!url) return undefined;
+    try {
+      // Only add cache-buster to Supabase Storage URLs, not to external URLs
+      if (!url.includes('supabase') && !url.includes('storage')) return url;
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}t=${Date.now()}`;
+    } catch {
+      return url;
+    }
+  };
+
   const pullFromSupabase = useCallback(async () => {
     try {
       const { data: dbUsers } = await supabase.from('users').select('*');
@@ -107,7 +121,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           password: u.password,
           telepon: u.telepon || localStorage.getItem('sigap_user_phone_' + u.id) || '',
           alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || '',
-          foto: u.avatar_url || localStorage.getItem('sigap_user_foto_' + u.id) || undefined
+          // DB is always source of truth for photo. localStorage is only a fallback
+          // when the DB has no value yet (e.g. older accounts before avatar_url column).
+          foto: u.avatar_url ? addCacheBuster(u.avatar_url) : (localStorage.getItem('sigap_user_foto_' + u.id) || undefined)
         }));
         setUsers(mappedUsers);
         localStorage.setItem('sigap_users', JSON.stringify(mappedUsers));
@@ -123,11 +139,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               email: matched.email,
               role: matched.role,
               identitas: matched.identitas,
-              // Prefer DB value; fall back to prev state (which may come from localStorage)
               telepon: matched.telepon || prev.telepon || localStorage.getItem('sigap_user_phone_' + prev.id) || '',
               alamat: matched.alamat || prev.alamat || localStorage.getItem('sigap_user_address_' + prev.id) || '',
-              foto: matched.foto || prev.foto || localStorage.getItem('sigap_user_foto_' + prev.id) || undefined,
+              // DB is always source of truth: use matched.foto (from DB) first.
+              // Only fall back to previous/localStorage if DB has no photo at all.
+              foto: matched.foto || localStorage.getItem('sigap_user_foto_' + prev.id) || undefined,
             };
+            // Also sync localStorage so this device reflects the latest DB photo
+            if (matched.foto) {
+              localStorage.setItem('sigap_user_foto_' + prev.id, matched.foto);
+            }
             const sessionData = {
               role: updatedUser.role === 'Masyarakat' ? 'pelapor' : updatedUser.role,
               email: updatedUser.email,
