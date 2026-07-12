@@ -50,57 +50,57 @@ export default function LoginMasyarakat() {
 
   return (
     <div className="page-shell flex items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-md legacy-card rounded-[1.25rem] p-4 sm:p-8 animate-fade-in">
-        <div className="text-center mb-6">
-          <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-12 h-12 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition shrink-0">
+      <div className="w-full max-w-md legacy-card rounded-2xl p-6 sm:p-10 animate-fade-in">
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex bg-[#001360]/10 p-2.5 rounded-xl mb-4 w-14 h-14 items-center justify-center border border-[#001360]/15 hover:bg-[#001360]/15 transition shrink-0">
             <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-8 w-auto object-contain" />
           </Link>
           <h2 className="text-2xl font-bold text-[#1C1B18] tracking-tight">Portal Warga / Pelapor</h2>
-          <p className="text-xs text-[#4E4639] mt-1">Silakan masuk untuk membuat aduan atau melacak berkas laporan Anda.</p>
+          <p className="text-sm text-[#807667] mt-1.5 leading-relaxed">Silakan masuk untuk membuat aduan atau melacak berkas laporan Anda.</p>
         </div>
 
         {errorMsg && (
-          <div className="bg-red-50 text-red-600 text-xs p-3 rounded-lg border border-red-200 mb-4 font-semibold text-center">
+          <div className="bg-red-50 text-red-600 text-sm p-4 rounded-xl border border-red-200 mb-5 font-medium text-center">
             {errorMsg}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
+            <label className="block text-sm font-semibold text-[#1C1B18] mb-2">Alamat Email</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">mail</span>
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">mail</span>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="budi.santoso@gmail.com"
-                className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                className="w-full bg-white border border-[#D3C5B1] rounded-xl pl-10 pr-4 py-3 text-sm text-[#1C1B18] focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none transition"
               />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider">Kata Sandi</label>
+              <label className="block text-sm font-semibold text-[#1C1B18]">Kata Sandi</label>
               <a
                 href="#"
                 onClick={(e) => { e.preventDefault(); alert('Fitur pemulihan sandi masyarakat sedang disinkronkan.'); }}
-                className="text-[10px] font-bold text-[#001360] hover:underline"
+                className="text-sm font-semibold text-[#001360] hover:underline"
               >
                 Lupa Sandi?
               </a>
             </div>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">lock</span>
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">lock</span>
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="********"
-                className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                placeholder="••••••••"
+                className="w-full bg-white border border-[#D3C5B1] rounded-xl pl-10 pr-12 py-3 text-sm text-[#1C1B18] focus:border-[#001360] focus:ring-2 focus:ring-[#001360]/15 outline-none transition"
               />
               <button
                 type="button"
@@ -112,13 +112,13 @@ export default function LoginMasyarakat() {
             </div>
           </div>
 
-          <div className="flex items-center pt-1">
+          <div className="flex items-center gap-3 pt-1">
             <input
               type="checkbox"
               id="remember"
-              className="rounded border-[#D3C5B1] text-[#001360] focus:ring-[#001360] h-4 w-4 cursor-pointer"
+              className="rounded border-[#D3C5B1] text-[#001360] focus:ring-[#001360]/20 h-4 w-4 cursor-pointer"
             />
-            <label htmlFor="remember" className="ml-2 text-[10px] text-[#4E4639] cursor-pointer select-none font-medium">
+            <label htmlFor="remember" className="text-sm text-[#4E4639] cursor-pointer select-none font-medium">
               Ingat sesi masuk saya di perangkat ini
             </label>
           </div>
@@ -126,7 +126,7 @@ export default function LoginMasyarakat() {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full bg-[#001360] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
+              className="w-full bg-[#001360] text-white font-semibold py-3.5 px-4 rounded-[28px] text-sm transition shadow-lg hover:bg-[#223aa8] flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer min-h-[48px]"
             >
               Masuk Sekarang <span className="material-symbols-outlined text-sm">login</span>
             </button>
@@ -142,7 +142,7 @@ export default function LoginMasyarakat() {
             <button
               type="button"
               onClick={loginGoogle}
-              className="w-full bg-white border border-[#D3C5B1] text-[#1C1B18] hover:bg-slate-50 font-bold py-2.5 px-4 rounded-lg text-xs transition flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-sm"
+              className="w-full bg-white border border-[#D3C5B1] text-[#1C1B18] hover:bg-[#F6F3EC] font-semibold py-3 px-4 rounded-[28px] text-sm transition flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-sm min-h-[48px]"
             >
               <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" className="w-4 h-4 object-contain" alt="Google Logo" />
               Masuk dengan Google
@@ -150,12 +150,12 @@ export default function LoginMasyarakat() {
           </div>
         </form>
 
-        <div className="space-y-3 mt-6 pt-4 border-t border-[#D3C5B1]/50 text-center text-xs">
-          <div className="text-[#4E4639] text-[11px]">
-            Belum memiliki akun? <Link href="/register" className="text-[#001360] font-bold hover:underline">Daftar di sini</Link>
+        <div className="space-y-3 mt-6 pt-5 border-t border-[#E5E2E1] text-center">
+          <div className="text-sm text-[#807667]">
+            Belum memiliki akun? <Link href="/register" className="text-[#001360] font-semibold hover:underline">Daftar di sini</Link>
           </div>
           <div>
-            <Link href="/" className="text-[#4E4639] hover:text-[#001360] transition flex items-center justify-center gap-1 font-semibold text-[11px]">
+            <Link href="/" className="text-sm text-[#807667] hover:text-[#001360] transition flex items-center justify-center gap-1 font-medium">
               <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali ke Halaman Utama
             </Link>
           </div>
