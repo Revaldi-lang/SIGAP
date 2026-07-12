@@ -628,17 +628,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!currentUser) return false;
     try {
       if (supabase) {
-        // Update name, email, and avatar_url in Supabase users table
+        // Update name, email, avatar_url, telepon, and alamat in Supabase users table
         const { error } = await supabase
           .from('users')
-          .update({ name: username, email: email, avatar_url: foto })
+          .update({ name: username, email: email, avatar_url: foto, telepon: telepon, alamat: alamat })
           .eq('id', parseInt(currentUser.id));
         
         if (error) {
-          console.warn('Update with avatar_url failed, falling back to name/email:', error.message);
+          console.warn('Update with avatar_url failed, falling back to name/email/telepon/alamat:', error.message);
           const { error: fallbackError } = await supabase
             .from('users')
-            .update({ name: username, email: email })
+            .update({ name: username, email: email, telepon: telepon, alamat: alamat })
             .eq('id', parseInt(currentUser.id));
           if (fallbackError) throw fallbackError;
         }
