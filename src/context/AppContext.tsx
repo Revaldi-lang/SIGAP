@@ -652,7 +652,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!currentUser) return false;
     try {
       if (supabase) {
-        // Step 1: Update core fields that always exist in the schema
+        // Use email as the stable identifier — avoids parseInt(id) issues
+        // (id may be a large timestamp that overflows PostgreSQL INT4, or a UUID)
+        const matchEmail = currentUser.email;
+
+        // Step 1: Update core fields (name, email, avatar_url)
         const coreUpdate: Record<string, string | null | undefined> = {
           name: username,
           email: email,
@@ -662,26 +666,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const { error: coreError } = await supabase
           .from('users')
           .update(coreUpdate)
-          .eq('id', parseInt(currentUser.id));
+          .eq('email', matchEmail);
 
         if (coreError) {
           console.error('[updateUserProfile] Core update failed:', coreError.message, coreError.code);
           throw coreError;
         }
 
-        // Step 2: Try to update telepon and alamat (columns may not exist yet)
+        // Step 2: Update telepon and alamat (these columns may not exist yet in the DB)
         if (telepon !== undefined || alamat !== undefined) {
           const extraUpdate: Record<string, string | undefined> = {};
           if (telepon !== undefined) extraUpdate.telepon = telepon;
           if (alamat !== undefined) extraUpdate.alamat = alamat;
 
+          // After Step 1, the email may have changed — use original email to match
           const { error: extraError } = await supabase
             .from('users')
             .update(extraUpdate)
-            .eq('id', parseInt(currentUser.id));
+            .eq('email', email); // use new email since core update already applied it
 
           if (extraError) {
-            // Column may not exist yet — log warning but don't fail the whole operation
             console.warn(
               '[updateUserProfile] Could not save telepon/alamat to DB (column may not exist yet).',
               'Error:', extraError.message,
@@ -745,8 +749,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateUserPassword = async (currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> => {
     if (!currentUser) return { success: false, message: 'User tidak teridentifikasi.' };
     
-    // Find the user in users array to get the password
-    const userInDb = users.find(u => u.id === currentUser.id);
+    // Find the user in users array to get the stored password
+    // Also fall back to matching by email in case id doesn't match cached users yet
+    const userInDb = users.find(u => u.id === currentUser.id)
+                  || users.find(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
     if (!userInDb) return { success: false, message: 'Data user tidak ditemukan.' };
 
     // If password is set in DB, check it
@@ -756,10 +762,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     try {
       if (supabase) {
+        // Use email as the stable identifier — avoids parseInt(id) issues
         const { error } = await supabase
           .from('users')
           .update({ password: newPassword })
-          .eq('id', parseInt(currentUser.id));
+          .eq('email', currentUser.email);
         if (error) throw error;
       }
 

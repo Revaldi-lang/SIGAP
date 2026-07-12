@@ -82,7 +82,7 @@ function PengaturanProfilForm() {
         return;
       }
 
-      // 4. All checks passed — proceed with Supabase upload
+      // 4. All checks passed — upload file to Supabase Storage
       setUploading(true);
       try {
         const ext = file.name.split('.').pop();
@@ -95,7 +95,25 @@ function PengaturanProfilForm() {
         if (uploadError) throw uploadError;
 
         const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
-        setFoto(data.publicUrl);
+        const publicUrl = data.publicUrl;
+
+        // 5. Immediately persist avatar_url to the database so it syncs across ALL devices.
+        //    Using email as identifier (avoids parseInt overflow issues).
+        const { error: dbError } = await supabase
+          .from('users')
+          .update({ avatar_url: publicUrl })
+          .eq('email', currentUser.email);
+
+        if (dbError) {
+          console.error('[Avatar] Failed to save avatar_url to DB:', dbError.message);
+          // Non-fatal: photo is in Storage, just not linked in DB yet
+        }
+
+        // 6. Update localStorage cache for offline/same-device use
+        localStorage.setItem('sigap_user_foto_' + currentUser.id, publicUrl);
+
+        // 7. Update local form state
+        setFoto(publicUrl);
       } catch (err) {
         console.error('Upload foto gagal:', err);
         alert('Gagal mengunggah foto. Silakan coba lagi.');
@@ -113,7 +131,10 @@ function PengaturanProfilForm() {
       alert('Harap tunggu, foto sedang diunggah...');
       return;
     }
-    const success = await updateUserProfile(nama, email, telepon, alamat, foto || undefined);
+    // Pass foto directly (not foto || undefined) so that:
+    //   - A new/updated photo URL is always synced to the database
+    //   - If user cleared the photo, avatar_url is set to null in the database
+    const success = await updateUserProfile(nama, email, telepon, alamat, foto);
     if (success) {
       alert('Informasi profil umum administrator berhasil diperbarui!');
     } else {
