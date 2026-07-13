@@ -54,7 +54,7 @@ export default function LandingPage() {
           <div className="flex-1 relative min-h-[400px] border-t-4 md:border-t-0 md:border-l-border-width-main border-black overflow-hidden bg-slate-100">
             <div 
               className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1590486803833-ffc6f78f88f5?auto=format&fit=crop&q=80&w=1200')" }}
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1200')" }}
             ></div>
             <div className="absolute bottom-10 left-10 right-10 bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6">
               <div className="flex items-center gap-4">
@@ -165,7 +165,7 @@ export default function LandingPage() {
               <p className="text-sm font-medium text-on-surface-variant mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
               <div 
                 className="w-full aspect-[4/3] border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1590486803833-ffc6f78f88f5?auto=format&fit=crop&q=80&w=800')" }}
+                style={{ backgroundImage: "url('/assets/images/perbaikan_jalan.png')" }}
               ></div>
             </div>
             
