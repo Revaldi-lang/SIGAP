@@ -15,7 +15,7 @@ export default function LandingPage() {
   const totalSelesai = loading ? '15,310' : laporan.filter(l => l.status === 'selesai').length.toLocaleString();
 
   return (
-    <div className="min-h-screen page-shell flex flex-col pt-20">
+    <div className="min-h-screen page-shell flex flex-col pt-20 bg-background text-on-background">
       {/* Navbar */}
       <Navbar onOpenAuthModal={() => setAuthModalOpen(true)} />
 
@@ -24,309 +24,298 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-28 px-6 md:px-16" style={{ background: 'linear-gradient(135deg, #FDF9F3 0%, #FEFDF8 100%)' }}>
-          <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <span className="text-[10px] font-bold text-[#001360] tracking-widest uppercase bg-[#001360]/10 px-3 py-1 rounded border border-[#001360]/10">
-                Portal Resmi Pelayanan
-              </span>
-              <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-bold text-primary max-w-xl leading-tight">
-                Efisiensi Publik Dalam Satu Genggaman.
-              </h1>
-              <p className="font-body-lg text-base sm:text-lg text-on-surface-variant max-w-md leading-relaxed">
-                SIGAP menghadirkan transparansi dan kemudahan akses bagi setiap warga negara. Lapor, pantau, dan selesaikan urusan aduan Anda dengan standar layanan terbaik.
-              </p>
-              <div className="flex flex-wrap gap-4 pt-4">
-                <button
-                  onClick={() => setAuthModalOpen(true)}
-                  className="bg-primary text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 cursor-pointer"
-                >
-                  Buat Laporan Sekarang
-                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </button>
-                <a
-                  href="#info-section"
-                  className="border border-primary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary/5 transition-all text-center inline-block"
-                >
-                  Pelajari Selengkapnya
-                </a>
-              </div>
-            </div>
-            <div className="relative">
-              <div
-                className="aspect-video md:aspect-square bg-slate-100 rounded-2xl overflow-hidden border border-[#D3C5B1] shadow-md"
-                style={{
-                  backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80')",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              ></div>
-              
-              {/* Tactile Overlay Element */}
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl border border-[#D3C5B1] hidden md:block max-w-[260px] shadow-lg">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="material-symbols-outlined text-emerald-600">verified_user</span>
-                  <span className="font-bold text-xs text-[#1C1B18]">Data Terenkripsi</span>
-                </div>
-                <p className="text-[11px] text-[#4E4639] leading-relaxed">
-                  Setiap laporan diproses dengan protokol keamanan cloud untuk menjamin kerahasiaan identitas Anda.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features (Kegunaan) */}
-        <section id="info-section" className="py-20 px-6 md:px-16 bg-[#FEFDF8]">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="mb-16 max-w-2xl">
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#001360] mb-4">Solusi Terpadu Masyarakat</h2>
-              <p className="text-sm sm:text-base text-[#4E4639] leading-relaxed">
-                Kami menyederhanakan kompleksitas birokrasi menjadi antarmuka yang intuitif dan fungsional untuk segala kebutuhan pelaporan Anda.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Feature 1 */}
-              <div className="legacy-card hover:border-[#001360] p-8 flex flex-col gap-4 rounded-xl transition duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
-                  <span className="material-symbols-outlined">description</span>
-                </div>
-                <h3 className="font-bold text-lg text-[#1C1B18]">Pelaporan Cepat</h3>
-                <p className="text-xs sm:text-sm text-[#4E4639] leading-relaxed">
-                  Laporkan keluhan atau insiden fasilitas publik hanya dalam hitungan detik dengan sistem otomatisasi geocoding.
-                </p>
-              </div>
-              {/* Feature 2 */}
-              <div className="legacy-card hover:border-[#001360] p-8 flex flex-col gap-4 rounded-xl transition duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
-                  <span className="material-symbols-outlined">folder_open</span>
-                </div>
-                <h3 className="font-bold text-lg text-[#1C1B18]">Arsip Digital</h3>
-                <p className="text-xs sm:text-sm text-[#4E4639] leading-relaxed">
-                  Akses semua dokumen penting dan riwayat laporan Anda dalam satu repositori terpusat yang aman di dasbor.
-                </p>
-              </div>
-              {/* Feature 3 */}
-              <div className="legacy-card hover:border-[#001360] p-8 flex flex-col gap-4 rounded-xl transition duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
-                  <span className="material-symbols-outlined">notifications_active</span>
-                </div>
-                <h3 className="font-bold text-lg text-[#1C1B18]">Pantauan Real-time</h3>
-                <p className="text-xs sm:text-sm text-[#4E4639] leading-relaxed">
-                  Dapatkan riwayat progres disposisi aduan Anda secara instan hingga status dinyatakan selesai oleh petugas.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Process (Cara Melapor) */}
-        <section id="alur-section" className="py-20 px-6 md:px-16 bg-[#F6F3EC]">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#001360] mb-4">Empat Langkah Mudah</h2>
-              <p className="text-sm sm:text-base text-[#4E4639] max-w-xl mx-auto leading-relaxed">
-                Dirancang untuk kecepatan dan kemudahan akses bagi seluruh lapisan masyarakat.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-4 gap-8 relative">
-              {/* Step 1 */}
-              <div className="relative z-10 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-white border border-[#D3C5B1] flex items-center justify-center mx-auto text-[#001360] font-bold text-xl shadow-sm">1</div>
-                <h4 className="font-bold text-sm text-[#1C1B18] uppercase tracking-wide">Masuk Akun</h4>
-                <p className="text-xs text-[#4E4639] px-4 leading-relaxed">Otentikasi melalui akun Google atau pendaftaran mandiri demi validitas.</p>
-              </div>
-              {/* Step 2 */}
-              <div className="relative z-10 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-white border border-[#D3C5B1] flex items-center justify-center mx-auto text-[#001360] font-bold text-xl shadow-sm">2</div>
-                <h4 className="font-bold text-sm text-[#1C1B18] uppercase tracking-wide">Isi Formulir</h4>
-                <p className="text-xs text-[#4E4639] px-4 leading-relaxed">Tulis deskripsi kendala Anda dengan lampiran bukti visual dan lokasi peta.</p>
-              </div>
-              {/* Step 3 */}
-              <div className="relative z-10 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-white border border-[#D3C5B1] flex items-center justify-center mx-auto text-[#001360] font-bold text-xl shadow-sm">3</div>
-                <h4 className="font-bold text-sm text-[#1C1B18] uppercase tracking-wide">Verifikasi</h4>
-                <p className="text-xs text-[#4E4639] px-4 leading-relaxed">Tim SIGAP melakukan validasi kebenaran laporan dalam waktu singkat.</p>
-              </div>
-              {/* Step 4 */}
-              <div className="relative z-10 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-[#001360] flex items-center justify-center mx-auto text-white font-bold text-xl shadow-sm">4</div>
-                <h4 className="font-bold text-sm text-[#1C1B18] uppercase tracking-wide">Tindak Lanjut</h4>
-                <p className="text-xs text-[#4E4639] px-4 leading-relaxed">Laporan didisposisi ke dinas terkait untuk segera mulai diperbaiki.</p>
-              </div>
-              {/* Decorative Line */}
-              <div className="hidden md:block absolute top-8 left-0 w-full h-[1px] bg-[#D3C5B1] -z-0"></div>
-            </div>
-          </div>
-        </section>
-
-        {/* SOP Section */}
-        <section id="proses-section" className="py-20 px-6 md:px-16 bg-[#FEFDF8]">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#001360] mb-4">SOP &amp; Alur Penyelesaian Laporan</h2>
-              <p className="text-sm sm:text-base text-[#4E4639] leading-relaxed">
-                Kami menjamin akuntabilitas setiap keluhan yang masuk dengan alur kerja profesional yang terdokumentasi rapi.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#001360]/10 flex items-center justify-center text-[#001360] font-bold">1</div>
-                  <div>
-                    <h4 className="font-bold text-sm text-[#1C1B18]">Respon Awal Dinas</h4>
-                    <p className="text-xs text-[#4E4639] mt-1 leading-relaxed">Estimasi verifikasi &amp; peninjauan laporan awal dalam waktu 3 jam sejak laporan dikirim warga.</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#001360]/10 flex items-center justify-center text-[#001360] font-bold">2</div>
-                  <div>
-                    <h4 className="font-bold text-sm text-[#1C1B18]">Disposisi Lapangan</h4>
-                    <p className="text-xs text-[#4E4639] mt-1 leading-relaxed">Petugas dinas terkait langsung diterjunkan ke titik lokasi dalam waktu maksimal 12 jam.</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#001360]/10 flex items-center justify-center text-[#001360] font-bold">3</div>
-                  <div>
-                    <h4 className="font-bold text-sm text-[#1C1B18]">Pekerjaan Teknis</h4>
-                    <p className="text-xs text-[#4E4639] mt-1 leading-relaxed">Penyelesaian perbaikan jalan, penerangan jalan atau selokan selesai dalam rata-rata waktu 24 - 48 jam.</p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="aspect-video bg-slate-100 rounded-2xl overflow-hidden border border-[#D3C5B1] shadow-sm"
-                style={{
-                  backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80')",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              ></div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials (Suara Warga) */}
-        <section id="suara-warga-section" className="py-20 px-6 md:px-16 bg-[#F6F3EC]">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="text-center mb-16 font-body">
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#001360] mb-4">Dipercaya Oleh Ribuan Masyarakat</h2>
-              <p className="text-sm sm:text-base text-[#4E4639] max-w-xl mx-auto leading-relaxed">
-                Kualitas pelayanan publik kami diukur dari kepuasan dan kemudahan yang dirasakan oleh setiap individu.
-              </p>
-              <div className="flex justify-center gap-12 mt-8">
-                <div>
-                  <div className="text-3xl font-bold text-[#001360] mb-1">{loading ? '98%' : '100%'}</div>
-                  <div className="text-[10px] font-bold text-[#4E4639] uppercase tracking-wider">Penyelesaian Cepat</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#001360] mb-1">{totalAduan}</div>
-                  <div className="text-[10px] font-bold text-[#4E4639] uppercase tracking-wider">Laporan Masuk</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#001360] mb-1">{totalSelesai}</div>
-                  <div className="text-[10px] font-bold text-[#4E4639] uppercase tracking-wider">Laporan Selesai</div>
-                </div>
-              </div>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Testimonial 1 */}
-              <div className="legacy-card p-8 rounded-xl flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="flex gap-1 text-amber-500 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <p className="text-sm italic text-[#1C1B18] mb-6 leading-relaxed">
-                    &quot;Laporan saya tentang jalan berlubang besar di depan komplek direspons sangat cepat. Dalam waktu singkat, regu perbaikan jalan dinas sudah datang menambal.&quot;
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 pt-4 border-t border-[#D3C5B1]/50">
-                  <div
-                    className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden"
-                    style={{
-                      backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80')",
-                      backgroundSize: 'cover',
-                    }}
-                  ></div>
-                  <div>
-                    <div className="font-bold text-xs text-[#1C1B18]">Budi Santoso</div>
-                    <div className="text-[10px] text-[#4E4639]">Warga, Klojen</div>
-                  </div>
-                </div>
-              </div>
-              {/* Testimonial 2 */}
-              <div className="legacy-card p-8 rounded-xl flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="flex gap-1 text-amber-500 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <p className="text-sm italic text-[#1C1B18] mb-6 leading-relaxed">
-                    &quot;Lampu penerangan jalan padam berbulan-bulan. Setelah saya laporkan lewat SIGAP dan sematkan koordinat peta, dinas Dishub langsung mengganti bohlam baru esok harinya!&quot;
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 pt-4 border-t border-[#D3C5B1]/50">
-                  <div
-                    className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden"
-                    style={{
-                      backgroundImage: "url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80')",
-                      backgroundSize: 'cover',
-                    }}
-                  ></div>
-                  <div>
-                    <div className="font-bold text-xs text-[#1C1B18]">Siti Aminah</div>
-                    <div className="text-[10px] text-[#4E4639]">Warga, Lowokwaru</div>
-                  </div>
-                </div>
-              </div>
-              {/* Testimonial 3 */}
-              <div className="legacy-card p-8 rounded-xl flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="flex gap-1 text-amber-500 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <p className="text-sm italic text-[#1C1B18] mb-6 leading-relaxed">
-                    &quot;Transparansi pelacakan di SIGAP ini luar biasa. Kita bisa tahu persis laporan sudah diverifikasi, diproses oleh dinas apa, dan mendapat foto bukti perbaikan.&quot;
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 pt-4 border-t border-[#D3C5B1]/50">
-                  <div
-                    className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden"
-                    style={{
-                      backgroundImage: "url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80')",
-                      backgroundSize: 'cover',
-                    }}
-                  ></div>
-                  <div>
-                    <div className="font-bold text-xs text-[#1C1B18]">Rahmat Hidayat</div>
-                    <div className="text-[10px] text-[#4E4639]">Warga, Sukun</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="px-6 md:px-16 py-20 bg-[#FEFDF8]">
-          <div className="max-w-[1280px] mx-auto bg-[#001360] rounded-2xl p-12 md:p-20 text-center text-white relative overflow-hidden shadow-lg">
-            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
-            <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-bold mb-6 relative z-10 text-white">Siap Untuk Pelayanan Yang Lebih Baik?</h2>
-            <p className="text-sm sm:text-base mb-10 max-w-2xl mx-auto opacity-90 relative z-10 leading-relaxed">
-              Bergabunglah dengan ribuan masyarakat yang telah merasakan kemudahan birokrasi pengaduan digital bersama SIGAP.
+        <section className="relative min-h-[800px] flex flex-col md:flex-row items-stretch border-b-border-width-main border-black">
+          <div className="flex-1 flex flex-col justify-center px-12 md:px-20 py-16 bg-white">
+            <span className="inline-block bg-primary text-on-primary border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 font-bold text-xs uppercase tracking-wider mb-4 w-fit">
+              Portal Pengaduan Terpadu
+            </span>
+            <h1 className="font-black text-4xl sm:text-5xl md:text-[54px] uppercase mb-6 leading-[0.9] text-primary tracking-tight font-display">
+              Solusi Cerdas Pelaporan Infrastruktur <span className="text-white bg-secondary px-2 border-4 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Kerusakan Publik</span>
+            </h1>
+            <p className="font-medium text-base md:text-lg max-w-xl mb-10 text-on-surface-variant leading-relaxed">
+              Laporkan jalan berlubang, lampu jalan mati, atau fasilitas umum rusak di sekitar Anda. SIGAP menjembatani aduan warga dengan tindakan perbaikan cepat dari instansi terkait.
             </p>
-            <div className="flex flex-col md:flex-row justify-center gap-4 relative z-10">
+            <div className="flex flex-wrap gap-4">
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="bg-white text-[#001360] px-10 py-4 rounded-lg font-bold hover:bg-slate-100 transition-all cursor-pointer shadow-md"
+                className="bg-primary text-white border-black border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none px-8 py-4 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
               >
-                Mulai Laporkan Sekarang
+                Mulai Lapor
+              </button>
+              <a
+                href="#alur-section"
+                className="bg-white text-primary border-black border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none px-8 py-4 font-bold text-xs uppercase tracking-wider transition-all text-center inline-block"
+              >
+                Lihat Progress
+              </a>
+            </div>
+          </div>
+          
+          <div className="flex-1 relative min-h-[400px] border-t-4 md:border-t-0 md:border-l-border-width-main border-black overflow-hidden bg-slate-100">
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1590486803833-ffc6f78f88f5?auto=format&fit=crop&q=80&w=1200')" }}
+            ></div>
+            <div className="absolute bottom-10 left-10 right-10 bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-secondary border-2 border-black flex items-center justify-center">
+                  <span className="material-symbols-outlined font-black text-white text-2xl">engineering</span>
+                </div>
+                <div>
+                  <p className="font-bold text-xs uppercase text-primary tracking-wider">Aduan Tertangani</p>
+                  <p className="text-xl md:text-2xl font-black text-primary uppercase leading-tight">{totalSelesai} Perbaikan</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Alur Pelaporan */}
+        <section id="alur-section" className="py-24 px-12 md:px-20 bg-white border-b-border-width-main border-black">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="font-black text-3xl md:text-4xl uppercase mb-4 text-primary tracking-tight font-display">Alur Pelaporan</h2>
+              <div className="h-2 w-48 bg-secondary mx-auto border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"></div>
+            </div>
+            
+            <div className="flex flex-col lg:flex-row items-center gap-16">
+              <div className="w-full lg:w-1/2">
+                <div className="bg-secondary border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 aspect-video flex items-center justify-center">
+                  <span className="material-symbols-outlined text-8xl text-white">dynamic_form</span>
+                </div>
+              </div>
+              
+              <div className="w-full lg:w-1/2 space-y-8">
+                <div className="flex items-center gap-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                  <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">1</div>
+                  <div>
+                    <h3 className="font-black text-sm uppercase text-primary tracking-wider mb-1">Unggah Laporan</h3>
+                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Laporkan kerusakan infrastruktur dengan foto dan lokasi melalui aplikasi SIGAP.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                  <div className="flex-shrink-0 w-16 h-16 bg-secondary text-white font-black text-xl flex items-center justify-center border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">2</div>
+                  <div>
+                    <h3 className="font-black text-sm uppercase text-primary tracking-wider mb-1">Tindakan Instansi</h3>
+                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Tim teknis memverifikasi laporan dan menjadwalkan perbaikan di lapangan.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                  <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">3</div>
+                  <div>
+                    <h3 className="font-black text-sm uppercase text-primary tracking-wider mb-1">Hasil Perbaikan</h3>
+                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Pantau hasil akhir perbaikan secara transparan untuk kenyamanan warga.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Pelayanan Publik Terpadu Section */}
+        <section id="info-section" className="py-24 px-12 md:px-20 bg-surface-container-low border-b-border-width-main border-black">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="font-black text-3xl md:text-4xl uppercase mb-4 text-primary tracking-tight font-display">Pelayanan Publik Terpadu</h2>
+              <div className="h-2 w-48 bg-secondary mx-auto border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Card 1 */}
+              <div className="bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                <div className="w-16 h-16 bg-primary border-border-width-sub border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <span className="material-symbols-outlined text-white text-3xl">visibility</span>
+                </div>
+                <h3 className="font-black text-sm uppercase text-primary tracking-wider">Pemantauan Aduan</h3>
+                <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Pantau status perbaikan infrastruktur yang Anda laporkan secara langsung.</p>
+                <a className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="#alur-section">Tracking Laporan</a>
+              </div>
+              
+              {/* Card 2 */}
+              <div className="bg-secondary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]">
+                <div className="w-16 h-16 bg-primary border-border-width-sub border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <span className="material-symbols-outlined text-white text-3xl">map</span>
+                </div>
+                <h3 className="font-black text-sm uppercase text-white tracking-wider">Database Infrastruktur</h3>
+                <p className="text-xs text-white/90 font-medium leading-relaxed">Data kerusakan terintegrasi untuk perencanaan perbaikan kota yang lebih efisien.</p>
+                <a className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-white hover:text-primary" href="#alur-section">Lihat Peta Kota</a>
+              </div>
+              
+              {/* Card 3 */}
+              <div className="bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                <div className="w-16 h-16 bg-primary border-border-width-sub border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <span className="material-symbols-outlined text-white text-3xl">verified</span>
+                </div>
+                <h3 className="font-black text-sm uppercase text-primary tracking-wider">Aduan Transparan</h3>
+                <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Setiap laporan diverifikasi dan dipublikasikan untuk menjamin akuntabilitas perbaikan.</p>
+                <a className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="#alur-section">Cek Akuntabilitas</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Empat Langkah Mudah Section */}
+        <section id="alur-section-steps" className="py-24 px-12 md:px-20 border-b-border-width-main border-black bg-white">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
+            <div className="md:w-1/3 sticky top-32">
+              <h2 className="font-black text-3xl md:text-4xl uppercase mb-6 leading-none text-primary tracking-tight font-display">Empat Langkah Mudah</h2>
+              <p className="text-sm font-medium text-on-surface-variant mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
+              <div className="w-full h-64 bg-surface-container border-border-width-main border-black flex items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <span className="material-symbols-outlined text-7xl text-primary opacity-25">report_problem</span>
+              </div>
+            </div>
+            
+            <div className="md:w-2/3 space-y-8">
+              {/* Step 1 */}
+              <div className="flex gap-6 items-start group">
+                <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">1</div>
+                <div className="pt-2">
+                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Registrasi Akun</h4>
+                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Lakukan pendaftaran singkat untuk melacak aduan dan mendapatkan update perbaikan.</p>
+                </div>
+              </div>
+              {/* Step 2 */}
+              <div className="flex gap-6 items-start group">
+                <div className="flex-shrink-0 w-16 h-16 bg-secondary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">2</div>
+                <div className="pt-2">
+                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Kirim Aduan Kerusakan</h4>
+                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Unggah foto bukti kerusakan dan sematkan lokasi yang akurat di peta SIGAP.</p>
+                </div>
+              </div>
+              {/* Step 3 */}
+              <div className="flex gap-6 items-start group">
+                <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">3</div>
+                <div className="pt-2">
+                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Verifikasi &amp; Audit Lapangan</h4>
+                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Petugas kami akan mendatangi lokasi untuk memvalidasi kerusakan dan tingkat urgensi.</p>
+                </div>
+              </div>
+              {/* Step 4 */}
+              <div className="flex gap-6 items-start group">
+                <div className="flex-shrink-0 w-16 h-16 bg-secondary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">4</div>
+                <div className="pt-2">
+                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Update Status &amp; Selesai</h4>
+                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Dapatkan notifikasi progres perbaikan hingga infrastruktur kembali berfungsi dengan baik.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SOP & Alur Kerja Section */}
+        <section id="proses-section" className="py-24 px-12 md:px-20 bg-white border-b-border-width-main border-black">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="font-black text-3xl md:text-4xl uppercase mb-12 text-center text-primary tracking-tight font-display">SOP &amp; Alur Kerja</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-full md:h-[500px]">
+              <div className="md:col-span-2 md:row-span-2 bg-primary border-border-width-main border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col justify-end text-white">
+                <span className="material-symbols-outlined text-6xl mb-6">assignment_turned_in</span>
+                <h3 className="font-black text-xl sm:text-2xl uppercase mb-4 tracking-tight">Protokol Perbaikan</h3>
+                <p className="text-xs opacity-80 leading-relaxed font-medium">Setiap aduan diproses berdasarkan Standar Pelayanan Minimal (SPM) untuk menjamin kualitas perbaikan infrastruktur yang tahan lama.</p>
+              </div>
+              <div className="md:col-span-2 bg-secondary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 text-white flex flex-col justify-center">
+                <h3 className="font-black text-sm uppercase tracking-wider mb-6">Siklus Laporan</h3>
+                <div className="flex flex-wrap justify-between items-center gap-2">
+                  <span className="font-bold text-xs uppercase tracking-wider">Warga Lapor</span>
+                  <span className="material-symbols-outlined text-sm">chevron_right</span>
+                  <span className="font-bold text-xs uppercase tracking-wider">Instansi Verif</span>
+                  <span className="material-symbols-outlined text-sm">chevron_right</span>
+                  <span className="font-bold text-xs uppercase tracking-wider">Vendor Kerja</span>
+                  <span className="material-symbols-outlined text-sm">chevron_right</span>
+                  <span className="font-bold text-xs uppercase tracking-wider">Publik Cek</span>
+                </div>
+              </div>
+              <div className="md:col-span-1 bg-white border-border-width-main border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 flex flex-col items-center justify-center text-center">
+                <span className="material-symbols-outlined text-4xl mb-2 text-primary">safety_check</span>
+                <p className="font-bold text-xs uppercase tracking-wider text-primary">Standard Keamanan</p>
+              </div>
+              <div className="md:col-span-1 bg-primary text-white border-border-width-main border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 flex flex-col items-center justify-center text-center">
+                <span className="material-symbols-outlined text-4xl mb-2 text-white">groups</span>
+                <p className="font-bold text-xs uppercase tracking-wider text-white">Audit Masyarakat</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Dampak Nyata (Stats & Testimonials) */}
+        <section id="suara-warga-section" className="py-24 px-12 md:px-20 bg-primary text-white border-b-border-width-main border-black shadow-[0_-4px_0px_0px_rgba(0,0,0,1)]">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
+            <div className="md:w-1/2">
+              <h2 className="font-black text-3xl md:text-[40px] uppercase mb-12 leading-none tracking-tight font-display">Dampak Nyata Untuk Kota Kita</h2>
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">92%</p>
+                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Aduan Tuntas</p>
+                </div>
+                <div>
+                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">340+</p>
+                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Mitra Perbaikan</p>
+                </div>
+                <div>
+                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">15mnt</p>
+                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Respon Awal Rata-rata</p>
+                </div>
+                <div>
+                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">{totalSelesai}</p>
+                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Laporan Selesai</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="md:w-1/2 flex flex-col gap-6">
+              {/* Testimonial 1 */}
+              <div className="bg-white text-primary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.15)] p-8">
+                <p className="text-base italic mb-6 leading-relaxed font-medium">&quot;Lubang jalan di depan rumah yang sudah berbulan-bulan rusak akhirnya diperbaiki dalam waktu 3 hari setelah saya lapor lewat SIGAP. Sangat membantu!&quot;</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-secondary border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                    <span className="material-symbols-outlined text-white">person</span>
+                  </div>
+                  <div>
+                    <p className="font-black text-xs uppercase tracking-wider">Budi Santoso</p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider opacity-60">Warga Jakarta Selatan</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Testimonial 2 */}
+              <div className="bg-secondary text-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] p-8 md:translate-x-6">
+                <p className="text-base italic mb-6 leading-relaxed font-medium">&quot;Lampu jalan yang mati sering membuat kawasan kami rawan. Lewat aduan transparan di SIGAP, kami bisa memantau kapan petugas datang memperbaiki.&quot;</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary border-2 border-white flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
+                    <span className="material-symbols-outlined text-white">person</span>
+                  </div>
+                  <div>
+                    <p className="font-black text-xs uppercase tracking-wider">Ani Wijaya</p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider opacity-85">Ketua RW</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="py-24 px-12 md:px-20 bg-surface-container-low">
+          <div className="bg-primary p-12 md:p-20 text-center border-border-width-main border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] max-w-6xl mx-auto">
+            <h2 className="font-black text-4xl sm:text-5xl text-white uppercase mb-8 leading-[0.9] tracking-tight font-display">
+              Membangun Infrastruktur <br/><span className="text-secondary bg-white border-4 border-black px-4 inline-block mt-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Yang Lebih SIGAP</span>
+            </h2>
+            <div className="flex flex-wrap justify-center gap-6">
+              <button
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-secondary border-4 border-white text-white font-black px-12 py-6 text-sm uppercase shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer"
+              >
+                Mulai Lapor
+              </button>
+              <button
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-primary border-4 border-white text-white font-black px-12 py-6 text-sm uppercase shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer"
+              >
+                Kontak Darurat
               </button>
             </div>
+            <p className="mt-10 font-bold text-xs text-white opacity-60 uppercase tracking-widest">Mari bergerak bersama untuk fasilitas publik yang lebih baik</p>
           </div>
         </section>
       </main>
