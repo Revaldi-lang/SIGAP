@@ -212,7 +212,7 @@ export default function LandingPage() {
             <h2 className="font-black text-3xl md:text-4xl uppercase mb-12 text-center text-primary tracking-tight font-display">SOP &amp; Alur Kerja</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {/* Card 1: Protokol Perbaikan */}
-              <div className="md:col-span-2 bg-primary border-border-width-main border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col justify-between text-white min-h-[320px]">
+              <div className="md:col-span-2 bg-primary border-border-width-main border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col justify-start gap-6 text-white min-h-[320px]">
                 <span className="material-symbols-outlined text-6xl">assignment_turned_in</span>
                 <div>
                   <h3 className="font-black text-xl uppercase mb-4 tracking-tight">Protokol Perbaikan (SPM)</h3>
