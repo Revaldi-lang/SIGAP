@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Hanken_Grotesk, Space_Grotesk } from "next/font/google";
 import { AppProvider } from "@/context/AppContext";
 import SessionTimeoutHandler from "@/components/SessionTimeoutHandler";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const hankenGrotesk = Hanken_Grotesk({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "700", "800", "900"],
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space",
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
@@ -22,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${spaceGrotesk.variable} h-full antialiased`}>
+    <html lang="id" className={`${hankenGrotesk.variable} ${spaceGrotesk.variable} h-full antialiased`}>
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
       </head>
