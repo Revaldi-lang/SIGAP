@@ -43,3 +43,6 @@ next-env.d.ts
 # agent configurations
 AGENTS.md
 CLAUDE.md
+
+# agents brain directory
+/brain/
