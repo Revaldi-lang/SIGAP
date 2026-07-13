@@ -80,9 +80,10 @@ export default function LandingPage() {
             
             <div className="flex flex-col lg:flex-row items-center gap-16">
               <div className="w-full lg:w-1/2">
-                <div className="bg-secondary border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 aspect-video flex items-center justify-center">
-                  <span className="material-symbols-outlined text-8xl text-white">dynamic_form</span>
-                </div>
+                <div 
+                  className="w-full aspect-video border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
+                  style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800')" }}
+                ></div>
               </div>
               
               <div className="w-full lg:w-1/2 space-y-8">
@@ -162,9 +163,10 @@ export default function LandingPage() {
             <div className="md:w-1/3 sticky top-32">
               <h2 className="font-black text-3xl md:text-4xl uppercase mb-6 leading-none text-primary tracking-tight font-display">Empat Langkah Mudah</h2>
               <p className="text-sm font-medium text-on-surface-variant mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
-              <div className="w-full h-64 bg-surface-container border-border-width-main border-black flex items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                <span className="material-symbols-outlined text-7xl text-primary opacity-25">report_problem</span>
-              </div>
+              <div 
+                className="w-full h-64 border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800')" }}
+              ></div>
             </div>
             
             <div className="md:w-2/3 space-y-8">
@@ -208,31 +210,69 @@ export default function LandingPage() {
         <section id="proses-section" className="py-24 px-12 md:px-20 bg-white border-b-border-width-main border-black">
           <div className="max-w-6xl mx-auto">
             <h2 className="font-black text-3xl md:text-4xl uppercase mb-12 text-center text-primary tracking-tight font-display">SOP &amp; Alur Kerja</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-full md:h-[500px]">
-              <div className="md:col-span-2 md:row-span-2 bg-primary border-border-width-main border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col justify-end text-white">
-                <span className="material-symbols-outlined text-6xl mb-6">assignment_turned_in</span>
-                <h3 className="font-black text-xl sm:text-2xl uppercase mb-4 tracking-tight">Protokol Perbaikan</h3>
-                <p className="text-xs opacity-80 leading-relaxed font-medium">Setiap aduan diproses berdasarkan Standar Pelayanan Minimal (SPM) untuk menjamin kualitas perbaikan infrastruktur yang tahan lama.</p>
-              </div>
-              <div className="md:col-span-2 bg-secondary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 text-white flex flex-col justify-center">
-                <h3 className="font-black text-sm uppercase tracking-wider mb-6">Siklus Laporan</h3>
-                <div className="flex flex-wrap justify-between items-center gap-2">
-                  <span className="font-bold text-xs uppercase tracking-wider">Warga Lapor</span>
-                  <span className="material-symbols-outlined text-sm">chevron_right</span>
-                  <span className="font-bold text-xs uppercase tracking-wider">Instansi Verif</span>
-                  <span className="material-symbols-outlined text-sm">chevron_right</span>
-                  <span className="font-bold text-xs uppercase tracking-wider">Vendor Kerja</span>
-                  <span className="material-symbols-outlined text-sm">chevron_right</span>
-                  <span className="font-bold text-xs uppercase tracking-wider">Publik Cek</span>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {/* Card 1: Protokol Perbaikan */}
+              <div className="md:col-span-2 bg-primary border-border-width-main border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col justify-between text-white min-h-[320px]">
+                <span className="material-symbols-outlined text-6xl">assignment_turned_in</span>
+                <div>
+                  <h3 className="font-black text-xl uppercase mb-4 tracking-tight">Protokol Perbaikan (SPM)</h3>
+                  <p className="text-xs opacity-90 leading-relaxed font-medium mb-4">
+                    Setiap laporan diproses berdasarkan Standar Pelayanan Minimal (SPM) Kota untuk memastikan penanganan yang cepat dan struktur yang kokoh:
+                  </p>
+                  <ul className="text-xs list-disc pl-4 space-y-1.5 opacity-85 font-medium">
+                    <li><strong>Respon Awal:</strong> Validasi berkas kelayakan &amp; kategori aduan maksimal 3 jam.</li>
+                    <li><strong>Survei Teknis:</strong> Kunjungan lokasi oleh dinas PUPR/Dishub maksimal 12 jam.</li>
+                    <li><strong>Estimasi Pekerjaan:</strong> Selesai dalam 24 - 48 jam untuk kerusakan umum.</li>
+                  </ul>
                 </div>
               </div>
-              <div className="md:col-span-1 bg-white border-border-width-main border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 flex flex-col items-center justify-center text-center">
-                <span className="material-symbols-outlined text-4xl mb-2 text-primary">safety_check</span>
-                <p className="font-bold text-xs uppercase tracking-wider text-primary">Standard Keamanan</p>
+
+              {/* Card 2: Siklus Laporan */}
+              <div className="md:col-span-2 bg-secondary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 text-white flex flex-col justify-between min-h-[320px] gap-4">
+                <div>
+                  <span className="material-symbols-outlined text-6xl">sync_alt</span>
+                  <h3 className="font-black text-lg uppercase mt-2 tracking-tight">Siklus Laporan Pelanggan</h3>
+                </div>
+                <div className="grid grid-cols-2 gap-4 items-stretch">
+                  <div className="bg-white/10 p-3 border border-white/20">
+                    <p className="font-black text-xs text-white">01. LAPOR</p>
+                    <p className="text-[10px] opacity-80 mt-1 font-medium">Warga menyematkan foto &amp; lokasi GPS kerusakan</p>
+                  </div>
+                  <div className="bg-white/10 p-3 border border-white/20">
+                    <p className="font-black text-xs text-white">02. VERIFIKASI</p>
+                    <p className="text-[10px] opacity-80 mt-1 font-medium">Admin memvalidasi dan disposisi laporan ke dinas terkait</p>
+                  </div>
+                  <div className="bg-white/10 p-3 border border-white/20">
+                    <p className="font-black text-xs text-white">03. PENANGANAN</p>
+                    <p className="text-[10px] opacity-80 mt-1 font-medium">Tim lapangan PUPR/Dishub datang melakukan perbaikan</p>
+                  </div>
+                  <div className="bg-white/10 p-3 border border-white/20">
+                    <p className="font-black text-xs text-white">04. KONTROL</p>
+                    <p className="text-[10px] opacity-80 mt-1 font-medium">Laporan dipublikasikan dan dinilai langsung oleh pelapor</p>
+                  </div>
+                </div>
               </div>
-              <div className="md:col-span-1 bg-primary text-white border-border-width-main border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 flex flex-col items-center justify-center text-center">
-                <span className="material-symbols-outlined text-4xl mb-2 text-white">groups</span>
-                <p className="font-bold text-xs uppercase tracking-wider text-white">Audit Masyarakat</p>
+
+              {/* Card 3: Keamanan Data */}
+              <div className="md:col-span-2 bg-white border-border-width-main border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 flex flex-col justify-between min-h-[160px] text-primary">
+                <span className="material-symbols-outlined text-4xl text-primary">safety_check</span>
+                <div>
+                  <h4 className="font-black text-sm uppercase tracking-wider text-primary mb-1">Standard Keamanan Data</h4>
+                  <p className="text-xs text-on-surface-variant font-semibold leading-relaxed">
+                    Kami melindungi privasi dan identitas pelapor sepenuhnya dengan enkripsi data SSL tingkat tinggi dan penyimpanan cloud yang aman dari akses pihak tidak berwenang.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 4: Audit Masyarakat */}
+              <div className="md:col-span-2 bg-primary text-white border-border-width-main border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 flex flex-col justify-between min-h-[160px]">
+                <span className="material-symbols-outlined text-4xl text-white">groups</span>
+                <div>
+                  <h4 className="font-black text-sm uppercase tracking-wider text-white mb-1">Transparansi &amp; Audit Masyarakat</h4>
+                  <p className="text-xs text-white/80 font-medium leading-relaxed">
+                    Setiap tahapan pekerjaan terdokumentasi rapi. Warga berhak memberikan umpan balik (feedback) dan penilaian performa kinerja dinas secara transparan.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -268,9 +308,10 @@ export default function LandingPage() {
               <div className="bg-white text-primary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.15)] p-8">
                 <p className="text-base italic mb-6 leading-relaxed font-medium">&quot;Lubang jalan di depan rumah yang sudah berbulan-bulan rusak akhirnya diperbaiki dalam waktu 3 hari setelah saya lapor lewat SIGAP. Sangat membantu!&quot;</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-secondary border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                    <span className="material-symbols-outlined text-white">person</span>
-                  </div>
+                  <div 
+                    className="w-12 h-12 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center rounded-none"
+                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80')" }}
+                  ></div>
                   <div>
                     <p className="font-black text-xs uppercase tracking-wider">Budi Santoso</p>
                     <p className="text-[10px] font-bold uppercase tracking-wider opacity-60">Warga Jakarta Selatan</p>
@@ -282,9 +323,10 @@ export default function LandingPage() {
               <div className="bg-secondary text-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] p-8 md:translate-x-6">
                 <p className="text-base italic mb-6 leading-relaxed font-medium">&quot;Lampu jalan yang mati sering membuat kawasan kami rawan. Lewat aduan transparan di SIGAP, kami bisa memantau kapan petugas datang memperbaiki.&quot;</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary border-2 border-white flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
-                    <span className="material-symbols-outlined text-white">person</span>
-                  </div>
+                  <div 
+                    className="w-12 h-12 border-2 border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] bg-cover bg-center rounded-none"
+                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80')" }}
+                  ></div>
                   <div>
                     <p className="font-black text-xs uppercase tracking-wider">Ani Wijaya</p>
                     <p className="text-[10px] font-bold uppercase tracking-wider opacity-85">Ketua RW</p>
