@@ -164,7 +164,7 @@ export default function LandingPage() {
               <h2 className="font-black text-3xl md:text-4xl uppercase mb-6 leading-none text-primary tracking-tight font-display">Empat Langkah Mudah</h2>
               <p className="text-sm font-medium text-on-surface-variant mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
               <div 
-                className="w-full h-64 border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
+                className="w-full aspect-[4/3] border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
                 style={{ backgroundImage: "url('https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&q=80&w=800')" }}
               ></div>
             </div>
