@@ -43,12 +43,12 @@ export default function LandingPage() {
               >
                 Mulai Lapor
               </button>
-              <a
-                href="#alur-section"
+              <Link
+                href="/progress"
                 className="bg-white text-primary border-black border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none px-8 py-4 font-bold text-xs uppercase tracking-wider transition-all text-center inline-block"
               >
                 Lihat Progress
-              </a>
+              </Link>
             </div>
           </div>
           
