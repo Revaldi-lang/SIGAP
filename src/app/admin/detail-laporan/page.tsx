@@ -38,13 +38,13 @@ function DetailContent({ reportId }: { reportId: string }) {
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'baru':
-        return 'bg-red-50 text-red-600 border-red-200';
+        return 'bg-red-100 text-red-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
       case 'proses':
-        return 'bg-amber-50 text-amber-600 border-amber-200';
+        return 'bg-amber-100 text-amber-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
       case 'selesai':
-        return 'bg-emerald-50 text-emerald-600 border-emerald-200';
+        return 'bg-emerald-100 text-emerald-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
       default:
-        return 'bg-slate-50 text-slate-600 border-slate-200';
+        return 'bg-slate-100 text-slate-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
     }
   };
 
@@ -130,7 +130,7 @@ function DetailContent({ reportId }: { reportId: string }) {
               </p>
             </div>
             <div>
-              <span className={"inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold border uppercase tracking-wider " + getStatusBadgeClass(aduan.status)}>
+              <span className={"inline-flex items-center gap-1.5 px-4 py-2 rounded-none text-xs font-black border-2 uppercase tracking-wider " + getStatusBadgeClass(aduan.status)}>
                 <span className={"w-1.5 h-1.5 rounded-full " + getStatusDotClass(aduan.status)}></span>
                 {getStatusText(aduan.status)}
               </span>
