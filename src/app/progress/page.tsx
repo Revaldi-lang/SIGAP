@@ -31,7 +31,7 @@ export default function ProgressPage() {
       date: '14 Juli 2026',
       progress: 100,
       status: 'Selesai',
-      image: 'https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&w=800&q=80',
+      image: '/assets/images/perbaikan_a_yani.png',
       description: 'Tim reaksi cepat dinas PUPR menyelesaikan pengaspalan dan penambalan 12 lubang besar di sepanjang jalur protokol Ahmad Yani dalam waktu 24 jam setelah aduan divalidasi.',
       officer: 'Dinas Pekerjaan Umum'
     },
