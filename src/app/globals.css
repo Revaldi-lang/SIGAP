@@ -36,6 +36,20 @@
   --spacing-stack-lg: 2rem;
   --spacing-stack-md: 1rem;
   --spacing-stack-sm: 0.5rem;
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+
+  --shadow-sm: 2px 2px 0px 0px rgba(0,0,0,1);
+  --shadow-md: 4px 4px 0px 0px rgba(0,0,0,1);
+  --shadow-lg: 6px 6px 0px 0px rgba(0,0,0,1);
+  --shadow-xl: 8px 8px 0px 0px rgba(0,0,0,1);
+  --shadow-2xl: 12px 12px 0px 0px rgba(0,0,0,1);
 }
 
 @layer base {
@@ -88,37 +102,41 @@
 
 .page-card {
   background: #FFFFFF;
-  border: 1px solid #E5E2E1;
-  border-radius: 0.875rem;
-  box-shadow: 0 8px 24px rgba(0, 19, 96, 0.04);
+  border: var(--spacing-border-width-main) solid #000000;
+  border-radius: 0px;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .page-section {
   background: #FCF9F8;
-  border: 1px solid #E5E2E1;
-  border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 19, 96, 0.04);
+  border: var(--spacing-border-width-main) solid #000000;
+  border-radius: 0px;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .tonal-card {
   background: #F6F3F2;
-  border: 1px solid #E5E2E1;
-  border-radius: 1rem;
+  border: var(--spacing-border-width-sub) solid #000000;
+  border-radius: 0px;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .card-shadow {
-  border: 1px solid #E5E2E1;
+  border: var(--spacing-border-width-sub) solid #000000;
+  border-radius: 0px;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   transition: all 0.2s ease;
 }
 
 .card-shadow:hover {
-  border-color: #001360;
-  box-shadow: 0 4px 20px rgba(0, 19, 96, 0.05);
+  border-color: #000000;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .page-title {
-  color: #001360;
-  font-weight: 800;
+  color: #0F1740;
+  font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.2;
 }
@@ -129,15 +147,15 @@
 
 .legacy-card {
   background: #FFFFFF;
-  border: 1px solid #E5E2E1;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 30px rgba(0, 19, 96, 0.04);
+  border: var(--spacing-border-width-main) solid #000000;
+  border-radius: 0px;
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .legacy-input {
   width: 100%;
-  border: 1px solid #D3C5B1;
-  border-radius: 0.5rem;
+  border: var(--spacing-border-width-sub) solid #000000;
+  border-radius: 0px;
   background-color: #FFFFFF;
   color: #1C1B18;
   padding: 0.625rem 0.875rem;
@@ -147,8 +165,8 @@
 }
 
 .legacy-input:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 19, 96, 0.15);
+  border-color: #000000;
+  box-shadow: none;
 }
 
 .legacy-btn-primary {
@@ -156,16 +174,24 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #001360;
+  border-radius: 0px;
+  border: var(--spacing-border-width-sub) solid #000000;
+  background-color: #0f1740;
   color: #FFFFFF;
   font-weight: 700;
   padding: 0.75rem 1rem;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .legacy-btn-primary:hover {
-  opacity: 0.92;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.legacy-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 .legacy-btn-secondary {
@@ -173,17 +199,25 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid #D3C5B1;
+  border-radius: 0px;
+  border: var(--spacing-border-width-sub) solid #000000;
   background-color: #FFFFFF;
-  color: #001360;
+  color: #0f1740;
   font-weight: 700;
   padding: 0.75rem 1rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
 }
 
 .legacy-btn-secondary:hover {
   background-color: #F6F3F2;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.legacy-btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 @layer base {
@@ -191,8 +225,8 @@
   select,
   textarea {
     width: 100%;
-    border: 1px solid #D3C5B1;
-    border-radius: 0.5rem;
+    border: var(--spacing-border-width-sub) solid #000000;
+    border-radius: 0px;
     background-color: #FFFFFF;
     color: #1C1B18;
     padding: 0.625rem 0.875rem;
@@ -204,8 +238,8 @@
   input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
   select:focus,
   textarea:focus {
-    border-color: transparent;
-    box-shadow: 0 0 0 2px rgba(0, 19, 96, 0.15);
+    border-color: #000000;
+    box-shadow: none;
   }
 
   button {
