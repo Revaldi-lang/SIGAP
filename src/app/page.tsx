@@ -25,12 +25,12 @@ export default function LandingPage() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative min-h-[800px] flex flex-col md:flex-row items-stretch border-b-border-width-main border-black">
-          <div className="flex-1 flex flex-col justify-center px-12 md:px-20 py-16 bg-white">
+          <div className="flex-1 flex flex-col justify-center px-6 md:px-20 py-16 bg-white">
             <span className="inline-block bg-primary text-on-primary border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 font-bold text-xs uppercase tracking-wider mb-4 w-fit">
               Portal Pengaduan Terpadu
             </span>
-            <h1 className="font-black text-4xl sm:text-5xl md:text-[54px] uppercase mb-6 leading-[0.9] text-primary tracking-tight font-display">
-              Solusi Cerdas Pelaporan Infrastruktur <span className="text-white bg-secondary px-2 border-4 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Kerusakan Publik</span>
+            <h1 className="font-black text-3xl sm:text-5xl md:text-[54px] uppercase mb-6 leading-[0.9] text-primary tracking-tight font-display">
+              Solusi Cerdas Pelaporan Infrastruktur <span className="text-white bg-secondary px-2 border-4 border-black block sm:inline-block mt-2 sm:mt-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Kerusakan Publik</span>
             </h1>
             <p className="font-medium text-base md:text-lg max-w-xl mb-10 text-on-surface-variant leading-relaxed">
               Laporkan jalan berlubang, lampu jalan mati, atau fasilitas umum rusak di sekitar Anda. SIGAP menjembatani aduan warga dengan tindakan perbaikan cepat dari instansi terkait.
@@ -158,7 +158,7 @@ export default function LandingPage() {
         </section>
 
         {/* Empat Langkah Mudah Section */}
-        <section id="alur-section-steps" className="py-24 px-12 md:px-20 border-b-border-width-main border-black bg-white font-space">
+        <section id="alur-section-steps" className="py-24 px-6 md:px-20 border-b-border-width-main border-black bg-white font-space">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
             <div className="md:w-1/3 md:sticky md:top-32">
               <h2 className="font-black text-3xl md:text-4xl uppercase mb-6 leading-none text-primary tracking-tight font-display">Empat Langkah Mudah</h2>
@@ -207,7 +207,7 @@ export default function LandingPage() {
         </section>
 
         {/* SOP & Alur Kerja Section */}
-        <section id="proses-section" className="py-24 px-12 md:px-20 bg-white border-b-border-width-main border-black">
+        <section id="proses-section" className="py-24 px-6 md:px-20 bg-white border-b-border-width-main border-black">
           <div className="max-w-6xl mx-auto">
             <h2 className="font-black text-3xl md:text-4xl uppercase mb-16 text-center text-primary tracking-tight font-display">SOP &amp; Alur Kerja</h2>
             <div className="flex flex-col lg:flex-row gap-12">
@@ -302,7 +302,7 @@ export default function LandingPage() {
         </section>
 
         {/* Dampak Nyata (Stats & Testimonials) */}
-        <section id="suara-warga-section" className="py-24 px-12 md:px-20 bg-primary text-white border-b-border-width-main border-black shadow-[0_-4px_0px_0px_rgba(0,0,0,1)]">
+        <section id="suara-warga-section" className="py-24 px-6 md:px-20 bg-primary text-white border-b-border-width-main border-black shadow-[0_-4px_0px_0px_rgba(0,0,0,1)]">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
             <div className="md:w-1/2">
               <h2 className="font-black text-3xl md:text-[40px] uppercase mb-12 leading-none tracking-tight font-display">Dampak Nyata Untuk Kota Kita</h2>
@@ -360,11 +360,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-24 px-12 md:px-20 bg-surface-container-low">
-          <div className="bg-primary p-12 md:p-20 text-center border-border-width-main border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] max-w-6xl mx-auto">
-            <h2 className="font-black text-4xl sm:text-5xl text-white uppercase mb-8 leading-[0.9] tracking-tight font-display">
-              Membangun Infrastruktur <br/><span className="text-secondary bg-white border-4 border-black px-4 inline-block mt-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Yang Lebih SIGAP</span>
+        <section className="py-24 px-6 md:px-20 bg-surface-container-low">
+          <div className="bg-primary p-6 md:p-20 text-center border-border-width-main border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] max-w-6xl mx-auto">
+            <h2 className="font-black text-3xl sm:text-5xl text-white uppercase mb-8 leading-[0.9] tracking-tight font-display">
+              Membangun Infrastruktur <br/><span className="text-secondary bg-white border-4 border-black px-4 block sm:inline-block mt-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] w-fit mx-auto">Yang Lebih SIGAP</span>
             </h2>
             <div className="flex flex-wrap justify-center gap-6">
               <button
