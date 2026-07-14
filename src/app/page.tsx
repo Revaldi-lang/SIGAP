@@ -160,7 +160,7 @@ export default function LandingPage() {
         {/* Empat Langkah Mudah Section */}
         <section id="alur-section-steps" className="py-24 px-12 md:px-20 border-b-border-width-main border-black bg-white font-space">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
-            <div className="md:w-1/3 sticky top-32">
+            <div className="md:w-1/3 md:sticky md:top-32">
               <h2 className="font-black text-3xl md:text-4xl uppercase mb-6 leading-none text-primary tracking-tight font-display">Empat Langkah Mudah</h2>
               <p className="text-sm font-medium text-on-surface-variant mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
               <div 
