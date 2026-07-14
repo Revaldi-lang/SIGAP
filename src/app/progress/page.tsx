@@ -53,7 +53,7 @@ export default function ProgressPage() {
       date: '11 Juli 2026',
       progress: 100,
       status: 'Selesai',
-      image: 'https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=800&q=80',
+      image: '/assets/images/perbaikan_pju.jpg',
       description: 'Kawasan rawan kecelakaan di sekitar Pasar Induk kini telah terpasang penerangan jalan pintar hemat energi untuk meningkatkan keamanan aktivitas jual beli malam hari.',
       officer: 'Dinas Perhubungan'
     },
