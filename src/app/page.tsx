@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ModalAkses from '@/components/ModalAkses';
@@ -131,7 +132,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="font-black text-sm uppercase text-primary tracking-wider">Pemantauan Aduan</h3>
                 <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Pantau status perbaikan infrastruktur yang Anda laporkan secara langsung.</p>
-                <a className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="#alur-section">Tracking Laporan</a>
+                <Link className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="/login-masyarakat">Tracking Laporan</Link>
               </div>
               
               {/* Card 2 */}
@@ -141,7 +142,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="font-black text-sm uppercase text-white tracking-wider">Database Infrastruktur</h3>
                 <p className="text-xs text-white/90 font-medium leading-relaxed">Data kerusakan terintegrasi untuk perencanaan perbaikan kota yang lebih efisien.</p>
-                <a className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-white hover:text-primary" href="#alur-section">Lihat Peta Kota</a>
+                <Link className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-white hover:text-primary" href="/login-masyarakat">Lihat Peta Kota</Link>
               </div>
               
               {/* Card 3 */}
@@ -151,7 +152,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="font-black text-sm uppercase text-primary tracking-wider">Aduan Transparan</h3>
                 <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Setiap laporan diverifikasi dan dipublikasikan untuk menjamin akuntabilitas perbaikan.</p>
-                <a className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="#alur-section">Cek Akuntabilitas</a>
+                <Link className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="/login-masyarakat">Cek Akuntabilitas</Link>
               </div>
             </div>
           </div>
