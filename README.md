@@ -79,50 +79,35 @@ SIGAP/
 
 ---
 
-## 🚀 Panduan Membuka & Menjalankan Web Secara Lokal
+## ✨ Fitur-Fitur Utama Platform SIGAP
 
-Ikuti langkah-langkah di bawah ini untuk memasang dependensi dan menjalankan server pengembangan SIGAP di komputer Anda:
+SIGAP dilengkapi dengan berbagai fitur modern berbasis spasial untuk mempermudah pelaporan dan pemantauan infrastruktur kota secara transparan:
 
-### 1. Prasyarat Sistem
-Pastikan Anda sudah menginstal:
-*   [Node.js](https://nodejs.org/) (Versi LTS terbaru, disarankan v18 ke atas)
-*   [Git](https://git-scm.com/)
+### 1. Pelaporan Aduan Infrastruktur (Masyarakat)
+* **Formulir Laporan Intuitif**: Warga dapat mengirimkan aduan mengenai infrastruktur publik (Jalan, Pipa Air/Drainase, Penerangan Jalan/PJU, Jembatan, dll.).
+* **Unggah Foto Kerusakan**: Mendukung pengunggahan bukti visual foto kerusakan fisik di lapangan.
+* **Peta Selektor Geografis (Map Selector)**: Menentukan lokasi koordinat (latitude & longitude) titik kerusakan secara presisi menggunakan peta interaktif Leaflet.
 
-### 2. Kloning Repositori
-Buka terminal/command prompt, lalu jalankan perintah berikut:
-```bash
-git clone https://github.com/Revaldi-lang/SIGAP.git
-cd SIGAP
-```
+### 2. Sistem Web-GIS / Peta Spasial Interaktif
+* **Peta Sebaran Kota (Map Impact View)**: Visualisasi peta kota dengan pin penanda berwarna yang dikelompokkan berdasarkan kategori aduan untuk memetakan titik-titik rawan secara spasial.
+* **Peta Detail Aduan**: Menampilkan penanda lokasi presisi satu laporan aduan tertentu pada halaman detail laporan.
 
-### 3. Pasang Dependensi Node Modules
-Unduh dan pasang seluruh pustaka dependensi yang dibutuhkan proyek:
-```bash
-npm install
-```
+### 3. Pelacakan Progres & Transparansi Real-Time
+* **Linimasa Alur Aduan**: Pelapor dapat melacak tahapan laporan mereka, mulai dari status **Diajukan**, **Diproses**, hingga **Selesai**.
+* **Persentase Progres Fisik**: Menampilkan tingkat kemajuan pengerjaan fisik di lapangan yang dilaporkan oleh petugas dinas secara berkala.
 
-### 4. Konfigurasi Variabel Lingkungan (.env)
-Buat berkas bernama `.env.local` di direktori utama (root folder) proyek, lalu masukkan URL dan Anon Key dari proyek Supabase Anda:
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://alamat-proyek-supabase-anda.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhnd2V4amVjeXRqZXN...
-```
+### 4. Dasbor Administrasi Aparatur Pemda (Admin)
+* **Manajemen & Verifikasi Laporan**: Panel khusus admin untuk memvalidasi aduan masuk guna menghindari laporan palsu/duplikat.
+* **Disposisi & Delegasi**: Mengarahkan penanganan laporan kepada satuan kerja dinas terkait (seperti Dinas PUPR atau Dinas Perhubungan) secara digital.
 
-### 5. Jalankan Server Pengembangan
-Nyalakan server lokal Next.js untuk memulai proses pengembangan interaktif:
-```bash
-npm run dev
-```
-Setelah server menyala, buka tautan berikut di browser Anda:
-👉 **[http://localhost:3000](http://localhost:3000)**
+### 5. Manajemen Pengguna & Keanggotaan (Admin)
+* **Kontrol Akses Pengguna**: Manajemen data akun pelapor dan petugas.
+* **Tindakan Keamanan**: Administrator dapat meninjau keaktifan akun, melakukan pemblokiran (suspend), atau menghapus akun pengguna secara permanen.
 
-### 6. Membuat Build Produksi
-Untuk menguji hasil kompilasi produksi yang teroptimasi, jalankan perintah:
-```bash
-npm run build
-npm run start
-```
-Perintah ini akan melakukan pengecekan sintaks TypeScript/ESLint secara ketat dan melakukan prerendering halaman statis.
+### 6. Autentikasi & Keamanan Sesi
+* **Role-Based Access Control (RBAC)**: Pembatasan hak akses halaman yang ketat antara akun Warga/Pelapor dan Admin/Aparatur Pemda melalui `AuthGuard`.
+* **Session Timeout Handler**: Perlindungan keamanan yang otomatis mendeteksi ketiadaan aktivitas pengguna dan mengeluarkan sesi login secara otomatis (auto-logout) untuk mencegah penyalahgunaan akun.
+
 
 ---
 
