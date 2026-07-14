@@ -64,7 +64,7 @@ export default function ProgressPage() {
       date: '09 Juli 2026',
       progress: 40,
       status: 'Diproses',
-      image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80',
+      image: '/assets/images/perbaikan_jembatan.png',
       description: 'Pembenahan karat struktur baja dan penggantian alas pijakan kayu JPO Terminal Kota sedang berjalan. Konstruksi saat ini difokuskan pada pengelasan balok penopang utama.',
       officer: 'Dinas Tata Kota'
     }
