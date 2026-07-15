@@ -67,7 +67,7 @@ CREATE POLICY "Allow public update" ON public.feedback_admin FOR UPDATE USING (t
 CREATE POLICY "Allow public delete" ON public.feedback_admin FOR DELETE USING (true);
 
 -- 3. Batasi akses pembacaan langsung pada kolom password untuk role publik (anon & authenticated)
-REVOKE SELECT ON COLUMN public.users.password FROM anon, authenticated;
+REVOKE SELECT (password) ON public.users FROM anon, authenticated;
 
 -- 4. Buat fungsi RPC aman di database untuk melakukan verifikasi password di sisi server
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
