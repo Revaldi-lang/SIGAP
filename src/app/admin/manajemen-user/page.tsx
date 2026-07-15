@@ -32,7 +32,7 @@ export default function AdminManajemenUser() {
 
     try {
       // In this local mock setup, we register user as Masyarakat or custom roles in context
-      const success = registerWarga(namaInput, emailInput, identitasInput, 'password123');
+      const success = registerWarga(namaInput, emailInput, identitasInput, 'password123', roleInput);
       if (success) {
         // If they chose a custom role (like Admin/Petugas), we update their role
         // For local mock simplicity, this registers the user in Supabase users table!

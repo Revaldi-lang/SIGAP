@@ -73,7 +73,7 @@ interface AppContextType {
   login: (email: string, password: string, portal: 'pelapor' | 'admin') => Promise<{ success: boolean; reason?: string }>;
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
-  registerWarga: (username: string, email: string, identitas: string, sandi: string) => boolean;
+  registerWarga: (username: string, email: string, identitas: string, sandi: string, role?: 'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR') => boolean;
   tambahLaporan: (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => void;
   updateStatusLaporan: (id: string, status: 'baru' | 'proses' | 'selesai', dinas: string, catatan: string) => void;
   updateStatusUser: (email: string, status: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi') => void;
@@ -442,7 +442,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const registerWarga = (username: string, email: string, identitas: string, sandi: string): boolean => {
+  const registerWarga = (
+    username: string, 
+    email: string, 
+    identitas: string, 
+    sandi: string,
+    role: 'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR' = 'Masyarakat'
+  ): boolean => {
     const emailExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
     if (emailExists) return false;
 
@@ -453,7 +459,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       username,
       email,
       identitas,
-      role: 'Masyarakat',
+      role,
       status: 'Aktif',
       registered: 'Pendaftaran Mandiri',
       password: hashedPassword
@@ -468,7 +474,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       name: username,
       email,
       nik: identitas,
-      role: 'Masyarakat',
+      role,
       status: 'Aktif',
       password: hashedPassword
     }).then(({ error }) => {
