@@ -10,6 +10,11 @@ ALTER TABLE public.activity_log ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.foto_laporan ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.feedback_admin ENABLE ROW LEVEL SECURITY;
 
+-- 2. Pastikan kolom pendukung ada di tabel users (untuk menghindari error select)
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS telepon TEXT;
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS alamat TEXT;
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS avatar_url TEXT;
+
 -- 2. Buat kebijakan (policies) akses publik agar aplikasi client-side tetap berfungsi normal
 -- Tabel: users
 DROP POLICY IF EXISTS "Allow public select" ON public.users;
