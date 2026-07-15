@@ -8,6 +8,7 @@ ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.laporan ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.activity_log ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.foto_laporan ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.feedback_admin ENABLE ROW LEVEL SECURITY;
 
 -- 2. Buat kebijakan (policies) akses publik agar aplikasi client-side tetap berfungsi normal
 -- Tabel: users
@@ -53,6 +54,17 @@ CREATE POLICY "Allow public select" ON public.foto_laporan FOR SELECT USING (tru
 CREATE POLICY "Allow public insert" ON public.foto_laporan FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public update" ON public.foto_laporan FOR UPDATE USING (true) WITH CHECK (true);
 CREATE POLICY "Allow public delete" ON public.foto_laporan FOR DELETE USING (true);
+
+-- Tabel: feedback_admin
+DROP POLICY IF EXISTS "Allow public select" ON public.feedback_admin;
+DROP POLICY IF EXISTS "Allow public insert" ON public.feedback_admin;
+DROP POLICY IF EXISTS "Allow public update" ON public.feedback_admin;
+DROP POLICY IF EXISTS "Allow public delete" ON public.feedback_admin;
+
+CREATE POLICY "Allow public select" ON public.feedback_admin FOR SELECT USING (true);
+CREATE POLICY "Allow public insert" ON public.feedback_admin FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update" ON public.feedback_admin FOR UPDATE USING (true) WITH CHECK (true);
+CREATE POLICY "Allow public delete" ON public.feedback_admin FOR DELETE USING (true);
 
 -- 3. Batasi akses pembacaan langsung pada kolom password untuk role publik (anon & authenticated)
 REVOKE SELECT ON COLUMN public.users.password FROM anon, authenticated;
