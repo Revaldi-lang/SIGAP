@@ -108,7 +108,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const pullFromSupabase = useCallback(async () => {
     try {
-      const { data: dbUsers } = await supabase.from('users').select('id, name, email, nik, role, status, avatar_url, telepon, alamat');
+      const { data: dbUsers, error: usersError } = await supabase.from('users').select('id, name, email, nik, role, status, avatar_url, telepon, alamat');
+      if (usersError) {
+        console.error('Error fetching users from Supabase:', usersError);
+      }
       if (dbUsers) {
         const mappedUsers: User[] = dbUsers.map(u => ({
           id: u.id.toString(),
@@ -165,12 +168,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         });
       }
 
-      const { data: dbLaporan } = await supabase.from('laporan').select(`
+      const { data: dbLaporan, error: laporanError } = await supabase.from('laporan').select(`
         *,
         users ( name ),
         activity_log ( * ),
         foto_laporan ( * )
       `);
+
+      if (laporanError) {
+        console.error('Error fetching laporan from Supabase:', laporanError);
+      }
 
       if (dbLaporan) {
         const mappedLaporan: Laporan[] = dbLaporan.map(l => {
