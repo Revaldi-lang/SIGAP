@@ -70,7 +70,7 @@ interface AppContextType {
   users: User[];
   laporan: Laporan[];
   loading: boolean;
-  login: (email: string, password: string, portal: 'pelapor' | 'admin') => { success: boolean; reason?: string };
+  login: (email: string, password: string, portal: 'pelapor' | 'admin') => Promise<{ success: boolean; reason?: string }>;
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   registerWarga: (username: string, email: string, identitas: string, sandi: string) => boolean;
@@ -108,7 +108,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const pullFromSupabase = useCallback(async () => {
     try {
-      const { data: dbUsers } = await supabase.from('users').select('*');
+      const { data: dbUsers } = await supabase.from('users').select('id, name, email, nik, role, status, avatar_url, telepon, alamat');
       if (dbUsers) {
         const mappedUsers: User[] = dbUsers.map(u => ({
           id: u.id.toString(),
@@ -118,7 +118,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           role: u.role,
           status: u.status === 'Menunggu' ? 'Menunggu Verifikasi' : u.status,
           registered: 'Terdaftar',
-          password: u.password,
+          password: undefined,
           telepon: u.telepon || localStorage.getItem('sigap_user_phone_' + u.id) || '',
           alamat: u.alamat || localStorage.getItem('sigap_user_address_' + u.id) || '',
           // DB is always source of truth for photo. localStorage is only a fallback
@@ -234,7 +234,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const { data: existing } = await supabase
         .from('users')
-        .select('*')
+        .select('id, name, email, nik, role, status, avatar_url, telepon, alamat')
         .eq('email', user.email)
         .single();
 
@@ -365,7 +365,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     initializeData();
   }, [handleSupabaseSession, pullFromSupabase]);
 
-  const login = (email: string, password: string, portal: 'pelapor' | 'admin'): { success: boolean; reason?: string } => {
+  const login = async (email: string, password: string, portal: 'pelapor' | 'admin'): Promise<{ success: boolean; reason?: string }> => {
     const matched = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
     // 1. User not found
@@ -384,16 +384,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return { success: false, reason: 'wrong_portal' };
     }
 
-    // 4. Password check (skip for OAuth-authenticated accounts)
-    if (matched.password && matched.password !== 'oauth_authenticated') {
-      const isBcrypt = matched.password.startsWith('$2a$') || matched.password.startsWith('$2b$') || matched.password.startsWith('$2y$');
-      const isMatch = isBcrypt
-        ? bcrypt.compareSync(password, matched.password)
-        : matched.password === password;
+    // 4. Password check via secure database RPC
+    try {
+      const { data: isValid, error } = await supabase.rpc('verify_user_password', {
+        p_email: email,
+        p_password: password
+      });
 
-      if (!isMatch) {
+      if (error) {
+        console.error('Password verification error:', error);
         return { success: false, reason: 'wrong_password' };
       }
+
+      if (!isValid) {
+        return { success: false, reason: 'wrong_password' };
+      }
+    } catch (err) {
+      console.error('Failed to verify password via RPC:', err);
+      return { success: false, reason: 'wrong_password' };
     }
 
     const mappedRole = matched.role === 'Masyarakat' ? 'pelapor' : matched.role;
@@ -815,22 +823,37 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateUserPassword = async (currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> => {
     if (!currentUser) return { success: false, message: 'User tidak teridentifikasi.' };
     
-    // Find the user in users array to get the stored password
-    // Also fall back to matching by email in case id doesn't match cached users yet
+    // Find the user in users array to check existence
     const userInDb = users.find(u => u.id === currentUser.id)
                   || users.find(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
     if (!userInDb) return { success: false, message: 'Data user tidak ditemukan.' };
 
-    // If password is set in DB, check it
-    if (userInDb.password && userInDb.password !== 'oauth_authenticated') {
-      const isBcrypt = userInDb.password.startsWith('$2a$') || userInDb.password.startsWith('$2b$') || userInDb.password.startsWith('$2y$');
-      const isMatch = isBcrypt
-        ? bcrypt.compareSync(currentPassword, userInDb.password)
-        : userInDb.password === currentPassword;
+    try {
+      if (supabase) {
+        // Check if the user actually has a password (not OAuth)
+        const { data: hasPassword, error: checkError } = await supabase.rpc('has_user_password', {
+          p_email: currentUser.email
+        });
 
-      if (!isMatch) {
-        return { success: false, message: 'Kata sandi saat ini salah.' };
+        if (checkError) {
+          console.error('Error checking user password status:', checkError);
+        }
+
+        if (hasPassword) {
+          // Verify current password via secure database RPC
+          const { data: isValid, error: verifyError } = await supabase.rpc('verify_user_password', {
+            p_email: currentUser.email,
+            p_password: currentPassword
+          });
+
+          if (verifyError || !isValid) {
+            return { success: false, message: 'Kata sandi saat ini salah.' };
+          }
+        }
       }
+    } catch (err) {
+      console.error('Failed to verify current password:', err);
+      return { success: false, message: 'Gagal melakukan verifikasi kata sandi saat ini.' };
     }
 
     try {

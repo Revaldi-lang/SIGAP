@@ -24,11 +24,11 @@ export default function AdminLogin() {
     }
   }, [currentUser, loading, router]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
-    const result = login(email, password, 'admin');
+    const result = await login(email, password, 'admin');
     if (result.success) {
       router.push('/admin');
     } else if (result.reason === 'wrong_portal') {

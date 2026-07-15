@@ -24,11 +24,11 @@ export default function LoginMasyarakat() {
     }
   }, [currentUser, loading, router]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
-    const result = login(email, password, 'pelapor');
+    const result = await login(email, password, 'pelapor');
     if (result.success) {
       router.push('/dashboard-pelapor');
     } else if (result.reason === 'wrong_portal') {
