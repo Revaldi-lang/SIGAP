@@ -18,7 +18,8 @@ export default function LandingPage() {
   const partnerLogos = [
     { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta' },
     { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR' },
-    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan' }
+    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan' },
+    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup' }
   ];
 
   // Repeat the logos 8 times per set to cover all screens and loop seamlessly
@@ -215,7 +216,7 @@ export default function LandingPage() {
           <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-6">
             <div className="animate-marquee flex items-center">
               {/* First set of logos */}
-              <div className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 shrink-0">
+              <div className="flex items-center gap-10 md:gap-14 pr-10 md:pr-14 shrink-0">
                 {repeatedLogos.map((logo, idx) => (
                   <img 
                     key={`set1-${idx}`}
@@ -226,7 +227,7 @@ export default function LandingPage() {
                 ))}
               </div>
               {/* Second set of logos (duplicate for seamless loop) */}
-              <div className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 shrink-0">
+              <div className="flex items-center gap-10 md:gap-14 pr-10 md:pr-14 shrink-0">
                 {repeatedLogos.map((logo, idx) => (
                   <img 
                     key={`set2-${idx}`}
