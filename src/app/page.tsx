@@ -209,11 +209,11 @@ export default function LandingPage() {
         </section>
 
         {/* Partnership & Dinas Logos Marquee Section */}
-        <section className="py-8 bg-slate-950 border-b border-slate-900 overflow-hidden">
+        <section className="py-8 bg-slate-50 border-b border-slate-100 overflow-hidden">
           <div className="max-w-6xl mx-auto px-6 mb-6 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Instansi Penyelenggara &amp; Teknis Terkait</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Instansi Penyelenggara &amp; Teknis Terkait</p>
           </div>
-          <div className="relative w-full overflow-hidden flex items-center bg-slate-900/40 border-y border-slate-900 py-4">
+          <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-5">
             <div className="animate-marquee flex items-center">
               {/* First set of logos */}
               <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
@@ -222,7 +222,7 @@ export default function LandingPage() {
                     key={`set1-${idx}`}
                     src={logo.src}
                     alt={logo.alt}
-                    className="h-6 md:h-7 w-auto object-contain grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                    className="h-8 w-8 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300"
                   />
                 ))}
               </div>
@@ -233,7 +233,7 @@ export default function LandingPage() {
                     key={`set2-${idx}`}
                     src={logo.src}
                     alt={logo.alt}
-                    className="h-6 md:h-7 w-auto object-contain grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                    className="h-8 w-8 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300"
                   />
                 ))}
               </div>
