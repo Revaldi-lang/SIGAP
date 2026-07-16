@@ -120,12 +120,7 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
     if (address === lastAddressFromMapRef.current) return;
 
     const debounceTimer = setTimeout(() => {
-      // Optimasi pencarian: Tambahkan bias ", Malang" jika user tidak mengetikkannya
-      const searchQuery = address.toLowerCase().includes('malang')
-        ? address
-        : `${address}, Malang`;
-
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&countrycodes=id&viewbox=112.55,-7.90,112.68,-8.06&limit=1&q=${encodeURIComponent(searchQuery)}`)
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&countrycodes=id&viewbox=112.55,-7.90,112.68,-8.06&limit=1&q=${encodeURIComponent(address)}`)
         .then(response => response.json())
         .then(data => {
           if (data && data.length > 0) {
