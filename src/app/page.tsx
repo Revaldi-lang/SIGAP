@@ -206,18 +206,16 @@ export default function LandingPage() {
           <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-6">
             <div className="animate-marquee flex items-center">
               {/* First set of logos */}
-              <div className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 shrink-0">
-                <img src="/assets/images/logo_dki.png" alt="Pemprov DKI Jakarta" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_pupr.png" alt="Kementerian PUPR" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_dishub.png" alt="Dinas Perhubungan" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_dlh.png" alt="Dinas Lingkungan Hidup" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
+              <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 shrink-0">
+                <img src="/assets/images/logo_dki.png" alt="Pemprov DKI Jakarta" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
+                <img src="/assets/images/logo_pupr.png" alt="Kementerian PUPR" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
+                <img src="/assets/images/logo_dishub.png" alt="Dinas Perhubungan" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
               </div>
               {/* Second set of logos (duplicate for seamless loop) */}
-              <div className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 shrink-0">
-                <img src="/assets/images/logo_dki.png" alt="Pemprov DKI Jakarta" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_pupr.png" alt="Kementerian PUPR" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_dishub.png" alt="Dinas Perhubungan" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_dlh.png" alt="Dinas Lingkungan Hidup" className="h-12 md:h-14 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity" />
+              <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 shrink-0">
+                <img src="/assets/images/logo_dki.png" alt="Pemprov DKI Jakarta" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
+                <img src="/assets/images/logo_pupr.png" alt="Kementerian PUPR" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
+                <img src="/assets/images/logo_dishub.png" alt="Dinas Perhubungan" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
               </div>
             </div>
           </div>
