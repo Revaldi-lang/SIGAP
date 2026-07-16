@@ -24,11 +24,11 @@ function DetailContent({ reportId }: { reportId: string }) {
 
   if (!aduan) {
     return (
-      <div className="min-h-screen bg-[#FEFDF8] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
         <span className="material-symbols-outlined text-5xl text-red-500 mb-3 animate-bounce">error</span>
-        <h2 className="text-lg font-bold text-[#1C1B18]">Laporan Tidak Ditemukan</h2>
-        <p className="text-xs text-[#4E4639] mt-1 mb-6">Nomor laporan aduan yang Anda cari tidak terdaftar atau telah dihapus.</p>
-        <Link href="/admin/laporan" className="bg-[#001360] text-white px-6 py-3 rounded-xl text-xs font-bold shadow-md hover:opacity-90 active:scale-95 transition-all">
+        <h2 className="text-lg font-semibold text-slate-800">Laporan Tidak Ditemukan</h2>
+        <p className="text-xs text-slate-500 mt-1 mb-6">Nomor laporan aduan yang Anda cari tidak terdaftar atau telah dihapus.</p>
+        <Link href="/admin/laporan" className="bg-primary text-white px-6 py-3 rounded-xl text-xs font-semibold shadow-sm hover:bg-primary/95 active:scale-95 transition-all">
           Kembali ke Manajemen Laporan
         </Link>
       </div>
@@ -38,13 +38,13 @@ function DetailContent({ reportId }: { reportId: string }) {
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'baru':
-        return 'bg-red-100 text-red-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-red-50 text-red-600 border-red-200';
       case 'proses':
-        return 'bg-amber-100 text-amber-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-amber-50 text-amber-600 border-amber-200';
       case 'selesai':
-        return 'bg-emerald-100 text-emerald-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-emerald-50 text-emerald-600 border-emerald-200';
       default:
-        return 'bg-slate-100 text-slate-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-slate-50 text-slate-600 border-slate-200';
     }
   };
 
@@ -114,23 +114,23 @@ function DetailContent({ reportId }: { reportId: string }) {
           {/* Header */}
           <header className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4 mb-12">
             <div>
-              <nav className="flex items-center gap-2 text-[#4E4639] mb-4">
+              <nav className="flex items-center gap-2 text-slate-500 mb-4">
                 <Link className="text-[10px] font-bold uppercase tracking-wider hover:underline" href="/admin/laporan">Manajemen Laporan</Link>
                 <span className="material-symbols-outlined text-xs">chevron_right</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#001360]">Detail Laporan</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-primary">Detail Laporan</span>
               </nav>
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[#807667] font-bold text-lg">#{aduan.id}</span>
-                <h1 className="text-xl sm:text-2xl font-bold text-[#001360]">{aduan.kategoriLabel}</h1>
+                <span className="font-mono text-slate-400 font-bold text-lg">#{aduan.id}</span>
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900">{aduan.kategoriLabel}</h1>
               </div>
-              <p className="text-[10px] text-[#807667] mt-2 flex items-center gap-3 font-semibold">
+              <p className="text-[10px] text-slate-400 mt-2 flex items-center gap-3 font-semibold">
                 <span>Pelapor: {aduan.pelapor}</span>
                 <span>•</span>
                 <span>Status: {aduan.waktu}</span>
               </p>
             </div>
             <div>
-              <span className={"inline-flex items-center gap-1.5 px-4 py-2 rounded-none text-xs font-black border-2 uppercase tracking-wider " + getStatusBadgeClass(aduan.status)}>
+              <span className={"inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold border uppercase tracking-wider " + getStatusBadgeClass(aduan.status)}>
                 <span className={"w-1.5 h-1.5 rounded-full " + getStatusDotClass(aduan.status)}></span>
                 {getStatusText(aduan.status)}
               </span>
@@ -141,10 +141,10 @@ function DetailContent({ reportId }: { reportId: string }) {
             {/* Left Column: Report Details & Form */}
             <div className="lg:col-span-8 space-y-6">
               {/* Visual Proof Section */}
-              <section className="page-card rounded-2xl overflow-hidden">
-                <div className="p-6 border-b border-[#D3C5B1]/50 flex justify-between items-center bg-white">
-                  <h2 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider">Bukti Visual Kerusakan</h2>
-                  <span className={"text-[10px] px-3 py-1 rounded-md font-bold border uppercase tracking-wider " + getUrgencyClass(aduan.urgensi)}>
+              <section className="page-card rounded-2xl overflow-hidden bg-white border border-slate-200">
+                <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-white">
+                  <h2 className="text-sm font-semibold text-slate-800 uppercase tracking-wider">Bukti Visual Kerusakan</h2>
+                  <span className={"text-[10px] px-3 py-1 rounded-full font-semibold border uppercase tracking-wider " + getUrgencyClass(aduan.urgensi)}>
                     Urgensi: {aduan.urgensi}
                   </span>
                 </div>
@@ -163,23 +163,23 @@ function DetailContent({ reportId }: { reportId: string }) {
               {/* Information Grid */}
               <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Description */}
-                <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
-                  <h3 className="text-xs font-bold text-[#807667] uppercase tracking-wider mb-4 border-b border-[#D3C5B1]/50 pb-2">Deskripsi Kerusakan Warga</h3>
-                  <p className="text-xs sm:text-sm text-[#4E4639] leading-relaxed whitespace-pre-line">{aduan.deskripsi}</p>
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                  <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Deskripsi Kerusakan Warga</h3>
+                  <p className="text-xs sm:text-sm text-slate-655 text-slate-600 leading-relaxed whitespace-pre-line">{aduan.deskripsi}</p>
                 </div>
 
                 {/* Status Action Form */}
-                <div className="bg-white border border-[#D3C5B1] p-6 rounded-2xl shadow-sm">
-                  <h3 className="text-xs font-bold text-[#807667] uppercase tracking-wider mb-4 border-b border-[#D3C5B1]/50 pb-2 flex items-center gap-1.5">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                  <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2 flex items-center gap-1.5">
                     <span className="material-symbols-outlined text-sm">settings_suggest</span> Pembaruan Status &amp; Validasi
                   </h3>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Status Laporan</label>
+                      <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Status Laporan</label>
                       <select
                         value={status}
                         onChange={e => setStatus(e.target.value as 'baru' | 'proses' | 'selesai')}
-                        className="w-full px-3 py-2 text-xs border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none bg-white text-[#1C1B18] font-semibold"
+                        className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white text-slate-800 font-semibold"
                       >
                         <option value="baru">Baru Masuk</option>
                         <option value="proses">Validasikan &amp; Proses Perbaikan</option>
@@ -188,11 +188,11 @@ function DetailContent({ reportId }: { reportId: string }) {
                     </div>
                     
                     <div>
-                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Disposisi Instansi</label>
+                      <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Disposisi Instansi</label>
                       <select
                         value={dinas}
                         onChange={e => setDinas(e.target.value)}
-                        className="w-full px-3 py-2 text-xs border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] outline-none bg-white text-[#1C1B18] font-semibold"
+                        className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white text-slate-800 font-semibold"
                       >
                         <option value="">Pilih Dinas Terkait</option>
                         <option value="Dinas PUPR">Dinas PUPR (Pekerjaan Umum)</option>
@@ -202,14 +202,14 @@ function DetailContent({ reportId }: { reportId: string }) {
                     </div>
 
                     <div>
-                      <label className="block text-[9px] font-bold text-[#4E4639] uppercase tracking-wider mb-1">Catatan Intervensi Teknis</label>
+                      <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Catatan Intervensi Teknis</label>
                       <textarea
                         required
                         rows={3}
                         value={catatan}
                         onChange={e => setCatatan(e.target.value)}
                         placeholder="Masukkan instruksi penanganan..."
-                        className="legacy-input w-full px-3 py-2 text-xs resize-none"
+                        className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-white text-slate-800 font-normal resize-none"
                       />
                     </div>
 
@@ -217,7 +217,7 @@ function DetailContent({ reportId }: { reportId: string }) {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="legacy-btn-primary py-2.5 px-5 rounded-lg text-xs uppercase tracking-wider disabled:opacity-50"
+                        className="bg-primary hover:bg-primary/95 text-white font-semibold py-2.5 px-5 rounded-lg text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-1 shadow-sm active:scale-95 cursor-pointer"
                       >
                         <span className="material-symbols-outlined text-sm">save</span> Simpan Perubahan
                       </button>
@@ -230,22 +230,22 @@ function DetailContent({ reportId }: { reportId: string }) {
             {/* Right Column: Location & Logs */}
             <div className="lg:col-span-4 space-y-6">
               {/* Location */}
-              <section className="page-card p-6 rounded-2xl space-y-4">
-                <h3 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider">Lokasi Titik Aduan</h3>
+              <section className="page-card p-6 rounded-2xl bg-white border border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider">Lokasi Titik Aduan</h3>
                 
                 <MapDetailView lat={aduan.lat} lng={aduan.lng} kategori={aduan.kategori} />
                 
-                <div className="text-[11px] space-y-2 bg-[#F6F3EC] p-4 rounded-xl border border-[#D3C5B1]/50">
+                <div className="text-[11px] space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <div className="flex justify-between gap-4">
-                    <span className="text-[#4E4639] font-medium shrink-0">Alamat:</span>
-                    <span className="text-[#1C1B18] font-bold text-right">{aduan.lokasi}</span>
+                    <span className="text-slate-500 font-medium shrink-0">Alamat:</span>
+                    <span className="text-slate-800 font-semibold text-right">{aduan.lokasi}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#4E4639] font-medium">Wilayah:</span>
-                    <span className="text-[#1C1B18] font-bold text-right">{aduan.wilayah}</span>
+                    <span className="text-slate-500 font-medium">Wilayah:</span>
+                    <span className="text-slate-800 font-semibold text-right">{aduan.wilayah}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-[#4E4639] font-medium"> GPS Akurasi:</span>
+                    <span className="text-slate-500 font-medium"> GPS Akurasi:</span>
                     <span className="text-emerald-600 font-bold text-right flex items-center gap-1">
                       <span className="material-symbols-outlined text-xs">verified</span> Tinggi
                     </span>
@@ -254,16 +254,16 @@ function DetailContent({ reportId }: { reportId: string }) {
               </section>
 
               {/* Timeline Logs */}
-              <section className="page-card p-6 rounded-2xl">
-                <h3 className="text-sm font-bold text-[#1C1B18] uppercase tracking-wider mb-6">Log Alur Riwayat</h3>
-                <div className="relative pl-4 border-l-2 border-[#D3C5B1]/50 ml-2 space-y-6">
+              <section className="page-card p-6 rounded-2xl bg-white border border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-6">Log Alur Riwayat</h3>
+                <div className="relative pl-4 border-l-2 border-slate-200 ml-2 space-y-6">
                   {aduan.logs.map((log, index) => (
                     <div key={index} className="relative">
                       {/* Timeline Bullet */}
-                      <span className="absolute -left-[23px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-[#001360] shadow-sm"></span>
+                      <span className="absolute -left-[23px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-primary shadow-sm"></span>
                       <div>
-                        <h4 className="font-bold text-[#1C1B18] text-xs">{log.judul}</h4>
-                        <p className="text-[10px] text-[#4E4639] mt-1">{log.aktor} • {log.waktu}</p>
+                        <h4 className="font-semibold text-slate-800 text-xs">{log.judul}</h4>
+                        <p className="text-[10px] text-slate-400 mt-1">{log.aktor} • {log.waktu}</p>
                       </div>
                     </div>
                   ))}
@@ -286,8 +286,8 @@ function DetailLaporanWrapper() {
 export default function DetailLaporanAdmin() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#FEFDF8] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#001360] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
       </div>
     }>
       <DetailLaporanWrapper />

@@ -53,13 +53,13 @@ export default function AdminDashboard() {
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'baru':
-        return 'bg-red-100 text-red-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-red-50 text-red-600 border-red-200';
       case 'proses':
-        return 'bg-amber-100 text-amber-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-amber-50 text-amber-600 border-amber-200';
       case 'selesai':
-        return 'bg-emerald-100 text-emerald-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-emerald-50 text-emerald-600 border-emerald-200';
       default:
-        return 'bg-slate-100 text-slate-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+        return 'bg-slate-50 text-slate-600 border-slate-200';
     }
   };
 
@@ -102,25 +102,25 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
+                className="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg flex items-center justify-center shrink-0"
                 type="button"
               >
                 <span className="material-symbols-outlined">menu</span>
               </button>
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-1">Beranda Dashboard</h1>
-                <p className="text-xs text-[#4E4639] font-mono">{currentDate}</p>
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">Beranda Dashboard</h1>
+                <p className="text-xs text-slate-500 font-mono">{currentDate}</p>
               </div>
             </div>
             <div className="flex items-center w-full sm:w-auto gap-4">
               <div className="relative w-full sm:w-64">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">search</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   placeholder="Cari laporan..."
-                  className="pl-10 pr-4 py-2.5 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none w-full text-xs text-[#1C1B18]"
+                  className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none w-full text-xs text-slate-800"
                 />
               </div>
             </div>
@@ -130,12 +130,12 @@ export default function AdminDashboard() {
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {/* Card 1: Total */}
             <div className="legacy-card p-6 rounded-xl flex flex-col gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#001360]/10 flex items-center justify-center text-[#001360]">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                 <span className="material-symbols-outlined">analytics</span>
               </div>
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Total Laporan</p>
-                <h3 className="text-2xl font-extrabold text-[#1C1B18]">{total}</h3>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">Total Laporan</p>
+                <h3 className="text-2xl font-extrabold text-slate-900">{total}</h3>
               </div>
             </div>
 
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
                 <span className="material-symbols-outlined">campaign</span>
               </div>
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Menunggu Verifikasi</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">Menunggu Verifikasi</p>
                 <h3 className="text-2xl font-extrabold text-red-600">{baru}</h3>
               </div>
             </div>
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                 <span className="material-symbols-outlined">pending_actions</span>
               </div>
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Sedang Diproses</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">Sedang Diproses</p>
                 <h3 className="text-2xl font-extrabold text-amber-500">{proses}</h3>
               </div>
             </div>
@@ -167,7 +167,7 @@ export default function AdminDashboard() {
                 <span className="material-symbols-outlined">verified</span>
               </div>
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Laporan Selesai</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">Laporan Selesai</p>
                 <h3 className="text-2xl font-extrabold text-emerald-600">{selesai}</h3>
               </div>
             </div>
@@ -175,42 +175,42 @@ export default function AdminDashboard() {
 
           {/* Recent Activity Table */}
           <section className="legacy-card rounded-xl overflow-hidden">
-            <div className="px-6 py-5 border-b border-[#D3C5B1]/50 bg-white">
-              <h3 className="font-bold text-[#1C1B18] text-base">Aduan Infrastruktur Terbaru</h3>
-              <p className="text-xs text-[#4E4639] mt-0.5">Daftar laporan aduan masuk yang memerlukan tindakan disposisi atau perbaikan.</p>
+            <div className="px-6 py-5 border-b border-slate-100 bg-white">
+              <h3 className="font-bold text-slate-800 text-base">Aduan Infrastruktur Terbaru</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Daftar laporan aduan masuk yang memerlukan tindakan disposisi atau perbaikan.</p>
             </div>
             
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#F6F3EC] text-[10px] font-bold uppercase tracking-wider text-[#4E4639] border-b border-[#D3C5B1]/50">
-                    <th className="px-6 py-4">Pelapor / Tanggal</th>
-                    <th className="px-6 py-4">Kategori Kerusakan</th>
-                    <th className="px-6 py-4">Lokasi</th>
-                    <th className="px-6 py-4">Status</th>
-                    <th className="px-6 py-4 text-right">Aksi</th>
+                  <tr className="bg-slate-50/75 text-[10px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                    <th className="px-6 py-4 font-semibold">Pelapor / Tanggal</th>
+                    <th className="px-6 py-4 font-semibold">Kategori Kerusakan</th>
+                    <th className="px-6 py-4 font-semibold">Lokasi</th>
+                    <th className="px-6 py-4 font-semibold">Status</th>
+                    <th className="px-6 py-4 text-right font-semibold">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D3C5B1]/30 text-xs">
+                <tbody className="divide-y divide-slate-100 text-xs">
                   {loading ? (
                     <tr>
-                      <td colSpan={5} className="text-center py-10 font-bold text-[#4E4639]">Menghubungkan ke server database...</td>
+                      <td colSpan={5} className="text-center py-10 font-bold text-slate-500">Menghubungkan ke server database...</td>
                     </tr>
                   ) : filteredLaporan.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="text-center py-10 text-[#4E4639]">Tidak ada laporan aduan yang cocok dengan pencarian Anda.</td>
+                      <td colSpan={5} className="text-center py-10 text-slate-500">Tidak ada laporan aduan yang cocok dengan pencarian Anda.</td>
                     </tr>
                   ) : (
                     filteredLaporan.slice(0, 10).map(aduan => (
-                      <tr key={aduan.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={aduan.id} className="hover:bg-slate-50/50 transition-colors">
                         <td className="px-6 py-4">
-                          <p className="font-bold text-[#1C1B18]">{aduan.pelapor}</p>
-                          <p className="text-[10px] text-[#807667] mt-0.5 font-mono">#{aduan.id} • {aduan.waktu}</p>
+                          <p className="font-semibold text-slate-800">{aduan.pelapor}</p>
+                          <p className="text-[10px] text-slate-400 mt-0.5 font-mono">#{aduan.id} • {aduan.waktu}</p>
                         </td>
-                        <td className="px-6 py-4 font-semibold text-[#001360]">{aduan.kategoriLabel}</td>
-                        <td className="px-6 py-4 text-[#4E4639] font-medium max-w-[200px] truncate" title={aduan.lokasi}>{aduan.lokasi}</td>
+                        <td className="px-6 py-4 font-medium text-slate-700">{aduan.kategoriLabel}</td>
+                        <td className="px-6 py-4 text-slate-500 font-medium max-w-[200px] truncate" title={aduan.lokasi}>{aduan.lokasi}</td>
                         <td className="px-6 py-4">
-                          <span className={"inline-flex items-center gap-1 px-2.5 py-1 rounded-none text-[9px] font-black border-2 uppercase tracking-wider " + getStatusBadgeClass(aduan.status)}>
+                          <span className={"inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-semibold border uppercase tracking-wider " + getStatusBadgeClass(aduan.status)}>
                             <span className={"w-1.5 h-1.5 rounded-full " + getStatusDotClass(aduan.status)}></span>
                             {getStatusText(aduan.status)}
                           </span>
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
                         <td className="px-6 py-4 text-right">
                           <Link
                             href={`/admin/detail-laporan?id=${aduan.id}`}
-                            className="bg-white hover:bg-[#001360] text-[#001360] hover:text-white border border-[#D3C5B1] hover:border-[#001360] px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-sm inline-flex items-center gap-1 cursor-pointer"
+                            className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs font-semibold transition-all shadow-sm inline-flex items-center gap-1 cursor-pointer"
                           >
                             Tinjau Laporan <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span>
                           </Link>

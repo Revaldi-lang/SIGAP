@@ -64,7 +64,7 @@
     font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -242,17 +242,17 @@
   }
 }
 
-.bg-surface { background-color: #FDF9F3; }
+.bg-surface { background-color: #f8fafc; }
 .bg-surface-container-lowest { background-color: #FFFFFF; }
-.bg-surface-container-low { background-color: #F6F3F2; }
-.bg-surface-container { background-color: #F0EDED; }
-.bg-surface-container-high { background-color: #EAE7E7; }
-.border-outline-variant { border-color: #E5E2E1; }
-.border-outline { border-color: #757684; }
-.text-on-surface { color: #1C1B18; }
-.text-on-surface-variant { color: #444653; }
-.text-primary { color: #001360; }
-.text-primary-container { color: #000E3D; }
+.bg-surface-container-low { background-color: #f1f5f9; }
+.bg-surface-container { background-color: #e2e8f0; }
+.bg-surface-container-high { background-color: #cbd5e1; }
+.border-outline-variant { border-color: #e2e8f0; }
+.border-outline { border-color: #94a3b8; }
+.text-on-surface { color: #0f172a; }
+.text-on-surface-variant { color: #475569; }
+.text-primary { color: var(--color-primary); }
+.text-primary-container { color: var(--color-on-primary-container); }
 
 .font-display-lg {
   font-size: 48px;

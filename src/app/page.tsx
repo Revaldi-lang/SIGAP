@@ -25,46 +25,46 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative min-h-[800px] flex flex-col md:flex-row items-stretch border-b-border-width-main border-black">
+        <section className="relative min-h-[800px] flex flex-col md:flex-row items-stretch border-b border-slate-100">
           <div className="flex-1 flex flex-col justify-center px-6 md:px-20 py-16 bg-white">
-            <span className="inline-block bg-primary text-on-primary border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 font-bold text-xs uppercase tracking-wider mb-4 w-fit">
+            <span className="inline-block bg-primary/10 text-primary px-3 py-1.5 font-semibold text-xs rounded-full uppercase tracking-wider mb-6 w-fit">
               Portal Pengaduan Terpadu
             </span>
-            <h1 className="font-black text-3xl sm:text-5xl md:text-[54px] uppercase mb-6 leading-[0.9] text-primary tracking-tight font-display">
-              Solusi Cerdas Pelaporan Infrastruktur <span className="text-white bg-secondary px-2 border-4 border-black block sm:inline-block mt-2 sm:mt-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Kerusakan Publik</span>
+            <h1 className="font-bold text-3xl sm:text-5xl md:text-[54px] mb-6 leading-tight text-slate-900 tracking-tight font-display">
+              Solusi Cerdas Pelaporan Infrastruktur <span className="text-primary bg-primary/5 px-3 py-1 rounded-lg inline-block mt-2 sm:mt-0 font-medium">Kerusakan Publik</span>
             </h1>
-            <p className="font-medium text-base md:text-lg max-w-xl mb-10 text-on-surface-variant leading-relaxed">
+            <p className="font-normal text-base md:text-lg max-w-xl mb-10 text-slate-600 leading-relaxed">
               Laporkan jalan berlubang, lampu jalan mati, atau fasilitas umum rusak di sekitar Anda. SIGAP menjembatani aduan warga dengan tindakan perbaikan cepat dari instansi terkait.
             </p>
             <div className="flex flex-wrap gap-4">
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="bg-primary text-white border-black border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none px-8 py-4 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                className="bg-primary text-white px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all hover:bg-primary/95 shadow-sm active:scale-[0.98] cursor-pointer"
               >
                 Mulai Lapor
               </button>
               <Link
                 href="/progress"
-                className="bg-white text-primary border-black border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none px-8 py-4 font-bold text-xs uppercase tracking-wider transition-all text-center inline-block"
+                className="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all hover:bg-slate-50 text-center inline-block shadow-sm"
               >
                 Lihat Progress
               </Link>
             </div>
           </div>
           
-          <div className="flex-1 relative min-h-[400px] border-t-4 md:border-t-0 md:border-l-border-width-main border-black overflow-hidden bg-slate-100">
+          <div className="flex-1 relative min-h-[400px] overflow-hidden bg-slate-50">
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1200')" }}
             ></div>
-            <div className="absolute bottom-10 left-10 right-10 bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6">
+            <div className="absolute bottom-10 left-10 right-10 bg-white/95 backdrop-blur-md border border-slate-200/50 shadow-lg rounded-2xl p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-secondary border-2 border-black flex items-center justify-center">
-                  <span className="material-symbols-outlined font-black text-white text-2xl">engineering</span>
+                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary text-2xl">engineering</span>
                 </div>
                 <div>
-                  <p className="font-bold text-xs uppercase text-primary tracking-wider">Aduan Tertangani</p>
-                  <p className="text-xl md:text-2xl font-black text-primary uppercase leading-tight">{totalSelesai} Perbaikan</p>
+                  <p className="font-bold text-xs uppercase text-slate-500 tracking-wider">Aduan Tertangani</p>
+                  <p className="text-xl md:text-2xl font-bold text-slate-900 leading-tight">{totalSelesai} Perbaikan</p>
                 </div>
               </div>
             </div>
@@ -72,43 +72,43 @@ export default function LandingPage() {
         </section>
 
         {/* Section: Alur Pelaporan */}
-        <section id="alur-section" className="py-24 px-12 md:px-20 bg-white border-b-border-width-main border-black">
+        <section id="alur-section" className="py-24 px-12 md:px-20 bg-white border-b border-slate-100">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="font-black text-3xl md:text-4xl uppercase mb-4 text-primary tracking-tight font-display">Alur Pelaporan</h2>
-              <div className="h-2 w-48 bg-secondary mx-auto border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"></div>
+              <h2 className="font-bold text-3xl md:text-4xl text-slate-900 tracking-tight">Alur Pelaporan</h2>
+              <div className="h-1 w-20 bg-primary/20 mx-auto rounded-full mt-3"></div>
             </div>
             
             <div className="flex flex-col lg:flex-row items-center gap-16">
               <div className="w-full lg:w-1/2">
                 <div 
-                  className="w-full aspect-video border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
+                  className="w-full aspect-video border border-slate-200 shadow-md rounded-2xl bg-cover bg-center"
                   style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800')" }}
                 ></div>
               </div>
               
               <div className="w-full lg:w-1/2 space-y-8">
-                <div className="flex items-center gap-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-                  <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">1</div>
+                <div className="flex items-center gap-6 bg-white border border-slate-200/60 shadow-sm rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary font-bold text-lg rounded-xl flex items-center justify-center">1</div>
                   <div>
-                    <h3 className="font-black text-sm uppercase text-primary tracking-wider mb-1">Unggah Laporan</h3>
-                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Laporkan kerusakan infrastruktur dengan foto dan lokasi melalui aplikasi SIGAP.</p>
+                    <h3 className="font-semibold text-sm text-slate-800 tracking-wide mb-1">Unggah Laporan</h3>
+                    <p className="text-xs text-slate-500 font-normal leading-relaxed">Laporkan kerusakan infrastruktur dengan foto dan lokasi melalui aplikasi SIGAP.</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-                  <div className="flex-shrink-0 w-16 h-16 bg-secondary text-white font-black text-xl flex items-center justify-center border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">2</div>
+                <div className="flex items-center gap-6 bg-white border border-slate-200/60 shadow-sm rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary font-bold text-lg rounded-xl flex items-center justify-center">2</div>
                   <div>
-                    <h3 className="font-black text-sm uppercase text-primary tracking-wider mb-1">Tindakan Instansi</h3>
-                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Tim teknis memverifikasi laporan dan menjadwalkan perbaikan di lapangan.</p>
+                    <h3 className="font-semibold text-sm text-slate-800 tracking-wide mb-1">Tindakan Instansi</h3>
+                    <p className="text-xs text-slate-500 font-normal leading-relaxed">Tim teknis memverifikasi laporan dan menjadwalkan perbaikan di lapangan.</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-                  <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">3</div>
+                <div className="flex items-center gap-6 bg-white border border-slate-200/60 shadow-sm rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary font-bold text-lg rounded-xl flex items-center justify-center">3</div>
                   <div>
-                    <h3 className="font-black text-sm uppercase text-primary tracking-wider mb-1">Hasil Perbaikan</h3>
-                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Pantau hasil akhir perbaikan secara transparan untuk kenyamanan warga.</p>
+                    <h3 className="font-semibold text-sm text-slate-800 tracking-wide mb-1">Hasil Perbaikan</h3>
+                    <p className="text-xs text-slate-500 font-normal leading-relaxed">Pantau hasil akhir perbaikan secara transparan untuk kenyamanan warga.</p>
                   </div>
                 </div>
               </div>
@@ -117,55 +117,55 @@ export default function LandingPage() {
         </section>
 
         {/* Pelayanan Publik Terpadu Section */}
-        <section id="info-section" className="py-24 px-12 md:px-20 bg-surface-container-low border-b-border-width-main border-black">
+        <section id="info-section" className="py-24 px-12 md:px-20 bg-slate-50/50 border-b border-slate-100">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="font-black text-3xl md:text-4xl uppercase mb-4 text-primary tracking-tight font-display">Pelayanan Publik Terpadu</h2>
-              <div className="h-2 w-48 bg-secondary mx-auto border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"></div>
+              <h2 className="font-bold text-3xl md:text-4xl text-slate-900 tracking-tight">Pelayanan Publik Terpadu</h2>
+              <div className="h-1 w-20 bg-primary/20 mx-auto rounded-full mt-3"></div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Card 1 */}
-              <div className="bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                <div className="w-16 h-16 bg-primary border-border-width-sub border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <span className="material-symbols-outlined text-white text-3xl">visibility</span>
+              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
+                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary text-2xl">visibility</span>
                 </div>
-                <h3 className="font-black text-sm uppercase text-primary tracking-wider">Pemantauan Aduan</h3>
-                <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Pantau status perbaikan infrastruktur yang Anda laporkan secara langsung.</p>
-                <Link className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="/login-masyarakat">Tracking Laporan</Link>
+                <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Pemantauan Aduan</h3>
+                <p className="text-xs text-slate-500 font-normal leading-relaxed">Pantau status perbaikan infrastruktur yang Anda laporkan secara langsung.</p>
+                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/login-masyarakat">Tracking Laporan <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span></Link>
               </div>
               
               {/* Card 2 */}
-              <div className="bg-secondary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]">
-                <div className="w-16 h-16 bg-primary border-border-width-sub border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <span className="material-symbols-outlined text-white text-3xl">map</span>
+              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
+                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary text-2xl">map</span>
                 </div>
-                <h3 className="font-black text-sm uppercase text-white tracking-wider">Database Infrastruktur</h3>
-                <p className="text-xs text-white/90 font-medium leading-relaxed">Data kerusakan terintegrasi untuk perencanaan perbaikan kota yang lebih efisien.</p>
-                <Link className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-white hover:text-primary" href="/login-masyarakat">Lihat Peta Kota</Link>
+                <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Database Infrastruktur</h3>
+                <p className="text-xs text-slate-500 font-normal leading-relaxed">Data kerusakan terintegrasi untuk perencanaan perbaikan kota yang lebih efisien.</p>
+                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/login-masyarakat">Lihat Peta Kota <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span></Link>
               </div>
               
               {/* Card 3 */}
-              <div className="bg-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col gap-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                <div className="w-16 h-16 bg-primary border-border-width-sub border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <span className="material-symbols-outlined text-white text-3xl">verified</span>
+              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
+                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary text-2xl">verified</span>
                 </div>
-                <h3 className="font-black text-sm uppercase text-primary tracking-wider">Aduan Transparan</h3>
-                <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Setiap laporan diverifikasi dan dipublikasikan untuk menjamin akuntabilitas perbaikan.</p>
-                <Link className="mt-auto font-black text-xs uppercase underline decoration-4 underline-offset-4 text-primary hover:text-secondary" href="/login-masyarakat">Cek Akuntabilitas</Link>
+                <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Aduan Transparan</h3>
+                <p className="text-xs text-slate-500 font-normal leading-relaxed">Setiap laporan diverifikasi dan dipublikasikan untuk menjamin akuntabilitas perbaikan.</p>
+                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/login-masyarakat">Cek Akuntabilitas <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span></Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* Empat Langkah Mudah Section */}
-        <section id="alur-section-steps" className="py-24 px-6 md:px-20 border-b-border-width-main border-black bg-white font-space">
+        <section id="alur-section-steps" className="py-24 px-6 md:px-20 border-b border-slate-100 bg-white">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
             <div className="md:w-1/3 md:sticky md:top-32">
-              <h2 className="font-black text-3xl md:text-4xl uppercase mb-6 leading-none text-primary tracking-tight font-display">Empat Langkah Mudah</h2>
-              <p className="text-sm font-medium text-on-surface-variant mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
+              <h2 className="font-bold text-3xl md:text-4xl text-slate-900 tracking-tight mb-6">Empat Langkah Mudah</h2>
+              <p className="text-sm font-normal text-slate-500 mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
               <div 
-                className="w-full aspect-[4/3] border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center"
+                className="w-full aspect-[4/3] border border-slate-200 shadow-md rounded-2xl bg-cover bg-center"
                 style={{ backgroundImage: "url('/assets/images/perbaikan_jalan.png')" }}
               ></div>
             </div>
@@ -173,34 +173,34 @@ export default function LandingPage() {
             <div className="md:w-2/3 space-y-8">
               {/* Step 1 */}
               <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">1</div>
-                <div className="pt-2">
-                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Registrasi Akun</h4>
-                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Lakukan pendaftaran singkat untuk melacak aduan dan mendapatkan update perbaikan.</p>
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">1</div>
+                <div className="pt-1">
+                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Registrasi Akun</h4>
+                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Lakukan pendaftaran singkat untuk melacak aduan dan mendapatkan update perbaikan.</p>
                 </div>
               </div>
               {/* Step 2 */}
               <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-16 h-16 bg-secondary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">2</div>
-                <div className="pt-2">
-                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Kirim Aduan Kerusakan</h4>
-                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Unggah foto bukti kerusakan dan sematkan lokasi yang akurat di peta SIGAP.</p>
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">2</div>
+                <div className="pt-1">
+                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Kirim Aduan Kerusakan</h4>
+                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Unggah foto bukti kerusakan dan sematkan lokasi yang akurat di peta SIGAP.</p>
                 </div>
               </div>
               {/* Step 3 */}
               <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-16 h-16 bg-primary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">3</div>
-                <div className="pt-2">
-                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Verifikasi &amp; Audit Lapangan</h4>
-                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Petugas kami akan mendatangi lokasi untuk memvalidasi kerusakan dan tingkat urgensi.</p>
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">3</div>
+                <div className="pt-1">
+                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Verifikasi &amp; Audit Lapangan</h4>
+                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Petugas kami akan mendatangi lokasi untuk memvalidasi kerusakan dan tingkat urgensi.</p>
                 </div>
               </div>
               {/* Step 4 */}
               <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-16 h-16 bg-secondary text-white font-black text-xl flex items-center justify-center border-border-width-main border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:scale-105">4</div>
-                <div className="pt-2">
-                  <h4 className="font-black text-sm uppercase mb-2 text-primary tracking-wider">Update Status &amp; Selesai</h4>
-                  <p className="text-xs text-on-surface-variant font-medium leading-relaxed">Dapatkan notifikasi progres perbaikan hingga infrastruktur kembali berfungsi dengan baik.</p>
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">4</div>
+                <div className="pt-1">
+                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Update Status &amp; Selesai</h4>
+                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Dapatkan notifikasi progres perbaikan hingga infrastruktur kembali berfungsi dengan baik.</p>
                 </div>
               </div>
             </div>
@@ -208,29 +208,29 @@ export default function LandingPage() {
         </section>
 
         {/* SOP & Alur Kerja Section */}
-        <section id="proses-section" className="py-24 px-6 md:px-20 bg-white border-b-border-width-main border-black">
+        <section id="proses-section" className="py-24 px-6 md:px-20 bg-white border-b border-slate-100">
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-black text-3xl md:text-4xl uppercase mb-16 text-center text-primary tracking-tight font-display">SOP &amp; Alur Kerja</h2>
+            <h2 className="font-bold text-3xl md:text-4xl text-center text-slate-900 tracking-tight mb-16">SOP &amp; Alur Kerja</h2>
             <div className="flex flex-col lg:flex-row gap-12">
               {/* Left: Protokol Perbaikan */}
-              <div className="lg:w-2/5 bg-primary border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-10 flex flex-col text-white">
+              <div className="lg:w-2/5 bg-primary rounded-2xl shadow-lg p-10 flex flex-col text-white">
                 <div className="mb-8">
                   <span className="material-symbols-outlined text-6xl text-white">assignment_turned_in</span>
                 </div>
-                <h3 className="font-black text-2xl md:text-3xl uppercase mb-6 leading-tight font-display">Protokol Perbaikan (SPM)</h3>
+                <h3 className="font-bold text-2xl md:text-3xl mb-6 leading-tight font-display">Protokol Perbaikan (SPM)</h3>
                 <p className="text-sm mb-8 opacity-90 leading-relaxed font-medium">Setiap laporan diproses berdasarkan Standar Pelayanan Minimal (SPM) Kota untuk memastikan penanganan yang cepat dan struktur yang kokoh:</p>
                 <ul className="space-y-6">
                   <li className="flex items-start gap-4">
-                    <div className="mt-1.5 w-2 h-2 rounded-full bg-secondary shrink-0"></div>
-                    <p className="text-xs font-semibold"><strong className="text-secondary uppercase">Respon Awal:</strong> Validasi berkas kelayakan &amp; kategori aduan maksimal 3 jam.</p>
+                    <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
+                    <p className="text-xs font-semibold"><strong className="text-white uppercase">Respon Awal:</strong> Validasi berkas kelayakan &amp; kategori aduan maksimal 3 jam.</p>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="mt-1.5 w-2 h-2 rounded-full bg-secondary shrink-0"></div>
-                    <p className="text-xs font-semibold"><strong className="text-secondary uppercase">Survei Teknis:</strong> Kunjungan lokasi oleh dinas PUPR/Dishub maksimal 12 jam.</p>
+                    <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
+                    <p className="text-xs font-semibold"><strong className="text-white uppercase">Survei Teknis:</strong> Kunjungan lokasi oleh dinas PUPR/Dishub maksimal 12 jam.</p>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="mt-1.5 w-2 h-2 rounded-full bg-secondary shrink-0"></div>
-                    <p className="text-xs font-semibold"><strong className="text-secondary uppercase">Estimasi Pekerjaan:</strong> Selesai dalam 24 - 48 jam untuk kerusakan umum.</p>
+                    <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
+                    <p className="text-xs font-semibold"><strong className="text-white uppercase">Estimasi Pekerjaan:</strong> Selesai dalam 24 - 48 jam untuk kerusakan umum.</p>
                   </li>
                 </ul>
               </div>
@@ -239,40 +239,40 @@ export default function LandingPage() {
               <div className="lg:w-3/5">
                 <div className="mb-10 flex items-center gap-4 text-primary">
                   <span className="material-symbols-outlined text-4xl">sync_alt</span>
-                  <h3 className="font-black text-xl uppercase font-display">Siklus Laporan Pelanggan</h3>
+                  <h3 className="font-semibold text-xl uppercase font-display">Siklus Laporan Pelanggan</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Step 1 */}
-                  <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border-2 border-black flex items-center justify-center bg-slate-50">
+                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
+                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
                       <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "0% 0%" }} />
                     </div>
-                    <h4 className="font-black text-lg uppercase text-primary mb-2 font-display">01. LAPOR</h4>
-                    <p className="text-xs text-on-surface-variant font-semibold leading-relaxed">Warga menyematkan foto &amp; lokasi GPS kerusakan.</p>
+                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">01. LAPOR</h4>
+                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Warga menyematkan foto &amp; lokasi GPS kerusakan.</p>
                   </div>
                   {/* Step 2 */}
-                  <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border-2 border-black flex items-center justify-center bg-slate-50">
+                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
+                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
                       <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "100% 0%" }} />
                     </div>
-                    <h4 className="font-black text-lg uppercase text-primary mb-2 font-display">02. VERIFIKASI</h4>
-                    <p className="text-xs text-on-surface-variant font-semibold leading-relaxed">Admin memvalidasi dan disposisi laporan ke dinas terkait.</p>
+                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">02. VERIFIKASI</h4>
+                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Admin memvalidasi dan disposisi laporan ke dinas terkait.</p>
                   </div>
                   {/* Step 3 */}
-                  <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border-2 border-black flex items-center justify-center bg-slate-50">
+                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
+                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
                       <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "0% 100%" }} />
                     </div>
-                    <h4 className="font-black text-lg uppercase text-primary mb-2 font-display">03. PENANGANAN</h4>
-                    <p className="text-xs text-on-surface-variant font-semibold leading-relaxed">Tim lapangan PUPR/Dishub datang melakukan perbaikan.</p>
+                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">03. PENANGANAN</h4>
+                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Tim lapangan PUPR/Dishub datang melakukan perbaikan.</p>
                   </div>
                   {/* Step 4 */}
-                  <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border-2 border-black flex items-center justify-center bg-slate-50">
+                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
+                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
                       <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "100% 100%" }} />
                     </div>
-                    <h4 className="font-black text-lg uppercase text-primary mb-2 font-display">04. KONTROL</h4>
-                    <p className="text-xs text-on-surface-variant font-semibold leading-relaxed">Laporan dipublikasikan dan dinilai langsung oleh pelapor.</p>
+                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">04. KONTROL</h4>
+                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Laporan dipublikasikan dan dinilai langsung oleh pelapor.</p>
                   </div>
                 </div>
               </div>
@@ -280,21 +280,21 @@ export default function LandingPage() {
 
             {/* Bottom Features */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16">
-              <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex items-start gap-6">
-                <div className="bg-secondary p-4 border-2 border-black shrink-0 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-4xl text-white">security</span>
+              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex items-start gap-6">
+                <div className="bg-primary/10 text-primary p-3 rounded-xl shrink-0 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-4xl text-primary">security</span>
                 </div>
                 <div>
-                  <h4 className="font-black text-base uppercase text-primary mb-2 font-display">Standard Keamanan Data</h4>
-                  <p className="text-xs text-on-surface-variant font-semibold leading-relaxed">Kami melindungi privasi dan identitas pelapor sepenuhnya dengan enkripsi data SSL tingkat tinggi dan penyimpanan cloud yang aman.</p>
+                  <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">Standard Keamanan Data</h4>
+                  <p className="text-xs text-slate-500 font-semibold leading-relaxed">Kami melindungi privasi dan identitas pelapor sepenuhnya dengan enkripsi data SSL tingkat tinggi dan penyimpanan cloud yang aman.</p>
                 </div>
               </div>
-              <div className="bg-primary border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex items-start gap-6 text-white">
-                <div className="bg-secondary p-4 border-2 border-black shrink-0 flex items-center justify-center">
+              <div className="bg-slate-900 shadow-md rounded-2xl p-8 flex items-start gap-6 text-white">
+                <div className="bg-white/10 text-white p-3 rounded-xl shrink-0 flex items-center justify-center">
                   <span className="material-symbols-outlined text-4xl text-white">groups</span>
                 </div>
                 <div>
-                  <h4 className="font-black text-base uppercase text-white mb-2 font-display">Transparansi &amp; Audit Masyarakat</h4>
+                  <h4 className="font-semibold text-base text-white mb-2 font-display">Transparansi &amp; Audit Masyarakat</h4>
                   <p className="text-xs text-white/80 font-semibold leading-relaxed">Setiap tahapan pekerjaan terdokumentasi rapi. Warga berhak memberikan umpan balik (feedback) dan penilaian performa dinas secara transparan.</p>
                 </div>
               </div>
@@ -303,57 +303,57 @@ export default function LandingPage() {
         </section>
 
         {/* Dampak Nyata (Stats & Testimonials) */}
-        <section id="suara-warga-section" className="py-24 px-6 md:px-20 bg-primary text-white border-b-border-width-main border-black shadow-[0_-4px_0px_0px_rgba(0,0,0,1)]">
+        <section id="suara-warga-section" className="py-24 px-6 md:px-20 bg-slate-900 text-white border-b border-slate-800">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
             <div className="md:w-1/2">
-              <h2 className="font-black text-3xl md:text-[40px] uppercase mb-12 leading-none tracking-tight font-display">Dampak Nyata Untuk Kota Kita</h2>
+              <h2 className="font-bold text-3xl md:text-[40px] mb-12 leading-none tracking-tight font-display">Dampak Nyata Untuk Kota Kita</h2>
               <div className="grid grid-cols-2 gap-8">
                 <div>
-                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">92%</p>
-                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Aduan Tuntas</p>
+                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">92%</p>
+                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Aduan Tuntas</p>
                 </div>
                 <div>
-                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">340+</p>
-                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Mitra Perbaikan</p>
+                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">340+</p>
+                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Mitra Perbaikan</p>
                 </div>
                 <div>
-                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">15mnt</p>
-                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Respon Awal Rata-rata</p>
+                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">15mnt</p>
+                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Respon Awal Rata-rata</p>
                 </div>
                 <div>
-                  <p className="font-black text-4xl md:text-5xl text-secondary mb-1">{totalSelesai}</p>
-                  <p className="font-bold text-xs uppercase tracking-wider opacity-75">Laporan Selesai</p>
+                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">{totalSelesai}</p>
+                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Laporan Selesai</p>
                 </div>
               </div>
             </div>
             
             <div className="md:w-1/2 flex flex-col gap-6">
               {/* Testimonial 1 */}
-              <div className="bg-white text-primary border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.15)] p-8">
-                <p className="text-base italic mb-6 leading-relaxed font-medium">&quot;Lubang jalan di depan rumah yang sudah berbulan-bulan rusak akhirnya diperbaiki dalam waktu 3 hari setelah saya lapor lewat SIGAP. Sangat membantu!&quot;</p>
+              <div className="bg-white text-slate-800 border border-slate-200 shadow-lg rounded-2xl p-8">
+                <p className="text-base italic mb-6 leading-relaxed font-medium text-slate-600">&quot;Lubang jalan di depan rumah yang sudah berbulan-bulan rusak akhirnya diperbaiki dalam waktu 3 hari setelah saya lapor lewat SIGAP. Sangat membantu!&quot;</p>
                 <div className="flex items-center gap-4">
                   <div 
-                    className="w-12 h-12 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-cover bg-center rounded-none"
+                    className="w-12 h-12 rounded-full border border-slate-200 bg-cover bg-center"
                     style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80')" }}
                   ></div>
                   <div>
-                    <p className="font-black text-xs uppercase tracking-wider">Budi Santoso</p>
-                    <p className="text-[10px] font-bold uppercase tracking-wider opacity-60">Warga Jakarta Selatan</p>
+                    <p className="font-bold text-xs uppercase tracking-wider text-slate-800">Budi Santoso</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Warga Jakarta Selatan</p>
                   </div>
                 </div>
               </div>
               
               {/* Testimonial 2 */}
-              <div className="bg-secondary text-white border-border-width-main border-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] p-8 md:translate-x-6">
-                <p className="text-base italic mb-6 leading-relaxed font-medium">&quot;Lampu jalan yang mati sering membuat kawasan kami rawan. Lewat aduan transparan di SIGAP, kami bisa memantau kapan petugas datang memperbaiki.&quot;</p>
+              <div className="bg-slate-850 text-white border border-slate-800 bg-slate-800 shadow-lg rounded-2xl p-8 md:translate-x-6">
+                <p className="text-base italic mb-6 leading-relaxed font-medium text-slate-200">&quot;Lampu jalan yang mati sering membuat kawasan kami rawan. Lewat aduan transparan di SIGAP, kami bisa memantau kapan petugas datang memperbaiki.&quot;</p>
                 <div className="flex items-center gap-4">
                   <div 
-                    className="w-12 h-12 border-2 border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] bg-cover bg-center rounded-none"
+                    className="w-12 h-12 rounded-full border border-slate-700 bg-cover bg-center"
                     style={{ backgroundImage: "url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80')" }}
                   ></div>
                   <div>
-                    <p className="font-black text-xs uppercase tracking-wider">Ani Wijaya</p>
-                    <p className="text-[10px] font-bold uppercase tracking-wider opacity-85">Ketua RW</p>
+                    <p className="font-bold text-xs uppercase tracking-wider">Ani Wijaya</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider opacity-75">Ketua RW</p>
                   </div>
                 </div>
               </div>
@@ -361,21 +361,22 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="py-24 px-6 md:px-20 bg-surface-container-low">
-          <div className="bg-primary p-6 md:p-20 text-center border-border-width-main border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] max-w-6xl mx-auto">
-            <h2 className="font-black text-3xl sm:text-5xl text-white uppercase mb-8 leading-[0.9] tracking-tight font-display">
-              Membangun Infrastruktur <br/><span className="text-secondary bg-white border-4 border-black px-4 block sm:inline-block mt-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] w-fit mx-auto">Yang Lebih SIGAP</span>
+        <section className="py-24 px-6 md:px-20 bg-slate-50/50">
+          <div className="bg-primary p-12 md:p-20 text-center rounded-3xl shadow-xl max-w-6xl mx-auto text-white">
+            <h2 className="font-bold text-3xl sm:text-5xl text-white uppercase mb-8 leading-tight tracking-tight font-display">
+              Membangun Infrastruktur <br/>
+              <span className="text-primary bg-white px-4 py-1.5 rounded-xl inline-block mt-4 shadow-sm w-fit mx-auto font-medium">Yang Lebih SIGAP</span>
             </h2>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-6 mt-8">
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="bg-secondary border-4 border-white text-white font-black px-12 py-6 text-sm uppercase shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer"
+                className="bg-white text-primary font-semibold px-8 py-4 rounded-xl text-sm uppercase transition-all hover:bg-slate-50 shadow-md cursor-pointer active:scale-95"
               >
                 Mulai Lapor
               </button>
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="bg-primary border-4 border-white text-white font-black px-12 py-6 text-sm uppercase shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer"
+                className="bg-transparent border border-white/20 hover:border-white/40 text-white font-semibold px-8 py-4 rounded-xl text-sm uppercase transition-all cursor-pointer active:scale-95"
               >
                 Kontak Darurat
               </button>

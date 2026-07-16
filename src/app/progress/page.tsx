@@ -81,8 +81,8 @@ export default function ProgressPage() {
 
   const getStatusBadgeClass = (status: 'Selesai' | 'Diproses') => {
     return status === 'Selesai' 
-      ? 'bg-emerald-100 text-emerald-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
-      : 'bg-amber-100 text-amber-700 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+      ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
+      : 'bg-amber-50 text-amber-600 border-amber-200';
   };
 
   return (
@@ -96,22 +96,22 @@ export default function ProgressPage() {
       <main className="flex-grow py-16 px-6 md:px-20 max-w-6xl mx-auto w-full">
         {/* Breadcrumbs */}
         <div className="mb-8 font-space">
-          <Link href="/" className="text-xs font-bold uppercase tracking-wider text-primary hover:underline">
+          <Link href="/" className="text-xs font-semibold uppercase tracking-wider text-primary hover:underline">
             Beranda
           </Link>
-          <span className="mx-2 text-xs font-bold text-on-surface-variant">/</span>
-          <span className="text-xs font-bold text-secondary uppercase tracking-wider">Progres Pembenahan</span>
+          <span className="mx-2 text-xs font-bold text-slate-400">/</span>
+          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Progres Pembenahan</span>
         </div>
 
         {/* Heading Section */}
         <header className="mb-12">
-          <span className="inline-block bg-primary text-on-primary border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-3 py-1 font-bold text-xs uppercase tracking-wider mb-4 w-fit">
+          <span className="inline-block bg-primary/10 text-primary px-3 py-1.5 font-semibold text-xs rounded-full uppercase tracking-wider mb-4 w-fit">
             Pantau Hasil Kerja Dinas
           </span>
-          <h1 className="font-black text-3xl sm:text-5xl uppercase mb-6 leading-[0.9] text-primary tracking-tight font-display">
-            Progres & Pembenahan <span className="text-white bg-secondary px-2 border-4 border-black block sm:inline-block mt-2 sm:mt-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Fasilitas Publik</span>
+          <h1 className="font-bold text-3xl sm:text-5xl tracking-tight mb-6 text-slate-900">
+            Progres & Pembenahan <span className="text-primary bg-primary/5 px-3 py-1 rounded-lg inline-block mt-2 sm:mt-0 font-medium">Fasilitas Publik</span>
           </h1>
-          <p className="font-medium text-sm md:text-base max-w-2xl text-on-surface-variant leading-relaxed">
+          <p className="font-normal text-sm md:text-base max-w-2xl text-slate-500 leading-relaxed">
             Halaman ini memuat transparansi aksi nyata perbaikan infrastruktur di seluruh wilayah kota. Setiap laporan yang tuntas atau sedang dikerjakan dapat Anda pantau progres fisiknya di bawah ini.
           </p>
         </header>
@@ -119,13 +119,13 @@ export default function ProgressPage() {
         {/* Search & Filter bar */}
         <div className="flex flex-col md:flex-row gap-6 mb-12 items-stretch font-space">
           <div className="relative flex-grow">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">search</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Cari berita pembenahan jalan, pipa, jembatan..."
-              className="pl-10 pr-4 py-3 bg-white border-2 border-black rounded-none outline-none w-full text-xs text-[#1C1B18] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all"
+              className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none w-full text-xs text-slate-800 shadow-sm transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -133,10 +133,10 @@ export default function ProgressPage() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 border-2 border-black text-xs font-bold uppercase transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none cursor-pointer ${
+                className={`px-4 py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer shadow-sm active:scale-95 ${
                   selectedCategory === cat
-                    ? 'bg-primary text-white'
-                    : 'bg-white text-primary'
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
                 {cat}
@@ -147,32 +147,32 @@ export default function ProgressPage() {
 
         {/* News Grid */}
         {filteredNews.length === 0 ? (
-          <div className="border-4 border-black p-12 text-center bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <div className="border border-slate-200 rounded-2xl p-12 text-center bg-white shadow-sm">
             <span className="material-symbols-outlined text-5xl text-primary mb-4">folder_open</span>
-            <h3 className="font-black text-lg uppercase mb-2">Berita Tidak Ditemukan</h3>
-            <p className="text-xs text-on-surface-variant font-semibold">Silakan coba cari dengan kata kunci lain atau pilih kategori yang berbeda.</p>
+            <h3 className="font-bold text-lg mb-2 text-slate-800">Berita Tidak Ditemukan</h3>
+            <p className="text-xs text-slate-500 font-normal">Silakan coba cari dengan kata kunci lain atau pilih kategori yang berbeda.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {filteredNews.map(news => (
               <article 
                 key={news.id}
-                className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
+                className="bg-white border border-slate-200/80 shadow-sm rounded-2xl flex flex-col overflow-hidden transition-all duration-300 hover:shadow-md hover:border-slate-200"
               >
                 {/* Image header */}
-                <div className="w-full aspect-[16/9] border-b-4 border-black relative overflow-hidden bg-slate-50">
+                <div className="w-full aspect-[16/9] border-b border-slate-100 relative overflow-hidden bg-slate-50">
                   <img
                     src={news.image}
                     alt={news.title}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="inline-block bg-secondary text-white text-[10px] font-black border-2 border-black px-2.5 py-1 uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] tracking-wider">
+                    <span className="inline-block bg-white text-slate-800 text-[10px] font-semibold rounded-md border border-slate-200 px-2.5 py-1 uppercase shadow-sm tracking-wider">
                       {news.category}
                     </span>
                   </div>
                   <div className="absolute top-4 right-4">
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-none text-[10px] font-black border-2 uppercase tracking-wider ` + getStatusBadgeClass(news.status)}>
+                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-semibold border uppercase tracking-wider ` + getStatusBadgeClass(news.status)}>
                       {news.status}
                     </span>
                   </div>
@@ -181,27 +181,27 @@ export default function ProgressPage() {
                 {/* Body Content */}
                 <div className="p-6 flex-grow flex flex-col justify-between">
                   <div>
-                    <p className="text-[10px] font-bold text-on-surface-variant opacity-75 uppercase tracking-wider mb-2 font-space">
+                    <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 font-space">
                       {news.date} • Dipantau oleh: {news.officer}
                     </p>
-                    <h3 className="font-black text-xl text-primary uppercase mb-4 leading-snug font-display">
+                    <h3 className="font-bold text-xl text-slate-800 mb-3 leading-snug">
                       {news.title}
                     </h3>
-                    <p className="text-xs text-on-surface-variant font-semibold leading-relaxed mb-6">
+                    <p className="text-xs text-slate-500 font-normal leading-relaxed mb-6">
                       {news.description}
                     </p>
                   </div>
 
                   {/* Progress bar */}
-                  <div className="border-t-2 border-black/10 pt-6">
+                  <div className="border-t border-slate-100 pt-6">
                     <div className="flex justify-between items-center mb-2 font-space">
-                      <span className="text-[10px] font-black uppercase tracking-wider">Progres Fisik Lapangan</span>
-                      <span className="text-xs font-black text-primary">{news.progress}%</span>
+                      <span className="text-[10px] font-semibold uppercase text-slate-500 tracking-wider">Progres Fisik Lapangan</span>
+                      <span className="text-xs font-bold text-primary">{news.progress}%</span>
                     </div>
-                    <div className="w-full h-4 bg-slate-100 border-2 border-black rounded-none overflow-hidden">
+                    <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full border-r-2 border-black transition-all duration-500 ${
-                          news.progress === 100 ? 'bg-emerald-400' : 'bg-secondary'
+                        className={`h-full transition-all duration-500 ${
+                          news.progress === 100 ? 'bg-emerald-500' : 'bg-primary'
                         }`}
                         style={{ width: `${news.progress}%` }}
                       ></div>
@@ -214,21 +214,21 @@ export default function ProgressPage() {
         )}
 
         {/* CTA section */}
-        <section className="mt-20 border-4 border-black p-8 md:p-12 bg-primary text-white text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-          <h2 className="font-black text-2xl md:text-3xl uppercase mb-4 leading-none font-display">Ada Kerusakan Baru di Sekitar Anda?</h2>
-          <p className="text-xs md:text-sm max-w-xl mx-auto opacity-80 font-semibold mb-8">
+        <section className="mt-20 p-8 md:p-12 bg-primary rounded-3xl text-white text-center shadow-xl">
+          <h2 className="font-bold text-2xl md:text-3xl mb-4 leading-none">Ada Kerusakan Baru di Sekitar Anda?</h2>
+          <p className="text-xs md:text-sm max-w-xl mx-auto opacity-85 font-normal mb-8">
             Laporkan segera ke sistem SIGAP agar petugas dinas terkait dapat menjadwalkan peninjauan teknis dan aksi perbaikan.
           </p>
           <div className="flex flex-wrap justify-center gap-4 font-space">
             <button
               onClick={() => setAuthModalOpen(true)}
-              className="bg-secondary border-2 border-black text-white font-black px-8 py-4 text-xs uppercase shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
+              className="bg-white text-primary font-semibold px-8 py-4 rounded-xl text-xs uppercase transition-all shadow-md hover:bg-slate-50 cursor-pointer active:scale-95"
             >
               Mulai Buat Laporan
             </button>
             <Link
               href="/"
-              className="bg-white border-2 border-black text-primary font-black px-8 py-4 text-xs uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
+              className="bg-transparent border border-white/20 hover:border-white/40 text-white font-semibold px-8 py-4 rounded-xl text-xs uppercase transition-all cursor-pointer active:scale-95"
             >
               Kembali ke Beranda
             </Link>
