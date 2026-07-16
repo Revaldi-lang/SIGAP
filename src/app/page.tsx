@@ -16,10 +16,10 @@ export default function LandingPage() {
   const totalSelesai = loading ? '15,310' : laporan.filter(l => l.status === 'selesai').length.toLocaleString();
 
   const partnerLogos = [
-    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta' },
-    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR' },
-    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan' },
-    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup' }
+    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta', className: 'h-10 w-20 object-contain' },
+    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR', className: 'h-10 w-10 object-contain' },
+    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan', className: 'h-10 w-10 object-contain' },
+    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup', className: 'h-10 w-10 object-contain' }
   ];
 
   // Repeat the logos 8 times per set to cover all screens and loop seamlessly
@@ -222,7 +222,7 @@ export default function LandingPage() {
                     key={`set1-${idx}`}
                     src={logo.src}
                     alt={logo.alt}
-                    className="h-8 w-8 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300"
+                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
                   />
                 ))}
               </div>
@@ -233,7 +233,7 @@ export default function LandingPage() {
                     key={`set2-${idx}`}
                     src={logo.src}
                     alt={logo.alt}
-                    className="h-8 w-8 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300"
+                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
                   />
                 ))}
               </div>
