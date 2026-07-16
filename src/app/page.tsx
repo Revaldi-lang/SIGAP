@@ -72,6 +72,39 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Partnership & Dinas Logos Marquee Section */}
+        <section className="py-8 bg-slate-50 border-b border-slate-100 overflow-hidden">
+          <div className="max-w-6xl mx-auto px-6 mb-6 text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Instansi Penyelenggara &amp; Teknis Terkait</p>
+          </div>
+          <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-5">
+            <div className="animate-marquee flex items-center">
+              {/* First set of logos */}
+              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
+                {repeatedLogos.map((logo, idx) => (
+                  <img 
+                    key={`set1-${idx}`}
+                    src={logo.src}
+                    alt={logo.alt}
+                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
+                  />
+                ))}
+              </div>
+              {/* Second set of logos (duplicate for seamless loop) */}
+              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
+                {repeatedLogos.map((logo, idx) => (
+                  <img 
+                    key={`set2-${idx}`}
+                    src={logo.src}
+                    alt={logo.alt}
+                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Section: Alur Pelaporan */}
         <section id="alur-section" className="py-24 px-12 md:px-20 bg-white border-b border-slate-100">
           <div className="max-w-6xl mx-auto">
@@ -203,39 +236,6 @@ export default function LandingPage() {
                   <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Update Status &amp; Selesai</h4>
                   <p className="text-xs text-slate-500 font-normal leading-relaxed">Dapatkan notifikasi progres perbaikan hingga infrastruktur kembali berfungsi dengan baik.</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Partnership & Dinas Logos Marquee Section */}
-        <section className="py-8 bg-slate-50 border-b border-slate-100 overflow-hidden">
-          <div className="max-w-6xl mx-auto px-6 mb-6 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Instansi Penyelenggara &amp; Teknis Terkait</p>
-          </div>
-          <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-5">
-            <div className="animate-marquee flex items-center">
-              {/* First set of logos */}
-              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
-                {repeatedLogos.map((logo, idx) => (
-                  <img 
-                    key={`set1-${idx}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
-                  />
-                ))}
-              </div>
-              {/* Second set of logos (duplicate for seamless loop) */}
-              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
-                {repeatedLogos.map((logo, idx) => (
-                  <img 
-                    key={`set2-${idx}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
-                  />
-                ))}
               </div>
             </div>
           </div>
