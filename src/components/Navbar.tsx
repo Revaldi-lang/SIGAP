@@ -54,23 +54,23 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
 
   return (
     <>
-      <nav className="bg-surface border-b-border-width-main border-black fixed top-0 left-0 w-full z-50 transition-all duration-200 h-20 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <nav className="bg-white border-b border-slate-200 fixed top-0 left-0 w-full z-50 transition-all duration-200 h-20 shadow-sm">
         <div className="flex justify-between items-center w-full px-6 md:px-16 max-w-[1280px] mx-auto h-full">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 min-h-[44px]">
-            <div className="bg-primary/10 p-2 border-2 border-black flex items-center justify-center w-12 h-12 shrink-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" />
+            <div className="bg-primary/5 p-2 rounded-lg border border-slate-100 flex items-center justify-center w-10 h-10 shrink-0">
+              <img alt="SIGAP Logo" className="h-6 w-auto object-contain" src="/assets/images/sigap.png" />
             </div>
-            <span className="font-black text-2xl text-primary tracking-tight font-display uppercase">SIGAP</span>
+            <span className="font-extrabold text-xl text-primary tracking-tight font-sans uppercase">SIGAP</span>
           </Link>
 
           {/* Desktop Links */}
           {!isDashboard && (
             <div className="hidden md:flex items-center gap-8">
-              <a className="text-xs font-bold uppercase tracking-wider text-primary hover:underline hover:decoration-border-width-sub hover:underline-offset-4" href="#info-section">Kegunaan</a>
-              <a className="text-xs font-bold uppercase tracking-wider text-primary hover:underline hover:decoration-border-width-sub hover:underline-offset-4" href="#alur-section">Cara Melapor</a>
-              <a className="text-xs font-bold uppercase tracking-wider text-primary hover:underline hover:decoration-border-width-sub hover:underline-offset-4" href="#proses-section">SOP Kerja</a>
-              <a className="text-xs font-bold uppercase tracking-wider text-primary hover:underline hover:decoration-border-width-sub hover:underline-offset-4" href="#suara-warga-section">Suara Warga</a>
+              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#info-section">Kegunaan</a>
+              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#alur-section">Cara Melapor</a>
+              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#proses-section">SOP Kerja</a>
+              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#suara-warga-section">Suara Warga</a>
             </div>
           )}
 
@@ -81,7 +81,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
               <div className="relative">
                 <button
                   onClick={handleProfileClick}
-                  className="w-10 h-10 rounded-full bg-primary hover:bg-[#223aa8] text-white font-bold flex items-center justify-center text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all active:scale-95 border-2 border-black overflow-hidden cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-primary/10 hover:opacity-90 text-primary font-semibold flex items-center justify-center text-xs transition-all active:scale-95 border border-slate-200 overflow-hidden cursor-pointer"
                 >
                   {currentUser.foto ? (
                     <img src={currentUser.foto} alt="Avatar" className="w-full h-full object-cover" />
@@ -91,23 +91,23 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
                 </button>
 
                 {profileDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-56 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] py-2 z-50 animate-fade-in">
-                    <div className="px-4 py-2 border-b-2 border-black bg-slate-50">
-                      <p className="font-bold text-primary truncate text-sm">{currentUser.username}</p>
-                      <p className="text-xs text-[#4E4639] truncate">{currentUser.email}</p>
-                      <span className="inline-block bg-primary text-white text-[9px] font-bold px-2 py-0.5 border-2 border-black uppercase tracking-wider mt-1.5 animate-pulse">
+                  <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-lg shadow-md py-2 z-50 animate-fade-in">
+                    <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50">
+                      <p className="font-semibold text-primary truncate text-sm">{currentUser.username}</p>
+                      <p className="text-xs text-slate-500 truncate">{currentUser.email}</p>
+                      <span className="inline-block bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mt-1.5">
                         {currentUser.role}
                       </span>
                     </div>
-                    <Link href={getDashboardUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-primary hover:bg-slate-100 transition-colors border-b border-black/10">
-                      <span className="material-symbols-outlined text-sm text-primary">dashboard</span> Dasbor Utama
+                    <Link href={getDashboardUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-700 hover:bg-slate-50 transition-colors border-b border-slate-100">
+                      <span className="material-symbols-outlined text-sm text-slate-500">dashboard</span> Dasbor Utama
                     </Link>
-                    <Link href={getProfileUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-primary hover:bg-slate-100 transition-colors border-b border-black/10">
-                      <span className="material-symbols-outlined text-sm text-primary">person</span> Pengaturan Profil
+                    <Link href={getProfileUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-700 hover:bg-slate-50 transition-colors border-b border-slate-100">
+                      <span className="material-symbols-outlined text-sm text-slate-500">person</span> Pengaturan Profil
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-red-600 hover:bg-red-50 transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-red-600 hover:bg-red-50 transition-colors text-left"
                     >
                       <span className="material-symbols-outlined text-sm text-red-600">logout</span> Keluar Sesi
                     </button>
@@ -119,7 +119,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
               <div className="hidden md:block">
                 <button
                   onClick={onOpenAuthModal}
-                  className="bg-primary text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none px-6 py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                  className="bg-primary text-white rounded-lg px-5 py-2 text-xs font-semibold uppercase tracking-wider transition-all hover:bg-primary/95 shadow-sm cursor-pointer"
                 >
                   Masuk Portal
                 </button>
@@ -139,7 +139,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t-4 border-black bg-surface px-6 py-4 space-y-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] max-h-[calc(100vh-80px)] overflow-y-auto">
+          <div className="md:hidden border-t border-slate-200 bg-white px-6 py-4 space-y-3 shadow-md max-h-[calc(100vh-80px)] overflow-y-auto">
             {!isDashboard && (
               <>
                 <a href="#info-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Kegunaan</a>
@@ -150,22 +150,22 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
             )}
 
             {currentUser ? (
-              <div className="pt-3 border-t-2 border-black mt-3 space-y-2">
-                <div className="pb-2 border-b border-black/10">
+              <div className="pt-3 border-t border-slate-200 mt-3 space-y-2">
+                <div className="pb-2 border-b border-slate-100">
                   <p className="font-bold text-sm text-primary">{currentUser.username}</p>
-                  <p className="text-xs text-[#4E4639]">{currentUser.email}</p>
+                  <p className="text-xs text-slate-500">{currentUser.email}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 mt-2">
-                  <Link href={getDashboardUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-xs font-bold uppercase tracking-wider text-primary py-2 transition">
+                  <Link href={getDashboardUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold uppercase tracking-wider text-primary py-2 transition shadow-sm">
                     <span className="material-symbols-outlined text-xs text-primary">dashboard</span> Dasbor
                   </Link>
-                  <Link href={getProfileUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-xs font-bold uppercase tracking-wider text-primary py-2 transition">
+                  <Link href={getProfileUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold uppercase tracking-wider text-primary py-2 transition shadow-sm">
                     <span className="material-symbols-outlined text-xs text-primary">person</span> Profil
                   </Link>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold uppercase tracking-wider py-2.5 transition border-2 border-red-300"
+                  className="w-full flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold uppercase tracking-wider py-2.5 transition rounded-lg border border-red-200"
                 >
                   <span className="material-symbols-outlined text-xs text-red-600">logout</span> Keluar Sesi
                 </button>
@@ -173,11 +173,8 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
             ) : (
               <div className="pt-2">
                 <button
-                  onClick={() => {
-                    closeMobileMenu();
-                    if (onOpenAuthModal) onOpenAuthModal();
-                  }}
-                  className="w-full bg-primary text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-bold text-xs py-3 transition text-center uppercase tracking-wider cursor-pointer"
+                  onClick={closeMobileMenu}
+                  className="w-full bg-primary text-white font-bold text-xs py-3 transition text-center uppercase tracking-wider cursor-pointer rounded-lg shadow-sm"
                 >
                   Masuk Portal
                 </button>
