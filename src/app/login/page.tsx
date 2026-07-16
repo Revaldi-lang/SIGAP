@@ -52,16 +52,16 @@ export default function AdminLogin() {
     <div className="flex items-center justify-center min-h-screen p-4 page-shell">
       <div className="legacy-card rounded-[1.25rem] flex w-full max-w-4xl overflow-hidden min-h-[500px] animate-fade-in">
         {/* Left Banner Area */}
-        <div className="w-1/2 bg-[#001360] text-white p-12 hidden md:flex flex-col justify-center relative overflow-hidden">
+        <div className="w-1/2 bg-primary text-white p-12 hidden md:flex flex-col justify-center relative overflow-hidden">
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-blue-500 opacity-20 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-blue-300 opacity-20 blur-3xl"></div>
 
           <div className="relative z-10 space-y-6">
             <Link href="/" className="flex items-center gap-3 w-max min-h-[44px]">
-              <div className="bg-white/10 p-2 rounded-xl border border-white/10 flex items-center justify-center w-12 h-12 shrink-0">
-                <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-8 w-auto object-contain" />
+              <div className="bg-white/10 p-2 rounded-2xl border border-white/10 flex items-center justify-center w-14 h-14 shrink-0">
+                <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-10 w-auto object-contain" />
               </div>
-              <span className="font-bold text-lg text-white">SIGAP</span>
+              <span className="font-extrabold text-2xl text-white tracking-tight uppercase">SIGAP</span>
             </Link>
             <h2 className="text-xl font-bold text-slate-100">Sistem Informasi Gerak Aduan Publik</h2>
             <p className="text-slate-300 leading-relaxed text-xs">

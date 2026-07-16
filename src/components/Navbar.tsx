@@ -58,10 +58,10 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
         <div className="flex justify-between items-center w-full px-6 md:px-16 max-w-[1280px] mx-auto h-full">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 min-h-[44px]">
-            <div className="bg-primary/5 p-2 rounded-lg border border-slate-100 flex items-center justify-center w-10 h-10 shrink-0">
-              <img alt="SIGAP Logo" className="h-6 w-auto object-contain" src="/assets/images/sigap.png" />
+            <div className="bg-primary/5 p-2 rounded-xl border border-slate-100 flex items-center justify-center w-12 h-12 shrink-0">
+              <img alt="SIGAP Logo" className="h-8 w-auto object-contain" src="/assets/images/sigap.png" />
             </div>
-            <span className="font-extrabold text-xl text-primary tracking-tight font-sans uppercase">SIGAP</span>
+            <span className="font-extrabold text-2xl text-primary tracking-tight font-sans uppercase">SIGAP</span>
           </Link>
 
           {/* Desktop Links */}

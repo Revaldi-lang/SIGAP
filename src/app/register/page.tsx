@@ -74,11 +74,11 @@ export default function RegisterWarga() {
     <div className="page-shell flex items-center justify-center min-h-screen p-4">
       <div className="w-full max-w-xl legacy-card rounded-[1.25rem] p-4 sm:p-8 animate-fade-in">
         <div className="text-center mb-6">
-          <Link href="/" className="inline-flex bg-[#001360]/10 p-2 rounded-xl mb-3 w-12 h-12 items-center justify-center border border-[#001360]/20 hover:bg-[#001360]/20 transition shrink-0">
-            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-8 w-auto object-contain" />
+          <Link href="/" className="inline-flex bg-primary/5 p-2 rounded-2xl mb-3 w-14 h-14 items-center justify-center border border-primary/10 hover:bg-primary/10 transition shrink-0">
+            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-10 w-auto object-contain" />
           </Link>
-          <h2 className="text-2xl font-bold text-[#1C1B18] tracking-tight">Daftar Akun SIGAP</h2>
-          <p className="text-xs text-[#4E4639] mt-1">Lengkapi data diri Anda untuk mulai melaporkan aduan infrastruktur.</p>
+          <h2 className="text-2xl font-bold text-slate-800 tracking-tight">Daftar Akun SIGAP</h2>
+          <p className="text-xs text-slate-500 mt-1">Lengkapi data diri Anda untuk mulai melaporkan aduan infrastruktur.</p>
         </div>
 
         {errorMsg && (
