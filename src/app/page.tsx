@@ -15,6 +15,15 @@ export default function LandingPage() {
   const totalAduan = loading ? '15,642' : laporan.length.toLocaleString();
   const totalSelesai = loading ? '15,310' : laporan.filter(l => l.status === 'selesai').length.toLocaleString();
 
+  const partnerLogos = [
+    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta' },
+    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR' },
+    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan' }
+  ];
+
+  // Repeat the logos 8 times per set to cover all screens and loop seamlessly
+  const repeatedLogos = Array(8).fill(partnerLogos).flat();
+
   return (
     <div className="min-h-screen page-shell flex flex-col pt-20 bg-background text-on-background">
       {/* Navbar */}
@@ -206,16 +215,26 @@ export default function LandingPage() {
           <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-6">
             <div className="animate-marquee flex items-center">
               {/* First set of logos */}
-              <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 shrink-0">
-                <img src="/assets/images/logo_dki.png" alt="Pemprov DKI Jakarta" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_pupr.png" alt="Kementerian PUPR" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_dishub.png" alt="Dinas Perhubungan" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
+              <div className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 shrink-0">
+                {repeatedLogos.map((logo, idx) => (
+                  <img 
+                    key={`set1-${idx}`}
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="h-10 md:h-12 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity"
+                  />
+                ))}
               </div>
               {/* Second set of logos (duplicate for seamless loop) */}
-              <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 shrink-0">
-                <img src="/assets/images/logo_dki.png" alt="Pemprov DKI Jakarta" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_pupr.png" alt="Kementerian PUPR" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
-                <img src="/assets/images/logo_dishub.png" alt="Dinas Perhubungan" className="h-12 w-12 md:h-16 md:w-16 object-contain opacity-75 hover:opacity-100 transition-opacity" />
+              <div className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 shrink-0">
+                {repeatedLogos.map((logo, idx) => (
+                  <img 
+                    key={`set2-${idx}`}
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="h-10 md:h-12 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity"
+                  />
+                ))}
               </div>
             </div>
           </div>
