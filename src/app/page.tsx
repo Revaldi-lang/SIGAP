@@ -59,19 +59,6 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
-            
-            {/* Floating Info Box on the right, styled like the screenshot or slightly transparent */}
-            <div className="mt-12 md:mt-0 md:ml-auto bg-slate-900/60 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl p-6 max-w-xs text-white z-20 animate-fade-in-delayed">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/10 text-white rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-2xl">engineering</span>
-                </div>
-                <div>
-                  <p className="font-bold text-xs uppercase text-slate-300 tracking-wider">Aduan Tertangani</p>
-                  <p className="text-xl md:text-2xl font-bold text-white leading-tight">{totalSelesai} Perbaikan</p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
