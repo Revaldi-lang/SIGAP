@@ -67,10 +67,11 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
           {/* Desktop Links */}
           {!isDashboard && (
             <div className="hidden md:flex items-center gap-8">
-              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#info-section">Kegunaan</a>
-              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#alur-section">Cara Melapor</a>
-              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#proses-section">SOP Kerja</a>
-              <a className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-primary transition-colors" href="#suara-warga-section">Suara Warga</a>
+              <a className="text-sm font-semibold text-primary transition-colors" href="/">Beranda</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#info-section">Kegunaan</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#alur-section">Cara Melapor</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#proses-section">SOP Kerja</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#suara-warga-section">Suara Warga</a>
             </div>
           )}
 

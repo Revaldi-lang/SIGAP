@@ -25,46 +25,53 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative min-h-[800px] flex flex-col md:flex-row items-stretch border-b border-slate-100">
-          <div className="flex-1 flex flex-col justify-center px-6 md:px-20 py-16 bg-white">
-            <span className="inline-block bg-primary/10 text-primary px-3 py-1.5 font-semibold text-xs rounded-full uppercase tracking-wider mb-6 w-fit">
-              Portal Pengaduan Terpadu
-            </span>
-            <h1 className="font-bold text-3xl sm:text-5xl md:text-[54px] mb-6 leading-tight text-slate-900 tracking-tight font-display">
-              Solusi Cerdas Pelaporan Infrastruktur <span className="text-primary bg-primary/5 px-3 py-1 rounded-lg inline-block mt-2 sm:mt-0 font-medium">Kerusakan Publik</span>
-            </h1>
-            <p className="font-normal text-base md:text-lg max-w-xl mb-10 text-slate-600 leading-relaxed">
-              Laporkan jalan berlubang, lampu jalan mati, atau fasilitas umum rusak di sekitar Anda. SIGAP menjembatani aduan warga dengan tindakan perbaikan cepat dari instansi terkait.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={() => setAuthModalOpen(true)}
-                className="bg-primary text-white px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all hover:bg-primary/95 shadow-sm active:scale-[0.98] cursor-pointer"
-              >
-                Mulai Lapor
-              </button>
-              <Link
-                href="/progress"
-                className="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all hover:bg-slate-50 text-center inline-block shadow-sm"
-              >
-                Lihat Progress
-              </Link>
-            </div>
-          </div>
+        <section className="relative min-h-[700px] flex items-center border-b border-slate-100 overflow-hidden bg-slate-950">
+          {/* Full-width Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-85 z-0"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1600')" }}
+          ></div>
           
-          <div className="flex-1 relative min-h-[400px] overflow-hidden bg-slate-50">
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1200')" }}
-            ></div>
-            <div className="absolute bottom-10 left-10 right-10 bg-white/95 backdrop-blur-md border border-slate-200/50 shadow-lg rounded-2xl p-6">
+          {/* Gradient Overlay: Solid black on the left, fading out to transparent on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10"></div>
+          
+          {/* Content Area */}
+          <div className="relative z-20 w-full px-6 md:px-20 max-w-[1280px] mx-auto py-24 flex flex-col md:flex-row items-center">
+            <div className="max-w-2xl text-white animate-slide-in">
+              <span className="inline-block bg-primary/20 text-blue-300 border border-blue-500/30 px-3 py-1.5 font-semibold text-xs rounded-full uppercase tracking-wider mb-6">
+                Portal Pengaduan Terpadu
+              </span>
+              <h1 className="font-extrabold text-4xl sm:text-5xl md:text-6xl mb-6 leading-tight tracking-tight text-white">
+                SIGAP Hadir <br/>Untuk Warga
+              </h1>
+              <p className="font-normal text-sm md:text-base max-w-lg mb-10 text-slate-300 leading-relaxed">
+                Layanan pengaduan dan aspirasi kerusakan jalan, lampu jalan, drainase, dan fasilitas umum terintegrasi langsung dengan dinas teknis daerah.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="bg-primary text-white hover:bg-primary/90 px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all shadow-md active:scale-[0.98] cursor-pointer"
+                >
+                  Mulai Lapor
+                </button>
+                <Link
+                  href="/progress"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all text-center inline-block"
+                >
+                  Lihat Progress
+                </Link>
+              </div>
+            </div>
+            
+            {/* Floating Info Box on the right, styled like the screenshot or slightly transparent */}
+            <div className="mt-12 md:mt-0 md:ml-auto bg-slate-900/60 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl p-6 max-w-xs text-white z-20 animate-fade-in-delayed">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl">engineering</span>
+                <div className="w-12 h-12 bg-white/10 text-white rounded-xl flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-2xl">engineering</span>
                 </div>
                 <div>
-                  <p className="font-bold text-xs uppercase text-slate-500 tracking-wider">Aduan Tertangani</p>
-                  <p className="text-xl md:text-2xl font-bold text-slate-900 leading-tight">{totalSelesai} Perbaikan</p>
+                  <p className="font-bold text-xs uppercase text-slate-300 tracking-wider">Aduan Tertangani</p>
+                  <p className="text-xl md:text-2xl font-bold text-white leading-tight">{totalSelesai} Perbaikan</p>
                 </div>
               </div>
             </div>
