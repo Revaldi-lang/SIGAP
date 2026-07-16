@@ -38,11 +38,8 @@ export default function LandingPage() {
           {/* Content Area */}
           <div className="relative z-20 w-full px-6 md:px-20 max-w-[1280px] mx-auto py-24 flex flex-col md:flex-row items-center">
             <div className="max-w-2xl text-white animate-slide-in">
-              <span className="inline-block bg-primary/20 text-blue-300 border border-blue-500/30 px-3 py-1.5 font-semibold text-xs rounded-full uppercase tracking-wider mb-6">
-                Portal Pengaduan Terpadu
-              </span>
               <h1 className="font-extrabold text-4xl sm:text-5xl md:text-6xl mb-6 leading-tight tracking-tight text-white">
-                SIGAP Hadir <br/>Untuk Warga
+                <span className="text-primary">SIGAP</span> Hadir <br/>Untuk Warga
               </h1>
               <p className="font-normal text-sm md:text-base max-w-lg mb-10 text-slate-300 leading-relaxed">
                 Layanan pengaduan dan aspirasi kerusakan jalan, lampu jalan, drainase, dan fasilitas umum terintegrasi langsung dengan dinas teknis daerah.
