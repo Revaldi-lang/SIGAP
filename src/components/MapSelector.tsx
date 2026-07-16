@@ -16,6 +16,8 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const isFirstMountRef = useRef<boolean>(true);
+  const lastAddressFromMapRef = useRef<string>('');
+  const initialAddressRef = useRef<string>(address);
 
   // Initialize Map
   useEffect(() => {
@@ -53,6 +55,9 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
             const addr = data.address;
             const roadName = addr.road || addr.suburb || addr.neighbourhood || addr.village || data.display_name.split(',')[0];
             const wil = addr.city_district || addr.suburb || addr.town || addr.municipality || addr.village || addr.city || 'Klojen';
+            
+            // Simpan alamat ke ref agar dideteksi sebagai perubahan dari peta, bukan dari ketikan user
+            lastAddressFromMapRef.current = roadName;
             onChange(clickLat, clickLng, roadName, wil);
           }
         })
@@ -105,10 +110,22 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
 
   // Debounced auto-geocoding from typed address
   useEffect(() => {
+    // 1. Skip if the address is too short
     if (!address || address.trim().length < 5) return;
 
+    // 2. Skip if the address is the initial address on mount (prevents overwriting coordinates on load)
+    if (address === initialAddressRef.current) return;
+
+    // 3. Skip if the address was updated from a map click
+    if (address === lastAddressFromMapRef.current) return;
+
     const debounceTimer = setTimeout(() => {
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&countrycodes=id&limit=1&q=${encodeURIComponent(address)}`)
+      // Optimasi pencarian: Tambahkan bias ", Malang" jika user tidak mengetikkannya
+      const searchQuery = address.toLowerCase().includes('malang')
+        ? address
+        : `${address}, Malang`;
+
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&countrycodes=id&viewbox=112.55,-7.90,112.68,-8.06&limit=1&q=${encodeURIComponent(searchQuery)}`)
         .then(response => response.json())
         .then(data => {
           if (data && data.length > 0) {
@@ -117,7 +134,10 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
             const addr = data[0].address || {};
             const wil = addr.city_district || addr.suburb || addr.town || addr.municipality || addr.village || addr.city || 'Klojen';
             
+            // Update parent state (hanya lat, lng, dan wilayah, tidak mengubah input address/lokasi yang sedang diketik user)
             onChange(geocodeLat, geocodeLng, undefined, wil);
+            
+            // Update map view directly
             if (mapRef.current) {
               mapRef.current.setView([geocodeLat, geocodeLng], 16);
             }
@@ -127,7 +147,7 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
     }, 800);
 
     return () => clearTimeout(debounceTimer);
-  }, [address]);
+  }, [address, onChange]);
 
   return (
     <div 
