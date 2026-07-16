@@ -16,10 +16,10 @@ export default function LandingPage() {
   const totalSelesai = loading ? '15,310' : laporan.filter(l => l.status === 'selesai').length.toLocaleString();
 
   const partnerLogos = [
-    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta', className: 'h-12 w-24 object-contain' },
-    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR', className: 'h-12 w-12 object-contain' },
-    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan', className: 'h-12 w-12 object-contain' },
-    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup', className: 'h-12 w-12 object-contain' }
+    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta', className: 'h-14 w-28 object-contain' },
+    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR', className: 'h-14 w-14 object-contain' },
+    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan', className: 'h-14 w-14 object-contain' },
+    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup', className: 'h-14 w-14 object-contain' }
   ];
 
   // Repeat the logos 8 times per set to cover all screens and loop seamlessly
