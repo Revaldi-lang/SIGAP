@@ -77,7 +77,7 @@ const contactTypes: ContactType[] = [
   { key: 'polisi', label: 'Polisi', image: '/assets/images/logo_polri.png' },
   { key: 'damkar', label: 'Damkar', image: '/assets/images/logo_damkar.png' },
   { key: 'ambulans', label: 'Ambulans', icon: 'ambulance' },
-  { key: 'bpbd', label: 'BPBD', icon: 'emergency' },
+  { key: 'bpbd', label: 'BPBD', image: '/assets/images/logo_bnpb.png' },
   { key: 'pln', label: 'PLN', image: '/assets/images/logo_pln.png' },
   { key: 'pdam', label: 'PDAM', image: '/assets/images/logo_pdam.png' },
 ];
@@ -94,7 +94,7 @@ const nationalContacts: NationalContact[] = [
   { label: 'Kepolisian', number: '110', image: '/assets/images/logo_polri.png', desc: 'Darurat kepolisian' },
   { label: 'Pemadam Kebakaran', number: '113', image: '/assets/images/logo_damkar.png', desc: 'Kebakaran & bencana' },
   { label: 'Ambulans', number: '118', icon: 'ambulance', desc: 'Kegawatdaruratan medis' },
-  { label: 'BNPB', number: '117', icon: 'emergency', desc: 'Penanggulangan bencana' },
+  { label: 'BNPB', number: '117', image: '/assets/images/logo_bnpb.png', desc: 'Penanggulangan bencana' },
   { label: 'PLN', number: '123', image: '/assets/images/logo_pln.png', desc: 'Gangguan listrik' },
   { label: 'SAR Nasional', number: '115', icon: 'sos', desc: 'Search & Rescue' },
 ];
