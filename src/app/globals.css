@@ -6,7 +6,7 @@
 }
 
 @theme {
-  --color-primary: #2563eb;
+  --color-primary: #1d4ed8;
   --color-on-primary: #ffffff;
   --color-secondary: #f1f5f9;
   --color-on-secondary: #0f172a;
@@ -166,7 +166,7 @@
 
 .legacy-input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
 }
 
 .legacy-btn-primary {
@@ -234,7 +234,7 @@
   select:focus,
   textarea:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
   }
 
   button {
@@ -349,7 +349,7 @@ img, video, canvas, svg {
 
 /* 2. CUSTOM SELECTION */
 ::selection {
-  background-color: #2563eb;
+  background-color: #1d4ed8;
   color: #ffffff;
 }
 

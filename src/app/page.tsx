@@ -408,12 +408,12 @@ export default function LandingPage() {
               >
                 Mulai Lapor
               </button>
-              <button
-                onClick={() => setAuthModalOpen(true)}
-                className="bg-transparent border border-white/20 hover:border-white/40 text-white font-semibold px-8 py-4 rounded-xl text-sm uppercase transition-all cursor-pointer active:scale-95"
+              <Link
+                href="/kontak-darurat"
+                className="bg-transparent border border-white/20 hover:border-white/40 text-white font-semibold px-8 py-4 rounded-xl text-sm uppercase transition-all cursor-pointer active:scale-95 inline-flex items-center justify-center"
               >
                 Kontak Darurat
-              </button>
+              </Link>
             </div>
             <p className="mt-10 font-bold text-xs text-white opacity-60 uppercase tracking-widest">Mari bergerak bersama untuk fasilitas publik yang lebih baik</p>
           </div>
