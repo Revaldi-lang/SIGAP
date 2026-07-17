@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -67,20 +67,20 @@ const kontakDarurat: ProvinceContact[] = [
 const pulauGroups = ['Semua', 'Jawa', 'Sumatera', 'Kalimantan', 'Sulawesi', 'Bali & Nusa Tenggara', 'Maluku & Papua'];
 
 const contactTypes = [
-  { key: 'polisi', label: 'Polisi', icon: 'local_police', color: 'bg-blue-100 text-blue-700 border-blue-200' },
+  { key: 'polisi', label: 'Polisi', icon: '', image: '/assets/images/logo_polri.png', color: 'bg-blue-100 text-blue-700 border-blue-200' },
   { key: 'damkar', label: 'Damkar', icon: 'local_fire_department', color: 'bg-red-100 text-red-700 border-red-200' },
   { key: 'ambulans', label: 'Ambulans', icon: 'ambulance', color: 'bg-green-100 text-green-700 border-green-200' },
   { key: 'bpbd', label: 'BPBD', icon: 'emergency', color: 'bg-orange-100 text-orange-700 border-orange-200' },
-  { key: 'pln', label: 'PLN', icon: 'bolt', color: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
-  { key: 'pdam', label: 'PDAM', icon: 'water_drop', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
+  { key: 'pln', label: 'PLN', icon: '', image: '/assets/images/logo_pln.png', color: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
+  { key: 'pdam', label: 'PDAM', icon: '', image: '/assets/images/logo_pdam.png', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
 ];
 
 const nationalContacts = [
-  { label: 'Polisi Nasional', number: '110', icon: 'local_police', color: 'from-blue-600 to-blue-800', desc: 'Panggilan darurat kepolisian' },
+  { label: 'Polisi Nasional', number: '110', icon: '', image: '/assets/images/logo_polri.png', color: 'from-blue-600 to-blue-800', desc: 'Panggilan darurat kepolisian' },
   { label: 'Pemadam Kebakaran', number: '113', icon: 'local_fire_department', color: 'from-red-500 to-red-700', desc: 'Darurat kebakaran & bencana' },
   { label: 'Ambulans / SPGDT', number: '118', icon: 'ambulance', color: 'from-green-500 to-green-700', desc: 'Kegawatdaruratan medis' },
   { label: 'BNPB / Bencana', number: '117', icon: 'emergency', color: 'from-orange-500 to-orange-700', desc: 'Badan Nasional Penanggulangan Bencana' },
-  { label: 'PLN Nasional', number: '123', icon: 'bolt', color: 'from-yellow-500 to-yellow-700', desc: 'Gangguan listrik nasional' },
+  { label: 'PLN Nasional', number: '123', icon: '', image: '/assets/images/logo_pln.png', color: 'from-yellow-500 to-yellow-700', desc: 'Gangguan listrik nasional' },
   { label: 'SAR Nasional', number: '115', icon: 'sos', color: 'from-purple-500 to-purple-700', desc: 'Search & Rescue nasional' },
 ];
 
@@ -139,7 +139,11 @@ export default function KontakDaruratPage() {
                   href={`tel:${c.number}`}
                   className={`bg-gradient-to-br ${c.color} text-white rounded-2xl p-5 flex flex-col items-center text-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all active:scale-95`}
                 >
-                  <span className="material-symbols-outlined text-3xl">{c.icon}</span>
+                  {'image' in c && c.image ? (
+                    <img src={c.image} alt={c.label} className="w-10 h-10 object-contain drop-shadow-md" />
+                  ) : (
+                    <span className="material-symbols-outlined text-3xl">{c.icon}</span>
+                  )}
                   <span className="text-2xl font-extrabold tracking-tight">{c.number}</span>
                   <span className="text-xs font-bold uppercase tracking-wider opacity-90 leading-tight">{c.label}</span>
                   <span className="text-xs opacity-70 leading-tight hidden sm:block">{c.desc}</span>
@@ -193,7 +197,11 @@ export default function KontakDaruratPage() {
             <div className="flex flex-wrap gap-3 mb-6">
               {contactTypes.map((t) => (
                 <div key={t.key} className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold ${t.color}`}>
-                  <span className="material-symbols-outlined text-sm">{t.icon}</span>
+                  {'image' in t && t.image ? (
+                    <img src={t.image} alt={t.label} className="w-4 h-4 object-contain" />
+                  ) : (
+                    <span className="material-symbols-outlined text-sm">{t.icon}</span>
+                  )}
                   {t.label}
                 </div>
               ))}
@@ -229,7 +237,11 @@ export default function KontakDaruratPage() {
                             href={`tel:${number.replace(/[^0-9+]/g, '')}`}
                             className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-semibold transition-all hover:shadow-sm active:scale-95 ${ct.color}`}
                           >
-                            <span className="material-symbols-outlined text-sm shrink-0">{ct.icon}</span>
+                            {'image' in ct && ct.image ? (
+                              <img src={ct.image} alt={ct.label} className="w-5 h-5 object-contain shrink-0" />
+                            ) : (
+                              <span className="material-symbols-outlined text-sm shrink-0">{ct.icon}</span>
+                            )}
                             <div className="min-w-0">
                               <div className="text-xs uppercase tracking-wide opacity-70 leading-none mb-0.5">{ct.label}</div>
                               <div className="font-bold leading-tight truncate">{number}</div>
