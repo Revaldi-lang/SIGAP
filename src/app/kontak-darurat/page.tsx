@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -115,7 +115,7 @@ export default function KontakDaruratPage() {
     const sizeMap = { sm: 'w-5 h-5', md: 'w-7 h-7', lg: 'w-10 h-10' };
     const iconSizeMap = { sm: 'text-base', md: 'text-xl', lg: 'text-3xl' };
     if (ct.image) {
-      return <img src={ct.image} alt={ct.label} className={`${sizeMap[size]} object-contain`} style={{ mixBlendMode: 'multiply' }} />;
+      return <img src={ct.image} alt={ct.label} className={`${sizeMap[size]} object-contain`} />;
     }
     return <span className={`material-symbols-outlined ${iconSizeMap[size]} text-slate-500`}>{ct.icon}</span>;
   };
