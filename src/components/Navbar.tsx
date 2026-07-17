@@ -174,7 +174,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
             ) : (
               <div className="pt-2">
                 <button
-                  onClick={closeMobileMenu}
+                  onClick={() => { closeMobileMenu(); onOpenAuthModal?.(); }}
                   className="w-full bg-primary text-white font-bold text-xs py-3 transition text-center uppercase tracking-wider cursor-pointer rounded-lg shadow-sm"
                 >
                   Masuk Portal
