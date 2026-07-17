@@ -96,7 +96,7 @@ const nationalContacts: NationalContact[] = [
   { label: 'Ambulans', number: '118', icon: 'ambulance', desc: 'Kegawatdaruratan medis' },
   { label: 'BNPB', number: '117', image: '/assets/images/logo_bnpb.png', desc: 'Penanggulangan bencana' },
   { label: 'PLN', number: '123', image: '/assets/images/logo_pln.png', desc: 'Gangguan listrik' },
-  { label: 'SAR Nasional', number: '115', icon: 'sos', desc: 'Search & Rescue' },
+  { label: 'SAR Nasional', number: '115', image: '/assets/images/logo_basarnas.png', desc: 'Search & Rescue' },
 ];
 
 export default function KontakDaruratPage() {
