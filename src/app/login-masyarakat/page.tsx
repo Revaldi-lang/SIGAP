@@ -8,7 +8,7 @@ import { useApp } from '@/context/AppContext';
 export default function LoginMasyarakat() {
   const { currentUser, login, loginGoogle, loading } = useApp();
   const router = useRouter();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -56,7 +56,7 @@ export default function LoginMasyarakat() {
             <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-10 w-auto object-contain" />
           </Link>
           <h2 className="text-2xl font-bold text-slate-800 tracking-tight">Portal Warga / Pelapor</h2>
-          <p className="text-xs text-slate-500 mt-1">Silakan masuk untuk membuat aduan atau melacak berkas laporan Anda.</p>
+          <p className="text-xs text-slate-500 mt-1">Silakan masuk untuk membuat aduan atau melacak proses laporan Anda.</p>
         </div>
 
         {errorMsg && (
@@ -131,7 +131,7 @@ export default function LoginMasyarakat() {
               Masuk Sekarang <span className="material-symbols-outlined text-sm">login</span>
             </button>
           </div>
-          
+
           <div className="relative flex py-2 items-center">
             <div className="flex-grow border-t border-[#D3C5B1]/50"></div>
             <span className="flex-shrink mx-4 text-[10px] text-[#4E4639] font-semibold uppercase">atau</span>
