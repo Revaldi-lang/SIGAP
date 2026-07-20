@@ -115,9 +115,9 @@ export default function KontakDaruratPage() {
     const sizeMap = { sm: 'w-5 h-5', md: 'w-7 h-7', lg: 'w-10 h-10' };
     const iconSizeMap = { sm: 'text-base', md: 'text-xl', lg: 'text-3xl' };
     if (ct.image) {
-      return <img src={ct.image} alt={ct.label} className={`${sizeMap[size]} object-contain`} />;
+      return <img src={ct.image} alt={ct.label} loading="lazy" className={`${sizeMap[size]} object-contain`} />;
     }
-    return <span className={`material-symbols-outlined ${iconSizeMap[size]} text-slate-500`}>{ct.icon}</span>;
+    return <span className={`material-symbols-outlined ${iconSizeMap[size]} text-slate-500`} aria-hidden="true">{ct.icon}</span>;
   };
 
   return (
@@ -130,7 +130,7 @@ export default function KontakDaruratPage() {
         <section className="border-b border-slate-100 py-12 px-6 md:px-20 bg-white">
           <div className="max-w-5xl mx-auto">
             <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-600 transition-colors mb-6 font-medium uppercase tracking-wider">
-              <span className="material-symbols-outlined text-sm">arrow_back</span>
+              <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_back</span>
               Beranda
             </Link>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -144,7 +144,7 @@ export default function KontakDaruratPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="material-symbols-outlined text-sm text-slate-400">info</span>
+                <span className="material-symbols-outlined text-sm text-slate-400" aria-hidden="true">info</span>
                 <span className="text-xs text-slate-400">{kontakDarurat.length} provinsi tercatat</span>
               </div>
             </div>

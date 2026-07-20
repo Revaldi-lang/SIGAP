@@ -20,10 +20,10 @@ export default function Footer() {
         <div className="md:col-span-3 space-y-4">
           <h5 className="text-sm font-bold uppercase tracking-wider text-blue-400">Navigasi</h5>
           <ul className="space-y-2.5 text-xs text-white/85">
-            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="#info-section">Kegunaan</a></li>
-            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="#alur-section">Cara Melapor</a></li>
-            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="#proses-section">SOP Kerja</a></li>
-            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="#suara-warga-section">Suara Warga</a></li>
+            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="/#info-section">Kegunaan</a></li>
+            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="/#alur-section">Cara Melapor</a></li>
+            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="/#proses-section">SOP Kerja</a></li>
+            <li><a className="hover:text-blue-400 hover:underline decoration-2 underline-offset-4 transition-colors font-semibold uppercase" href="/#suara-warga-section">Suara Warga</a></li>
           </ul>
         </div>
 
@@ -31,15 +31,15 @@ export default function Footer() {
           <h5 className="text-sm font-bold uppercase tracking-wider text-blue-400">Hubungi Bantuan</h5>
           <ul className="space-y-2.5 text-xs text-white/85">
             <li className="flex items-start gap-2">
-              <span className="material-symbols-outlined text-sm mt-0.5 text-blue-400">location_on</span>
+              <span className="material-symbols-outlined text-sm mt-0.5 text-blue-400" aria-hidden="true">location_on</span>
               <span>Pusat Layanan SIGAP Nasional, DKI Jakarta, Indonesia</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm text-blue-400">phone</span>
+              <span className="material-symbols-outlined text-sm text-blue-400" aria-hidden="true">phone</span>
               <span>Hotline 112 (Bebas Pulsa)</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm text-blue-400">mail</span>
+              <span className="material-symbols-outlined text-sm text-blue-400" aria-hidden="true">mail</span>
               <span>support@sigap.go.id</span>
             </li>
           </ul>

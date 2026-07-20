@@ -119,7 +119,7 @@ export default function ProgressPage() {
         {/* Search & Filter bar */}
         <div className="flex flex-col md:flex-row gap-6 mb-12 items-stretch font-space">
           <div className="relative flex-grow">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm" aria-hidden="true">search</span>
             <input
               type="text"
               value={searchQuery}
@@ -148,7 +148,7 @@ export default function ProgressPage() {
         {/* News Grid */}
         {filteredNews.length === 0 ? (
           <div className="border border-slate-200 rounded-2xl p-12 text-center bg-white shadow-sm">
-            <span className="material-symbols-outlined text-5xl text-primary mb-4">folder_open</span>
+            <span className="material-symbols-outlined text-5xl text-primary mb-4" aria-hidden="true">folder_open</span>
             <h3 className="font-bold text-lg mb-2 text-slate-800">Berita Tidak Ditemukan</h3>
             <p className="text-xs text-slate-500 font-normal">Silakan coba cari dengan kata kunci lain atau pilih kategori yang berbeda.</p>
           </div>
@@ -164,6 +164,7 @@ export default function ProgressPage() {
                   <img
                     src={news.image}
                     alt={news.title}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4">

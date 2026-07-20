@@ -18,8 +18,34 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "SIGAP - Sistem Informasi Gerak Aduan Publik",
+  title: {
+    default: "SIGAP - Sistem Informasi Gerak Aduan Publik",
+    template: "%s | SIGAP",
+  },
   description: "Portal Resmi Pelayanan Pengaduan & Aspirasi Infrastruktur Daerah Terintegrasi",
+  metadataBase: new URL("https://sigap-liard.vercel.app"),
+  openGraph: {
+    title: "SIGAP - Sistem Informasi Gerak Aduan Publik",
+    description: "Portal Resmi Pelayanan Pengaduan & Aspirasi Infrastruktur Daerah Terintegrasi",
+    url: "https://sigap-liard.vercel.app",
+    siteName: "SIGAP",
+    images: [
+      {
+        url: "/assets/images/sigap.png",
+        width: 800,
+        height: 600,
+        alt: "Logo SIGAP",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SIGAP - Sistem Informasi Gerak Aduan Publik",
+    description: "Portal Resmi Pelayanan Pengaduan & Aspirasi Infrastruktur Daerah Terintegrasi",
+    images: ["/assets/images/sigap.png"],
+  },
 };
 
 export default function RootLayout({

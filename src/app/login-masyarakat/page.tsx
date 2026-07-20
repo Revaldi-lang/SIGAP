@@ -14,6 +14,16 @@ export default function LoginMasyarakat() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const [pageReady, setPageReady] = useState(false);
+
+  useEffect(() => {
+    // Safety fallback: ensure form is displayed if loading takes > 1.5s
+    const timer = setTimeout(() => {
+      setPageReady(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     if (!loading && currentUser) {
       if (currentUser.role === 'Masyarakat') {
@@ -40,10 +50,11 @@ export default function LoginMasyarakat() {
     }
   };
 
-  if (loading || currentUser) {
+  if ((loading && !pageReady) || currentUser) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center gap-3">
         <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-xs text-slate-500 font-semibold animate-pulse">Memuat Portal Warga...</p>
       </div>
     );
   }
@@ -69,7 +80,7 @@ export default function LoginMasyarakat() {
           <div>
             <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">mail</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm" aria-hidden="true">mail</span>
               <input
                 type="email"
                 required
@@ -93,7 +104,7 @@ export default function LoginMasyarakat() {
               </a>
             </div>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">lock</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm" aria-hidden="true">lock</span>
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
@@ -105,9 +116,10 @@ export default function LoginMasyarakat() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-[#807667] hover:text-[#1C1B18] transition eye-icon-wrapper"
+                aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-[#807667] hover:text-[#1C1B18] transition eye-icon-wrapper p-2"
               >
-                <span className="material-symbols-outlined text-sm">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">{showPassword ? 'visibility_off' : 'visibility'}</span>
               </button>
             </div>
           </div>
@@ -128,7 +140,7 @@ export default function LoginMasyarakat() {
               type="submit"
               className="w-full bg-[#001360] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
             >
-              Masuk Sekarang <span className="material-symbols-outlined text-sm">login</span>
+              Masuk Sekarang <span className="material-symbols-outlined text-sm" aria-hidden="true">login</span>
             </button>
           </div>
 
@@ -156,7 +168,7 @@ export default function LoginMasyarakat() {
           </div>
           <div>
             <Link href="/" className="text-[#4E4639] hover:text-[#001360] transition flex items-center justify-center gap-1 font-semibold text-[11px]">
-              <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali ke Halaman Utama
+              <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_back</span> Kembali ke Halaman Utama
             </Link>
           </div>
         </div>

@@ -1,0 +1,114 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--text-primary)}
+.wrap{padding:1.5rem 0}
+.header{margin-bottom:1.5rem}
+.title{font-size:20px;font-weight:500;margin-bottom:4px}
+.subtitle{font-size:14px;color:var(--text-secondary)}
+.score-bar{display:flex;gap:12px;margin-bottom:2rem;flex-wrap:wrap}
+.score-card{flex:1;min-width:120px;background:var(--surface-1);border:0.5px solid var(--border);border-radius:12px;padding:1rem;text-align:center}
+.score-label{font-size:12px;color:var(--text-secondary);margin-bottom:6px}
+.score-num{font-size:26px;font-weight:500}
+.score-num.good{color:var(--text-success)}
+.score-num.warn{color:var(--text-warning)}
+.score-num.bad{color:var(--text-danger)}
+.section{margin-bottom:1.5rem}
+.section-head{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;margin-bottom:0.75rem;padding-bottom:8px;border-bottom:0.5px solid var(--border)}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;font-weight:500}
+.badge.ok{background:var(--bg-success);color:var(--text-success)}
+.badge.isu{background:var(--bg-danger);color:var(--text-danger)}
+.badge.warn{background:var(--bg-warning);color:var(--text-warning)}
+.item{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);font-size:14px;align-items:flex-start}
+.item:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot.ok{background:var(--fill-success)}
+.dot.isu{background:var(--fill-danger)}
+.dot.warn{background:var(--fill-warning)}
+.item-body{flex:1}
+.item-title{font-weight:500;margin-bottom:2px}
+.item-desc{color:var(--text-secondary);line-height:1.5}
+.fix{font-size:12px;margin-top:4px;padding:4px 8px;background:var(--bg-accent);color:var(--text-accent);border-radius:4px;display:inline-block}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{padding:6px 14px;border-radius:99px;font-size:13px;cursor:pointer;border:0.5px solid var(--border);background:var(--surface-1);color:var(--text-secondary)}
+.tab.active{background:var(--fill-accent);color:var(--on-accent);border-color:transparent}
+.section-panel{display:none}
+.section-panel.active{display:block}
+.overall{background:var(--bg-success);border:0.5px solid var(--border-success);border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:14px;color:var(--text-success)}
+</style>
+<div class="wrap">
+  <div class="header">
+    <div class="title">Laporan QA — SIGAP</div>
+    <div class="subtitle">sigap-liard.vercel.app · Dianalisis 20 Juli 2026</div>
+  </div>
+
+  <div class="score-bar">
+    <div class="score-card"><div class="score-label">Responsivitas</div><div class="score-num warn">B</div></div>
+    <div class="score-card"><div class="score-label">Performa</div><div class="score-num warn">B+</div></div>
+    <div class="score-card"><div class="score-label">Aksesibilitas</div><div class="score-num bad">C+</div></div>
+    <div class="score-card"><div class="score-label">SEO</div><div class="score-num warn">B</div></div>
+    <div class="score-card"><div class="score-label">Kode</div><div class="score-num warn">B+</div></div>
+  </div>
+
+  <div class="overall">✓ Secara keseluruhan web ini sudah cukup baik untuk portofolio — struktur konten jelas, navigasi fungsional, dan desain konsisten. Fokus perbaikan ada di aksesibilitas dan beberapa isu minor SEO.</div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="show('responsive')">Responsivitas</div>
+    <div class="tab" onclick="show('performa')">Performa</div>
+    <div class="tab" onclick="show('a11y')">Aksesibilitas</div>
+    <div class="tab" onclick="show('seo')">SEO</div>
+    <div class="tab" onclick="show('kode')">Kode</div>
+  </div>
+
+  <div id="responsive" class="section-panel active">
+    <div class="section-head"><i class="ti ti-device-mobile" aria-hidden="true"></i> Responsivitas & Mobile-Friendly <span class="badge warn">3 isu</span></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Viewport meta tag sudah ada</div><div class="item-desc">Tag <code>width=device-width, initial-scale=1</code> terpasang dengan benar di semua halaman.</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Logo marquee duplikat berlebihan</div><div class="item-desc">Logo instansi (DKI, PUPR, Dishub, DLH) diulang 28+ kali di DOM. Di mobile ini memperlambat render dan membuang bandwidth.</div><div class="fix">Saran: Gunakan CSS animation infinite pada ~8 item saja, bukan clone ratusan elemen</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Halaman /login-masyarakat kosong</div><div class="item-desc">Halaman login tidak merender konten apapun — kemungkinan ada bug pada conditional rendering atau route yang belum selesai.</div><div class="fix">Saran: Tambahkan fallback UI / loading state agar halaman tidak tampak blank</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Anchor link navbar menuju section di beranda</div><div class="item-desc">Link seperti <code>#info-section</code> di navbar pada halaman /progress dan /kontak-darurat tidak akan scroll ke mana pun karena section itu tidak ada di halaman tersebut.</div><div class="fix">Saran: Arahkan link navbar ke <code>/#info-section</code> (dengan prefix URL beranda)</div></div></div>
+  </div>
+
+  <div id="performa" class="section-panel">
+    <div class="section-head"><i class="ti ti-bolt" aria-hidden="true"></i> Performa & Load <span class="badge warn">2 isu</span></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Deploy di Vercel</div><div class="item-desc">Vercel otomatis memberikan CDN global, HTTPS, dan kompresi — fondasi performa sudah solid.</div></div></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Gambar menggunakan path lokal</div><div class="item-desc">Aset gambar di-host sendiri (bukan CDN eksternal pihak ketiga) sehingga tidak ada ketergantungan eksternal yang berisiko lambat.</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Logo marquee membebani DOM</div><div class="item-desc">28+ elemen <code>&lt;img&gt;</code> identik di-load untuk efek scroll logo. Ini memperberat DOM dan memicu banyak request gambar berulang.</div><div class="fix">Saran: Gunakan max 1 set logo (4 item) + CSS infinite scroll animation</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Gambar tidak ada atribut loading="lazy"</div><div class="item-desc">Gambar di halaman /progress (perbaikan jalan, PJU, jembatan) tidak ada lazy loading, sehingga semua diunduh saat halaman pertama kali dibuka.</div><div class="fix">Saran: Tambahkan <code>loading="lazy"</code> pada semua img yang berada below the fold</div></div></div>
+  </div>
+
+  <div id="a11y" class="section-panel">
+    <div class="section-head"><i class="ti ti-accessible" aria-hidden="true"></i> Aksesibilitas (a11y) <span class="badge isu">5 isu</span></div>
+    <div class="item"><div class="dot isu"></div><div class="item-body"><div class="item-title">Semua gambar logo marquee tanpa alt yang berbeda</div><div class="item-desc">Ratusan tag <code>&lt;img&gt;</code> logo duplikat memiliki alt text yang sama persis — screen reader akan membacanya ratusan kali berturut-turut.</div><div class="fix">Saran: Kurangi elemen DOM dan tambahkan <code>aria-hidden="true"</code> pada elemen duplikat dekoratif</div></div></div>
+    <div class="item"><div class="dot isu"></div><div class="item-body"><div class="item-title">Icon Material Symbols tidak ada aria-label</div><div class="item-desc">Icon teks seperti <code>visibility</code>, <code>map</code>, <code>verified</code>, <code>ambulance</code> dirender sebagai teks literal — screen reader akan membacanya sebagai kata "ambulance", "map", dll. secara aneh.</div><div class="fix">Saran: Tambahkan <code>aria-hidden="true"</code> pada semua icon dekoratif, atau gunakan tag <code>&lt;span aria-hidden&gt;</code></div></div></div>
+    <div class="item"><div class="dot isu"></div><div class="item-body"><div class="item-title">Tombol "Masuk Portal" dan "menu" tidak ada konteks</div><div class="item-desc">Teks "menu" di navbar kemungkinan adalah tombol hamburger tanpa aria-label yang menjelaskan fungsinya.</div><div class="fix">Saran: Tambahkan <code>aria-label="Buka menu navigasi"</code> pada tombol hamburger</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Statistik angka tidak ada konteks unit</div><div class="item-desc">Angka seperti "92%", "340+", "15mnt", "15,310" muncul tanpa label yang semantik — tidak jelas untuk screen reader apa satuan/konteksnya.</div><div class="fix">Saran: Gunakan <code>&lt;dl&gt;&lt;dt&gt;&lt;dd&gt;&gt;</code> atau tambahkan aria-label pada container statistik</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Link "Tracking Laporan", "Lihat Peta Kota" semua menuju URL yang sama</div><div class="item-desc">Tiga CTA berbeda semuanya menuju <code>/login-masyarakat</code> — padahal teksnya menjanjikan fitur berbeda. Ini membingungkan pengguna dan screen reader.</div><div class="fix">Saran: Pastikan setiap link menuju halaman/fitur yang relevan, atau jelaskan bahwa login diperlukan lebih dulu</div></div></div>
+  </div>
+
+  <div id="seo" class="section-panel">
+    <div class="section-head"><i class="ti ti-search" aria-hidden="true"></i> SEO & Meta Tags <span class="badge warn">3 isu</span></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Title & meta description sudah ada</div><div class="item-desc">Semua halaman memiliki <code>&lt;title&gt;</code> dan <code>meta-description</code> yang konsisten dan deskriptif.</div></div></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Struktur heading sudah baik</div><div class="item-desc">Setiap halaman menggunakan H1 yang jelas dan H2/H3 yang hierarkis dengan konten yang relevan.</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Title & description sama di semua halaman</div><div class="item-desc">Halaman /progress dan /kontak-darurat memiliki title dan meta description yang identik dengan beranda — tidak optimal untuk SEO.</div><div class="fix">Saran: Buat title unik per halaman, misal "Progres Perbaikan Infrastruktur | SIGAP"</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Tidak ada Open Graph tags</div><div class="item-desc">Ketika link SIGAP dibagikan di WhatsApp, Twitter, atau LinkedIn, tidak akan ada preview gambar/deskripsi yang menarik.</div><div class="fix">Saran: Tambahkan <code>og:title</code>, <code>og:description</code>, <code>og:image</code>, <code>og:url</code> di setiap halaman</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Tidak ada sitemap.xml / robots.txt</div><div class="item-desc">Tidak terdeteksi sitemap — ini memperlambat indexing oleh Google, terutama untuk halaman /progress dan /kontak-darurat.</div><div class="fix">Saran: Generate sitemap.xml dan tambahkan robots.txt (Next.js bisa generate otomatis)</div></div></div>
+  </div>
+
+  <div id="kode" class="section-panel">
+    <div class="section-head"><i class="ti ti-code" aria-hidden="true"></i> Kode & Best Practices <span class="badge warn">3 isu</span></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Menggunakan Next.js</div><div class="item-desc">Framework modern dengan SSR/SSG, routing, dan optimasi bawaan — pilihan yang tepat untuk project ini.</div></div></div>
+    <div class="item"><div class="dot ok"></div><div class="item-body"><div class="item-title">Deploy otomatis via Vercel</div><div class="item-desc">CI/CD sudah terhubung — perubahan kode otomatis ter-deploy tanpa konfigurasi tambahan.</div></div></div>
+    <div class="item"><div class="dot isu"></div><div class="item-body"><div class="item-title">Halaman /login-masyarakat tidak merender apapun</div><div class="item-desc">Kemungkinan ada error pada komponen, conditional rendering yang salah, atau halaman belum selesai dikerjakan. Ini adalah bug kritis karena banyak CTA mengarah ke sini.</div><div class="fix">Saran: Debug halaman ini — cek console error dan pastikan ada fallback UI</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Anchor link tidak cross-page aware</div><div class="item-desc">Navbar menggunakan hash links (<code>#section</code>) tanpa prefix URL beranda, sehingga broken saat diakses dari halaman lain.</div><div class="fix">Saran: Ganti jadi <code>href="/#info-section"</code> agar bekerja dari halaman manapun</div></div></div>
+    <div class="item"><div class="dot warn"></div><div class="item-body"><div class="item-title">Konten footer menggunakan icon font sebagai teks</div><div class="item-desc">Icon seperti <code>location_on</code>, <code>phone</code>, <code>mail</code> dirender sebagai plaintext — ini berarti menggunakan Material Icons font, tapi perlu dipastikan sudah di-load dengan benar di semua browser.</div><div class="fix">Saran: Pastikan Material Icons dimuat, atau ganti dengan SVG icon yang lebih reliable</div></div></div>
+  </div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

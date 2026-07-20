@@ -22,9 +22,6 @@ export default function LandingPage() {
     { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup', className: 'h-20 w-20 object-contain' }
   ];
 
-  // Repeat the logos 8 times per set to cover all screens and loop seamlessly
-  const repeatedLogos = Array(8).fill(partnerLogos).flat();
-
   return (
     <div className="min-h-screen page-shell flex flex-col pt-20 bg-background text-on-background">
       {/* Navbar */}
@@ -79,24 +76,26 @@ export default function LandingPage() {
           </div>
           <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-5">
             <div className="animate-marquee flex items-center">
-              {/* First set of logos */}
+              {/* First set of logos (accessible set) */}
               <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
-                {repeatedLogos.map((logo, idx) => (
+                {partnerLogos.map((logo, idx) => (
                   <img 
                     key={`set1-${idx}`}
                     src={logo.src}
                     alt={logo.alt}
+                    loading="lazy"
                     className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
                   />
                 ))}
               </div>
-              {/* Second set of logos (duplicate for seamless loop) */}
-              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
-                {repeatedLogos.map((logo, idx) => (
+              {/* Second set of logos (decorative clone set for seamless CSS loop) */}
+              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0" aria-hidden="true">
+                {partnerLogos.map((logo, idx) => (
                   <img 
                     key={`set2-${idx}`}
                     src={logo.src}
-                    alt={logo.alt}
+                    alt=""
+                    loading="lazy"
                     className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
                   />
                 ))}
@@ -162,31 +161,31 @@ export default function LandingPage() {
               {/* Card 1 */}
               <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
                 <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl">visibility</span>
+                  <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">visibility</span>
                 </div>
                 <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Pemantauan Aduan</h3>
                 <p className="text-xs text-slate-500 font-normal leading-relaxed">Pantau status perbaikan infrastruktur yang Anda laporkan secara langsung.</p>
-                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/login-masyarakat">Tracking Laporan <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span></Link>
+                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/dashboard-pelapor">Tracking Laporan <span className="material-symbols-outlined text-[10px]" aria-hidden="true">arrow_right_alt</span></Link>
               </div>
               
               {/* Card 2 */}
               <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
                 <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl">map</span>
+                  <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">map</span>
                 </div>
                 <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Database Infrastruktur</h3>
                 <p className="text-xs text-slate-500 font-normal leading-relaxed">Data kerusakan terintegrasi untuk perencanaan perbaikan kota yang lebih efisien.</p>
-                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/login-masyarakat">Lihat Peta Kota <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span></Link>
+                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/peta-pelapor">Lihat Peta Kota <span className="material-symbols-outlined text-[10px]" aria-hidden="true">arrow_right_alt</span></Link>
               </div>
               
               {/* Card 3 */}
               <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
                 <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl">verified</span>
+                  <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">verified</span>
                 </div>
                 <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Aduan Transparan</h3>
                 <p className="text-xs text-slate-500 font-normal leading-relaxed">Setiap laporan diverifikasi dan dipublikasikan untuk menjamin akuntabilitas perbaikan.</p>
-                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/login-masyarakat">Cek Akuntabilitas <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span></Link>
+                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/progress">Cek Akuntabilitas <span className="material-symbols-outlined text-[10px]" aria-hidden="true">arrow_right_alt</span></Link>
               </div>
             </div>
           </div>
@@ -249,10 +248,10 @@ export default function LandingPage() {
               {/* Left: Protokol Perbaikan */}
               <div className="lg:w-2/5 bg-primary rounded-2xl shadow-lg p-10 flex flex-col text-white">
                 <div className="mb-8">
-                  <span className="material-symbols-outlined text-6xl text-white">assignment_turned_in</span>
+                  <span className="material-symbols-outlined text-6xl text-white" aria-hidden="true">assignment_turned_in</span>
                 </div>
                 <h3 className="font-bold text-2xl md:text-3xl mb-6 leading-tight font-display">Protokol Perbaikan (SPM)</h3>
-                <p className="text-sm mb-8 opacity-90 leading-relaxed font-medium">Setiap laporan diproses berdasarkan Standar Pelayanan Minimal (SPM) Kota untuk memastikan penanganan yang cepat dan struktur yang kokoh:</p>
+                <p className="text-sm mb-8 opacity-90 leading-relaxed font-medium">Setiap laporan dipproses berdasarkan Standar Pelayanan Minimal (SPM) Kota untuk memastikan penanganan yang cepat dan struktur yang kokoh:</p>
                 <ul className="space-y-6">
                   <li className="flex items-start gap-4">
                     <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
@@ -272,7 +271,7 @@ export default function LandingPage() {
               {/* Right: Siklus Laporan */}
               <div className="lg:w-3/5">
                 <div className="mb-10 flex items-center gap-4 text-primary">
-                  <span className="material-symbols-outlined text-4xl">sync_alt</span>
+                  <span className="material-symbols-outlined text-4xl" aria-hidden="true">sync_alt</span>
                   <h3 className="font-semibold text-xl uppercase font-display">Siklus Laporan Pelanggan</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -316,7 +315,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16">
               <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex items-start gap-6">
                 <div className="bg-primary/10 text-primary p-3 rounded-xl shrink-0 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-4xl text-primary">security</span>
+                  <span className="material-symbols-outlined text-4xl text-primary" aria-hidden="true">security</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">Standard Keamanan Data</h4>
@@ -325,7 +324,7 @@ export default function LandingPage() {
               </div>
               <div className="bg-slate-900 shadow-md rounded-2xl p-8 flex items-start gap-6 text-white">
                 <div className="bg-white/10 text-white p-3 rounded-xl shrink-0 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-4xl text-white">groups</span>
+                  <span className="material-symbols-outlined text-4xl text-white" aria-hidden="true">groups</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-base text-white mb-2 font-display">Transparansi &amp; Audit Masyarakat</h4>
@@ -341,24 +340,24 @@ export default function LandingPage() {
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
             <div className="md:w-1/2">
               <h2 className="font-bold text-3xl md:text-[40px] mb-12 leading-none tracking-tight font-display">Dampak Nyata Untuk Kota Kita</h2>
-              <div className="grid grid-cols-2 gap-8">
+              <dl className="grid grid-cols-2 gap-8" aria-label="Statistik Pencapaian SIGAP">
                 <div>
-                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">92%</p>
-                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Aduan Tuntas</p>
+                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">92%</dt>
+                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Aduan Tuntas</dd>
                 </div>
                 <div>
-                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">340+</p>
-                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Mitra Perbaikan</p>
+                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">340+</dt>
+                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Mitra Perbaikan</dd>
                 </div>
                 <div>
-                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">15mnt</p>
-                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Respon Awal Rata-rata</p>
+                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">15mnt</dt>
+                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Respon Awal Rata-rata</dd>
                 </div>
                 <div>
-                  <p className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">{totalSelesai}</p>
-                  <p className="font-semibold text-xs uppercase tracking-wider opacity-75">Laporan Selesai</p>
+                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">{totalSelesai}</dt>
+                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Laporan Selesai</dd>
                 </div>
-              </div>
+              </dl>
             </div>
             
             <div className="md:w-1/2 flex flex-col gap-6">

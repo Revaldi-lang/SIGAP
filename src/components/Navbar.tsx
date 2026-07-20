@@ -68,10 +68,10 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
           {!isDashboard && (
             <div className="hidden md:flex items-center gap-8">
               <a className="text-sm font-semibold text-primary transition-colors" href="/">Beranda</a>
-              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#info-section">Kegunaan</a>
-              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#alur-section">Cara Melapor</a>
-              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#proses-section">SOP Kerja</a>
-              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#suara-warga-section">Suara Warga</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="/#info-section">Kegunaan</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="/#alur-section">Cara Melapor</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="/#proses-section">SOP Kerja</a>
+              <a className="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="/#suara-warga-section">Suara Warga</a>
             </div>
           )}
 
@@ -82,6 +82,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
               <div className="relative">
                 <button
                   onClick={handleProfileClick}
+                  aria-label="Menu profil pengguna"
                   className="w-9 h-9 rounded-full bg-primary/10 hover:opacity-90 text-primary font-semibold flex items-center justify-center text-xs transition-all active:scale-95 border border-slate-200 overflow-hidden cursor-pointer"
                 >
                   {currentUser.foto ? (
@@ -101,16 +102,16 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
                       </span>
                     </div>
                     <Link href={getDashboardUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-700 hover:bg-slate-50 transition-colors border-b border-slate-100">
-                      <span className="material-symbols-outlined text-sm text-slate-500">dashboard</span> Dasbor Utama
+                      <span className="material-symbols-outlined text-sm text-slate-500" aria-hidden="true">dashboard</span> Dasbor Utama
                     </Link>
                     <Link href={getProfileUrl()} className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-700 hover:bg-slate-50 transition-colors border-b border-slate-100">
-                      <span className="material-symbols-outlined text-sm text-slate-500">person</span> Pengaturan Profil
+                      <span className="material-symbols-outlined text-sm text-slate-500" aria-hidden="true">person</span> Pengaturan Profil
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-red-600 hover:bg-red-50 transition-colors text-left"
                     >
-                      <span className="material-symbols-outlined text-sm text-red-600">logout</span> Keluar Sesi
+                      <span className="material-symbols-outlined text-sm text-red-600" aria-hidden="true">logout</span> Keluar Sesi
                     </button>
                   </div>
                 )}
@@ -120,6 +121,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
               <div className="hidden md:block">
                 <button
                   onClick={onOpenAuthModal}
+                  aria-label="Masuk ke portal SIGAP"
                   className="bg-primary text-white rounded-lg px-5 py-2 text-xs font-semibold uppercase tracking-wider transition-all hover:bg-primary/95 shadow-sm cursor-pointer"
                 >
                   Masuk Portal
@@ -130,10 +132,11 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
             {/* Mobile Menu Toggle */}
             <button
               onClick={toggleMobileMenu}
-              className="md:hidden text-primary flex items-center justify-center"
+              className="md:hidden text-primary flex items-center justify-center p-2 rounded-lg"
               aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
             >
-              <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
+              <span className="material-symbols-outlined" aria-hidden="true">{mobileMenuOpen ? 'close' : 'menu'}</span>
             </button>
           </div>
         </div>
@@ -143,10 +146,10 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
           <div className="md:hidden border-t border-slate-200 bg-white px-6 py-4 space-y-3 shadow-md max-h-[calc(100vh-80px)] overflow-y-auto">
             {!isDashboard && (
               <>
-                <a href="#info-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Kegunaan</a>
-                <a href="#alur-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Cara Melapor</a>
-                <a href="#proses-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">SOP Kerja</a>
-                <a href="#suara-warga-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Suara Warga</a>
+                <a href="/#info-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Kegunaan</a>
+                <a href="/#alur-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Cara Melapor</a>
+                <a href="/#proses-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">SOP Kerja</a>
+                <a href="/#suara-warga-section" onClick={closeMobileMenu} className="block text-xs font-bold uppercase tracking-wider text-primary py-1 transition-colors hover:underline">Suara Warga</a>
               </>
             )}
 
@@ -158,23 +161,24 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
                 </div>
                 <div className="grid grid-cols-2 gap-2 mt-2">
                   <Link href={getDashboardUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold uppercase tracking-wider text-primary py-2 transition shadow-sm">
-                    <span className="material-symbols-outlined text-xs text-primary">dashboard</span> Dasbor
+                    <span className="material-symbols-outlined text-xs text-primary" aria-hidden="true">dashboard</span> Dasbor
                   </Link>
                   <Link href={getProfileUrl()} onClick={closeMobileMenu} className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold uppercase tracking-wider text-primary py-2 transition shadow-sm">
-                    <span className="material-symbols-outlined text-xs text-primary">person</span> Profil
+                    <span className="material-symbols-outlined text-xs text-primary" aria-hidden="true">person</span> Profil
                   </Link>
                 </div>
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold uppercase tracking-wider py-2.5 transition rounded-lg border border-red-200"
                 >
-                  <span className="material-symbols-outlined text-xs text-red-600">logout</span> Keluar Sesi
+                  <span className="material-symbols-outlined text-xs text-red-600" aria-hidden="true">logout</span> Keluar Sesi
                 </button>
               </div>
             ) : (
               <div className="pt-2">
                 <button
                   onClick={() => { closeMobileMenu(); onOpenAuthModal?.(); }}
+                  aria-label="Masuk ke portal SIGAP"
                   className="w-full bg-primary text-white font-bold text-xs py-3 transition text-center uppercase tracking-wider cursor-pointer rounded-lg shadow-sm"
                 >
                   Masuk Portal
