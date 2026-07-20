@@ -76,10 +76,10 @@ export default function LandingPage() {
           </div>
           <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-5">
             <div className="animate-marquee flex items-center">
-              {/* First set of logos (accessible set) */}
-              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0">
+              {/* Set 1 — visible/accessible */}
+              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8">
                 {partnerLogos.map((logo, idx) => (
-                  <img 
+                  <img
                     key={`set1-${idx}`}
                     src={logo.src}
                     alt={logo.alt}
@@ -88,11 +88,35 @@ export default function LandingPage() {
                   />
                 ))}
               </div>
-              {/* Second set of logos (decorative clone set for seamless CSS loop) */}
-              <div className="flex items-center gap-12 md:gap-16 pr-12 md:pr-16 shrink-0" aria-hidden="true">
+              {/* Set 2 — decorative clone */}
+              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8" aria-hidden="true">
                 {partnerLogos.map((logo, idx) => (
-                  <img 
+                  <img
                     key={`set2-${idx}`}
+                    src={logo.src}
+                    alt=""
+                    loading="lazy"
+                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
+                  />
+                ))}
+              </div>
+              {/* Set 3 — extra clone to fill wide viewports */}
+              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8" aria-hidden="true">
+                {partnerLogos.map((logo, idx) => (
+                  <img
+                    key={`set3-${idx}`}
+                    src={logo.src}
+                    alt=""
+                    loading="lazy"
+                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
+                  />
+                ))}
+              </div>
+              {/* Set 4 — extra clone to fill wide viewports */}
+              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8" aria-hidden="true">
+                {partnerLogos.map((logo, idx) => (
+                  <img
+                    key={`set4-${idx}`}
                     src={logo.src}
                     alt=""
                     loading="lazy"
