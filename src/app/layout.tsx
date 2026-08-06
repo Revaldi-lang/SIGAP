@@ -24,6 +24,11 @@ export const metadata: Metadata = {
   },
   description: "Portal Resmi Pelayanan Pengaduan & Aspirasi Infrastruktur Daerah Terintegrasi",
   metadataBase: new URL("https://sigap-liard.vercel.app"),
+  icons: {
+    icon: "/assets/images/sigap.png",
+    shortcut: "/assets/images/sigap.png",
+    apple: "/assets/images/sigap.png",
+  },
   openGraph: {
     title: "SIGAP - Sistem Informasi Gerak Aduan Publik",
     description: "Portal Resmi Pelayanan Pengaduan & Aspirasi Infrastruktur Daerah Terintegrasi",
