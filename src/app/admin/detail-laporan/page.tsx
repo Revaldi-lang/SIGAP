@@ -3,12 +3,12 @@
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
+import lazy from 'next/dynamic';
 import AuthGuard from '@/components/AuthGuard';
 import Sidebar from '@/components/Sidebar';
 import { useApp } from '@/context/AppContext';
 
-const MapDetailView = dynamic(() => import('@/components/MapDetailView'), { ssr: false });
+const MapDetailView = lazy(() => import('@/components/MapDetailView'), { ssr: false });
 
 function DetailContent({ reportId }: { reportId: string }) {
   const { laporan, updateStatusLaporan } = useApp();
@@ -79,7 +79,7 @@ function DetailContent({ reportId }: { reportId: string }) {
       case 'Rendah':
         return 'bg-slate-50 text-slate-600 border-slate-200';
       case 'Sedang':
-        return 'bg-blue-50 text-blue-600 border-blue-200';
+        return 'bg-accent-tint text-accent-strong border-accent/20';
       case 'Tinggi':
         return 'bg-red-50 text-red-600 border-red-200';
       default:
@@ -294,4 +294,4 @@ export default function DetailLaporanAdmin() {
     </Suspense>
   );
 }
-export const dynamicType = 'force-dynamic';
+export const dynamic = 'force-dynamic';

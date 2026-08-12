@@ -64,8 +64,8 @@ export default function RegisterWarga() {
 
   if (loading || currentUser) {
     return (
-      <div className="min-h-screen bg-[#FEFDF8] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#001360] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[#f6f5f2] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#0c0f12] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -96,23 +96,23 @@ export default function RegisterWarga() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nama Lengkap</label>
+              <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Nama Lengkap</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">person</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm">person</span>
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   placeholder="Budi Santoso"
-                  className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">NIK (KTP)</label>
+              <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">NIK (KTP)</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">badge</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm">badge</span>
                 <input
                   type="text"
                   required
@@ -120,60 +120,60 @@ export default function RegisterWarga() {
                   value={identitas}
                   onChange={e => setIdentitas(e.target.value.replace(/D/g, ''))}
                   placeholder="3573xxxxxxxxxxxx"
-                  className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition font-mono tracking-wider"
+                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition font-mono tracking-wider"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
+            <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Alamat Email</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">mail</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm">mail</span>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="budi.santoso@gmail.com"
-                className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi</label>
+              <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Kata Sandi</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">lock</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm">lock</span>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="********"
-                  className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 text-[#807667] hover:text-[#1C1B18] transition eye-icon-wrapper"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-[#5c6268] hover:text-[#0f172a] transition eye-icon-wrapper"
                 >
                   <span className="material-symbols-outlined text-sm">{showPassword ? 'visibility_off' : 'visibility'}</span>
                 </button>
               </div>
             </div>
             <div>
-              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Konfirmasi Sandi</label>
+              <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Konfirmasi Sandi</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm">verified_user</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm">verified_user</span>
                 <input
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="********"
-                  className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
                 />
               </div>
             </div>
@@ -184,25 +184,25 @@ export default function RegisterWarga() {
               type="checkbox"
               required
               id="agree"
-              className="rounded border-[#D3C5B1] text-[#001360] focus:ring-[#001360] h-4 w-4 mt-0.5 cursor-pointer"
+              className="rounded border-[#e4e2dc] text-[#0c0f12] focus:ring-accent h-4 w-4 mt-0.5 cursor-pointer"
             />
-            <label htmlFor="agree" className="ml-2 text-[10px] text-[#4E4639] cursor-pointer select-none leading-normal font-medium">
-              Saya menyatakan bahwa data yang saya masukkan adalah benar dan siap mematuhi <a href="#" onClick={(e) => { e.preventDefault(); alert('Ketentuan Penggunaan Platform SIGAP'); }} className="text-[#001360] font-bold hover:underline">Syarat &amp; Ketentuan</a> penggunaan platform SIGAP.
+            <label htmlFor="agree" className="ml-2 text-[10px] text-[#5c6268] cursor-pointer select-none leading-normal font-medium">
+              Saya menyatakan bahwa data yang saya masukkan adalah benar dan siap mematuhi <a href="#" onClick={(e) => { e.preventDefault(); alert('Ketentuan Penggunaan Platform SIGAP'); }} className="text-[#0c0f12] font-bold hover:underline">Syarat &amp; Ketentuan</a> penggunaan platform SIGAP.
             </label>
           </div>
 
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full bg-[#001360] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
+              className="w-full bg-[#0c0f12] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
             >
               <span className="material-symbols-outlined text-sm">person_add</span> Buat Akun Baru
             </button>
           </div>
         </form>
 
-        <div className="text-center mt-6 pt-4 border-t border-[#D3C5B1]/50 text-xs text-[#4E4639]">
-          Sudah memiliki akun? <Link href="/login-masyarakat" className="text-[#001360] font-bold hover:underline">Masuk di sini</Link>
+        <div className="text-center mt-6 pt-4 border-t border-[#e4e2dc]/50 text-xs text-[#5c6268]">
+          Sudah memiliki akun? <Link href="/login-masyarakat" className="text-[#0c0f12] font-bold hover:underline">Masuk di sini</Link>
         </div>
       </div>
     </div>

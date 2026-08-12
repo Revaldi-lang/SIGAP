@@ -26,7 +26,7 @@ export default function DashboardPelapor() {
       case 'jalan':
         return {
           icon: 'road',
-          wrapperClass: 'bg-blue-50 text-blue-600 border-blue-200',
+          wrapperClass: 'bg-accent-tint text-accent-strong border-accent/20',
         };
       case 'penerangan':
         return {
@@ -93,21 +93,21 @@ export default function DashboardPelapor() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
+                className="md:hidden p-2 text-[#0c0f12] hover:bg-[#0c0f12]/5 rounded-lg flex items-center justify-center shrink-0"
               >
                 <span className="material-symbols-outlined">menu</span>
               </button>
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-[#001360]">
+                <h1 className="text-xl sm:text-2xl font-bold text-[#0c0f12]">
                   Selamat Datang, {currentUser?.username || 'Pak Budi'}
                 </h1>
-                <p className="text-xs text-[#4E4639] mt-0.5">
+                <p className="text-xs text-[#5c6268] mt-0.5">
                   Pantau status laporan dan permohonan layanan publik Anda di sini.
                 </p>
               </div>
             </div>
             <div className="self-start sm:self-auto pl-11 sm:pl-0">
-              <span className="inline-block text-[10px] font-bold text-[#001360] tracking-widest uppercase bg-[#001360]/10 px-3 py-1.5 rounded border border-[#001360]/10 whitespace-nowrap">
+              <span className="inline-block text-[10px] font-bold text-[#0c0f12] tracking-widest uppercase bg-[#0c0f12]/10 px-3 py-1.5 rounded border border-[#0c0f12]/10 whitespace-nowrap">
                 {total} Aduan Aktif
               </span>
             </div>
@@ -118,25 +118,25 @@ export default function DashboardPelapor() {
             {/* Total Card */}
             <div className="col-span-12 md:col-span-4 legacy-card p-6 flex flex-col justify-between rounded-xl">
               <div>
-                <h2 className="text-[10px] font-bold uppercase tracking-widest text-[#4E4639] mb-2">Total Laporan</h2>
-                <p className="text-4xl font-extrabold text-[#001360] font-display">{total}</p>
+                <h2 className="text-[10px] font-bold uppercase tracking-widest text-[#5c6268] mb-2">Total Laporan</h2>
+                <p className="text-4xl font-extrabold text-[#0c0f12] font-display">{total}</p>
               </div>
             </div>
 
             {/* Split Stats */}
             <div className="col-span-12 md:col-span-8 grid grid-cols-3 gap-4">
               <div className="legacy-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Ditinjau</p>
-                <p className="text-2xl font-bold text-[#001360]">{baru}</p>
-                <span className="mt-2 inline-block h-1 w-6 bg-[#001360]/20 rounded-full"></span>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-[#5c6268] mb-1">Ditinjau</p>
+                <p className="text-2xl font-bold text-[#0c0f12]">{baru}</p>
+                <span className="mt-2 inline-block h-1 w-6 bg-[#0c0f12]/20 rounded-full"></span>
               </div>
               <div className="legacy-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Diproses</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-[#5c6268] mb-1">Diproses</p>
                 <p className="text-2xl font-bold text-amber-500">{proses}</p>
                 <span className="mt-2 inline-block h-1 w-6 bg-amber-500/20 rounded-full"></span>
               </div>
               <div className="legacy-card rounded-xl p-4 flex flex-col items-center justify-center text-center">
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#4E4639] mb-1">Selesai</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-[#5c6268] mb-1">Selesai</p>
                 <p className="text-2xl font-bold text-emerald-600">{selesai}</p>
                 <span className="mt-2 inline-block h-1 w-6 bg-emerald-600/20 rounded-full"></span>
               </div>
@@ -146,20 +146,20 @@ export default function DashboardPelapor() {
           {/* Recent Activity Section */}
           <section>
             <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#001360]">Riwayat Laporan</h2>
-              <p className="text-xs text-[#4E4639] mt-0.5">Daftar laporan aduan infrastruktur yang Anda ajukan.</p>
+              <h2 className="text-lg font-bold text-[#0c0f12]">Riwayat Laporan</h2>
+              <p className="text-xs text-[#5c6268] mt-0.5">Daftar laporan aduan infrastruktur yang Anda ajukan.</p>
             </div>
 
             {/* List Container */}
             <div className="space-y-4">
               {myReports.length === 0 ? (
-                <div className="text-center py-16 border border-dashed border-[#D3C5B1] rounded-xl bg-[#F6F3EC]/30">
-                  <span className="material-symbols-outlined text-4xl text-[#807667] mb-2">folder_open</span>
-                  <p className="text-sm font-bold text-[#1C1B18]">Belum Ada Aduan</p>
-                  <p className="text-xs text-[#4E4639] mt-1 mb-4">Anda belum mengirimkan laporan aduan infrastruktur.</p>
+                <div className="text-center py-16 border border-dashed border-[#e4e2dc] rounded-xl bg-[#f6f5f2]/30">
+                  <span className="material-symbols-outlined text-4xl text-[#5c6268] mb-2">folder_open</span>
+                  <p className="text-sm font-bold text-[#0f172a]">Belum Ada Aduan</p>
+                  <p className="text-xs text-[#5c6268] mt-1 mb-4">Anda belum mengirimkan laporan aduan infrastruktur.</p>
                   <Link
                     href="/buat-laporan"
-                    className="inline-flex items-center gap-1.5 bg-[#001360] text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer"
+                    className="inline-flex items-center gap-1.5 bg-[#0c0f12] text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-xs">add_circle</span> Buat Aduan Baru
                   </Link>
@@ -179,24 +179,24 @@ export default function DashboardPelapor() {
                         </div>
                         <div>
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[9px] font-mono font-bold text-[#807667]">#{aduan.id}</span>
-                            <span className="bg-[#001360]/10 text-[#001360] text-[9px] px-2 py-0.5 rounded-full font-bold border border-[#001360]/10 uppercase tracking-wider">
+                            <span className="text-[9px] font-mono font-bold text-[#5c6268]">#{aduan.id}</span>
+                            <span className="bg-[#0c0f12]/10 text-[#0c0f12] text-[9px] px-2 py-0.5 rounded-full font-bold border border-[#0c0f12]/10 uppercase tracking-wider">
                               {aduan.kategoriLabel}
                             </span>
-                            <span className="text-[#807667] text-[10px]"><span className="mx-1 text-[#D3C5B1]">|</span> {aduan.waktu}</span>
+                            <span className="text-[#5c6268] text-[10px]"><span className="mx-1 text-[#e4e2dc]">|</span> {aduan.waktu}</span>
                           </div>
-                          <h4 className="font-bold text-[#1C1B18] text-sm mt-1.5 leading-snug">{aduan.lokasi}</h4>
-                          <p className="text-[#4E4639] text-xs mt-1 max-w-xl leading-relaxed">{aduan.deskripsi}</p>
+                          <h4 className="font-bold text-[#0f172a] text-sm mt-1.5 leading-snug">{aduan.lokasi}</h4>
+                          <p className="text-[#5c6268] text-xs mt-1 max-w-xl leading-relaxed">{aduan.deskripsi}</p>
                         </div>
                       </div>
 
-                      <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 border-t sm:border-t-0 border-[#D3C5B1]/30 pt-3 sm:pt-0 shrink-0">
+                      <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 border-t sm:border-t-0 border-[#e4e2dc]/30 pt-3 sm:pt-0 shrink-0">
                         <span className={`inline-flex items-center gap-1.5 ${stat.badgeClass} px-3 py-1 rounded-full text-[9px] font-bold border uppercase tracking-wider`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${stat.dotClass}`}></span> {stat.label}
                         </span>
                         <Link
                           href={`/detail-laporan-pelapor?id=${aduan.id}`}
-                          className="bg-[#FEFDF8] hover:bg-[#001360] text-[#001360] hover:text-white border border-[#D3C5B1] hover:border-[#001360] px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 shadow-sm"
+                          className="bg-[#f6f5f2] hover:bg-[#0c0f12] text-[#0c0f12] hover:text-white border border-[#e4e2dc] hover:border-[#0c0f12] px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 shadow-sm"
                         >
                           Tinjau Log <span className="material-symbols-outlined text-[10px]">arrow_right_alt</span>
                         </Link>

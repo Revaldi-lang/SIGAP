@@ -75,7 +75,7 @@ function DetailContent() {
       case 'Rendah':
         return 'bg-slate-50 text-slate-600 border-slate-200';
       case 'Sedang':
-        return 'bg-blue-50 text-blue-600 border-blue-200';
+        return 'bg-accent-tint text-accent-strong border-accent/20';
       case 'Tinggi':
         return 'bg-red-50 text-red-600 border-red-200';
       default:

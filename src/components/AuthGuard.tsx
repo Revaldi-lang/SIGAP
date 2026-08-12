@@ -37,9 +37,9 @@ export default function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
 
   if (loading || !currentUser) {
     return (
-      <div className="min-h-screen bg-[#FEFDF8] flex flex-col items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#001360] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-sm font-semibold mt-4 text-[#4E4639]">Menyelaraskan data sesi...</p>
+      <div className="min-h-screen bg-[#f6f5f2] flex flex-col items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#0c0f12] border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-sm font-semibold mt-4 text-[#5c6268]">Menyelaraskan data sesi...</p>
       </div>
     );
   }

@@ -333,4 +333,4 @@ export default function AdminManajemenUser() {
     </AuthGuard>
   );
 }
-export const dynamicType = 'force-dynamic';
+export const dynamic = 'force-dynamic';

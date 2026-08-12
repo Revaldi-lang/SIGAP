@@ -175,14 +175,14 @@ function PengaturanProfilForm() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#001360] hover:bg-[#001360]/5 rounded-lg flex items-center justify-center shrink-0"
+              className="md:hidden p-2 text-[#0c0f12] hover:bg-[#0c0f12]/5 rounded-lg flex items-center justify-center shrink-0"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#001360] mb-1">Pengaturan Profil</h1>
-              <p className="text-xs text-[#4E4639]">Kelola data diri, foto profil, dan keamanan sandi login Anda.</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#0c0f12] mb-1">Pengaturan Profil</h1>
+              <p className="text-xs text-[#5c6268]">Kelola data diri, foto profil, dan keamanan sandi login Anda.</p>
             </div>
           </div>
         </header>
@@ -197,7 +197,7 @@ function PengaturanProfilForm() {
                 className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md"
               />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-[#001360] text-white font-bold flex items-center justify-center text-xl border-2 border-white shadow-md select-none">
+              <div className="w-20 h-20 rounded-full bg-[#0c0f12] text-white font-bold flex items-center justify-center text-xl border-2 border-white shadow-md select-none">
                 {nama ? nama.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase() : 'A'}
               </div>
             )}
@@ -220,8 +220,8 @@ function PengaturanProfilForm() {
             />
           </div>
           <div className="text-center sm:text-left flex-grow">
-            <h3 className="text-base font-bold text-[#1C1B18]">Foto Profil Anda</h3>
-            <p className="text-xs text-[#4E4639] mt-1">
+            <h3 className="text-base font-bold text-[#0f172a]">Foto Profil Anda</h3>
+            <p className="text-xs text-[#5c6268] mt-1">
               {uploading ? 'Sedang mengunggah foto...' : 'Disarankan format PNG/JPG rasio 1:1 maks 2MB.'}
             </p>
             <div className="mt-3 flex flex-wrap justify-center sm:justify-start gap-2">
@@ -229,7 +229,7 @@ function PengaturanProfilForm() {
                 type="button"
                 onClick={() => document.getElementById('upload-avatar')?.click()}
                 disabled={uploading}
-                className="bg-[#001360] text-white text-[10px] font-bold py-2 px-4 rounded-lg hover:opacity-90 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[#0c0f12] text-white text-[10px] font-bold py-2 px-4 rounded-lg hover:opacity-90 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {uploading ? 'Mengunggah...' : 'Ganti Foto'}
               </button>
@@ -237,7 +237,7 @@ function PengaturanProfilForm() {
                 type="button"
                 onClick={() => setFoto('')}
                 disabled={uploading || !foto}
-                className="bg-[#F6F3EC] border border-[#D3C5B1] hover:bg-white text-[#4E4639] text-[10px] font-bold py-2 px-4 rounded-lg transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="bg-[#f6f5f2] border border-[#e4e2dc] hover:bg-white text-[#5c6268] text-[10px] font-bold py-2 px-4 rounded-lg transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Hapus
               </button>
@@ -246,13 +246,13 @@ function PengaturanProfilForm() {
         </div>
 
         {/* Tab Selector Header */}
-        <div className="border-b border-[#D3C5B1] flex gap-6 mb-6">
+        <div className="border-b border-[#e4e2dc] flex gap-6 mb-6">
           <button
             onClick={() => setActiveTab('umum')}
             className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'umum'
-                ? 'border-[#001360] text-[#001360]'
-                : 'border-transparent text-[#4E4639] hover:text-[#1C1B18]'
+                ? 'border-[#0c0f12] text-[#0c0f12]'
+                : 'border-transparent text-[#5c6268] hover:text-[#0f172a]'
             )}
           >
             <span className="material-symbols-outlined text-sm">badge</span> Informasi Umum
@@ -261,8 +261,8 @@ function PengaturanProfilForm() {
             onClick={() => setActiveTab('keamanan')}
             className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'keamanan'
-                ? 'border-[#001360] text-[#001360]'
-                : 'border-transparent text-[#4E4639] hover:text-[#1C1B18]'
+                ? 'border-[#0c0f12] text-[#0c0f12]'
+                : 'border-transparent text-[#5c6268] hover:text-[#0f172a]'
             )}
           >
             <span className="material-symbols-outlined text-sm">lock</span> Keamanan Akun
@@ -271,45 +271,45 @@ function PengaturanProfilForm() {
 
         {/* Panel Informasi Umum */}
         {activeTab === 'umum' && (
-          <div className="bg-white border border-[#D3C5B1] rounded-2xl p-6 shadow-sm">
+          <div className="bg-white border border-[#e4e2dc] rounded-2xl p-6 shadow-sm">
             <form onSubmit={handleSaveUmum} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nama Lengkap</label>
+                  <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Nama Lengkap</label>
                   <input
                     type="text"
                     required
                     value={nama}
                     onChange={e => setNama(e.target.value)}
                     placeholder="Masukkan nama lengkap..."
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
+                  <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Alamat Email</label>
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Contoh: admin@pemda.go.id"
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Nomor Telepon Kerja</label>
+                  <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Nomor Telepon Kerja</label>
                   <input
                     type="text"
                     value={telepon}
                     onChange={e => setTelepon(e.target.value)}
                     placeholder="Masukkan nomor telepon kerja..."
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">NIP Pegawai</label>
+                  <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">NIP Pegawai</label>
                   <input
                     type="text"
                     value={currentUser?.identitas || ''}
@@ -321,29 +321,29 @@ function PengaturanProfilForm() {
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Instansi / Satuan Kerja</label>
+                <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Instansi / Satuan Kerja</label>
                 <input
                   type="text"
                   value={currentUser?.role === 'Petugas PUPR' ? 'Dinas Pekerjaan Umum dan Penataan Ruang (PUPR)' : currentUser?.role === 'Administrator' ? 'Administrator Sistem SIGAP' : currentUser?.role || ''}
                   disabled
-                  className="w-full px-3 py-2 bg-[#F6F3EC] border border-[#D3C5B1] rounded-lg text-[#807667] cursor-not-allowed text-xs"
+                  className="w-full px-3 py-2 bg-[#f6f5f2] border border-[#e4e2dc] rounded-lg text-[#5c6268] cursor-not-allowed text-xs"
                   title="Instansi ditentukan berdasarkan peran akun Anda"
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Instansi / Kantor</label>
+                <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Alamat Instansi / Kantor</label>
                 <textarea
                   rows={3}
                   value={alamat}
                   onChange={e => setAlamat(e.target.value)}
                   placeholder="Masukkan alamat kantor atau instansi..."
-                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18] resize-none"
+                  className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] resize-none"
                 />
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
+              <div className="flex justify-end pt-4 border-t border-[#e4e2dc]/50">
                 <button
                   type="submit"
-                  className="bg-[#001360] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
+                  className="bg-[#0c0f12] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">save</span> Simpan Perubahan
                 </button>
@@ -354,47 +354,47 @@ function PengaturanProfilForm() {
 
         {/* Panel Keamanan */}
         {activeTab === 'keamanan' && (
-          <div className="bg-white border border-[#D3C5B1] rounded-2xl p-6 shadow-sm">
+          <div className="bg-white border border-[#e4e2dc] rounded-2xl p-6 shadow-sm">
             <form onSubmit={handleSaveSandi} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi Sekarang</label>
+                <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Kata Sandi Sekarang</label>
                 <input
                   type="password"
                   required
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
                   placeholder="Masukkan kata sandi saat ini..."
-                  className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                  className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Kata Sandi Baru</label>
+                  <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Kata Sandi Baru</label>
                   <input
                     type="password"
                     required
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     placeholder="Minimal 8 karakter..."
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Konfirmasi Kata Sandi Baru</label>
+                  <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Konfirmasi Kata Sandi Baru</label>
                   <input
                     type="password"
                     required
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Ulangi kata sandi baru..."
-                    className="w-full px-3 py-2 bg-white border border-[#D3C5B1] rounded-lg focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none text-xs text-[#1C1B18]"
+                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#D3C5B1]/50">
+              <div className="flex justify-end pt-4 border-t border-[#e4e2dc]/50">
                 <button
                   type="submit"
-                  className="bg-[#001360] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
+                  className="bg-[#0c0f12] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">key</span> Perbarui Kata Sandi
                 </button>

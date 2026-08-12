@@ -78,46 +78,46 @@ export default function LoginMasyarakat() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider mb-2">Alamat Email</label>
+            <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Alamat Email</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm" aria-hidden="true">mail</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm" aria-hidden="true">mail</span>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="budi.santoso@gmail.com"
-                className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
               />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-[10px] font-bold text-[#4E4639] uppercase tracking-wider">Kata Sandi</label>
+              <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider">Kata Sandi</label>
               <a
                 href="#"
                 onClick={(e) => { e.preventDefault(); alert('Fitur pemulihan sandi masyarakat sedang disinkronkan.'); }}
-                className="text-[10px] font-bold text-[#001360] hover:underline"
+                className="text-[10px] font-bold text-[#0c0f12] hover:underline"
               >
                 Lupa Sandi?
               </a>
             </div>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#807667] text-sm" aria-hidden="true">lock</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#5c6268] text-sm" aria-hidden="true">lock</span>
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="********"
-                className="w-full bg-white border border-[#D3C5B1] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#1C1B18] focus:ring-2 focus:ring-[#001360] focus:border-transparent outline-none transition"
+                className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-[#807667] hover:text-[#1C1B18] transition eye-icon-wrapper p-2"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-[#5c6268] hover:text-[#0f172a] transition eye-icon-wrapper p-2"
               >
                 <span className="material-symbols-outlined text-sm" aria-hidden="true">{showPassword ? 'visibility_off' : 'visibility'}</span>
               </button>
@@ -128,9 +128,9 @@ export default function LoginMasyarakat() {
             <input
               type="checkbox"
               id="remember"
-              className="rounded border-[#D3C5B1] text-[#001360] focus:ring-[#001360] h-4 w-4 cursor-pointer"
+              className="rounded border-[#e4e2dc] text-[#0c0f12] focus:ring-accent h-4 w-4 cursor-pointer"
             />
-            <label htmlFor="remember" className="ml-2 text-[10px] text-[#4E4639] cursor-pointer select-none font-medium">
+            <label htmlFor="remember" className="ml-2 text-[10px] text-[#5c6268] cursor-pointer select-none font-medium">
               Ingat sesi masuk saya di perangkat ini
             </label>
           </div>
@@ -138,23 +138,23 @@ export default function LoginMasyarakat() {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full bg-[#001360] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
+              className="w-full bg-[#0c0f12] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
             >
               Masuk Sekarang <span className="material-symbols-outlined text-sm" aria-hidden="true">login</span>
             </button>
           </div>
 
           <div className="relative flex py-2 items-center">
-            <div className="flex-grow border-t border-[#D3C5B1]/50"></div>
-            <span className="flex-shrink mx-4 text-[10px] text-[#4E4639] font-semibold uppercase">atau</span>
-            <div className="flex-grow border-t border-[#D3C5B1]/50"></div>
+            <div className="flex-grow border-t border-[#e4e2dc]/50"></div>
+            <span className="flex-shrink mx-4 text-[10px] text-[#5c6268] font-semibold uppercase">atau</span>
+            <div className="flex-grow border-t border-[#e4e2dc]/50"></div>
           </div>
 
           <div>
             <button
               type="button"
               onClick={loginGoogle}
-              className="w-full bg-white border border-[#D3C5B1] text-[#1C1B18] hover:bg-slate-50 font-bold py-2.5 px-4 rounded-lg text-xs transition flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-sm"
+              className="w-full bg-white border border-[#e4e2dc] text-[#0f172a] hover:bg-slate-50 font-bold py-2.5 px-4 rounded-lg text-xs transition flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-sm"
             >
               <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" className="w-4 h-4 object-contain" alt="Google Logo" />
               Masuk dengan Google
@@ -162,12 +162,12 @@ export default function LoginMasyarakat() {
           </div>
         </form>
 
-        <div className="space-y-3 mt-6 pt-4 border-t border-[#D3C5B1]/50 text-center text-xs">
-          <div className="text-[#4E4639] text-[11px]">
-            Belum memiliki akun? <Link href="/register" className="text-[#001360] font-bold hover:underline">Daftar di sini</Link>
+        <div className="space-y-3 mt-6 pt-4 border-t border-[#e4e2dc]/50 text-center text-xs">
+          <div className="text-[#5c6268] text-[11px]">
+            Belum memiliki akun? <Link href="/register" className="text-[#0c0f12] font-bold hover:underline">Daftar di sini</Link>
           </div>
           <div>
-            <Link href="/" className="text-[#4E4639] hover:text-[#001360] transition flex items-center justify-center gap-1 font-semibold text-[11px]">
+            <Link href="/" className="text-[#5c6268] hover:text-[#0c0f12] transition flex items-center justify-center gap-1 font-semibold text-[11px]">
               <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_back</span> Kembali ke Halaman Utama
             </Link>
           </div>

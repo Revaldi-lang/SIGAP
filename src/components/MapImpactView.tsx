@@ -79,11 +79,11 @@ export default function MapImpactView({ laporan, statusFilters, detailUrlPrefix 
 
       const popupHtml = `
         <div style="font-family: sans-serif; padding: 4px; min-width: 140px;">
-          <p style="margin: 0; font-size: 9px; font-weight: bold; color: #807667;">#${aduan.id}</p>
-          <h4 style="margin: 2px 0; font-size: 11px; font-weight: bold; color: #1c1b18;">${aduan.kategoriLabel}</h4>
-          <p style="margin: 4px 0; font-size: 9px; color: #4e4639; line-height: 1.3;">${aduan.lokasi}</p>
+          <p style="margin: 0; font-size: 9px; font-weight: bold; color: #5c6268;">#${aduan.id}</p>
+          <h4 style="margin: 2px 0; font-size: 11px; font-weight: bold; color: #0f172a;">${aduan.kategoriLabel}</h4>
+          <p style="margin: 4px 0; font-size: 9px; color: #5c6268; line-height: 1.3;">${aduan.lokasi}</p>
           <div style="margin-top: 8px;">
-            <a href="${detailUrlPrefix}?id=${aduan.id}" style="display: block; text-align: center; background-color: #001360; color: white; padding: 5px 10px; border-radius: 6px; font-size: 9px; font-weight: bold; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">Tinjau Detail</a>
+            <a href="${detailUrlPrefix}?id=${aduan.id}" style="display: block; text-align: center; background-color: #0c0f12; color: white; padding: 5px 10px; border-radius: 6px; font-size: 9px; font-weight: bold; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">Tinjau Detail</a>
           </div>
         </div>
       `;
