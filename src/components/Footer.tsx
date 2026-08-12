@@ -1,18 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import FooterLogo from '@/components/Logo';
 
 export default function Footer() {
   return (
     <footer className="bg-primary text-white border-t border-white/10 pt-16 pb-8 px-6 md:px-16 w-full mt-auto">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
         <div className="md:col-span-6 space-y-4">
-          <Link href="/" className="flex items-center gap-3 min-h-[44px] w-max">
-            <div className="bg-white/10 p-2 border border-white/10 rounded-md flex items-center justify-center w-11 h-11 shrink-0">
-              <img alt="SIGAP Logo" className="h-7 w-auto object-contain" src="/assets/images/sigap.png" />
-            </div>
-            <span className="font-display font-bold text-white text-2xl tracking-tight uppercase">SIGAP</span>
-          </Link>
+          <FooterLogo variant="dark" />
           <p className="text-xs text-white/70 leading-relaxed max-w-md">
             Sistem Informasi Gerak Aduan Publik, layanan pelaporan dan pengaduan kerusakan
             infrastruktur yang terintegrasi langsung dengan instansi teknis pemerintah daerah,

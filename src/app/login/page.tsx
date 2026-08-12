@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { useApp } from '@/context/AppContext';
 
 export default function AdminLogin() {
@@ -57,12 +58,7 @@ export default function AdminLogin() {
           <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-accent opacity-20 blur-3xl"></div>
 
           <div className="relative z-10 space-y-6">
-            <Link href="/" className="flex items-center gap-3 w-max min-h-[44px]">
-              <div className="bg-white/10 p-2 rounded-2xl border border-white/10 flex items-center justify-center w-14 h-14 shrink-0">
-                <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-10 w-auto object-contain" />
-              </div>
-              <span className="font-extrabold text-2xl text-white tracking-tight uppercase">SIGAP</span>
-            </Link>
+            <Logo variant="dark" size="md" />
             <h2 className="text-xl font-bold text-slate-100">Sistem Informasi Gerak Aduan Publik</h2>
             <p className="text-slate-300 leading-relaxed text-xs">
               Portal admin terpadu untuk memantau, memverifikasi, dan mengelola pelaporan kerusakan infrastruktur

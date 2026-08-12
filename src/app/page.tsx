@@ -144,7 +144,7 @@ export default function LandingPage() {
         {/* ============ ALUR PELAPORAN — asymmetric sticky + work-order rail ============ */}
         <section id="alur-section" className="py-24 md:py-32 px-6 md:px-20 bg-surface border-b border-outline">
           <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+            <div className="lg:col-span-5">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-6">Alur Pelaporan</p>
               <h2 className="font-display font-bold text-4xl md:text-5xl text-on-surface tracking-tight leading-[1.05] mb-6">
                 Dari foto di HP, sampai jalan mulus.

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { useApp } from '@/context/AppContext';
 
 export default function LoginMasyarakat() {
@@ -63,9 +64,7 @@ export default function LoginMasyarakat() {
     <div className="page-shell flex items-center justify-center min-h-screen p-4">
       <div className="w-full max-w-md legacy-card rounded-[1.25rem] p-4 sm:p-8 animate-fade-in">
         <div className="text-center mb-6">
-          <Link href="/" className="inline-flex bg-primary/5 p-2 rounded-2xl mb-3 w-14 h-14 items-center justify-center border border-primary/10 hover:bg-primary/10 transition shrink-0">
-            <img src="/assets/images/sigap.png" alt="Logo SIGAP" className="h-10 w-auto object-contain" />
-          </Link>
+          <Logo size="md" showWordmark={false} className="mx-auto mb-3 justify-center" />
           <h2 className="text-2xl font-bold text-slate-800 tracking-tight">Portal Warga / Pelapor</h2>
           <p className="text-xs text-slate-500 mt-1">Silakan masuk untuk membuat aduan atau melacak proses laporan Anda.</p>
         </div>

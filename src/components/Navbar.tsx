@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { LayoutDashboard, LogOut, Menu, User, X } from 'lucide-react';
+import NavbarLogo from '@/components/Logo';
 import { useApp } from '@/context/AppContext';
 
 interface NavbarProps {
@@ -65,12 +66,7 @@ export default function Navbar({ onOpenAuthModal, isDashboard = false }: NavbarP
       <nav className="bg-white border-b border-outline fixed top-0 left-0 w-full z-50 transition-all duration-200 h-20 shadow-sm">
         <div className="flex justify-between items-center w-full px-6 md:px-16 max-w-[1280px] mx-auto h-full">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 min-h-[44px]">
-            <div className="bg-primary/5 p-2 rounded-md border border-outline flex items-center justify-center w-11 h-11 shrink-0">
-              <img alt="SIGAP Logo" className="h-7 w-auto object-contain" src="/assets/images/sigap.png" />
-            </div>
-            <span className="font-display font-bold text-2xl text-primary tracking-tight uppercase">SIGAP</span>
-          </Link>
+          <NavbarLogo />
 
           {/* Desktop Links */}
           {!isDashboard && (
