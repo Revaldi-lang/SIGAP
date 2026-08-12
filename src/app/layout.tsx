@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Public_Sans, Archivo } from "next/font/google";
 import { AppProvider } from "@/context/AppContext";
 import SessionTimeoutHandler from "@/components/SessionTimeoutHandler";
 import "./globals.css";
 
-const inter = Inter({
+// Public Sans: built by the US Digital Service for civic/government interfaces.
+// Archivo: mechanical display family with a width axis — reads like a city
+// signage / road-works system without sliding into generic "gov blue".
+const publicSans = Public_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-space",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -59,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}>
+    <html lang="id" className={`${publicSans.variable} ${archivo.variable} h-full antialiased`}>
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
       </head>

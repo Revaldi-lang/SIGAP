@@ -1,33 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9f9f9;
-  --foreground: #1a1c1c;
+  --background: #f6f5f2;
+  --foreground: #0f172a;
 }
 
 @theme {
-  --color-primary: #1d4ed8;
+  /* Asphalt-ink primary: the "night road" base. Buttons/actions stay near-black
+     so white text always clears WCAG AA — and the look says "operational". */
+  --color-primary: #0c0f12;
   --color-on-primary: #ffffff;
+  /* Traffic-orange accent: the road-cone / safety-vest color. Spent sparingly
+     on the signature moments (kickers, numbers, status, hi-vis CTA). */
+  --color-accent: #c2410c;
+  --color-accent-strong: #9a3406;
+  --color-accent-bright: #ff7a1a;
+  --color-accent-tint: #ffe8d9;
   --color-secondary: #f1f5f9;
   --color-on-secondary: #0f172a;
-  --color-primary-container: #dbeafe;
-  --color-on-primary-container: #1e40af;
-  --color-surface: #ffffff;
+  --color-primary-container: #ffe8d9;
+  --color-on-primary-container: #7a2a04;
+  --color-surface: #f6f5f2;
   --color-on-surface: #0f172a;
-  --color-surface-container-low: #f8fafc;
-  --color-surface-container: #f1f5f9;
-  --color-surface-container-high: #e2e8f0;
+  --color-surface-container-low: #faf9f7;
+  --color-surface-container: #efeeea;
+  --color-surface-container-high: #e4e2dc;
   --color-surface-container-lowest: #ffffff;
-  --color-on-surface-variant: #64748b;
-  --color-outline: #e2e8f0;
-  --color-outline-variant: #cbd5e1;
+  --color-on-surface-variant: #5c6268;
+  --color-outline: #e4e2dc;
+  --color-outline-variant: #cfccc4;
   --color-error: #ef4444;
   --color-on-error: #ffffff;
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-display), var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-body: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-space: var(--font-space), var(--font-sans), ui-sans-serif, sans-serif;
+  --font-space: var(--font-display), var(--font-sans), ui-sans-serif, sans-serif;
 
   --spacing-border-width-main: 1px;
   --spacing-border-width-sub: 1px;
@@ -59,7 +67,7 @@
   }
 
   body {
-    background: #f8fafc;
+    background: #f6f5f2;
     color: #0f172a;
     font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
@@ -96,7 +104,7 @@
 }
 
 .page-shell {
-  background-color: #f8fafc;
+  background-color: #f6f5f2;
   min-height: 100vh;
 }
 
@@ -165,8 +173,8 @@
 }
 
 .legacy-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.16);
 }
 
 .legacy-btn-primary {
@@ -233,8 +241,8 @@
   input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
   select:focus,
   textarea:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.16);
   }
 
   button {
@@ -242,15 +250,15 @@
   }
 }
 
-.bg-surface { background-color: #f8fafc; }
+.bg-surface { background-color: #f6f5f2; }
 .bg-surface-container-lowest { background-color: #FFFFFF; }
-.bg-surface-container-low { background-color: #f1f5f9; }
-.bg-surface-container { background-color: #e2e8f0; }
-.bg-surface-container-high { background-color: #cbd5e1; }
-.border-outline-variant { border-color: #e2e8f0; }
-.border-outline { border-color: #94a3b8; }
+.bg-surface-container-low { background-color: #faf9f7; }
+.bg-surface-container { background-color: #efeeea; }
+.bg-surface-container-high { background-color: #e4e2dc; }
+.border-outline-variant { border-color: #cfccc4; }
+.border-outline { border-color: #e4e2dc; }
 .text-on-surface { color: #0f172a; }
-.text-on-surface-variant { color: #475569; }
+.text-on-surface-variant { color: #5c6268; }
 .text-primary { color: var(--color-primary); }
 .text-primary-container { color: var(--color-on-primary-container); }
 
@@ -305,9 +313,9 @@
   align-items: center;
   gap: 0.35rem;
   border-radius: 9999px;
-  border: 1px solid rgba(0, 19, 96, 0.1);
-  background: rgba(0, 19, 96, 0.08);
-  color: #001360;
+  border: 1px solid rgba(194, 65, 12, 0.25);
+  background: rgba(194, 65, 12, 0.08);
+  color: #9a3406;
   padding: 0.4rem 0.7rem;
   font-size: 0.7rem;
   font-weight: 700;
@@ -349,7 +357,7 @@ img, video, canvas, svg {
 
 /* 2. CUSTOM SELECTION */
 ::selection {
-  background-color: #1d4ed8;
+  background-color: #c2410c;
   color: #ffffff;
 }
 
@@ -481,4 +489,23 @@ img, video, canvas, svg {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* 8. HERO PHOTO SLOW PULL-BACK (single orchestrated entrance, not scroll-triggered) */
+@keyframes slowZoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-slow-zoom {
+  animation: slowZoom 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 9. WORK-ORDER SIGNATURE STRIP: dashed progress connector */
+.order-connector {
+  border-top: 1px dashed rgba(255, 255, 255, 0.22);
 }

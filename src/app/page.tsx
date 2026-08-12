@@ -2,6 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import {
+  ArrowRight,
+  CheckCircle2,
+  Map,
+  Radar,
+  ShieldCheck,
+  Users,
+} from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ModalAkses from '@/components/ModalAkses';
@@ -16,10 +24,23 @@ export default function LandingPage() {
   const totalSelesai = loading ? '15,310' : laporan.filter(l => l.status === 'selesai').length.toLocaleString();
 
   const partnerLogos = [
-    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta', className: 'h-20 w-40 object-contain' },
-    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR', className: 'h-20 w-20 object-contain' },
-    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan', className: 'h-20 w-20 object-contain' },
-    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup', className: 'h-20 w-20 object-contain' }
+    { src: '/assets/images/logo_dki.png', alt: 'Pemprov DKI Jakarta', className: 'h-16 w-36 object-contain' },
+    { src: '/assets/images/logo_pupr.png', alt: 'Kementerian PUPR', className: 'h-16 w-16 object-contain' },
+    { src: '/assets/images/logo_dishub.png', alt: 'Dinas Perhubungan', className: 'h-16 w-16 object-contain' },
+    { src: '/assets/images/logo_dlh.png', alt: 'Dinas Lingkungan Hidup', className: 'h-16 w-16 object-contain' }
+  ];
+
+  const workOrder = [
+    { n: '01', title: 'Lapor', desc: 'Unggah foto kerusakan dan sematkan lokasi di peta. Aduan masuk dan langsung mendapat nomor tiket.', chip: '± 3 menit' },
+    { n: '02', title: 'Survei', desc: 'Dinas teknis memvalidasi kelayakan laporan dan men-disposisi ke unit penanganan yang tepat.', chip: '≤ 12 jam' },
+    { n: '03', title: 'Kerjakan', desc: 'Tim lapangan PUPR, Dishub, dan DLH menjadwalkan serta mengerjakan perbaikan di lokasi.', chip: '24–48 jam' },
+    { n: '04', title: 'Selesai', desc: 'Hasil perbaikan diverifikasi, ditayangkan, dan pelapor bisa memberi penilaian.', chip: 'transparan' }
+  ];
+
+  const services = [
+    { icon: Radar, title: 'Pemantauan Aduan', desc: 'Pantau status tiketmu kapan saja — diterima, disurvei, dikerjakan, atau selesai.', href: '/dashboard-pelapor', cta: 'Buka dasbor pelapor' },
+    { icon: Map, title: 'Peta Kerusakan Kota', desc: 'Kerusakan yang sudah dilaporkan tampil di peta terbuka, jadi seluruh warga ikut mengawasi.', href: '/peta-pelapor', cta: 'Lihat peta kota' },
+    { icon: CheckCircle2, title: 'Akuntabilitas Publik', desc: 'Setiap tiket tayang dengan siapa yang menangani dan kapan dinyatakan selesai.', href: '/progress', cta: 'Cek akuntabilitas' }
   ];
 
   return (
@@ -31,414 +52,364 @@ export default function LandingPage() {
       <ModalAkses isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="relative min-h-[700px] flex items-center border-b border-slate-100 overflow-hidden bg-slate-950">
-          {/* Full-width Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-85 z-0"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1600')" }}
-          ></div>
-          
-          {/* Gradient Overlay: Solid black on the left, fading out to transparent on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10"></div>
-          
-          {/* Content Area */}
-          <div className="relative z-20 w-full px-6 md:px-20 max-w-[1280px] mx-auto py-24 flex flex-col md:flex-row items-center">
-            <div className="max-w-2xl text-white animate-slide-in">
-              <h1 className="font-extrabold text-4xl sm:text-5xl md:text-6xl mb-6 leading-tight tracking-tight text-white">
-                <span className="text-primary">SIGAP</span> Hadir <br/>Untuk Warga
-              </h1>
-              <p className="font-normal text-sm md:text-base max-w-lg mb-10 text-slate-300 leading-relaxed">
-                Layanan pengaduan dan aspirasi kerusakan jalan, lampu jalan, drainase, dan fasilitas umum terintegrasi langsung dengan dinas teknis daerah.
+        {/* ============ HERO — real repair photo, asphalt drench ============ */}
+        <section className="relative min-h-[720px] flex items-center overflow-hidden bg-primary border-b border-white/5">
+          <div className="absolute inset-0 z-0">
+            <img
+              src="/assets/images/perbaikan_jalan.png"
+              alt="Petugas memperbaiki jalan di Jakarta setelah aduan warga diproses"
+              className="w-full h-full object-cover opacity-45 animate-slow-zoom"
+            />
+          </div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-primary via-primary/80 to-primary/30"></div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary via-transparent to-primary/40"></div>
+
+          <div className="relative z-20 w-full px-6 md:px-20 max-w-[1280px] mx-auto py-28">
+            <div className="max-w-3xl animate-fade-in">
+              <p className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-300 mb-8">
+                <span className="inline-block w-2 h-2 bg-accent-bright" aria-hidden="true"></span>
+                Portal Aduan Publik · DKI Jakarta
               </p>
+              <h1 className="font-display font-bold text-[42px] sm:text-6xl md:text-7xl leading-[1.02] tracking-tight text-white [font-stretch:110%] mb-8">
+                Setiap kerusakan kota
+                <br />
+                <span className="text-accent-bright">punya nomor tiket.</span>
+              </h1>
+              <p className="font-normal text-base md:text-lg max-w-xl mb-10 text-slate-300 leading-relaxed">
+                Lapor jalan, lampu, dan drainase yang rusak dengan foto dan lokasi.
+                Aduan diteruskan ke dinas teknis — dan kamu bisa pantau sampai tuntas.
+              </p>
+
               <div className="flex flex-wrap gap-4">
                 <button
                   onClick={() => setAuthModalOpen(true)}
-                  className="bg-primary text-white hover:bg-primary/90 px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all shadow-md active:scale-[0.98] cursor-pointer"
+                  className="group inline-flex items-center gap-2.5 bg-accent text-white hover:bg-accent-strong px-7 py-4 rounded-md font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-accent/20"
                 >
                   Mulai Lapor
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </button>
                 <Link
                   href="/progress"
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all text-center inline-block"
+                  className="inline-flex items-center gap-2.5 bg-white/5 hover:bg-white/10 text-white border border-white/20 px-7 py-4 rounded-md font-semibold text-sm transition-all"
                 >
-                  Lihat Progress
+                  Lihat progres aduan
                 </Link>
               </div>
+
+              {/* Signature: live work-order strip with real SPM times */}
+              <div className="mt-16 hidden sm:grid grid-cols-4 border border-white/10 bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden">
+                {workOrder.map((step, i) => (
+                  <div key={step.n} className="relative px-5 py-4">
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <span className="font-display text-lg font-bold text-accent-bright">{step.n}</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-white">{step.title}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 font-semibold tracking-wide">{step.chip}</p>
+                    {i < workOrder.length - 1 && (
+                      <ArrowRight
+                        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 text-white/25 bg-transparent"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Partnership & Dinas Logos Marquee Section */}
-        <section className="py-8 bg-slate-50 border-b border-slate-100 overflow-hidden">
-          <div className="max-w-6xl mx-auto px-6 mb-6 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Instansi Penyelenggara &amp; Teknis Terkait</p>
-          </div>
-          <div className="relative w-full overflow-hidden flex items-center bg-white border-y border-slate-100 py-5">
+        {/* ============ PARTNER LOGOS MARQUEE ============ */}
+        <section className="py-10 bg-white border-b border-outline overflow-hidden">
+          <p className="max-w-6xl mx-auto px-6 mb-6 text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
+            Dioperasikan bersama instansi penyelenggara &amp; teknis
+          </p>
+          <div className="relative w-full overflow-hidden flex items-center">
             <div className="animate-marquee flex items-center">
-              {/* Set 1 — visible/accessible */}
-              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8">
-                {partnerLogos.map((logo, idx) => (
-                  <img
-                    key={`set1-${idx}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                    loading="lazy"
-                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
-                  />
-                ))}
-              </div>
-              {/* Set 2 — decorative clone */}
-              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8" aria-hidden="true">
-                {partnerLogos.map((logo, idx) => (
-                  <img
-                    key={`set2-${idx}`}
-                    src={logo.src}
-                    alt=""
-                    loading="lazy"
-                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
-                  />
-                ))}
-              </div>
-              {/* Set 3 — extra clone to fill wide viewports */}
-              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8" aria-hidden="true">
-                {partnerLogos.map((logo, idx) => (
-                  <img
-                    key={`set3-${idx}`}
-                    src={logo.src}
-                    alt=""
-                    loading="lazy"
-                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
-                  />
-                ))}
-              </div>
-              {/* Set 4 — extra clone to fill wide viewports */}
-              <div className="flex items-center gap-12 md:gap-16 shrink-0 px-6 md:px-8" aria-hidden="true">
-                {partnerLogos.map((logo, idx) => (
-                  <img
-                    key={`set4-${idx}`}
-                    src={logo.src}
-                    alt=""
-                    loading="lazy"
-                    className={`${logo.className} opacity-70 hover:opacity-100 transition-opacity duration-300`}
-                  />
-                ))}
-              </div>
+              {[0, 1, 2, 3].map((setIdx) => (
+                <div key={`set-${setIdx}`} className="flex items-center gap-12 md:gap-20 shrink-0 px-6 md:px-10" aria-hidden={setIdx > 0}>
+                  {partnerLogos.map((logo, idx) => (
+                    <img
+                      key={`${setIdx}-${idx}`}
+                      src={logo.src}
+                      alt={setIdx === 0 ? logo.alt : ''}
+                      loading="lazy"
+                      className={`${logo.className} opacity-60 hover:opacity-100 transition-opacity duration-300`}
+                    />
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Section: Alur Pelaporan */}
-        <section id="alur-section" className="py-24 px-12 md:px-20 bg-white border-b border-slate-100">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="font-bold text-3xl md:text-4xl text-slate-900 tracking-tight">Alur Pelaporan</h2>
-              <div className="h-1 w-20 bg-primary/20 mx-auto rounded-full mt-3"></div>
-            </div>
-            
-            <div className="flex flex-col lg:flex-row items-center gap-16">
-              <div className="w-full lg:w-1/2">
-                <div 
-                  className="w-full aspect-video border border-slate-200 shadow-md rounded-2xl bg-cover bg-center"
-                  style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800')" }}
-                ></div>
+        {/* ============ ALUR PELAPORAN — asymmetric sticky + work-order rail ============ */}
+        <section id="alur-section" className="py-24 md:py-32 px-6 md:px-20 bg-surface border-b border-outline">
+          <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-6">Alur Pelaporan</p>
+              <h2 className="font-display font-bold text-4xl md:text-5xl text-on-surface tracking-tight leading-[1.05] mb-6">
+                Dari foto di HP, sampai jalan mulus.
+              </h2>
+              <p className="text-sm text-on-surface-variant leading-relaxed mb-10 max-w-md">
+                Empat tahap dengan standar waktu nyata, bukan janji. Setiap tiket tercatat
+                dari sistem — kamu tidak perlu mengejar-ngejar status.
+              </p>
+              <div className="mb-10">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Total laporan masuk</p>
+                <p className="font-display font-bold text-6xl text-on-surface tracking-tight">{totalAduan}</p>
               </div>
-              
-              <div className="w-full lg:w-1/2 space-y-8">
-                <div className="flex items-center gap-6 bg-white border border-slate-200/60 shadow-sm rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary font-bold text-lg rounded-xl flex items-center justify-center">1</div>
-                  <div>
-                    <h3 className="font-semibold text-sm text-slate-800 tracking-wide mb-1">Unggah Laporan</h3>
-                    <p className="text-xs text-slate-500 font-normal leading-relaxed">Laporkan kerusakan infrastruktur dengan foto dan lokasi melalui aplikasi SIGAP.</p>
+              <Link
+                href="/buat-laporan"
+                className="group inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 px-6 py-3.5 rounded-md font-semibold text-sm transition-all"
+              >
+                Buat laporan sekarang
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="lg:col-span-7">
+              {workOrder.map((step) => (
+                <div key={step.n} className="group grid sm:grid-cols-12 gap-3 sm:gap-6 border-t border-outline py-9 first:border-t-0">
+                  <div className="sm:col-span-2">
+                    <span className="font-display font-bold text-4xl text-accent transition-colors group-hover:text-accent-strong">{step.n}</span>
+                  </div>
+                  <div className="sm:col-span-7">
+                    <h3 className="font-display font-semibold text-xl text-on-surface mb-2">{step.title}</h3>
+                    <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">{step.desc}</p>
+                  </div>
+                  <div className="sm:col-span-3 sm:text-right">
+                    <span className="inline-block bg-accent-tint text-accent-strong text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded">
+                      {step.chip}
+                    </span>
                   </div>
                 </div>
-                
-                <div className="flex items-center gap-6 bg-white border border-slate-200/60 shadow-sm rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary font-bold text-lg rounded-xl flex items-center justify-center">2</div>
-                  <div>
-                    <h3 className="font-semibold text-sm text-slate-800 tracking-wide mb-1">Tindakan Instansi</h3>
-                    <p className="text-xs text-slate-500 font-normal leading-relaxed">Tim teknis memverifikasi laporan dan menjadwalkan perbaikan di lapangan.</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============ LAYANAN — image + divide-y service rows ============ */}
+        <section id="info-section" className="py-24 md:py-32 px-6 md:px-20 bg-white border-b border-outline">
+          <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <div className="relative overflow-hidden rounded-xl border border-outline bg-surface-container-low">
+                <img
+                  src="/assets/images/kategori_jalan.jpg"
+                  alt="Dokumentasi kerusakan jalan yang dilaporkan warga melalui SIGAP"
+                  loading="lazy"
+                  className="aspect-square w-full object-cover"
+                />
+                <span className="absolute top-0 left-0 bg-accent text-white text-[10px] font-bold uppercase tracking-wider px-3.5 py-2 rounded-br-lg">
+                  Foto aduan · kerusakan jalan
+                </span>
+              </div>
+              <p className="mt-4 text-xs text-on-surface-variant leading-relaxed">
+                Setiap foto aduan ditayangkan supaya proses perbaikan bisa diawasi bersama.
+              </p>
+            </div>
+
+            <div className="lg:col-span-7 order-1 lg:order-2 flex flex-col justify-center">
+              <h2 className="font-display font-bold text-4xl md:text-5xl text-on-surface tracking-tight leading-[1.05] mb-12">
+                Bukan cuma formulir aduan —<br className="hidden sm:block" /> ini catatan kerja kota.
+              </h2>
+
+              <div>
+                {services.map((s) => (
+                  <div key={s.title} className="group border-t border-outline py-7 first:border-t-0 last:border-b">
+                    <div className="flex items-start gap-5">
+                      <div className="w-11 h-11 shrink-0 bg-accent-tint text-accent-strong rounded-md flex items-center justify-center">
+                        <s.icon className="w-5 h-5" aria-hidden="true" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-display font-semibold text-lg text-on-surface mb-1.5">{s.title}</h3>
+                        <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed max-w-lg">{s.desc}</p>
+                      </div>
+                      <Link
+                        href={s.href}
+                        className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-accent hover:text-accent-strong pt-1 transition-colors"
+                      >
+                        {s.cta}
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-center gap-6 bg-white border border-slate-200/60 shadow-sm rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary font-bold text-lg rounded-xl flex items-center justify-center">3</div>
-                  <div>
-                    <h3 className="font-semibold text-sm text-slate-800 tracking-wide mb-1">Hasil Perbaikan</h3>
-                    <p className="text-xs text-slate-500 font-normal leading-relaxed">Pantau hasil akhir perbaikan secara transparan untuk kenyamanan warga.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Pelayanan Publik Terpadu Section */}
-        <section id="info-section" className="py-24 px-12 md:px-20 bg-slate-50/50 border-b border-slate-100">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="font-bold text-3xl md:text-4xl text-slate-900 tracking-tight">Pelayanan Publik Terpadu</h2>
-              <div className="h-1 w-20 bg-primary/20 mx-auto rounded-full mt-3"></div>
+        {/* ============ SOP & BUKTI LAPANGAN ============ */}
+        <section id="proses-section" className="py-24 md:py-32 px-6 md:px-20 bg-surface border-b border-outline">
+          <div className="max-w-[1280px] mx-auto">
+            <div className="max-w-2xl mb-16">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-6">SOP &amp; Standar Waktu</p>
+              <h2 className="font-display font-bold text-4xl md:text-5xl text-on-surface tracking-tight leading-[1.05]">
+                Standar waktu yang bisa kamu pegang.
+              </h2>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Card 1 */}
-              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
-                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">visibility</span>
-                </div>
-                <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Pemantauan Aduan</h3>
-                <p className="text-xs text-slate-500 font-normal leading-relaxed">Pantau status perbaikan infrastruktur yang Anda laporkan secara langsung.</p>
-                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/dashboard-pelapor">Tracking Laporan <span className="material-symbols-outlined text-[10px]" aria-hidden="true">arrow_right_alt</span></Link>
-              </div>
-              
-              {/* Card 2 */}
-              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
-                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">map</span>
-                </div>
-                <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Database Infrastruktur</h3>
-                <p className="text-xs text-slate-500 font-normal leading-relaxed">Data kerusakan terintegrasi untuk perencanaan perbaikan kota yang lebih efisien.</p>
-                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/peta-pelapor">Lihat Peta Kota <span className="material-symbols-outlined text-[10px]" aria-hidden="true">arrow_right_alt</span></Link>
-              </div>
-              
-              {/* Card 3 */}
-              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-md hover:border-slate-200">
-                <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">verified</span>
-                </div>
-                <h3 className="font-semibold text-sm text-slate-800 tracking-wide">Aduan Transparan</h3>
-                <p className="text-xs text-slate-500 font-normal leading-relaxed">Setiap laporan diverifikasi dan dipublikasikan untuk menjamin akuntabilitas perbaikan.</p>
-                <Link className="mt-auto font-semibold text-xs uppercase tracking-wider text-primary hover:text-primary/80 inline-flex items-center gap-1" href="/progress">Cek Akuntabilitas <span className="material-symbols-outlined text-[10px]" aria-hidden="true">arrow_right_alt</span></Link>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Empat Langkah Mudah Section */}
-        <section id="alur-section-steps" className="py-24 px-6 md:px-20 border-b border-slate-100 bg-white">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-start">
-            <div className="md:w-1/3 md:sticky md:top-32">
-              <h2 className="font-bold text-3xl md:text-4xl text-slate-900 tracking-tight mb-6">Empat Langkah Mudah</h2>
-              <p className="text-sm font-normal text-slate-500 mb-8 leading-relaxed">Partisipasi aktif Anda sangat berarti untuk percepatan perbaikan infrastruktur publik.</p>
-              <div 
-                className="w-full aspect-[4/3] border border-slate-200 shadow-md rounded-2xl bg-cover bg-center"
-                style={{ backgroundImage: "url('/assets/images/perbaikan_jalan.png')" }}
-              ></div>
-            </div>
-            
-            <div className="md:w-2/3 space-y-8">
-              {/* Step 1 */}
-              <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">1</div>
-                <div className="pt-1">
-                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Registrasi Akun</h4>
-                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Lakukan pendaftaran singkat untuk melacak aduan dan mendapatkan update perbaikan.</p>
-                </div>
-              </div>
-              {/* Step 2 */}
-              <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">2</div>
-                <div className="pt-1">
-                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Kirim Aduan Kerusakan</h4>
-                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Unggah foto bukti kerusakan dan sematkan lokasi yang akurat di peta SIGAP.</p>
-                </div>
-              </div>
-              {/* Step 3 */}
-              <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">3</div>
-                <div className="pt-1">
-                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Verifikasi &amp; Audit Lapangan</h4>
-                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Petugas kami akan mendatangi lokasi untuk memvalidasi kerusakan dan tingkat urgensi.</p>
-                </div>
-              </div>
-              {/* Step 4 */}
-              <div className="flex gap-6 items-start group">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 text-primary font-semibold text-base rounded-full flex items-center justify-center transition-transform group-hover:scale-105">4</div>
-                <div className="pt-1">
-                  <h4 className="font-semibold text-sm text-slate-800 tracking-wide mb-2">Update Status &amp; Selesai</h4>
-                  <p className="text-xs text-slate-500 font-normal leading-relaxed">Dapatkan notifikasi progres perbaikan hingga infrastruktur kembali berfungsi dengan baik.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SOP & Alur Kerja Section */}
-        <section id="proses-section" className="py-24 px-6 md:px-20 bg-white border-b border-slate-100">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="font-bold text-3xl md:text-4xl text-center text-slate-900 tracking-tight mb-16">SOP &amp; Alur Kerja</h2>
-            <div className="flex flex-col lg:flex-row gap-12">
-              {/* Left: Protokol Perbaikan */}
-              <div className="lg:w-2/5 bg-primary rounded-2xl shadow-lg p-10 flex flex-col text-white">
-                <div className="mb-8">
-                  <span className="material-symbols-outlined text-6xl text-white" aria-hidden="true">assignment_turned_in</span>
-                </div>
-                <h3 className="font-bold text-2xl md:text-3xl mb-6 leading-tight font-display">Protokol Perbaikan (SPM)</h3>
-                <p className="text-sm mb-8 opacity-90 leading-relaxed font-medium">Setiap laporan dipproses berdasarkan Standar Pelayanan Minimal (SPM) Kota untuk memastikan penanganan yang cepat dan struktur yang kokoh:</p>
-                <ul className="space-y-6">
+            <div className="grid lg:grid-cols-12 gap-12">
+              {/* SPM panel — ink drench */}
+              <div className="lg:col-span-5 bg-primary text-white rounded-lg p-8 md:p-10 flex flex-col">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-bright mb-4">SPM · DKI Jakarta</p>
+                <h3 className="font-display font-bold text-2xl md:text-3xl leading-tight mb-8">
+                  Standar Pelayanan Minimal
+                </h3>
+                <ul className="space-y-7">
                   <li className="flex items-start gap-4">
-                    <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
-                    <p className="text-xs font-semibold"><strong className="text-white uppercase">Respon Awal:</strong> Validasi berkas kelayakan &amp; kategori aduan maksimal 3 jam.</p>
+                    <div className="mt-1.5 w-2 h-2 bg-accent-bright shrink-0" aria-hidden="true"></div>
+                    <div>
+                      <p className="font-bold text-sm mb-1">Respon awal · <span className="text-accent-bright">≤ 3 jam</span></p>
+                      <p className="text-xs text-white/70 leading-relaxed">Validasi berkas dan kategori aduan.</p>
+                    </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
-                    <p className="text-xs font-semibold"><strong className="text-white uppercase">Survei Teknis:</strong> Kunjungan lokasi oleh dinas PUPR/Dishub maksimal 12 jam.</p>
+                    <div className="mt-1.5 w-2 h-2 bg-accent-bright shrink-0" aria-hidden="true"></div>
+                    <div>
+                      <p className="font-bold text-sm mb-1">Survei teknis · <span className="text-accent-bright">≤ 12 jam</span></p>
+                      <p className="text-xs text-white/70 leading-relaxed">Kunjungan lokasi oleh PUPR, Dishub, atau DLH.</p>
+                    </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="mt-1.5 w-2 h-2 rounded-full bg-white/40 shrink-0"></div>
-                    <p className="text-xs font-semibold"><strong className="text-white uppercase">Estimasi Pekerjaan:</strong> Selesai dalam 24 - 48 jam untuk kerusakan umum.</p>
+                    <div className="mt-1.5 w-2 h-2 bg-accent-bright shrink-0" aria-hidden="true"></div>
+                    <div>
+                      <p className="font-bold text-sm mb-1">Estimasi pekerjaan · <span className="text-accent-bright">24–48 jam</span></p>
+                      <p className="text-xs text-white/70 leading-relaxed">Pengerjaan untuk kerusakan umum.</p>
+                    </div>
                   </li>
                 </ul>
               </div>
 
-              {/* Right: Siklus Laporan */}
-              <div className="lg:w-3/5">
-                <div className="mb-10 flex items-center gap-4 text-primary">
-                  <span className="material-symbols-outlined text-4xl" aria-hidden="true">sync_alt</span>
-                  <h3 className="font-semibold text-xl uppercase font-display">Siklus Laporan Pelanggan</h3>
+              {/* Before/after + trust */}
+              <div className="lg:col-span-7 flex flex-col gap-10">
+                <div>
+                  <div className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-3 sm:gap-4">
+                    <div className="overflow-hidden rounded-lg border border-outline bg-white">
+                      <img src="/assets/images/jalanrusak.jpg" alt="Kondisi jalan berlubang sebelum diperbaiki" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-4 py-3">Sebelum</p>
+                    </div>
+                    <div className="flex items-center">
+                      <ArrowRight className="w-5 h-5 text-accent" aria-hidden="true" />
+                    </div>
+                    <div className="overflow-hidden rounded-lg border border-outline bg-white">
+                      <img src="/assets/images/perbaikan_jalan.png" alt="Proses perbaikan jalan di lokasi yang sama" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-accent px-4 py-3">Dikerjakan</p>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-xs text-on-surface-variant leading-relaxed">
+                    Dokumentasi pengerjaan dikembalikan ke pelapor sebagai bukti, bukan sekadar status teks.
+                  </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Step 1 */}
-                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
-                      <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "0% 0%" }} />
-                    </div>
-                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">01. LAPOR</h4>
-                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Warga menyematkan foto &amp; lokasi GPS kerusakan.</p>
-                  </div>
-                  {/* Step 2 */}
-                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
-                      <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "100% 0%" }} />
-                    </div>
-                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">02. VERIFIKASI</h4>
-                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Admin memvalidasi dan disposisi laporan ke dinas terkait.</p>
-                  </div>
-                  {/* Step 3 */}
-                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
-                      <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "0% 100%" }} />
-                    </div>
-                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">03. PENANGANAN</h4>
-                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Tim lapangan PUPR/Dishub datang melakukan perbaikan.</p>
-                  </div>
-                  {/* Step 4 */}
-                  <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 transition-all hover:shadow-md hover:border-slate-300">
-                    <div className="w-full aspect-square mb-6 overflow-hidden border border-slate-100 rounded-xl flex items-center justify-center bg-slate-50/50">
-                      <div className="w-[85%] h-[85%] bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/assets/images/sop_sprite.png')", backgroundSize: "200% 200%", backgroundPosition: "100% 100%" }} />
-                    </div>
-                    <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">04. KONTROL</h4>
-                    <p className="text-xs text-slate-500 font-semibold leading-relaxed">Laporan dipublikasikan dan dinilai langsung oleh pelapor.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Bottom Features */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16">
-              <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex items-start gap-6">
-                <div className="bg-primary/10 text-primary p-3 rounded-xl shrink-0 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-4xl text-primary" aria-hidden="true">security</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-base text-slate-800 mb-2 font-display">Standard Keamanan Data</h4>
-                  <p className="text-xs text-slate-500 font-semibold leading-relaxed">Kami melindungi privasi dan identitas pelapor sepenuhnya dengan enkripsi data SSL tingkat tinggi dan penyimpanan cloud yang aman.</p>
-                </div>
-              </div>
-              <div className="bg-slate-900 shadow-md rounded-2xl p-8 flex items-start gap-6 text-white">
-                <div className="bg-white/10 text-white p-3 rounded-xl shrink-0 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-4xl text-white" aria-hidden="true">groups</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-base text-white mb-2 font-display">Transparansi &amp; Audit Masyarakat</h4>
-                  <p className="text-xs text-white/80 font-semibold leading-relaxed">Setiap tahapan pekerjaan terdokumentasi rapi. Warga berhak memberikan umpan balik (feedback) dan penilaian performa dinas secara transparan.</p>
+                <div className="grid sm:grid-cols-2 gap-px bg-outline border border-outline rounded-lg overflow-hidden">
+                  <div className="bg-white p-7 flex flex-col gap-4">
+                    <div className="w-11 h-11 bg-accent-tint text-accent-strong rounded-md flex items-center justify-center">
+                      <ShieldCheck className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <h4 className="font-display font-semibold text-base text-on-surface">Keamanan data pelapor</h4>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">Identitas pelapor dienkripsi dan tidak dipublikasikan ke peta.</p>
+                  </div>
+                  <div className="bg-white p-7 flex flex-col gap-4">
+                    <div className="w-11 h-11 bg-accent-tint text-accent-strong rounded-md flex items-center justify-center">
+                      <Users className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <h4 className="font-display font-semibold text-base text-on-surface">Audit masyarakat terbuka</h4>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">Setiap tahap terdokumentasi; warga bisa menilai kinerja dinas.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Dampak Nyata (Stats & Testimonials) */}
-        <section id="suara-warga-section" className="py-24 px-6 md:px-20 bg-slate-900 text-white border-b border-slate-800">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
-            <div className="md:w-1/2">
-              <h2 className="font-bold text-3xl md:text-[40px] mb-12 leading-none tracking-tight font-display">Dampak Nyata Untuk Kota Kita</h2>
-              <dl className="grid grid-cols-2 gap-8" aria-label="Statistik Pencapaian SIGAP">
-                <div>
-                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">92%</dt>
-                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Aduan Tuntas</dd>
+        {/* ============ SUARA WARGA — stats + testimonials ============ */}
+        <section id="suara-warga-section" className="py-24 md:py-32 px-6 md:px-20 bg-primary text-white border-b border-white/5">
+          <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-16">
+            <div className="lg:col-span-5">
+              <h2 className="font-display font-bold text-4xl md:text-5xl leading-[1.05] tracking-tight mb-14">
+                Dampak nyata untuk kota kita.
+              </h2>
+              <dl className="grid grid-cols-2 gap-y-10 gap-x-6" aria-label="Statistik pencapaian SIGAP">
+                <div className="border-l border-white/15 pl-5">
+                  <dt className="font-display font-bold text-5xl md:text-6xl text-accent-bright mb-2">92%</dt>
+                  <dd className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Aduan tuntas</dd>
                 </div>
-                <div>
-                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">340+</dt>
-                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Mitra Perbaikan</dd>
+                <div className="border-l border-white/15 pl-5">
+                  <dt className="font-display font-bold text-5xl md:text-6xl text-accent-bright mb-2">340+</dt>
+                  <dd className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Mitra perbaikan</dd>
                 </div>
-                <div>
-                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">15mnt</dt>
-                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Respon Awal Rata-rata</dd>
+                <div className="border-l border-white/15 pl-5">
+                  <dt className="font-display font-bold text-5xl md:text-6xl text-accent-bright mb-2">15 mnt</dt>
+                  <dd className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Respon awal rata-rata</dd>
                 </div>
-                <div>
-                  <dt className="font-extrabold text-4xl md:text-5xl text-blue-400 mb-1">{totalSelesai}</dt>
-                  <dd className="font-semibold text-xs uppercase tracking-wider opacity-75">Laporan Selesai</dd>
+                <div className="border-l border-white/15 pl-5">
+                  <dt className="font-display font-bold text-5xl md:text-6xl text-accent-bright mb-2">{totalSelesai}</dt>
+                  <dd className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Laporan selesai</dd>
                 </div>
               </dl>
             </div>
-            
-            <div className="md:w-1/2 flex flex-col gap-6">
-              {/* Testimonial 1 */}
-              <div className="bg-white text-slate-800 border border-slate-200 shadow-lg rounded-2xl p-8">
-                <p className="text-base italic mb-6 leading-relaxed font-medium text-slate-600">&quot;Lubang jalan di depan rumah yang sudah berbulan-bulan rusak akhirnya diperbaiki dalam waktu 3 hari setelah saya lapor lewat SIGAP. Sangat membantu!&quot;</p>
-                <div className="flex items-center gap-4">
-                  <div 
-                    className="w-12 h-12 rounded-full border border-slate-200 bg-cover bg-center"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80')" }}
-                  ></div>
+
+            <div className="lg:col-span-7 flex flex-col gap-6">
+              <figure className="bg-white text-slate-800 border border-outline rounded-lg p-8">
+                <blockquote className="text-sm sm:text-base italic leading-relaxed text-slate-600 mb-7">
+                  &quot;Lubang jalan di depan rumah yang sudah berbulan-bulan rusak akhirnya diperbaiki
+                  dalam waktu tiga hari setelah saya lapor lewat SIGAP. Tiap tahapnya ada kabarnya.&quot;
+                </blockquote>
+                <figcaption className="flex items-center gap-4">
+                  <span className="w-11 h-11 rounded-md bg-accent-tint text-accent-strong font-bold text-sm flex items-center justify-center shrink-0">BS</span>
                   <div>
                     <p className="font-bold text-xs uppercase tracking-wider text-slate-800">Budi Santoso</p>
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Warga Jakarta Selatan</p>
                   </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 2 */}
-              <div className="bg-slate-850 text-white border border-slate-800 bg-slate-800 shadow-lg rounded-2xl p-8 md:translate-x-6">
-                <p className="text-base italic mb-6 leading-relaxed font-medium text-slate-200">&quot;Lampu jalan yang mati sering membuat kawasan kami rawan. Lewat aduan transparan di SIGAP, kami bisa memantau kapan petugas datang memperbaiki.&quot;</p>
-                <div className="flex items-center gap-4">
-                  <div 
-                    className="w-12 h-12 rounded-full border border-slate-700 bg-cover bg-center"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80')" }}
-                  ></div>
+                </figcaption>
+              </figure>
+
+              <figure className="bg-white/5 border border-white/15 text-white rounded-lg p-8 md:translate-x-6">
+                <blockquote className="text-sm sm:text-base italic leading-relaxed text-slate-200 mb-7">
+                  &quot;Lampu jalan mati membuat kawasan kami rawan. Lewat peta aduan, warga bisa
+                  memantau kapan petugas datang memperbaiki — tidak perlu menunggu diam-diam.&quot;
+                </blockquote>
+                <figcaption className="flex items-center gap-4">
+                  <span className="w-11 h-11 rounded-md bg-accent text-white font-bold text-sm flex items-center justify-center shrink-0">AW</span>
                   <div>
-                    <p className="font-bold text-xs uppercase tracking-wider">Ani Wijaya</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-wider opacity-75">Ketua RW</p>
+                    <p className="font-bold text-xs uppercase tracking-wider text-white">Ani Wijaya</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-white/60">Ketua RW, Jakarta Pusat</p>
                   </div>
-                </div>
-              </div>
+                </figcaption>
+              </figure>
             </div>
           </div>
         </section>
 
-        <section className="py-24 px-6 md:px-20 bg-slate-50/50">
-          <div className="bg-primary p-12 md:p-20 text-center rounded-3xl shadow-xl max-w-6xl mx-auto text-white">
-            <h2 className="font-bold text-3xl sm:text-5xl text-white uppercase mb-8 leading-tight tracking-tight font-display">
-              Membangun Infrastruktur <br/>
-              <span className="text-primary bg-white px-4 py-1.5 rounded-xl inline-block mt-4 shadow-sm w-fit mx-auto font-medium">Yang Lebih SIGAP</span>
+        {/* ============ CTA — full-bleed hi-vis band ============ */}
+        <section className="bg-accent text-white">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-20 py-24 text-center">
+            <p className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80 mb-8">
+              <span className="inline-block w-2 h-2 bg-white" aria-hidden="true"></span>
+              Mari bergerak bersama
+            </p>
+            <h2 className="font-display font-bold text-4xl sm:text-6xl leading-[1.05] tracking-tight mb-4">
+              Bangun lingkungan yang lebih SIGAP.
             </h2>
-            <div className="flex flex-wrap justify-center gap-6 mt-8">
+            <p className="text-sm sm:text-base text-white/80 max-w-xl mx-auto mb-12 leading-relaxed">
+              Semakin banyak warga melapor, semakin cepat kota menindaklanjuti.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="bg-white text-primary font-semibold px-8 py-4 rounded-xl text-sm uppercase transition-all hover:bg-slate-50 shadow-md cursor-pointer active:scale-95"
+                className="group inline-flex items-center gap-2.5 bg-white text-accent-strong hover:bg-slate-100 px-8 py-4 rounded-md font-bold text-sm transition-all active:scale-95 cursor-pointer"
               >
                 Mulai Lapor
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </button>
               <Link
                 href="/kontak-darurat"
-                className="bg-transparent border border-white/20 hover:border-white/40 text-white font-semibold px-8 py-4 rounded-xl text-sm uppercase transition-all cursor-pointer active:scale-95 inline-flex items-center justify-center"
+                className="inline-flex items-center gap-2.5 border border-white/40 hover:border-white/70 text-white px-8 py-4 rounded-md font-bold text-sm transition-all"
               >
-                Kontak Darurat
+                Kontak darurat 112
               </Link>
             </div>
-            <p className="mt-10 font-bold text-xs text-white opacity-60 uppercase tracking-widest">Mari bergerak bersama untuk fasilitas publik yang lebih baik</p>
           </div>
         </section>
       </main>
