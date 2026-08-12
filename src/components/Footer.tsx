@@ -14,7 +14,7 @@ export default function Footer() {
             <span className="font-display font-bold text-white text-2xl tracking-tight uppercase">SIGAP</span>
           </Link>
           <p className="text-xs text-white/70 leading-relaxed max-w-md">
-            Sistem Informasi Gerak Aduan Publik — layanan pelaporan dan pengaduan kerusakan
+            Sistem Informasi Gerak Aduan Publik, layanan pelaporan dan pengaduan kerusakan
             infrastruktur yang terintegrasi langsung dengan instansi teknis pemerintah daerah,
             untuk pelayanan publik yang transparan.
           </p>

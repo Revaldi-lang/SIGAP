@@ -269,7 +269,7 @@ export default function KontakDaruratPage() {
             )}
 
             <p className="text-center text-xs text-slate-300 mt-12 pb-4">
-              Dalam kondisi darurat, utamakan nomor nasional: <span className="font-bold text-slate-400">110</span> · <span className="font-bold text-slate-400">113</span> · <span className="font-bold text-slate-400">118</span>
+              Dalam kondisi darurat, utamakan nomor nasional: <span className="font-bold text-slate-400">110</span> <span className="font-bold text-slate-400">113</span> <span className="font-bold text-slate-400">118</span>
             </p>
           </div>
         </section>

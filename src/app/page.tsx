@@ -38,7 +38,7 @@ export default function LandingPage() {
   ];
 
   const services = [
-    { icon: Radar, title: 'Pemantauan Aduan', desc: 'Pantau status tiketmu kapan saja — diterima, disurvei, dikerjakan, atau selesai.', href: '/dashboard-pelapor', cta: 'Buka dasbor pelapor' },
+    { icon: Radar, title: 'Pemantauan Aduan', desc: 'Pantau status tiketmu kapan saja, diterima, disurvei, dikerjakan, atau selesai.', href: '/dashboard-pelapor', cta: 'Buka dasbor pelapor' },
     { icon: Map, title: 'Peta Kerusakan Kota', desc: 'Kerusakan yang sudah dilaporkan tampil di peta terbuka, jadi seluruh warga ikut mengawasi.', href: '/peta-pelapor', cta: 'Lihat peta kota' },
     { icon: CheckCircle2, title: 'Akuntabilitas Publik', desc: 'Setiap tiket tayang dengan siapa yang menangani dan kapan dinyatakan selesai.', href: '/progress', cta: 'Cek akuntabilitas' }
   ];
@@ -66,9 +66,8 @@ export default function LandingPage() {
 
           <div className="relative z-20 w-full px-6 md:px-20 max-w-[1280px] mx-auto py-28">
             <div className="max-w-3xl animate-fade-in">
-              <p className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-300 mb-8">
-                <span className="inline-block w-2 h-2 bg-accent-bright" aria-hidden="true"></span>
-                Portal Aduan Publik · DKI Jakarta
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-300 mb-8">
+                Portal Aduan Publik DKI Jakarta
               </p>
               <h1 className="font-display font-bold text-[42px] sm:text-6xl md:text-7xl leading-[1.02] tracking-tight text-white [font-stretch:110%] mb-8">
                 Setiap kerusakan kota
@@ -77,7 +76,7 @@ export default function LandingPage() {
               </h1>
               <p className="font-normal text-base md:text-lg max-w-xl mb-10 text-slate-300 leading-relaxed">
                 Lapor jalan, lampu, dan drainase yang rusak dengan foto dan lokasi.
-                Aduan diteruskan ke dinas teknis — dan kamu bisa pantau sampai tuntas.
+                Aduan diteruskan ke dinas teknis dan kamu bisa pantau sampai tuntas.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -152,7 +151,7 @@ export default function LandingPage() {
               </h2>
               <p className="text-sm text-on-surface-variant leading-relaxed mb-10 max-w-md">
                 Empat tahap dengan standar waktu nyata, bukan janji. Setiap tiket tercatat
-                dari sistem — kamu tidak perlu mengejar-ngejar status.
+                dari sistem, kamu tidak perlu mengejar-ngejar status.
               </p>
               <div className="mb-10">
                 <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Total laporan masuk</p>
@@ -200,7 +199,7 @@ export default function LandingPage() {
                   className="aspect-square w-full object-cover"
                 />
                 <span className="absolute top-0 left-0 bg-accent text-white text-[10px] font-bold uppercase tracking-wider px-3.5 py-2 rounded-br-lg">
-                  Foto aduan · kerusakan jalan
+                  Foto aduan kerusakan jalan
                 </span>
               </div>
               <p className="mt-4 text-xs text-on-surface-variant leading-relaxed">
@@ -210,7 +209,7 @@ export default function LandingPage() {
 
             <div className="lg:col-span-7 order-1 lg:order-2 flex flex-col justify-center">
               <h2 className="font-display font-bold text-4xl md:text-5xl text-on-surface tracking-tight leading-[1.05] mb-12">
-                Bukan cuma formulir aduan —<br className="hidden sm:block" /> ini catatan kerja kota.
+                Bukan cuma formulir aduan,<br className="hidden sm:block" /> ini catatan kerja kota.
               </h2>
 
               <div>
@@ -252,7 +251,7 @@ export default function LandingPage() {
             <div className="grid lg:grid-cols-12 gap-12">
               {/* SPM panel — ink drench */}
               <div className="lg:col-span-5 bg-primary text-white rounded-lg p-8 md:p-10 flex flex-col">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-bright mb-4">SPM · DKI Jakarta</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-bright mb-4">SPM DKI Jakarta</p>
                 <h3 className="font-display font-bold text-2xl md:text-3xl leading-tight mb-8">
                   Standar Pelayanan Minimal
                 </h3>
@@ -260,21 +259,21 @@ export default function LandingPage() {
                   <li className="flex items-start gap-4">
                     <div className="mt-1.5 w-2 h-2 bg-accent-bright shrink-0" aria-hidden="true"></div>
                     <div>
-                      <p className="font-bold text-sm mb-1">Respon awal · <span className="text-accent-bright">≤ 3 jam</span></p>
+                      <p className="font-bold text-sm mb-1">Respon awal <span className="text-accent-bright">≤ 3 jam</span></p>
                       <p className="text-xs text-white/70 leading-relaxed">Validasi berkas dan kategori aduan.</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1.5 w-2 h-2 bg-accent-bright shrink-0" aria-hidden="true"></div>
                     <div>
-                      <p className="font-bold text-sm mb-1">Survei teknis · <span className="text-accent-bright">≤ 12 jam</span></p>
+                      <p className="font-bold text-sm mb-1">Survei teknis <span className="text-accent-bright">≤ 12 jam</span></p>
                       <p className="text-xs text-white/70 leading-relaxed">Kunjungan lokasi oleh PUPR, Dishub, atau DLH.</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1.5 w-2 h-2 bg-accent-bright shrink-0" aria-hidden="true"></div>
                     <div>
-                      <p className="font-bold text-sm mb-1">Estimasi pekerjaan · <span className="text-accent-bright">24–48 jam</span></p>
+                      <p className="font-bold text-sm mb-1">Estimasi pekerjaan <span className="text-accent-bright">24–48 jam</span></p>
                       <p className="text-xs text-white/70 leading-relaxed">Pengerjaan untuk kerusakan umum.</p>
                     </div>
                   </li>
@@ -368,7 +367,7 @@ export default function LandingPage() {
               <figure className="bg-white/5 border border-white/15 text-white rounded-lg p-8 md:translate-x-6">
                 <blockquote className="text-sm sm:text-base italic leading-relaxed text-slate-200 mb-7">
                   &quot;Lampu jalan mati membuat kawasan kami rawan. Lewat peta aduan, warga bisa
-                  memantau kapan petugas datang memperbaiki — tidak perlu menunggu diam-diam.&quot;
+                  memantau kapan petugas datang memperbaiki, tidak perlu menunggu diam-diam.&quot;
                 </blockquote>
                 <figcaption className="flex items-center gap-4">
                   <span className="w-11 h-11 rounded-md bg-accent text-white font-bold text-sm flex items-center justify-center shrink-0">AW</span>
@@ -385,8 +384,7 @@ export default function LandingPage() {
         {/* ============ CTA — full-bleed hi-vis band ============ */}
         <section className="bg-accent text-white">
           <div className="max-w-[1280px] mx-auto px-6 md:px-20 py-24 text-center">
-            <p className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80 mb-8">
-              <span className="inline-block w-2 h-2 bg-white" aria-hidden="true"></span>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80 mb-8">
               Mari bergerak bersama
             </p>
             <h2 className="font-display font-bold text-4xl sm:text-6xl leading-[1.05] tracking-tight mb-4">
