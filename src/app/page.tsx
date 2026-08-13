@@ -53,7 +53,7 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* ============ HERO — real repair photo, asphalt drench ============ */}
-        <section className="relative min-h-[720px] flex items-center overflow-hidden bg-primary border-b border-white/5">
+        <section className="relative min-h-[720px] flex items-center overflow-hidden bg-black border-b border-white/5">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/perbaikan_jalan.png"
@@ -61,8 +61,8 @@ export default function LandingPage() {
               className="w-full h-full object-cover opacity-45 animate-slow-zoom"
             />
           </div>
-          <div className="absolute inset-0 z-10 bg-gradient-to-r from-primary via-primary/80 to-primary/30"></div>
-          <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary via-transparent to-primary/40"></div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-black via-black/80 to-black/30"></div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-black/40"></div>
 
           <div className="relative z-20 w-full px-6 md:px-20 max-w-[1280px] mx-auto py-28">
             <div className="max-w-3xl animate-fade-in">
@@ -93,25 +93,6 @@ export default function LandingPage() {
                 >
                   Lihat progres aduan
                 </Link>
-              </div>
-
-              {/* Signature: live work-order strip with real SPM times */}
-              <div className="mt-16 hidden sm:grid grid-cols-4 border border-white/10 bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden">
-                {workOrder.map((step, i) => (
-                  <div key={step.n} className="relative px-5 py-4">
-                    <div className="flex items-center gap-2.5 mb-1.5">
-                      <span className="font-display text-lg font-bold text-accent-bright">{step.n}</span>
-                      <span className="text-xs font-bold uppercase tracking-wider text-white">{step.title}</span>
-                    </div>
-                    <p className="text-[11px] text-slate-400 font-semibold tracking-wide">{step.chip}</p>
-                    {i < workOrder.length - 1 && (
-                      <ArrowRight
-                        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 text-white/25 bg-transparent"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </div>
-                ))}
               </div>
             </div>
           </div>
