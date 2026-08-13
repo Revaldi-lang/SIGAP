@@ -57,7 +57,7 @@ export default function MapDetailView({ lat, lng, kategori }: MapDetailViewProps
   return (
     <div 
       ref={containerRef} 
-      className="w-full h-60 relative z-0 border border-[#e4e2dc] rounded-xl overflow-hidden shadow-sm" 
+      className="w-full h-60 relative z-0 border border-[#e2e6ee] rounded-xl overflow-hidden shadow-sm" 
     />
   );
 }

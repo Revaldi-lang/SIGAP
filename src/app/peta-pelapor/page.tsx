@@ -33,13 +33,13 @@ export default function PetaPelapor() {
           <header className="flex items-center gap-3 mb-6 shrink-0">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#0c0f12] hover:bg-[#0c0f12]/5 rounded-lg flex items-center justify-center mr-2 shrink-0"
+              className="md:hidden p-2 text-[#022159] hover:bg-[#022159]/5 rounded-lg flex items-center justify-center mr-2 shrink-0"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#0c0f12] mb-1">Peta Sebaran Laporan Warga</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#022159] mb-1">Peta Sebaran Laporan Warga</h1>
               <p className="text-xs text-[#5c6268]">Lihat sebaran spasial lokasi aduan infrastruktur dari masyarakat luas secara real-time.</p>
             </div>
           </header>
@@ -58,7 +58,7 @@ export default function PetaPelapor() {
                     type="checkbox"
                     checked={statusFilters.includes(filter.id)}
                     onChange={() => handleFilterChange(filter.id)}
-                    className="rounded border-[#e4e2dc] text-[#0c0f12] focus:ring-accent h-4 w-4"
+                    className="rounded border-[#e2e6ee] text-[#022159] focus:ring-accent h-4 w-4"
                   />
                   <span className="inline-flex items-center gap-1.5">
                     <span className={`w-2.5 h-2.5 rounded-full ${filter.colorClass}`}></span>

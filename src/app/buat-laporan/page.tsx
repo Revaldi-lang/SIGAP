@@ -138,13 +138,13 @@ export default function BuatLaporan() {
           <header className="flex items-center gap-3 mb-12">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#0c0f12] hover:bg-[#0c0f12]/5 rounded-lg flex items-center justify-center shrink-0"
+              className="md:hidden p-2 text-[#022159] hover:bg-[#022159]/5 rounded-lg flex items-center justify-center shrink-0"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#0c0f12]">Buat Aduan Infrastruktur Baru</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#022159]">Buat Aduan Infrastruktur Baru</h1>
               <p className="text-xs text-[#5c6268] mt-0.5">Laporkan kendala kerusakan jalan, saluran air, dan fasilitas umum kota.</p>
             </div>
           </header>
@@ -154,7 +154,7 @@ export default function BuatLaporan() {
             {/* Left Column: Form Fields */}
             <div className="lg:col-span-7 space-y-6">
               {/* Category selector */}
-              <div className="bg-white border border-[#e4e2dc] p-6 rounded-2xl shadow-sm">
+              <div className="bg-white border border-[#e2e6ee] p-6 rounded-2xl shadow-sm">
                 <h2 className="text-sm font-bold text-[#0f172a] mb-4 uppercase tracking-wider">Kategori Laporan</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[
@@ -172,7 +172,7 @@ export default function BuatLaporan() {
                         onChange={() => setKategori(cat.id as 'jalan' | 'penerangan' | 'drainase' | 'fasilitas' | 'lainnya')}
                         className="peer sr-only"
                       />
-                      <div className="p-3 border border-[#e4e2dc] rounded-xl text-center peer-checked:border-[#0c0f12] peer-checked:bg-[#0c0f12]/5 group-hover:bg-[#f6f5f2] transition-all h-full flex flex-col items-center justify-center">
+                      <div className="p-3 border border-[#e2e6ee] rounded-xl text-center peer-checked:border-[#022159] peer-checked:bg-[#022159]/5 group-hover:bg-[#f4f6fb] transition-all h-full flex flex-col items-center justify-center">
                         <span className="material-symbols-outlined block mb-1 text-sm">{cat.icon}</span>
                         <span className="text-[10px] font-bold leading-tight">{cat.label}</span>
                       </div>
@@ -194,7 +194,7 @@ export default function BuatLaporan() {
                     value={lokasi}
                     onChange={e => setLokasi(e.target.value)}
                     placeholder="Contoh: Jl. Ijen No. 12 (depan gerbang Katedral)"
-                    className="w-full bg-white border border-[#e4e2dc] rounded-lg p-3 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                    className="w-full bg-white border border-[#e2e6ee] rounded-lg p-3 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   />
                 </div>
 
@@ -209,7 +209,7 @@ export default function BuatLaporan() {
                     value={deskripsi}
                     onChange={e => setDeskripsi(e.target.value)}
                     placeholder="Jelaskan detail permasalahan yang Anda temukan secara rinci..."
-                    className="w-full bg-white border border-[#e4e2dc] rounded-lg p-4 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all resize-none"
+                    className="w-full bg-white border border-[#e2e6ee] rounded-lg p-4 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all resize-none"
                   />
                 </div>
 
@@ -218,7 +218,7 @@ export default function BuatLaporan() {
                   <div className="flex gap-6">
                     {[
                       { id: 'Rendah', label: 'Normal', colorClass: 'text-[#5c6268]' },
-                      { id: 'Sedang', label: 'Penting', colorClass: 'text-[#0c0f12]' },
+                      { id: 'Sedang', label: 'Penting', colorClass: 'text-[#022159]' },
                       { id: 'Tinggi', label: 'Mendesak', colorClass: 'text-red-600 font-bold' }
                     ].map(urg => (
                       <label key={urg.id} className="flex items-center gap-2 cursor-pointer text-xs">
@@ -228,7 +228,7 @@ export default function BuatLaporan() {
                           value={urg.id}
                           checked={urgensi === urg.id}
                           onChange={() => setUrgensi(urg.id as 'Rendah' | 'Sedang' | 'Tinggi')}
-                          className="w-4 h-4 text-[#0c0f12] border-[#e4e2dc] focus:ring-accent"
+                          className="w-4 h-4 text-[#022159] border-[#e2e6ee] focus:ring-accent"
                         />
                         <span className={`font-semibold ${urg.colorClass}`}>{urg.label}</span>
                       </label>
@@ -238,12 +238,12 @@ export default function BuatLaporan() {
               </div>
 
               {/* Photo Upload Card */}
-              <div className="bg-white border border-[#e4e2dc] p-6 rounded-2xl shadow-sm">
+              <div className="bg-white border border-[#e2e6ee] p-6 rounded-2xl shadow-sm">
                 <h2 className="text-sm font-bold text-[#0f172a] mb-1">Unggah Bukti</h2>
                 <p className="text-[11px] text-[#5c6268] mb-4">Tambahkan foto visual lokasi untuk mempercepat verifikasi laporan.</p>
 
                 {foto ? (
-                  <div className="relative border border-[#e4e2dc] rounded-xl overflow-hidden max-w-sm">
+                  <div className="relative border border-[#e2e6ee] rounded-xl overflow-hidden max-w-sm">
                     <img src={foto} alt="Preview Bukti" className="w-full h-48 object-cover" />
                     <button
                       type="button"
@@ -254,7 +254,7 @@ export default function BuatLaporan() {
                     </button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-[#e4e2dc] hover:border-[#0c0f12] bg-[#f6f5f2]/30 rounded-xl p-6 text-center cursor-pointer transition relative">
+                  <div className="border-2 border-dashed border-[#e2e6ee] hover:border-[#022159] bg-[#f4f6fb]/30 rounded-xl p-6 text-center cursor-pointer transition relative">
                     <input
                       type="file"
                       id="input-foto"
@@ -264,7 +264,7 @@ export default function BuatLaporan() {
                     />
                     <div className="space-y-2">
                       <span className="material-symbols-outlined text-4xl text-[#5c6268]">cloud_upload</span>
-                      <p className="text-xs text-[#5c6268]"><span className="font-bold text-[#0c0f12]">Pilih berkas foto</span> atau tarik gambar ke sini</p>
+                      <p className="text-xs text-[#5c6268]"><span className="font-bold text-[#022159]">Pilih berkas foto</span> atau tarik gambar ke sini</p>
                       <p className="text-[10px] text-[#5c6268]">Mendukung format PNG, JPG, JPEG maks 5MB</p>
                     </div>
                   </div>
@@ -275,13 +275,13 @@ export default function BuatLaporan() {
             {/* Right Column: Location & Submit */}
             <div className="lg:col-span-5 space-y-6">
               <div className="legacy-card rounded-xl overflow-hidden flex flex-col">
-                <div className="p-6 border-b border-[#e4e2dc]/50">
+                <div className="p-6 border-b border-[#e2e6ee]/50">
                   <h2 className="text-sm font-bold text-[#0f172a] mb-1">Lokasi Kejadian</h2>
                   <p className="text-[11px] text-[#5c6268]">Ketik alamat atau klik pada peta digital di bawah ini untuk menandai titik presisi kerusakan.</p>
                 </div>
                 
                 {/* Dynamically Loaded Map */}
-                <div className="p-4 border-b border-[#e4e2dc]/50">
+                <div className="p-4 border-b border-[#e2e6ee]/50">
                   <MapSelector lat={lat} lng={lng} onChange={handleMapChange} address={lokasi} />
                 </div>
 
@@ -293,7 +293,7 @@ export default function BuatLaporan() {
                         type="text"
                         readOnly
                         value={lat.toFixed(6)}
-                        className="w-full bg-[#f6f5f2] border border-[#e4e2dc] rounded-lg px-3 py-2 text-xs font-mono text-[#5c6268] outline-none cursor-not-allowed"
+                        className="w-full bg-[#f4f6fb] border border-[#e2e6ee] rounded-lg px-3 py-2 text-xs font-mono text-[#5c6268] outline-none cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -302,7 +302,7 @@ export default function BuatLaporan() {
                         type="text"
                         readOnly
                         value={lng.toFixed(6)}
-                        className="w-full bg-[#f6f5f2] border border-[#e4e2dc] rounded-lg px-3 py-2 text-xs font-mono text-[#5c6268] outline-none cursor-not-allowed"
+                        className="w-full bg-[#f4f6fb] border border-[#e2e6ee] rounded-lg px-3 py-2 text-xs font-mono text-[#5c6268] outline-none cursor-not-allowed"
                       />
                     </div>
                   </div>
@@ -310,7 +310,7 @@ export default function BuatLaporan() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#0c0f12] text-white font-bold py-3.5 px-6 rounded-xl text-xs transition-all hover:opacity-90 flex items-center justify-center gap-2 uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-50"
+                    className="w-full bg-[#022159] text-white font-bold py-3.5 px-6 rounded-xl text-xs transition-all hover:opacity-90 flex items-center justify-center gap-2 uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>Mengirim Laporan...</>

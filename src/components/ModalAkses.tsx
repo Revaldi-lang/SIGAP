@@ -10,8 +10,8 @@ export default function ModalAkses({ isOpen, onClose }: ModalAksesProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-[#0c0f12]/75 backdrop-blur-sm z-[100] flex items-center justify-center animate-fade-in">
-      <div className="bg-white border border-[#e4e2dc] rounded-2xl shadow-2xl w-full max-w-lg p-6 sm:p-8 transform transition-transform duration-300 relative text-center mx-4">
+    <div className="fixed inset-0 bg-[#022159]/75 backdrop-blur-sm z-[100] flex items-center justify-center animate-fade-in">
+      <div className="bg-white border border-[#e2e6ee] rounded-2xl shadow-2xl w-full max-w-lg p-6 sm:p-8 transform transition-transform duration-300 relative text-center mx-4">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -31,9 +31,9 @@ export default function ModalAkses({ isOpen, onClose }: ModalAksesProps) {
           <Link
             href="/login-masyarakat"
             onClick={onClose}
-            className="flex flex-col items-center justify-center p-6 bg-[#f6f5f2] hover:bg-white border border-[#e4e2dc] hover:border-[#0c0f12] rounded-xl transition group text-center shadow-sm"
+            className="flex flex-col items-center justify-center p-6 bg-[#f4f6fb] hover:bg-white border border-[#e2e6ee] hover:border-[#022159] rounded-xl transition group text-center shadow-sm"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#0c0f12]/10 text-[#0c0f12] flex items-center justify-center text-xl mb-3.5 group-hover:bg-[#0c0f12] group-hover:text-white transition shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#022159]/10 text-[#022159] flex items-center justify-center text-xl mb-3.5 group-hover:bg-[#022159] group-hover:text-white transition shadow-sm">
               <span className="material-symbols-outlined">group</span>
             </div>
             <h4 className="font-bold text-sm text-[#0f172a]">Masyarakat / Pelapor</h4>
@@ -43,9 +43,9 @@ export default function ModalAkses({ isOpen, onClose }: ModalAksesProps) {
           <Link
             href="/login"
             onClick={onClose}
-            className="flex flex-col items-center justify-center p-6 bg-[#f6f5f2] hover:bg-white border border-[#e4e2dc] hover:border-[#0c0f12] rounded-xl transition group text-center shadow-sm"
+            className="flex flex-col items-center justify-center p-6 bg-[#f4f6fb] hover:bg-white border border-[#e2e6ee] hover:border-[#022159] rounded-xl transition group text-center shadow-sm"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#0c0f12]/10 text-[#0c0f12] flex items-center justify-center text-xl mb-3.5 group-hover:bg-[#0c0f12] group-hover:text-white transition shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#022159]/10 text-[#022159] flex items-center justify-center text-xl mb-3.5 group-hover:bg-[#022159] group-hover:text-white transition shadow-sm">
               <span className="material-symbols-outlined">admin_panel_settings</span>
             </div>
             <h4 className="font-bold text-sm text-[#0f172a]">Admin / Petugas</h4>

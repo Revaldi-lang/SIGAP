@@ -43,8 +43,8 @@ export default function AdminLogin() {
 
   if (loading || currentUser) {
     return (
-      <div className="min-h-screen bg-[#f6f5f2] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#0c0f12] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[#f4f6fb] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#022159] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -91,7 +91,7 @@ export default function AdminLogin() {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="admin@sigap.go.id"
-                  className="block w-full pl-10 pr-3 py-2.5 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] transition"
+                  className="block w-full pl-10 pr-3 py-2.5 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] transition"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function AdminLogin() {
                 <button
                   type="button"
                   onClick={() => alert('Sandi di-reset oleh Admin Utama (admin@sigap.go.id)')}
-                  className="text-[10px] font-bold text-[#0c0f12] hover:underline focus:outline-none"
+                  className="text-[10px] font-bold text-[#022159] hover:underline focus:outline-none"
                 >
                   Lupa Sandi?
                 </button>
@@ -115,7 +115,7 @@ export default function AdminLogin() {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="********"
-                  className="block w-full pl-10 pr-10 py-2.5 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] transition"
+                  className="block w-full pl-10 pr-10 py-2.5 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] transition"
                 />
                 <button
                   type="button"
@@ -131,7 +131,7 @@ export default function AdminLogin() {
               <input
                 type="checkbox"
                 id="remember"
-                className="h-4 w-4 text-[#0c0f12] border-[#e4e2dc] focus:ring-accent rounded cursor-pointer"
+                className="h-4 w-4 text-[#022159] border-[#e2e6ee] focus:ring-accent rounded cursor-pointer"
               />
               <label htmlFor="remember" className="ml-2 block text-[10px] text-[#5c6268] cursor-pointer select-none font-semibold">
                 Ingat saya di perangkat ini
@@ -141,15 +141,15 @@ export default function AdminLogin() {
             <div>
               <button
                 type="submit"
-                className="w-full py-3 px-4 bg-[#0c0f12] text-white rounded-lg font-bold text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
+                className="w-full py-3 px-4 bg-[#022159] text-white rounded-lg font-bold text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
               >
                 Masuk Dasbor <span className="material-symbols-outlined text-sm">login</span>
               </button>
             </div>
           </form>
 
-          <div className="mt-8 pt-4 border-t border-[#e4e2dc]/50 text-center">
-            <Link href="/" className="inline-flex items-center gap-1.5 text-[11px] text-[#5c6268] hover:text-[#0c0f12] transition font-bold">
+          <div className="mt-8 pt-4 border-t border-[#e2e6ee]/50 text-center">
+            <Link href="/" className="inline-flex items-center gap-1.5 text-[11px] text-[#5c6268] hover:text-[#022159] transition font-bold">
               <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali ke Halaman Utama
             </Link>
           </div>

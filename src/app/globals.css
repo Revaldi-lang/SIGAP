@@ -1,34 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f5f2;
+  --background: #f4f6fb;
   --foreground: #0f172a;
 }
 
 @theme {
-  /* Asphalt-ink primary: the "night road" base. Buttons/actions stay near-black
-     so white text always clears WCAG AA — and the look says "operational". */
-  --color-primary: #0c0f12;
+  /* SIGAP-logo navy primary: sampled from the logo's dominant fill (#022159).
+     Buttons/actions stay navy so white text always clears WCAG AA — and the
+     brand reads straight off the logo. */
+  --color-primary: #022159;
   --color-on-primary: #ffffff;
-  /* Traffic-orange accent: the road-cone / safety-vest color. Spent sparingly
-     on the signature moments (kickers, numbers, status, hi-vis CTA). */
+  /* Traffic-orange accent: complementary to navy; the road-cone / safety-vest
+     color. Spent sparingly on the signature moments (kickers, numbers, status,
+     hi-vis CTA). */
   --color-accent: #c2410c;
   --color-accent-strong: #9a3406;
   --color-accent-bright: #ff7a1a;
   --color-accent-tint: #ffe8d9;
-  --color-secondary: #f1f5f9;
+  --color-secondary: #e9edf4;
   --color-on-secondary: #0f172a;
-  --color-primary-container: #ffe8d9;
-  --color-on-primary-container: #7a2a04;
-  --color-surface: #f6f5f2;
+  --color-primary-container: #e7ecf7;
+  --color-on-primary-container: #022159;
+  --color-surface: #f4f6fb;
   --color-on-surface: #0f172a;
-  --color-surface-container-low: #faf9f7;
-  --color-surface-container: #efeeea;
-  --color-surface-container-high: #e4e2dc;
+  --color-surface-container-low: #f7f9fc;
+  --color-surface-container: #e9edf4;
+  --color-surface-container-high: #dfe4ec;
   --color-surface-container-lowest: #ffffff;
   --color-on-surface-variant: #5c6268;
-  --color-outline: #e4e2dc;
-  --color-outline-variant: #cfccc4;
+  --color-outline: #e2e6ee;
+  --color-outline-variant: #c8cede;
   --color-error: #ef4444;
   --color-on-error: #ffffff;
 
@@ -67,7 +69,7 @@
   }
 
   body {
-    background: #f6f5f2;
+    background: #f4f6fb;
     color: #0f172a;
     font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
@@ -104,7 +106,7 @@
 }
 
 .page-shell {
-  background-color: #f6f5f2;
+  background-color: #f4f6fb;
   min-height: 100vh;
 }
 
@@ -250,13 +252,13 @@
   }
 }
 
-.bg-surface { background-color: #f6f5f2; }
+.bg-surface { background-color: #f4f6fb; }
 .bg-surface-container-lowest { background-color: #FFFFFF; }
-.bg-surface-container-low { background-color: #faf9f7; }
-.bg-surface-container { background-color: #efeeea; }
-.bg-surface-container-high { background-color: #e4e2dc; }
-.border-outline-variant { border-color: #cfccc4; }
-.border-outline { border-color: #e4e2dc; }
+.bg-surface-container-low { background-color: #f7f9fc; }
+.bg-surface-container { background-color: #e9edf4; }
+.bg-surface-container-high { background-color: #dfe4ec; }
+.border-outline-variant { border-color: #c8cede; }
+.border-outline { border-color: #e2e6ee; }
 .text-on-surface { color: #0f172a; }
 .text-on-surface-variant { color: #5c6268; }
 .text-primary { color: var(--color-primary); }

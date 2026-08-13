@@ -65,8 +65,8 @@ export default function RegisterWarga() {
 
   if (loading || currentUser) {
     return (
-      <div className="min-h-screen bg-[#f6f5f2] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#0c0f12] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[#f4f6fb] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#022159] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -104,7 +104,7 @@ export default function RegisterWarga() {
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   placeholder="Budi Santoso"
-                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
+                  className="w-full bg-white border border-[#e2e6ee] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function RegisterWarga() {
                   value={identitas}
                   onChange={e => setIdentitas(e.target.value.replace(/D/g, ''))}
                   placeholder="3573xxxxxxxxxxxx"
-                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition font-mono tracking-wider"
+                  className="w-full bg-white border border-[#e2e6ee] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition font-mono tracking-wider"
                 />
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function RegisterWarga() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="budi.santoso@gmail.com"
-                className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
+                className="w-full bg-white border border-[#e2e6ee] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function RegisterWarga() {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="********"
-                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
+                  className="w-full bg-white border border-[#e2e6ee] rounded-lg pl-10 pr-10 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
                 />
                 <button
                   type="button"
@@ -172,7 +172,7 @@ export default function RegisterWarga() {
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="********"
-                  className="w-full bg-white border border-[#e4e2dc] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
+                  className="w-full bg-white border border-[#e2e6ee] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition"
                 />
               </div>
             </div>
@@ -183,25 +183,25 @@ export default function RegisterWarga() {
               type="checkbox"
               required
               id="agree"
-              className="rounded border-[#e4e2dc] text-[#0c0f12] focus:ring-accent h-4 w-4 mt-0.5 cursor-pointer"
+              className="rounded border-[#e2e6ee] text-[#022159] focus:ring-accent h-4 w-4 mt-0.5 cursor-pointer"
             />
             <label htmlFor="agree" className="ml-2 text-[10px] text-[#5c6268] cursor-pointer select-none leading-normal font-medium">
-              Saya menyatakan bahwa data yang saya masukkan adalah benar dan siap mematuhi <a href="#" onClick={(e) => { e.preventDefault(); alert('Ketentuan Penggunaan Platform SIGAP'); }} className="text-[#0c0f12] font-bold hover:underline">Syarat &amp; Ketentuan</a> penggunaan platform SIGAP.
+              Saya menyatakan bahwa data yang saya masukkan adalah benar dan siap mematuhi <a href="#" onClick={(e) => { e.preventDefault(); alert('Ketentuan Penggunaan Platform SIGAP'); }} className="text-[#022159] font-bold hover:underline">Syarat &amp; Ketentuan</a> penggunaan platform SIGAP.
             </label>
           </div>
 
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full bg-[#0c0f12] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
+              className="w-full bg-[#022159] text-white font-bold py-3 px-4 rounded-lg text-xs transition shadow-lg hover:opacity-90 flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer uppercase tracking-wider"
             >
               <span className="material-symbols-outlined text-sm">person_add</span> Buat Akun Baru
             </button>
           </div>
         </form>
 
-        <div className="text-center mt-6 pt-4 border-t border-[#e4e2dc]/50 text-xs text-[#5c6268]">
-          Sudah memiliki akun? <Link href="/login-masyarakat" className="text-[#0c0f12] font-bold hover:underline">Masuk di sini</Link>
+        <div className="text-center mt-6 pt-4 border-t border-[#e2e6ee]/50 text-xs text-[#5c6268]">
+          Sudah memiliki akun? <Link href="/login-masyarakat" className="text-[#022159] font-bold hover:underline">Masuk di sini</Link>
         </div>
       </div>
     </div>

@@ -100,8 +100,8 @@ export default function SessionTimeoutHandler() {
   if (!showWarning) return null;
 
   return (
-    <div className="fixed inset-0 bg-[#0c0f12]/75 backdrop-blur-sm z-[200] flex items-center justify-center animate-fade-in">
-      <div className="bg-white border border-[#e4e2dc] rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 relative text-center mx-4">
+    <div className="fixed inset-0 bg-[#022159]/75 backdrop-blur-sm z-[200] flex items-center justify-center animate-fade-in">
+      <div className="bg-white border border-[#e2e6ee] rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 relative text-center mx-4">
         {/* Warning Icon */}
         <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center text-3xl mx-auto mb-4 border border-amber-200">
           <span className="material-symbols-outlined">hourglass_empty</span>
@@ -123,7 +123,7 @@ export default function SessionTimeoutHandler() {
           </button>
           <button
             onClick={handleKeepLoggedIn}
-            className="w-full bg-[#0c0f12] hover:opacity-90 text-white text-xs font-bold py-3 rounded-lg uppercase tracking-wider transition"
+            className="w-full bg-[#022159] hover:opacity-90 text-white text-xs font-bold py-3 rounded-lg uppercase tracking-wider transition"
           >
             Tetap Masuk
           </button>

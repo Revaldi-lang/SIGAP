@@ -147,7 +147,7 @@ export default function MapSelector({ lat, lng, onChange, address }: MapSelector
   return (
     <div 
       ref={containerRef} 
-      className="w-full h-80 relative z-0 border border-[#e4e2dc] rounded-xl overflow-hidden" 
+      className="w-full h-80 relative z-0 border border-[#e2e6ee] rounded-xl overflow-hidden" 
     />
   );
 }

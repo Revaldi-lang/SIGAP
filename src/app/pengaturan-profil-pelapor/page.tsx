@@ -169,13 +169,13 @@ function PengaturanProfilPelaporForm() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden p-2 text-[#0c0f12] hover:bg-[#0c0f12]/5 rounded-lg flex items-center justify-center shrink-0"
+              className="md:hidden p-2 text-[#022159] hover:bg-[#022159]/5 rounded-lg flex items-center justify-center shrink-0"
               type="button"
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-[#0c0f12] mb-1">Pengaturan Profil</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#022159] mb-1">Pengaturan Profil</h1>
               <p className="text-xs text-[#5c6268]">Kelola data diri, foto profil, dan keamanan sandi akun pelapor Anda.</p>
             </div>
           </div>
@@ -191,7 +191,7 @@ function PengaturanProfilPelaporForm() {
                 className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md"
               />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-[#0c0f12] text-white font-bold flex items-center justify-center text-xl border-2 border-white shadow-md select-none">
+              <div className="w-20 h-20 rounded-full bg-[#022159] text-white font-bold flex items-center justify-center text-xl border-2 border-white shadow-md select-none">
                 {nama ? nama.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase() : 'U'}
               </div>
             )}
@@ -225,7 +225,7 @@ function PengaturanProfilPelaporForm() {
                 type="button"
                 onClick={() => document.getElementById('upload-avatar-pelapor')?.click()}
                 disabled={uploading}
-                className="bg-[#0c0f12] text-white text-[10px] font-bold py-2 px-4 rounded-lg hover:opacity-90 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[#022159] text-white text-[10px] font-bold py-2 px-4 rounded-lg hover:opacity-90 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {uploading ? 'Mengunggah...' : 'Ganti Foto'}
               </button>
@@ -233,24 +233,24 @@ function PengaturanProfilPelaporForm() {
                 type="button"
                 onClick={() => setFoto('')}
                 disabled={uploading || !foto}
-                className="bg-[#f6f5f2] border border-[#e4e2dc] hover:bg-white text-[#5c6268] text-[10px] font-bold py-2 px-4 rounded-lg transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="bg-[#f4f6fb] border border-[#e2e6ee] hover:bg-white text-[#5c6268] text-[10px] font-bold py-2 px-4 rounded-lg transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Hapus
               </button>
             </div>
-            <span className="inline-block bg-[#0c0f12]/10 text-[#0c0f12] text-[9px] font-bold px-2 py-0.5 rounded-full border border-[#0c0f12]/10 uppercase tracking-wider mt-3">
+            <span className="inline-block bg-[#022159]/10 text-[#022159] text-[9px] font-bold px-2 py-0.5 rounded-full border border-[#022159]/10 uppercase tracking-wider mt-3">
               Pelapor / Warga
             </span>
           </div>
         </div>
 
         {/* Tab Selector Header */}
-        <div className="border-b border-[#e4e2dc] flex gap-6 mb-6 shrink-0">
+        <div className="border-b border-[#e2e6ee] flex gap-6 mb-6 shrink-0">
           <button
             onClick={() => setActiveTab('umum')}
             className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'umum'
-                ? 'border-[#0c0f12] text-[#0c0f12]'
+                ? 'border-[#022159] text-[#022159]'
                 : 'border-transparent text-[#5c6268] hover:text-[#0f172a]'
             )}
           >
@@ -260,7 +260,7 @@ function PengaturanProfilPelaporForm() {
             onClick={() => setActiveTab('keamanan')}
             className={"pb-3 font-bold text-xs transition focus:outline-none flex items-center gap-1.5 border-b-2 " + (
               activeTab === 'keamanan'
-                ? 'border-[#0c0f12] text-[#0c0f12]'
+                ? 'border-[#022159] text-[#022159]'
                 : 'border-transparent text-[#5c6268] hover:text-[#0f172a]'
             )}
           >
@@ -270,7 +270,7 @@ function PengaturanProfilPelaporForm() {
 
         {/* Panel Informasi Umum */}
         {activeTab === 'umum' && (
-          <div className="bg-white border border-[#e4e2dc] rounded-2xl p-6 shadow-sm flex-grow">
+          <div className="bg-white border border-[#e2e6ee] rounded-2xl p-6 shadow-sm flex-grow">
             <form onSubmit={handleSaveUmum} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -280,7 +280,7 @@ function PengaturanProfilPelaporForm() {
                     required
                     value={nama}
                     onChange={e => setNama(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
+                    className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
                 <div>
@@ -290,7 +290,7 @@ function PengaturanProfilPelaporForm() {
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
+                    className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
               </div>
@@ -302,7 +302,7 @@ function PengaturanProfilPelaporForm() {
                     required
                     value={telepon}
                     onChange={e => setTelepon(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
+                    className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
                 <div>
@@ -311,7 +311,7 @@ function PengaturanProfilPelaporForm() {
                     type="text"
                     value={currentUser?.identitas || '-'}
                     disabled
-                    className="w-full px-3 py-2 bg-[#f6f5f2] border border-[#e4e2dc] rounded-lg text-[#5c6268] font-mono cursor-not-allowed text-xs"
+                    className="w-full px-3 py-2 bg-[#f4f6fb] border border-[#e2e6ee] rounded-lg text-[#5c6268] font-mono cursor-not-allowed text-xs"
                     title="NIK terverifikasi tidak dapat diubah secara mandiri"
                   />
                 </div>
@@ -323,14 +323,14 @@ function PengaturanProfilPelaporForm() {
                   value={alamat}
                   onChange={e => setAlamat(e.target.value)}
                   placeholder="Masukkan alamat domisili lengkap Anda..."
-                  className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] resize-none"
+                  className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a] resize-none"
                 />
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#e4e2dc]/50">
+              <div className="flex justify-end pt-4 border-t border-[#e2e6ee]/50">
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="bg-[#0c0f12] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-[#022159] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">save</span> Simpan Perubahan
                 </button>
@@ -341,7 +341,7 @@ function PengaturanProfilPelaporForm() {
 
         {/* Panel Keamanan */}
         {activeTab === 'keamanan' && (
-          <div className="bg-white border border-[#e4e2dc] rounded-2xl p-6 shadow-sm flex-grow">
+          <div className="bg-white border border-[#e2e6ee] rounded-2xl p-6 shadow-sm flex-grow">
             <form onSubmit={handleSaveSandi} className="space-y-4">
               <div>
                 <label className="block text-[10px] font-bold text-[#5c6268] uppercase tracking-wider mb-2">Kata Sandi Sekarang</label>
@@ -351,7 +351,7 @@ function PengaturanProfilPelaporForm() {
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
                   placeholder="Masukkan kata sandi saat ini..."
-                  className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
+                  className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -363,7 +363,7 @@ function PengaturanProfilPelaporForm() {
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     placeholder="Minimal 8 karakter..."
-                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
+                    className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
                 <div>
@@ -374,14 +374,14 @@ function PengaturanProfilPelaporForm() {
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     placeholder="Ulangi kata sandi baru..."
-                    className="w-full px-3 py-2 bg-white border border-[#e4e2dc] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
+                    className="w-full px-3 py-2 bg-white border border-[#e2e6ee] rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none text-xs text-[#0f172a]"
                   />
                 </div>
               </div>
-              <div className="flex justify-end pt-4 border-t border-[#e4e2dc]/50">
+              <div className="flex justify-end pt-4 border-t border-[#e2e6ee]/50">
                 <button
                   type="submit"
-                  className="bg-[#0c0f12] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
+                  className="bg-[#022159] text-white font-bold py-2.5 px-6 rounded-lg text-xs transition-all hover:opacity-90 flex items-center gap-2 cursor-pointer uppercase tracking-wider shadow-md"
                 >
                   <span className="material-symbols-outlined text-sm font-bold">key</span> Perbarui Kata Sandi
                 </button>
