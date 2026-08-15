@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { createClient, Session } from '@supabase/supabase-js';
+import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import bcrypt from 'bcryptjs';
 
@@ -18,6 +18,27 @@ export interface User {
   alamat?: string;
   foto?: string;
 }
+
+interface ServerSessionUser {
+  id: string;
+  email: string;
+  username: string;
+  role: User['role'];
+  status: string;
+}
+
+const toPublicUser = (u: User): User => ({
+  id: u.id,
+  username: u.username,
+  email: u.email,
+  identitas: u.identitas,
+  role: u.role,
+  status: u.status,
+  registered: u.registered,
+  telepon: u.telepon,
+  alamat: u.alamat,
+  foto: u.foto
+});
 
 export interface ActivityLog {
   judul: string;
@@ -152,16 +173,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             if (matched.foto) {
               localStorage.setItem('sigap_user_foto_' + prev.id, matched.foto);
             }
-            const sessionData = {
-              role: updatedUser.role === 'Masyarakat' ? 'pelapor' : updatedUser.role,
-              email: updatedUser.email,
-              username: updatedUser.username,
-              id: updatedUser.id,
-              telepon: updatedUser.telepon,
-              alamat: updatedUser.alamat,
-              foto: updatedUser.foto
-            };
-            localStorage.setItem('sigap_session', JSON.stringify(sessionData));
             return updatedUser;
           }
           return prev;
@@ -237,72 +248,36 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   const handleSupabaseSession = useCallback(async (session: Session) => {
-    const user = session.user;
+    // Server-side: validate the Supabase access token, upsert the user,
+    // and set an httpOnly, HMAC-signed session cookie.
     try {
-      const { data: existing } = await supabase
-        .from('users')
-        .select('id, name, email, nik, role, status, avatar_url, telepon, alamat')
-        .eq('email', user.email)
-        .single();
+      const res = await fetch('/api/auth/oauth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ access_token: session.access_token })
+      });
+      const data = await res.json();
 
-      let dbUserId: string;
-      let dbUserRole: 'Masyarakat' | 'Administrator' | 'Petugas PUPR' | 'Petugas' = 'Masyarakat';
-      let dbUserStatus: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi' = 'Aktif';
-      let dbUserNik = '-';
-      let dbUserName = (user.user_metadata.full_name as string) || user.email?.split('@')[0] || 'User';
-      const dbUserAvatar = existing?.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || undefined;
-
-      if (!existing) {
-        const generatedId = Math.floor(100000 + Math.random() * 900000);
-        dbUserId = generatedId.toString();
-        await supabase.from('users').insert({
-          id: generatedId,
-          name: dbUserName,
-          email: user.email,
-          role: 'Masyarakat',
-          status: 'Aktif',
-          password: 'oauth_authenticated',
-          nik: '-',
-          avatar_url: dbUserAvatar
+      if (res.ok && data.user) {
+        const u = data.user as ServerSessionUser;
+        setCurrentUser({
+          id: u.id,
+          username: u.username,
+          email: u.email,
+          identitas: '-',
+          role: u.role,
+          status: (u.status || 'Aktif') as User['status'],
+          registered: 'Google Sign-In',
+          telepon: '',
+          alamat: '',
+          foto: undefined
         });
+        localStorage.setItem('sigap_session_last_activity', Date.now().toString());
       } else {
-        dbUserId = existing.id.toString();
-        dbUserRole = (existing.role as 'Masyarakat' | 'Administrator' | 'Petugas PUPR' | 'Petugas') || 'Masyarakat';
-        const rawStatus = existing.status || 'Aktif';
-        dbUserStatus = (rawStatus === 'Menunggu' ? 'Menunggu Verifikasi' : rawStatus) as 'Aktif' | 'Blokir' | 'Menunggu Verifikasi';
-        dbUserNik = existing.nik || '-';
-        dbUserName = existing.name || dbUserName;
+        console.error('OAuth session sync failed:', data?.reason || res.status);
       }
-
-      const mappedUser: User = {
-        id: dbUserId,
-        username: dbUserName,
-        email: user.email || '',
-        identitas: dbUserNik,
-        role: dbUserRole,
-        status: dbUserStatus,
-        registered: 'Google Sign-In',
-        telepon: existing?.telepon || '',
-        alamat: existing?.alamat || '',
-        foto: dbUserAvatar || undefined
-      };
-
-      setCurrentUser(mappedUser);
-
-      const sessionData = {
-        role: dbUserRole === 'Masyarakat' ? 'pelapor' : dbUserRole,
-        email: user.email,
-        username: dbUserName,
-        id: dbUserId,
-        telepon: mappedUser.telepon,
-        alamat: mappedUser.alamat,
-        foto: mappedUser.foto
-      };
-      localStorage.setItem('sigap_session', JSON.stringify(sessionData));
-      localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-
     } catch (err) {
-      console.error('Supabase user upsert error:', err);
+      console.error('Supabase session sync error:', err);
     }
 
     await pullFromSupabase();
@@ -311,27 +286,28 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Initialize data from localstorage & sync with Supabase
   useEffect(() => {
     const initializeData = async () => {
-      // 1. LocalStorage Auth Session
-      const cachedSession = localStorage.getItem('sigap_session');
-      if (cachedSession) {
-        try {
-          const parsed = JSON.parse(cachedSession);
-          const mappedRole = parsed.role === 'pelapor' ? 'Masyarakat' : parsed.role;
+      // 1. Server session (httpOnly, HMAC-signed) is the single source of truth.
+      //    Never trust client-side localStorage for authentication.
+      try {
+        const res = await fetch('/api/auth/session');
+        const data = await res.json();
+        if (data?.user) {
+          const su = data.user as ServerSessionUser;
           setCurrentUser({
-            id: parsed.id,
-            username: parsed.username,
-            email: parsed.email,
+            id: su.id,
+            username: su.username,
+            email: su.email,
             identitas: '-',
-            role: mappedRole,
-            status: 'Aktif',
-            registered: 'Cached Session',
-            telepon: parsed.telepon || '',
-            alamat: parsed.alamat || '',
-            foto: parsed.foto || undefined
+            role: su.role,
+            status: (su.status || 'Aktif') as User['status'],
+            registered: 'Server Session',
+            telepon: '',
+            alamat: '',
+            foto: undefined
           });
-        } catch (e) {
-          console.error(e);
         }
+      } catch (e) {
+        console.error('Server session fetch error:', e);
       }
 
       // 2. Local cache
@@ -373,60 +349,38 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [handleSupabaseSession, pullFromSupabase]);
 
   const login = async (email: string, password: string, portal: 'pelapor' | 'admin'): Promise<{ success: boolean; reason?: string }> => {
-    const matched = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
-    // 1. User not found
-    if (!matched) return { success: false, reason: 'not_found' };
-
-    // 2. Account is blocked
-    if (matched.status === 'Blokir') return { success: false, reason: 'blocked' };
-
-    // 3. Portal role enforcement:
-    //    - Citizen portal ('pelapor'): only 'Masyarakat' accounts allowed
-    //    - Admin portal ('admin'): only non-Masyarakat accounts allowed
-    if (portal === 'pelapor' && matched.role !== 'Masyarakat') {
-      return { success: false, reason: 'wrong_portal' };
-    }
-    if (portal === 'admin' && matched.role === 'Masyarakat') {
-      return { success: false, reason: 'wrong_portal' };
-    }
-
-    // 4. Password check via secure database RPC
+    // Server-side login: verifies password via RPC and sets an httpOnly cookie.
     try {
-      const { data: isValid, error } = await supabase.rpc('verify_user_password', {
-        p_email: email,
-        p_password: password
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, portal })
       });
+      const data = await res.json();
 
-      if (error) {
-        console.error('Password verification error:', error);
-        return { success: false, reason: 'wrong_password' };
+      if (!res.ok || !data.success) {
+        return { success: false, reason: data.reason || 'wrong_password' };
       }
 
-      if (!isValid) {
-        return { success: false, reason: 'wrong_password' };
-      }
+      const u = data.user as ServerSessionUser;
+      setCurrentUser({
+        id: u.id,
+        username: u.username,
+        email: u.email,
+        identitas: '-',
+        role: u.role,
+        status: (u.status || 'Aktif') as User['status'],
+        registered: 'Server Session',
+        telepon: '',
+        alamat: '',
+        foto: undefined
+      });
+      localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+      return { success: true };
     } catch (err) {
-      console.error('Failed to verify password via RPC:', err);
-      return { success: false, reason: 'wrong_password' };
+      console.error('Login error:', err);
+      return { success: false, reason: 'server_error' };
     }
-
-    const mappedRole = matched.role === 'Masyarakat' ? 'pelapor' : matched.role;
-    const sessionData = {
-      role: mappedRole,
-      email: matched.email,
-      username: matched.username,
-      id: matched.id,
-      telepon: matched.telepon || '',
-      alamat: matched.alamat || '',
-      foto: matched.foto || undefined
-    };
-
-    localStorage.setItem('sigap_session', JSON.stringify(sessionData));
-    localStorage.setItem('sigap_session_last_activity', Date.now().toString());
-
-    setCurrentUser(matched);
-    return { success: true };
   };
 
   const loginGoogle = async () => {
@@ -440,6 +394,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const logout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     localStorage.setItem('sigap_logged_out', 'true');
     localStorage.removeItem('sigap_session');
     localStorage.removeItem('sigap_session_last_activity');
@@ -474,7 +433,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const updated = [...users, newUser];
     setUsers(updated);
-    localStorage.setItem('sigap_users', JSON.stringify(updated));
+    localStorage.setItem('sigap_users', JSON.stringify(updated.map(toPublicUser)));
 
     supabase.from('users').insert({
       id: parseInt(id) || Math.floor(Math.random() * 100000),
@@ -677,7 +636,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return u;
     });
     setUsers(updated);
-    localStorage.setItem('sigap_users', JSON.stringify(updated));
+    localStorage.setItem('sigap_users', JSON.stringify(updated.map(toPublicUser)));
 
     const mappedStatus = status === 'Menunggu Verifikasi' ? 'Menunggu' : status;
     supabase.from('users').update({ status: mappedStatus }).eq('email', email).then(() => {
@@ -689,7 +648,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const updated = users.filter(u => u.email.toLowerCase() !== email.toLowerCase());
       setUsers(updated);
-      localStorage.setItem('sigap_users', JSON.stringify(updated));
+      localStorage.setItem('sigap_users', JSON.stringify(updated.map(toPublicUser)));
 
       if (supabase) {
         const { error } = await supabase.from('users').delete().eq('email', email);
@@ -797,17 +756,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
 
       setCurrentUser(updatedUser);
-      
-      const sessionData = {
-        role: updatedUser.role === 'Masyarakat' ? 'pelapor' : updatedUser.role,
-        email: updatedUser.email,
-        username: updatedUser.username,
-        id: updatedUser.id,
-        telepon: updatedUser.telepon,
-        alamat: updatedUser.alamat,
-        foto: updatedUser.foto
-      };
-      localStorage.setItem('sigap_session', JSON.stringify(sessionData));
 
       // Update in users list
       const updatedUsers = users.map(u => {
@@ -824,7 +772,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return u;
       });
       setUsers(updatedUsers);
-      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers));
+      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers.map(toPublicUser)));
 
       return true;
     } catch (err) {
@@ -888,7 +836,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return u;
       });
       setUsers(updatedUsers);
-      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers));
+      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers.map(toPublicUser)));
 
       return { success: true, message: 'Kata sandi Anda berhasil diperbarui!' };
     } catch (err) {

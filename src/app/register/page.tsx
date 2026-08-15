@@ -35,7 +35,7 @@ export default function RegisterWarga() {
     setSuccessMsg('');
 
     // NIK validation
-    if (identitas.length !== 16 || !/^d+$/.test(identitas)) {
+    if (identitas.length !== 16 || !/^\d+$/.test(identitas)) {
       setErrorMsg('NIK (KTP) harus berupa 16 digit angka.');
       return;
     }
@@ -117,7 +117,7 @@ export default function RegisterWarga() {
                   required
                   maxLength={16}
                   value={identitas}
-                  onChange={e => setIdentitas(e.target.value.replace(/D/g, ''))}
+                  onChange={e => setIdentitas(e.target.value.replace(/\D/g, ''))}
                   placeholder="3573xxxxxxxxxxxx"
                   className="w-full bg-white border border-[#e2e6ee] rounded-lg pl-10 pr-4 py-2.5 text-xs text-[#0f172a] focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition font-mono tracking-wider"
                 />
