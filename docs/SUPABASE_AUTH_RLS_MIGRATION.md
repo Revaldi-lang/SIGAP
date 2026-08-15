@@ -54,8 +54,13 @@ untuk proteksi halaman (proxy) dan endpoint admin.
 
 ## 4. Fase 0 — Persiapan (± 10 menit)
 
-1. **Backup database**: Dashboard Supabase → Database → Backup. (Mudah
-   dipulihkan, tidak menghalangi.)
+1. **Snapshot data (pengganti backup — tidak tersedia di free plan)**:
+   Table Editor → buka tiap tabel (`users`, `laporan`, `activity_log`,
+   `foto_laporan`) → menu ⋮ → Export → CSV/JSON, simpan di folder aman.
+   Skrip migrasi hanya mengubah cara login (tidak menghapus data), dan semua
+   perubahan SQL terekam di repo ini, jadi resiko sebenarnya kecil; snapshot
+   ini cadangan ekstra. Migrasi tetap bisa di-rollback dengan menjalankan
+   ulang `supabase_security_fix.sql`.
 2. **Ambil service role key**: Dashboard → Settings → API → `service_role`
    (rahasiakan; hanya dipakai server-side/script migrasi, jangan pernah di
    bundle client atau dipublish).
