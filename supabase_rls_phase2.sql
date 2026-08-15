@@ -43,6 +43,11 @@ ALTER TABLE public.laporan
 -- SECURITY DEFINER agar policy bisa membaca public.users tanpa rekursi RLS.
 -- Petugas disetujui update laporan & activity log; hanya Administrator
 -- yang boleh menghapus.
+-- CATATAN: nilai role berasal dari enum role_user yang ADA di DB.
+-- 'Petugas' TIDAK ada di enum (hanya 'Masyarakat' | 'Administrator' |
+-- 'Petugas PUPR'), jadi jangan dimasukkan di sini. Bila kelak role
+-- 'Petugas' diperlukan, tambahkan ke enum dulu:
+--   ALTER TYPE public.role_user ADD VALUE IF NOT EXISTS 'Petugas';
 
 CREATE OR REPLACE FUNCTION public.is_staff()
 RETURNS boolean
@@ -52,7 +57,7 @@ AS $$
   SELECT EXISTS (
     SELECT 1 FROM public.users
     WHERE auth_id = auth.uid()
-      AND role IN ('Administrator', 'Petugas PUPR', 'Petugas')
+      AND role IN ('Administrator', 'Petugas PUPR')
   );
 $$;
 
