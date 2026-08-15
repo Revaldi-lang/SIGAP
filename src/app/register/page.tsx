@@ -29,7 +29,7 @@ export default function RegisterWarga() {
     }
   }, [currentUser, loading, router]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');
@@ -52,11 +52,11 @@ export default function RegisterWarga() {
     }
 
     // Call Context Register
-    const success = registerWarga(username, email, identitas, password);
+    const success = await registerWarga(username, email, identitas, password);
     if (success) {
-      setSuccessMsg('Akun warga baru berhasil dibuat! Dialihkan ke halaman login...');
+      setSuccessMsg('Akun warga baru berhasil dibuat! Dialihkan ke dashboard...');
       setTimeout(() => {
-        router.push('/login-masyarakat');
+        router.replace('/dashboard-pelapor');
       }, 2000);
     } else {
       setErrorMsg('Gagal mendaftar: Alamat email sudah digunakan.');

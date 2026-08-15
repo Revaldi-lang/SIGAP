@@ -39,7 +39,7 @@ export default function LoginMasyarakat() {
     e.preventDefault();
     setErrorMsg('');
 
-    const result = await login(email, password, 'pelapor');
+    const result = await login(email, password);
     if (result.success) {
       router.push('/dashboard-pelapor');
     } else if (result.reason === 'wrong_portal') {

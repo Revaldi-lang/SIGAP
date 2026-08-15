@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { encodeSession, SESSION_COOKIE, SESSION_MAX_AGE, SessionUser, SessionRole } from '@/lib/session';
 
@@ -40,9 +41,19 @@ export async function POST(request: NextRequest) {
 
   const email = authUser.email.toLowerCase();
 
-  const { data: existing } = await supabase
+  // Client authenticated dengan token user ini — bukan anon. Setelah RLS
+  // ketat aktif, query dengan anon key akan ditolak; dengan Bearer token,
+  // policy per-role (auth.uid()) berlaku dan hanya data milik user/otoritas
+  // mereka yang terlihat/diubah.
+  const authed = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { global: { headers: { Authorization: `Bearer ${accessToken}` } } }
+  );
+
+  const { data: existing } = await authed
     .from('users')
-    .select('id, name, email, role, status')
+    .select('id, name, email, role, status, auth_id')
     .eq('email', email)
     .maybeSingle();
 
@@ -50,10 +61,11 @@ export async function POST(request: NextRequest) {
   if (!user) {
     const fullName = authUser.user_metadata?.full_name as string | undefined;
     const userName = fullName || authUser.email.split('@')[0] || 'User';
-    const { data: inserted, error: insertError } = await supabase
+    const { data: inserted, error: insertError } = await authed
       .from('users')
       .insert({
         id: Math.floor(100000 + Math.random() * 900000),
+        auth_id: authUser.id,
         name: userName,
         email,
         role: 'Masyarakat',
@@ -62,7 +74,7 @@ export async function POST(request: NextRequest) {
         nik: '-',
         avatar_url: authUser.user_metadata?.avatar_url || authUser.user_metadata?.picture || undefined
       })
-      .select('id, name, email, role, status')
+      .select('id, name, email, role, status, auth_id')
       .single();
 
     if (insertError) {
@@ -70,6 +82,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, reason: 'server_error' }, { status: 500 });
     }
     user = inserted;
+  } else if (!user.auth_id) {
+    // Backfill auth_id untuk akun Google yang dibuat sebelum migrasi.
+    await authed.from('users').update({ auth_id: authUser.id }).eq('email', email);
   }
 
   if (!user) {

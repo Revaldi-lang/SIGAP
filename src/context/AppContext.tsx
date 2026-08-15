@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
-import bcrypt from 'bcryptjs';
 
 export interface User {
   id: string;
@@ -91,10 +90,10 @@ interface AppContextType {
   users: User[];
   laporan: Laporan[];
   loading: boolean;
-  login: (email: string, password: string, portal: 'pelapor' | 'admin') => Promise<{ success: boolean; reason?: string }>;
+  login: (email: string, password: string) => Promise<{ success: boolean; reason?: string }>;
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
-  registerWarga: (username: string, email: string, identitas: string, sandi: string, role?: 'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR') => boolean;
+  registerWarga: (username: string, email: string, identitas: string, sandi: string, role?: 'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR') => Promise<boolean>;
   tambahLaporan: (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => void;
   updateStatusLaporan: (id: string, status: 'baru' | 'proses' | 'selesai', dinas: string, catatan: string) => void;
   updateStatusUser: (email: string, status: 'Aktif' | 'Blokir' | 'Menunggu Verifikasi') => void;
@@ -247,7 +246,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, []);
 
-  const handleSupabaseSession = useCallback(async (session: Session) => {
+  const handleSupabaseSession = useCallback(async (session: Session): Promise<{ success: boolean; reason?: string }> => {
     // Server-side: validate the Supabase access token, upsert the user,
     // and set an httpOnly, HMAC-signed session cookie.
     try {
@@ -267,20 +266,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           identitas: '-',
           role: u.role,
           status: (u.status || 'Aktif') as User['status'],
-          registered: 'Google Sign-In',
+          registered: 'Supabase Sign-In',
           telepon: '',
           alamat: '',
           foto: undefined
         });
         localStorage.setItem('sigap_session_last_activity', Date.now().toString());
+        await pullFromSupabase();
+        return { success: true };
       } else {
         console.error('OAuth session sync failed:', data?.reason || res.status);
+        return { success: false, reason: data?.reason || 'unauthorized' };
       }
     } catch (err) {
       console.error('Supabase session sync error:', err);
+      return { success: false, reason: 'server_error' };
     }
-
-    await pullFromSupabase();
   }, [pullFromSupabase]);
 
   // Initialize data from localstorage & sync with Supabase
@@ -348,33 +349,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     initializeData();
   }, [handleSupabaseSession, pullFromSupabase]);
 
-  const login = async (email: string, password: string, portal: 'pelapor' | 'admin'): Promise<{ success: boolean; reason?: string }> => {
-    // Server-side login: verifies password via RPC and sets an httpOnly cookie.
+  const login = async (email: string, password: string): Promise<{ success: boolean; reason?: string }> => {
+    // Login password kini ditangani Supabase Auth. Cookie sesi server (HMAC)
+    // tetap dipasang via /api/auth/oauth sebagai lapisan proteksi halaman.
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, portal })
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
       });
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        return { success: false, reason: data.reason || 'wrong_password' };
+      if (error || !data.session) {
+        return { success: false, reason: 'wrong_password' };
       }
 
-      const u = data.user as ServerSessionUser;
-      setCurrentUser({
-        id: u.id,
-        username: u.username,
-        email: u.email,
-        identitas: '-',
-        role: u.role,
-        status: (u.status || 'Aktif') as User['status'],
-        registered: 'Server Session',
-        telepon: '',
-        alamat: '',
-        foto: undefined
-      });
+      const result = await handleSupabaseSession(data.session);
+      if (!result.success) {
+        // Hapus sesi client agar tidak bisa dipakai query bila akun diblokir/ditolak.
+        await supabase.auth.signOut().catch(() => undefined);
+        return result;
+      }
+
       localStorage.setItem('sigap_session_last_activity', Date.now().toString());
       return { success: true };
     } catch (err) {
@@ -385,7 +378,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const loginGoogle = async () => {
     try {
-      const redirectUrl = window.location.origin + '/login-masyarakat';
+      const redirectUrl = window.location.origin + '/auth/callback';
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -414,47 +407,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const registerWarga = (
+  const registerWarga = async (
     username: string, 
     email: string, 
     identitas: string, 
     sandi: string,
     role: 'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR' = 'Masyarakat'
-  ): boolean => {
+  ): Promise<boolean> => {
     const emailExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
     if (emailExists) return false;
 
-    const id = Date.now().toString();
-    const hashedPassword = bcrypt.hashSync(sandi, 10);
-    const newUser: User = {
-      id,
-      username,
-      email,
-      identitas,
-      role,
-      status: 'Aktif',
-      registered: 'Pendaftaran Mandiri',
-      password: hashedPassword
-    };
+    try {
+      // Identitas = Supabase Auth. Dengan "Confirm email" OFF, signUp langsung
+      // mengembalikan sesi (user langsung aktif, konsisten dengan perilaku lama).
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password: sandi,
+        options: { data: { full_name: username, nik: identitas } }
+      });
+      if (signUpError || !signUpData.user) {
+        console.error('Supabase signUp error:', signUpError?.message || 'no user returned');
+        return false;
+      }
 
-    const updated = [...users, newUser];
-    setUsers(updated);
-    localStorage.setItem('sigap_users', JSON.stringify(updated.map(toPublicUser)));
+      const id = Date.now().toString();
+      const { error: insertError } = await supabase.from('users').insert({
+        auth_id: signUpData.user.id,
+        id: parseInt(id) || Math.floor(Math.random() * 100000),
+        name: username,
+        email,
+        nik: identitas,
+        role,
+        status: 'Aktif'
+      });
+      if (insertError) {
+        console.error('Supabase user insert error:', insertError);
+        return false;
+      }
 
-    supabase.from('users').insert({
-      id: parseInt(id) || Math.floor(Math.random() * 100000),
-      name: username,
-      email,
-      nik: identitas,
-      role,
-      status: 'Aktif',
-      password: hashedPassword
-    }).then(({ error }) => {
-      if (error) console.error('Supabase user insert error:', error);
-      pullFromSupabase();
-    });
-
-    return true;
+      // Pastikan cookie sesi server terpasang (jangan menunggu event listener).
+      if (signUpData.session) {
+        await handleSupabaseSession(signUpData.session);
+      }
+      await pullFromSupabase();
+      return true;
+    } catch (err) {
+      console.error('Register error:', err);
+      return false;
+    }
   };
 
   const tambahLaporan = async (laporanBaru: Omit<Laporan, 'id' | 'kategoriLabel' | 'waktu' | 'logs'>) => {
@@ -495,6 +495,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     try {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
       const { data: userObj } = await supabase
         .from('users')
         .select('id')
@@ -506,6 +507,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const { error: insertError } = await supabase.from('laporan').insert({
         nomor_laporan: `RPT-${id}`,
         user_id: uId,
+        pelapor_id: authUser?.id || null,
         kategori: laporanBaru.kategori,
         deskripsi: laporanBaru.deskripsi,
         lokasi: laporanBaru.lokasi,
@@ -529,11 +531,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .single();
 
       if (lapObj) {
-        await supabase.from('activity_log').insert({
-          laporan_id: lapObj.id,
-          judul: 'Aduan Dikirim',
-          deskripsi: `Baru Saja | Oleh ${laporanBaru.pelapor}`
-        });
+        // Log "Aduan Dikirim" dibuat otomatis oleh trigger DB (trg_laporan_dikirim)
+        // agar tidak butuh policy INSERT publik untuk activity_log.
 
         if (laporanBaru.foto) {
           let publicUrl = laporanBaru.foto;
@@ -827,25 +826,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     try {
-      const hashedPassword = bcrypt.hashSync(newPassword, 10);
-      if (supabase) {
-        // Use email as the stable identifier — avoids parseInt(id) issues
-        const { error } = await supabase
-          .from('users')
-          .update({ password: hashedPassword })
-          .eq('email', currentUser.email);
-        if (error) throw error;
-      }
-
-      // Update in users state & localStorage
-      const updatedUsers = users.map(u => {
-        if (u.id === currentUser.id) {
-          return { ...u, password: hashedPassword };
-        }
-        return u;
-      });
-      setUsers(updatedUsers);
-      localStorage.setItem('sigap_users', JSON.stringify(updatedUsers.map(toPublicUser)));
+      // Password sekarang dikelola Supabase Auth (bukan kolom public.users.password).
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) throw error;
 
       return { success: true, message: 'Kata sandi Anda berhasil diperbarui!' };
     } catch (err) {

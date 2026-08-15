@@ -6,7 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import { useApp, User } from '@/context/AppContext';
 
 export default function AdminManajemenUser() {
-  const { users, updateStatusUser, hapusUserPermanen, registerWarga, loading } = useApp();
+  const { users, updateStatusUser, hapusUserPermanen, syncData, loading } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRole, setSelectedRole] = useState('semua');
@@ -39,16 +39,31 @@ export default function AdminManajemenUser() {
 
     try {
       const sandi = generateRandomPassword();
-      const success = registerWarga(namaInput, emailInput, identitasInput, sandi, roleInput);
-      if (success) {
-        alert(`Pengguna baru berhasil ditambahkan! Kata sandi akun: ${sandi}`);
+      // Pembuatan akun lewat server (service role) — lihat /api/admin/users.
+      const res = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput,
+          password: sandi,
+          name: namaInput,
+          nik: identitasInput,
+          role: roleInput
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`Pengguna baru berhasil ditambahkan! Kata sandi akun: ${data.sandi}`);
+        syncData();
         setIsModalOpen(false);
         setNamaInput('');
         setEmailInput('');
         setIdentitasInput('');
         setRoleInput('Masyarakat');
       } else {
-        alert('Gagal menambahkan: Email sudah terdaftar.');
+        alert(data.reason === 'forbidden'
+          ? 'Anda bukan Administrator. Pembuatan akun ditolak.'
+          : 'Gagal menambahkan: Email sudah terdaftar.');
       }
     } catch (err) {
       console.error(err);

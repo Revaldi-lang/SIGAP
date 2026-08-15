@@ -29,7 +29,7 @@ export default function AdminLogin() {
     e.preventDefault();
     setErrorMsg('');
 
-    const result = await login(email, password, 'admin');
+    const result = await login(email, password);
     if (result.success) {
       router.push('/admin');
     } else if (result.reason === 'wrong_portal') {

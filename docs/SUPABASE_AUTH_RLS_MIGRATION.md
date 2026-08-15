@@ -78,6 +78,10 @@ untuk proteksi halaman (proxy) dan endpoint admin.
 Kerjakan perubahan ini TERLEBIH DAHULU sebelum RLS ketat diaktifkan. Semua
 query client harus menjadi *authenticated* (membawa JWT).
 
+> **Status: seluruh perubahan 5.1–5.6 sudah diterapkan di repo**
+> (`commit` menyusul). Bagian ini tetap dipertahankan sebagai dokumentasi
+> alur & alasan, bukan instruksi yang harus dikerjakan ulang.
+
 ### 5.1 Daftar (`registerWarga` di `src/context/AppContext.tsx`)
 
 Ubah dari: hash bcrypt client-side + insert anon.
@@ -114,13 +118,16 @@ const registerWarga = async (
     console.error('Supabase user insert error:', insertError);
     return false;
   }
+  // Pasang cookie sesi server secara eksplisit (bukan menunggu event listener)
+  if (signUpData.session) await handleSupabaseSession(signUpData.session);
   await pullFromSupabase();
   return true;
 };
 ```
 
 Catatan:
-- Pemanggil di `src/app/register/page.tsx:55` harus `await` (fungsinya jadi async).
+- Pemanggil di `src/app/register/page.tsx` diubah jadi `await` + redirect ke
+  dashboard (akun langsung aktif, bukan lagi ke halaman login).
 - `bcrypt.hashSync` tidak dipakai lagi (password ditangani Supabase Auth).
 - Halaman register publik hanya membuat role `Masyarakat` — aman.
 - Pembuatan akun staf/admin dipindah ke endpoint server (lihat 5.4).
@@ -138,8 +145,12 @@ const login = async (email: string, password: string, portal: 'pelapor' | 'admin
     if (error || !data.session) {
       return { success: false, reason: 'wrong_password' };
     }
-    const synced = await handleSupabaseSession(data.session); // → boolean
-    return synced ? { success: true } : { success: false, reason: 'wrong_password' };
+    const result = await handleSupabaseSession(data.session); // → { success, reason }
+    if (!result.success) {
+      await supabase.auth.signOut().catch(() => undefined);
+      return result;
+    }
+    return { success: true };
   } catch {
     return { success: false, reason: 'server_error' };
   }
@@ -147,18 +158,21 @@ const login = async (email: string, password: string, portal: 'pelapor' | 'admin
 ```
 
 Catatan:
-- `handleSupabaseSession` perlu diubah agar mengembalikan `boolean`
-  (saat ini tidak). Return `true` bila `res.ok && data.user`.
+- `handleSupabaseSession` diubah mengembalikan `{ success: boolean; reason?: string }`
+  (sebelumnya `void`). `success: true` bila `res.ok && data.user`.
+- Bila akun diblokir/ditolak, sesi client di-sign-out agar tidak bisa dipakai
+  untuk query data setelah RLS ketat.
 - Route `/api/auth/login` beserta RPC `verify_user_password` / `has_user_password`
   menjadi legacy dan bisa dihapus pada langkah akhir (lihat Fase 3).
 - Cek "portal" (pelapor vs admin) sudah ditangani redirect halaman via
   `currentUser.role` + proxy — tidak perlu RPC khusus.
 - Status `Blokir` sudah ditolak di `/api/auth/oauth` (respons 403 `blocked`).
 
-### 5.3 Route `/api/auth/oauth` (validasi token + cookie)
+### 5.3 Route `/api/auth/oauth` (validasi token + cookie) & callback Google
 
-Saat ini memakai client **anon** untuk query `public.users`. Setelah RLS ketat,
-query anon ditolak. Buat client authenticated dari token yang dikirim user:
+Route ini memakai client **anon** untuk query `public.users` — setelah RLS
+ketat query anon ditolak. Diubah menjadi client authenticated dari token yang
+dikirim user, sekaligus backfill `auth_id`:
 
 ```ts
 // setelah supabase.auth.getUser(accessToken) berhasil
@@ -170,19 +184,25 @@ const authedClient = createClient(
 // gunakan authedClient untuk .from('users').select(...) / .insert(...)
 ```
 
-Tambahkan `auth_id` saat insert user baru:
-```ts
-auth_id: authUser.id,
-```
-Policy `users_insert_own` (auth_id = auth.uid()) akan lolos karena token yang
-dipakaikan adalah punya user itu sendiri.
+Perubahan lain:
+- Insert user baru kini menyertakan `auth_id: authUser.id` (lolos policy
+  `users_insert_own`).
+- User Google existing dengan `auth_id` kosong di-backfill saat login berikutnya
+  (`update({ auth_id })` by email).
+- **Login Google** diubah `redirectTo`-nya dari `/login-masyarakat` ke halaman
+  baru `/auth/callback`. Alasannya: sebelumnya redirect ke route API berarti
+  browser supabase client TIDAK pernah menerima sesi (token hanya sampai di
+  server), sehingga query client tetap anon dan bakal ditolak RLS ketat.
+  `/auth/callback` (client page) menangkap fragment token dari flow implicit,
+  lalu memanggil `/api/auth/oauth` untuk memasang cookie dan mengarahkan sesuai
+  role. File: `src/app/auth/callback/page.tsx`.
 
 ### 5.4 Admin membuat user (`src/app/admin/manajemen-user/page.tsx`)
 
 Pembuatan akun oleh admin harus lewat **server** (memakai service role), karena
 admin membuat akun untuk orang lain (auth_id ≠ auth.uid() admin).
 
-1. Buat endpoint `POST /api/admin/users` yang:
+1. Endpoint `POST /api/admin/users` (sudah dibuat, `src/app/api/admin/users/route.ts`):
    - Memeriksa sesi admin (decode cookie `sigap_session`, cek role
      `Administrator`).
    - `admin.auth.admin.createUser({ email, password, email_confirm: true })`.
@@ -239,11 +259,24 @@ membawa JWT dan lolos policy `authenticated` (diterapkan di Fase 3).
 
 ## 6. Fase 2 — Migrasi Data (script sekali jalan)
 
-Jalankan script Node ini **sebelum RLS ketat**. Isi `SUPABASE_SERVICE_ROLE_KEY`
-dari `.env.local` (jangan dicetak).
+Script sudah disiapkan di repo: **`migrate-to-auth.mjs`**. Isi
+`SUPABASE_SERVICE_ROLE_KEY` di `.env.local` (sudah dilakukan), lalu jalankan
+**sebelum RLS ketat**:
 
+```
+node migrate-to-auth.mjs
+```
+
+Yang dilakukan script:
+- Mengimpor user password bcrypt ke `auth.users` (hash ditetapkan langsung —
+  password lama tetap valid tanpa reset).
+- Meng-backfill `auth_id` untuk SEMUA user (password + Google) dengan
+  mencocokkan email ke `auth.users`.
+- Mencetak daftar user yang di-skip (password teks biasa legacy — buat ulang
+  lewat menu Admin, atau mereka bisa login Google) dan error jika ada.
+
+Rincian teknik (untuk referensi / versi lama yang inline di commit awal):
 ```js
-// migrate-to-auth.mjs — jalankan: node migrate-to-auth.mjs
 import fs from 'node:fs';
 import { createClient } from '@supabase/supabase-js';
 
