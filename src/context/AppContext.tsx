@@ -128,6 +128,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const pullFromSupabase = useCallback(async () => {
     try {
+      // Di bawah RLS ketat, pengunjung tanpa login TIDAK boleh membaca data.
+      // Skip pull bila tidak ada sesi agar halaman publik tidak memicu
+      // query yang ditolak (42501) dan tidak menimpa cache dengan kosong.
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
       const { data: dbUsers, error: usersError } = await supabase.from('users').select('id, name, email, nik, role, status, avatar_url, telepon, alamat');
       if (usersError) {
         console.error('Error fetching users from Supabase:', usersError);
