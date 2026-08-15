@@ -22,6 +22,10 @@
 --      auth.users.id, diisi saat laporan dibuat.
 --   4. Semua penulisan/update di aplikasi disesuaikan sehingga berjalan
 --      sebagai authenticated user (bukan anon).
+--   5. Aplikasi TIDAK lagi menulis log "Aduan Dikirim" secara manual;
+--      log awal dibuat otomatis oleh trigger (bagian 3b di bawah). Insert
+--      activity_log di tambahLaporan() HARUS dihapus sebelum skrip ini
+--      dijalankan, atau policy insert_staff akan menolak milik pelapor.
 -- ---------------------------------------------------------------------
 
 -- 0) KOLOM PENDUKUNG MIGRASI ------------------------------------------
@@ -146,6 +150,8 @@ CREATE POLICY "laporan_delete_admin" ON public.laporan
 CREATE POLICY "activity_log_select_any_authenticated" ON public.activity_log
   FOR SELECT USING (auth.role() = 'authenticated');
 
+-- Insert log "Aduan Dikirim" dibuat trigger (3b) sebagai SECURITY DEFINER.
+-- Staff masih menulis log disposisi/selesai lewat policy ini.
 CREATE POLICY "activity_log_insert_staff" ON public.activity_log
   FOR INSERT WITH CHECK (public.is_staff());
 
@@ -181,6 +187,63 @@ CREATE POLICY "feedback_update_staff" ON public.feedback_admin
 CREATE POLICY "feedback_delete_admin" ON public.feedback_admin
   FOR DELETE USING (public.is_admin());
 
+-- 3b) TRIGGER LOG "ADUAN DIKIRIM" ----------------------------------------
+-- Log awal sebuah laporan dibuat otomatis saat INSERT laporan (oleh pelapor),
+-- sehingga tidak perlu policy INSERT publik untuk activity_log.
+-- SECURITY DEFINER agar bisa membaca public.users tanpa rekursi RLS.
+
+CREATE OR REPLACE FUNCTION public.log_laporan_dikirim()
+RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  INSERT INTO public.activity_log (laporan_id, judul, deskripsi)
+  VALUES (
+    NEW.id,
+    'Aduan Dikirim',
+    'Baru Saja | Oleh ' || COALESCE(
+      (SELECT name FROM public.users WHERE id = NEW.user_id),
+      'Pelapor'
+    )
+  );
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_laporan_dikirim ON public.laporan;
+CREATE TRIGGER trg_laporan_dikirim
+  AFTER INSERT ON public.laporan
+  FOR EACH ROW EXECUTE FUNCTION public.log_laporan_dikirim();
+
+-- 3c) STORAGE POLICY (bucket 'avatars') -----------------------------------
+-- Upload ke bucket 'avatars' (folder avatars/ dan reports/) harus datang
+-- dari user terautentikasi; URL-nya tetap bisa dibaca publik.
+-- Jalankan HANYA setelah bucket 'avatars' ada dan RLS storage aktif.
+
+DROP POLICY IF EXISTS "avatars_public_read" ON storage.objects;
+CREATE POLICY "avatars_public_read" ON storage.objects
+  FOR SELECT USING (bucket_id = 'avatars');
+
+DROP POLICY IF EXISTS "avatars_auth_write" ON storage.objects;
+CREATE POLICY "avatars_auth_write" ON storage.objects
+  FOR INSERT TO authenticated
+  WITH CHECK (
+    bucket_id = 'avatars'
+    AND (storage.foldername(name))[1] IN ('avatars', 'reports')
+  );
+
+DROP POLICY IF EXISTS "avatars_auth_update" ON storage.objects;
+CREATE POLICY "avatars_auth_update" ON storage.objects
+  FOR UPDATE TO authenticated
+  USING (bucket_id = 'avatars' AND owner = auth.uid())
+  WITH CHECK (bucket_id = 'avatars' AND owner = auth.uid());
+
+DROP POLICY IF EXISTS "avatars_owner_delete" ON storage.objects;
+CREATE POLICY "avatars_owner_delete" ON storage.objects
+  FOR DELETE TO authenticated
+  USING (bucket_id = 'avatars' AND owner = auth.uid());
+
 -- 4) KOLOM PASSWORD -----------------------------------------------------
 -- Kolom password bcrypt lama TIDAK LAGI dibutuhkan setelah migrasi ke
 -- Supabase Auth. Pindahkan nilainya ke auth.users (via Admin API:
@@ -194,3 +257,12 @@ CREATE POLICY "feedback_delete_admin" ON public.feedback_admin
 --
 --   DROP FUNCTION IF EXISTS public.verify_user_password(text, text);
 --   DROP FUNCTION IF EXISTS public.has_user_password(text);
+--
+-- ---------------------------------------------------------------------
+-- ROLLBACK (jika terjadi masalah):
+--   Kembalikan akses anon terbuka dengan menjalankan ULANG file
+--   supabase_security_fix.sql. Trigger & storage policy baru tidak
+--   menghalangi (policy hanya menambah aturan; supabase_security_fix.sql
+--   hanya DROP/CREATE policy public). Setelah rollback, pastikan aplikasi
+--   yang sudah bermigrasi ke Supabase Auth tetap bekerja — tidak wajib
+--   me-revert kode aplikasi, cukup RLS-nya.
