@@ -13,6 +13,10 @@ const setSessionCookie = (response: NextResponse, user: SessionUser) => {
 };
 
 export async function POST(request: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json({ success: false, reason: 'server_error' }, { status: 500 });
+  }
+
   let body: { access_token?: string };
   try {
     body = await request.json();

@@ -56,6 +56,10 @@ const clearAttempts = (key: string) => {
 };
 
 export async function POST(request: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json({ success: false, reason: 'server_error' }, { status: 500 });
+  }
+
   let body: { email?: string; password?: string; portal?: 'pelapor' | 'admin' };
   try {
     body = await request.json();
