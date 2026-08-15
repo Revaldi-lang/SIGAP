@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
   const { data: authData, error: authError } = await supabase.auth.getUser(accessToken);
   const authUser = authData.user;
   if (authError || !authUser || !authUser.email) {
+    console.error('[oauth-route] getUser failed:', authError?.message || 'no email', 'status:', authError?.status ?? '');
     return NextResponse.json({ success: false, reason: 'unauthorized' }, { status: 401 });
   }
 
@@ -65,6 +66,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (insertError) {
+      console.error('[oauth-route] users insert failed:', insertError.message);
       return NextResponse.json({ success: false, reason: 'server_error' }, { status: 500 });
     }
     user = inserted;

@@ -384,13 +384,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const loginGoogle = async () => {
-    const redirectUrl = window.location.origin + '/login-masyarakat';
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: redirectUrl
-      }
-    });
+    try {
+      const redirectUrl = window.location.origin + '/login-masyarakat';
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl
+        }
+      });
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error login dengan Google:', err);
+      alert('Gagal masuk dengan Google: ' + (err instanceof Error ? err.message : String(err)));
+    }
   };
 
   const logout = async () => {
