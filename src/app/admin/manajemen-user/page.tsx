@@ -18,6 +18,13 @@ export default function AdminManajemenUser() {
   const [identitasInput, setIdentitasInput] = useState('');
   const [roleInput, setRoleInput] = useState<'Masyarakat' | 'Administrator' | 'Petugas' | 'Petugas PUPR'>('Masyarakat');
 
+  const generateRandomPassword = (): string => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+    const rand = new Uint32Array(12);
+    crypto.getRandomValues(rand);
+    return 'Sg-' + Array.from(rand, n => chars[n % chars.length]).join('');
+  };
+
   const handleResetFilters = () => {
     setSearchQuery('');
     setSelectedRole('semua');
@@ -31,12 +38,10 @@ export default function AdminManajemenUser() {
     }
 
     try {
-      // In this local mock setup, we register user as Masyarakat or custom roles in context
-      const success = registerWarga(namaInput, emailInput, identitasInput, 'password123', roleInput);
+      const sandi = generateRandomPassword();
+      const success = registerWarga(namaInput, emailInput, identitasInput, sandi, roleInput);
       if (success) {
-        // If they chose a custom role (like Admin/Petugas), we update their role
-        // For local mock simplicity, this registers the user in Supabase users table!
-        alert('Pengguna baru berhasil ditambahkan! Kata sandi bawaan: password123');
+        alert(`Pengguna baru berhasil ditambahkan! Kata sandi akun: ${sandi}`);
         setIsModalOpen(false);
         setNamaInput('');
         setEmailInput('');

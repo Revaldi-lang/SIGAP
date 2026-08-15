@@ -32,8 +32,11 @@ function PengaturanProfilForm() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Sync state if currentUser gets updated asynchronously (e.g., from DB sync on mount)
-  React.useEffect(() => {
+  // Sync form state when currentUser updates asynchronously (e.g., DB sync on mount).
+  // React-recommended "adjust state during render" pattern — avoids an effect cascade.
+  const [prevUser, setPrevUser] = useState(currentUser);
+  if (prevUser !== currentUser) {
+    setPrevUser(currentUser);
     if (currentUser) {
       if (currentUser.username) setNama(currentUser.username);
       if (currentUser.email) setEmail(currentUser.email);
@@ -41,7 +44,7 @@ function PengaturanProfilForm() {
       if (currentUser.alamat) setAlamat(currentUser.alamat);
       if (currentUser.foto) setFoto(currentUser.foto);
     }
-  }, [currentUser]);
+  }
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

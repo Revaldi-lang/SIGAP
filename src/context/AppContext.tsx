@@ -567,6 +567,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               } else {
                 const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
                 publicUrl = data.publicUrl;
+                // Base64 photo no longer needed locally once uploaded to Storage.
+                // It only stays in localStorage as a fallback when the upload fails.
+                localStorage.removeItem('sigap_foto_data_' + id);
               }
             }
           } catch (e) {
